@@ -32,7 +32,7 @@ public class UserController {
 	
 	@RequestMapping("/")
 	public String index() {
-		return "main";
+		return "index";
 	}
 	
 	/*
