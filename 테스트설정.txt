@@ -1,0 +1,6 @@
+CREATE TABLE USER (
+ id VARCHAR(20),
+ pwd VARCHAR(30)
+);
+
+테이블 만들어서 적당히 값 집어넣고 테스트 해보면 됩니다
