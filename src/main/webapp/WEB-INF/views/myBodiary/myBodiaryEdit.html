@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="row mt-4">
+	<nav class="col-2 ml-3 mr-0">
+		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+		</aside>
+	</nav>
+
+		<div class="col mr-5">
+			<div class="card pt-2 pb-2 pl-4">gd</div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="row mt-4">
+		<nav class="col-2 ml-3 mr-0">
+			<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+			</aside>
+		</nav>
+
+		<div class="col mr-5">
+			<div class="row">
+				<div class="col-12">
+					<h4 class="d-inline">Cards Types</h4>
+					<p>The building block of a card is the <code class="highlighter-rouge">.card-body</code>. Use it whenever you need a padded section within a card.</p>
+					<div class="row">
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+									<p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+									<p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
+									</p><a href="#" class="card-link float-right"><small>Card link</small></a>
+								</div>
+							</div>
+						</div>
+						<!-- End Col -->
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<div class="card-body">
+									<h5 class="card-title">Card title</h5>
+									<p class="card-text">This is a wider card with supporting text and below as a natural lead-in to the additional content. This content is a little bit longer.</p>
+								</div>
+								<div class="card-footer">
+									<p class="card-text d-inline"><small class="text-muted">Last updated 3 mins ago</small>
+									</p><a href="#" class="card-link m-l-30"><small>Card link</small> </a><a href="#" class="btn btn-primary float-right">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+						<!-- End Col -->
+						<div class="col-md-6 col-lg-3">
+							<div class="card text-center">
+								<div class="card-body">
+									<h5 class="card-title">Special title treatment</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+								<div class="card-footer text-muted">Last updateed 5 min ago</div>
+							</div>
+						</div>
+						<!-- End Col -->
+						
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<div class="card-header">Card Header</div>
+								<div class="card-body">
+									<h5 class="card-title">Special title treatment</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+						<!-- End Col -->
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<div class="card-header">Quote</div>
+								<div class="card-body">
+									<blockquote class="blockquote mb-0">
+										<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+										<footer class="blockquote-footer">Someone famous in <cite title="Source Title">Source Title</cite>
+										</footer>
+									</blockquote>
+								</div>
+							</div>
+						</div>
+						<!-- End Col -->
+						
+						<div class="col-lg-3">
+							<div class="card text-left">
+								<div class="card-body">
+									<h5 class="card-title">Special title treatment</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="card text-center">
+								<div class="card-body">
+									<h5 class="card-title">Special title treatment</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3">
+							<div class="card text-right">
+								<div class="card-body">
+									<h5 class="card-title">Special title treatment</h5>
+									<p class="card-text">With supporting text below as a natural lead-in to additional content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- End Col -->
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>
