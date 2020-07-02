@@ -34,9 +34,31 @@ public class UserController {
 	public String index() {
 		return "index";
 	}
+
 	@RequestMapping("/main")
 	public String getMain() {
 		return "main";
+	}
+	
+	@RequestMapping("/myBodiaryMain.html")
+	public String myBodiaryMain() {
+		return "myBodiaryMain";
+	}
+	
+	@RequestMapping("/myBodiaryForm.html")
+	public String myBodiaryForm() {
+		return "myBodiaryForm";
+	}
+	
+	@RequestMapping("/myBodiaryDetail.html")
+	public String myBodiaryDetail() {
+		return "myBodiaryDetail";
+	}
+
+	@RequestMapping("/routineBrdForm")
+	public String getRoutineBrdForm() {
+		return "routineBrdForm";
+
 	}
 	
 	/*
