@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+  <body>
+  <!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	
+	<div class="content-body">
+
+       
+            <!-- row -->
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="summernote">
+                                    <h3>Default Summernote</h3>
+                                </div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+  </body>
+</html>

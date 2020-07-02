@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+  <body>
+  <!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+  </body>
+</html>

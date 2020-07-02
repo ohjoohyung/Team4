@@ -34,7 +34,7 @@ public class UserController {
 	public String index() {
 		return "index";
 	}
-<<<<<<< HEAD
+
 	@RequestMapping("/main")
 	public String getMain() {
 		return "main";
@@ -53,11 +53,12 @@ public class UserController {
 	@RequestMapping("/myBodiaryDetail.html")
 	public String myBodiaryDetail() {
 		return "myBodiaryDetail";
-=======
+	}
+
 	@RequestMapping("/routineBrdForm")
 	public String getRoutineBrdForm() {
 		return "routineBrdForm";
->>>>>>> Deok
+
 	}
 	
 	/*
