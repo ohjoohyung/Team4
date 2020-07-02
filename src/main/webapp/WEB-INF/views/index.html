@@ -1,24 +1,38 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- 공통 헤더-->
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div style="height:70px;"></div>
 	<!-- 공통 sidenav -->
 	<div class="row mt-4">
-	<nav class="col-2 ml-3 mr-0">
+	<nav class="col-3 ml-3 mr-0 sidenav">
 		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
 		</aside>
 	</nav>
-
+		<!-- myBodiary 내 공통 목표 띠  -->
 		<div class="col mr-5">
-			<div class="card pt-2 pb-2 pl-4">gd</div>
+			<!-- 목표 인원수 + 목표 설정하기  -->
+			<div class="card card-body pt-0 pb-0 pl-4">
+				<div class="row">
+					<div class="col pl-3 mt-3 mb-2">
+						현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이 목표를 달성하고 있어요!
+					</div>
+					<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
+					<div class="col-1 mt-2 mb-2">
+						<button class="btn btn-primary btn-flat"><i class="mdi mdi-plus"></i></button>
+					</div>
+				</div>
+			</div>
+			<!--  -->
+			
 		</div>
 	</div>
 	<!-- 기본 폼 완성 -->
-
+	
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>

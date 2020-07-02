@@ -34,6 +34,10 @@ public class UserController {
 	public String index() {
 		return "index";
 	}
+	@RequestMapping("/main")
+	public String getMain() {
+		return "main";
+	}
 	
 	/*
 	 * @GetMapping("/login") public String
