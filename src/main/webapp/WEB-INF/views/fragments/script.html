@@ -26,9 +26,48 @@
     <!-- ChartistJS -->
     <script src="assets/plugins/chartist/js/chartist.min.js"></script>
     <script src="assets/plugins/chartist-plugin-tooltips/js/chartist-plugin-tooltip.min.js"></script>
+<<<<<<< HEAD
+	<!-- SummerNote -->
+   	<script src="assets/plugins/summernote/dist/summernote.min.js"></script>
+    <script src="assets/plugins/summernote/dist/summernote-init.js"></script>
 
 
 
     <script src="assets/js/dashboard/dashboard-1.js"></script>
+    
+     <!-- 이벤트 캘린더 -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="assets/pretty-event-calendar/src/calendar.js"></script>
+    <script>
+       var now = new Date();
+       var year = now.getFullYear();
+       var month = now.getMonth() + 1;
+       var date = now.getDate();
+      
+       var data = [{
+           date: year + '-' + month + '-' + (date - 1),
+           value: '운동함'
+       }];
+       $(function() {
+            $('#eventCalendar').calendar({
+                  // view: 'month',
+                
+                  // startWeek: 0,
+                  // selectedRang: [new Date(), null],
+                  data: data,
+                  monthArray: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                  onSelected: function (view, date, data) {
+                      console.log('view:' + view)
+                      console.log('date:' + date)
+                      console.log('data:' + (data));
+                  },
+                  viewChange: function (view, y, m) {
+                      console.log(view, y, m)
+
+                  }
+              });   
+       });
+  
+    </script>
   	
 </th:block>

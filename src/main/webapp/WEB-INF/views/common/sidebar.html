@@ -10,71 +10,75 @@
 					<!-- End Title -->
 
 					<!-- Getting Started -->
-					<li class="side-nav-info card card-body border-primary pt-4 pb-4 pl-3 pr-0">
+					<li class="side-nav-info card card-body border-primary pt-4 pb-4 pl-3 pr-3 mb-2">
 						<div class="row mt-1" style="width:100%">
-							<div class="col-5 ml-1 mr-1">
-								<img style="width:100%;" class="side-nav-photo rounded-circle" th:src="@{assets/img/avatar-1.jpg}" alt="Image Description"/>
+							<div class="col-5 ">
+								<img style="width:100%;" class="side-nav-photo rounded-circle" th:src="@{assets/images/users/2.jpg}" alt="Image Description"/>
 							</div>
-							<div class="col-6 ml-1 mt-2 p-0">
-								<h4>지희 님&nbsp;&nbsp;<a href="#"><i class="gd-pencil icon-text text-secondary"></i></a></h4>
+							<div class="col-6 p-0 mt-3">
+								<h3>지희 님&nbsp;&nbsp;<a href="#"><i class="fa fa-pencil-square-o text-secondary"></i></a></h3>
 								<h6>158cm | 00kg</h6>
 							</div>
 						</div>
-						<div class="my-info ml-2 mr-4 mt-4" style="font-size:12px;">
+						<div class="my-info mt-4" style="font-size:12px;">
 							내 기초대사량
 							<div class="container mt-1 p-2" align="center" style="background-color:#f1f3f7;">
 							<span class="h3" >1294.4</span> Kcal
 							</div>
 						</div>
-						<div class="my-info ml-2 mr-4 mt-2" style="font-size:12px;">
+						<div class="my-info mt-2" style="font-size:12px;">
 							내 BMI 지수
 							<div class="container mt-1 p-2" align="center" style="background-color:#f1f3f7;">
 							<span class="h3" >20.3</span> 정상 지수 
 							</div>
 						</div>
+						<div class="">
+							<div id="eventCalendar" class="mt-3">
+	                  		</div>
+                  		</div>
 					</li>
 				</ul>
 				
-				<ul class="side-nav-menu side-nav-menu-top-level card mb-0" >
-					<li class="side-nav-menu-item mt-1 mb-1 ml-1">
-					<a class="side-nav-menu-link media align-items-center"
-					   href="#"> 
+				<ul class="side-nav-menu side-nav-menu-top-level card mb-5" >
+					<li class="side-nav-menu-item mt-4 mb-3 ml-4">
+					<a class="side-nav-menu-link media align-items-center" href="#"> 
 						<span class="side-nav-menu-icon d-flex mr-3"> 
-							<i class="gd-stats-up"></i>
+							<!-- <i class="mdi mdi-bell-outline"></i> -->
+							<span class="mdi mdi-chart-gantt"></span>
+
 						</span>
 						<span class="side-nav-fadeout-on-closed media-body">목표  변화 모아보기</span>
 					</a>
 					</li>
-					<li class="side-nav-menu-item mt-1 mb-1 ml-1">
+					<li class="side-nav-menu-item mb-3 ml-4">
 					<a class="side-nav-menu-link media align-items-center"
 					   href="#"> 
 						<span class="side-nav-menu-icon d-flex mr-3"> 
-							<i class="gd-pin-alt"></i>
+							<i class="mdi mdi-content-paste"></i>
 						</span>
 						<span class="side-nav-fadeout-on-closed media-body">루틴 리스트</span>
 					</a>
 					</li>
-					<li class="side-nav-menu-item mt-1 mb-1 ml-1">
+					<li class="side-nav-menu-item mb-3 ml-4">
 					<a class="side-nav-menu-link media align-items-center"
 					   href="#"> 
 						<span class="side-nav-menu-icon d-flex mr-3"> 
-							<i class="gd-marker-alt"></i>
+							<i class="mdi mdi-emoticon"></i>
 						</span>
 						<span class="side-nav-fadeout-on-closed media-body">내가 쓴 글 댓글</span>
 					</a>
 					</li>
-					<li class="side-nav-menu-item mt-1 mb-1 ml-1">
+					<li class="side-nav-menu-item mb-4 ml-4">
 					<a class="side-nav-menu-link media align-items-center"
 					   href="#"> 
 						<span class="side-nav-menu-icon d-flex mr-3"> 
-							<i class="gd-info-alt"></i>
+							<i class="mdi mdi-lightbulb-on-outline"></i>
 						</span>
 						<span class="side-nav-fadeout-on-closed media-body">내 문의함</span>
 					</a>
 					</li>
 					<!-- End Getting Started -->
 				</ul>
-			
 		</main>    
 	</th:block>
 	
