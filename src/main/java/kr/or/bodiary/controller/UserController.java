@@ -34,6 +34,10 @@ public class UserController {
 	public String index() {
 		return "index";
 	}
+	@RequestMapping("/routineBrdForm")
+	public String getRoutineBrdForm() {
+		return "routineBrdForm";
+	}
 	
 	/*
 	 * @GetMapping("/login") public String
