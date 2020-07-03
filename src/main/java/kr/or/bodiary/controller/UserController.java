@@ -38,6 +38,10 @@ public class UserController {
 	public String getMain() {
 		return "main";
 	}
+	@RequestMapping("/search")
+	public String getSearchExcs() {
+		return "searchExcs/searchExcs";
+	}
 	
 	/*
 	 * @GetMapping("/login") public String

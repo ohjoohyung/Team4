@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<!-- 공통 헤더-->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 
 <body>
 	<!-- <h1>테스트 입니다 아이디를 입력해주세요</h1>
@@ -12,79 +13,94 @@
 	<!--*******************
         Preloader start
     ********************-->
-    <!-- <div id="preloader">
+	<!-- <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
                 <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
             </svg>
         </div>
     </div> -->
-    <!-- 공통 nav -->
+	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<div style="height:56px;"></div>
-    <!--*******************
+	<div style="height: 56px;"></div>
+	<!--*******************
         Preloader end
     ********************-->
 	<div id="main-wrapper">
 		<div class="content ">
-		<div style="height:56px;"></div>
-			<ul class="nav nav-pills mb-3 pt-4" style="font-size:24px; font-weight:300;">
-                                    <li class="nav-item"><a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">Tab One</a>
-                                    </li>
-                                    <li class="nav-item"><a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">Tab Two</a>
-                                    </li>
-                                    <li class="nav-item"><a href="#navpills-3" class="nav-link" data-toggle="tab" aria-expanded="true">Tab Three</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content br-n pn">
-                                    <div id="navpills-1" class="tab-pane active">
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-6 col-md-4 col-xl-2">
-                                                <img src="images/big/card-4.png" alt="" class="img-fluid thumbnail m-r-15">
-                                            </div>
-                                            <div class="col-sm-6 col-md-8 col-xl-10">
-                                                <p>dddRaw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                                                <p>Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="navpills-2" class="tab-pane">
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-6 col-md-4 col-xl-2">
-                                                <img src="images/big/card-3.png" alt="" class="img-fluid thumbnail m-r-15">
-                                            </div>
-                                            <div class="col-sm-6 col-md-8 col-xl-10">
-                                                <p>Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
-                                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div id="navpills-3" class="tab-pane">
-                                        <div class="row align-items-center">
-                                            <div class="col-sm-6 col-md-4 col-xl-2">
-                                                <img src="images/big/card-1.png" alt="" class="img-fluid thumbnail m-r-15">
-                                            </div>
-                                            <div class="col-sm-6 col-md-8 col-xl-10">
-                                                <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p>
-                                                <p>Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-		
-		<!--  -->
-            <ul class="nav nav-pills mb-3 pt-5"> 
-	            <li class="nav-item">
-	            	<a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">메인</a>
-	            </li>
-	            <li class="nav-item">
-	            	<a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">루틴 자랑</a>
-	            </li>
-	            <li class="nav-item">
-	            	<a href="#navpills-3" class="nav-link" data-toggle="tab" aria-expanded="false">자유 게시판</a>
-	            </li>
-            </ul>
-		
+			<div style="height: 56px;"></div>
+			<ul class="nav nav-pills mb-3 pt-4"
+				style="font-size: 24px; font-weight: 300;">
+				<li class="nav-item"><a href="#navpills-1"
+					class="nav-link active" data-toggle="tab" aria-expanded="false">Tab
+						One</a></li>
+				<li class="nav-item"><a href="#navpills-2" class="nav-link"
+					data-toggle="tab" aria-expanded="false">Tab Two</a></li>
+				<li class="nav-item"><a href="#navpills-3" class="nav-link"
+					data-toggle="tab" aria-expanded="true">Tab Three</a></li>
+			</ul>
+			<div class="tab-content br-n pn">
+				<div id="navpills-1" class="tab-pane active">
+					<div class="row align-items-center">
+						<div class="col-sm-6 col-md-4 col-xl-2">
+							<img src="images/big/card-4.png" alt=""
+								class="img-fluid thumbnail m-r-15">
+						</div>
+						<div class="col-sm-6 col-md-8 col-xl-10">
+							<p>dddRaw denim you probably haven't heard of them jean
+								shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+								master cleanse. Mustache cliche tempor, williamsburg carles
+								vegan helvetica.</p>
+							<p>Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+								Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
+						</div>
+					</div>
+				</div>
+				<div id="navpills-2" class="tab-pane">
+					<div class="row align-items-center">
+						<div class="col-sm-6 col-md-4 col-xl-2">
+							<img src="images/big/card-3.png" alt=""
+								class="img-fluid thumbnail m-r-15">
+						</div>
+						<div class="col-sm-6 col-md-8 col-xl-10">
+							<p>Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+								Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
+							<p>Raw denim you probably haven't heard of them jean shorts
+								Austin. Nesciunt tofu stumptown aliqua, retro synth master
+								cleanse. Mustache cliche tempor, williamsburg carles vegan
+								helvetica.</p>
+						</div>
+					</div>
+				</div>
+				<div id="navpills-3" class="tab-pane">
+					<div class="row align-items-center">
+						<div class="col-sm-6 col-md-4 col-xl-2">
+							<img src="images/big/card-1.png" alt=""
+								class="img-fluid thumbnail m-r-15">
+						</div>
+						<div class="col-sm-6 col-md-8 col-xl-10">
+							<p>Raw denim you probably haven't heard of them jean shorts
+								Austin. Nesciunt tofu stumptown aliqua, retro synth master
+								cleanse. Mustache cliche tempor, williamsburg carles vegan
+								helvetica.</p>
+							<p>Reprehenderit butcher retro keffiyeh dreamcatcher synth.
+								Cosby sweater eu banh mi, qui irure terry richardson ex squid.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!--  -->
+			<ul class="nav nav-pills mb-3 pt-5">
+				<li class="nav-item"><a href="#navpills-1"
+					class="nav-link active" data-toggle="tab" aria-expanded="false">메인</a>
+				</li>
+				<li class="nav-item"><a href="#navpills-2" class="nav-link"
+					data-toggle="tab" aria-expanded="false">루틴 자랑</a></li>
+				<li class="nav-item"><a href="#navpills-3" class="nav-link"
+					data-toggle="tab" aria-expanded="false">자유 게시판</a></li>
+			</ul>
+
 			<div id="navpills-1" class="tab-content p-0">
 				<!-- 캐러셀 -->
 				<div class="tab-pane fade show active" id="tabs2-tab1"
@@ -93,13 +109,16 @@
 						data-ride="carousel">
 						<div class="carousel-inner">
 							<div class="carousel-item active">
-								<img class="d-block w-100" src="/assets/img/1.png" alt="First slide">
+								<img class="d-block w-100" src="/assets/img/1.png"
+									alt="First slide">
 							</div>
 							<div class="carousel-item">
-								<img class="d-block w-100" src="/assets/img/2.png" alt="Second slide">
+								<img class="d-block w-100" src="/assets/img/2.png"
+									alt="Second slide">
 							</div>
 							<div class="carousel-item">
-								<img class="d-block w-100" src="/assets/img/1.png" alt="Third slide">
+								<img class="d-block w-100" src="/assets/img/1.png"
+									alt="Third slide">
 							</div>
 						</div>
 						<a class="carousel-control-prev" href="#carouselExampleControls"
@@ -114,92 +133,88 @@
 					</div>
 					<!-- 끼워넣기 배너 -->
 					<div class="mt-4 container bg-secondary p-2">
-						<h2 style="text-align:center; color:white;">살려줘 긴급탈출</h2>
+						<h2 style="text-align: center; color: white;">살려줘 긴급탈출</h2>
 					</div>
 					<!-- 오늘의 hit 일지 & 팁자유 -->
 					<div class="row mt-4">
 						<div class="col-8">
-							<h5>오늘의 HIT 루틴</h5><hr>
-							<div class="bg-white p-4">
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-							synth nesciunt you probably haven't heard of them accusamus labore
-							sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-							on it squid single-origin coffee nulla assumenda shoreditch et.
-							Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-							nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-							accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-							cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-							laborum eiusmod.
-							</div>
-						
+							<h5>오늘의 HIT 루틴</h5>
+							<hr>
+							<div class="bg-white p-4">Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably
+								haven't heard of them accusamus labore sustainable VHS. Brunch 3
+								wolf moon tempor, sunt aliqua put a bird on it squid
+								single-origin coffee nulla assumenda shoreditch et. Nihil anim
+								keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+								sapiente ea proident. Ad vegan excepteur butcher vice lomo. Anim
+								pariatur cliche reprehenderit, enim eiusmod high life accusamus
+								terry richardson ad squid. 3 wolf moon officia aute, non
+								cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+								laborum eiusmod.</div>
 						</div>
 						<div class="col-4">
-							<h5>오늘의 팁</h5><hr>
-							<div class="bg-white p-4">
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-							synth nesciunt you probably haven't heard of them accusamus labore
-							sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-							on it squid single-origin coffee nulla assumenda shoreditch et.
-							Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-							nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-							accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-							cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-							laborum eiusmod.
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-							synth nesciunt you probably haven't heard of them accusamus labore
-							sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-							on it squid single-origin coffee nulla assumenda shoreditch et.
-							Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-							nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-							accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-							cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-							laborum eiusmod.
-							Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-							synth nesciunt you probably haven't heard of them accusamus labore
-							sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-							on it squid single-origin coffee nulla assumenda shoreditch et.
-							Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-							nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-							lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-							accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-							cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-							laborum eiusmod.
-							</div>
+							<h5>오늘의 팁</h5>
+							<hr>
+							<div class="bg-white p-4">Leggings occaecat craft beer
+								farm-to-table, raw denim aesthetic synth nesciunt you probably
+								haven't heard of them accusamus labore sustainable VHS. Brunch 3
+								wolf moon tempor, sunt aliqua put a bird on it squid
+								single-origin coffee nulla assumenda shoreditch et. Nihil anim
+								keffiyeh helvetica, craft beer labore wes anderson cred nesciunt
+								sapiente ea proident. Ad vegan excepteur butcher vice lomo. Anim
+								pariatur cliche reprehenderit, enim eiusmod high life accusamus
+								terry richardson ad squid. 3 wolf moon officia aute, non
+								cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
+								laborum eiusmod. Leggings occaecat craft beer farm-to-table, raw
+								denim aesthetic synth nesciunt you probably haven't heard of
+								them accusamus labore sustainable VHS. Brunch 3 wolf moon
+								tempor, sunt aliqua put a bird on it squid single-origin coffee
+								nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica,
+								craft beer labore wes anderson cred nesciunt sapiente ea
+								proident. Ad vegan excepteur butcher vice lomo. Anim pariatur
+								cliche reprehenderit, enim eiusmod high life accusamus terry
+								richardson ad squid. 3 wolf moon officia aute, non cupidatat
+								skateboard dolor brunch. Food truck quinoa nesciunt laborum
+								eiusmod. Leggings occaecat craft beer farm-to-table, raw denim
+								aesthetic synth nesciunt you probably haven't heard of them
+								accusamus labore sustainable VHS. Brunch 3 wolf moon tempor,
+								sunt aliqua put a bird on it squid single-origin coffee nulla
+								assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft
+								beer labore wes anderson cred nesciunt sapiente ea proident. Ad
+								vegan excepteur butcher vice lomo. Anim pariatur cliche
+								reprehenderit, enim eiusmod high life accusamus terry richardson
+								ad squid. 3 wolf moon officia aute, non cupidatat skateboard
+								dolor brunch. Food truck quinoa nesciunt laborum eiusmod.</div>
 						</div>
 					</div>
 				</div>
-		</div>
-		<div class="tab-content fade " id="navpills-2" role="tabpanel">
-					Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-					synth nesciunt you probably haven't heard of them accusamus labore
-					sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-					on it squid single-origin coffee nulla assumenda shoreditch et.
-					Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-					nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-					lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-					accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-					cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-					laborum eiusmod.
-				</div>
-				<div class="tab-content fade" id="navpills-3" role="tabpanel">
-					Leggings occaecat craft beer farm-to-table, raw denim aesthetic
-					synth nesciunt you probably haven't heard of them accusamus labore
-					sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
-					on it squid single-origin coffee nulla assumenda shoreditch et.
-					Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
-					nesciunt sapiente ea proident. Ad vegan excepteur butcher vice
-					lomo. Anim pariatur cliche reprehenderit, enim eiusmod high life
-					accusamus terry richardson ad squid. 3 wolf moon officia aute, non
-					cupidatat skateboard dolor brunch. Food truck quinoa nesciunt
-					laborum eiusmod.
-				</div>
-		<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
-		
-		<!--  -->
-		
+			</div>
+			<div class="tab-content fade " id="navpills-2" role="tabpanel">
+				Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+				synth nesciunt you probably haven't heard of them accusamus labore
+				sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+				on it squid single-origin coffee nulla assumenda shoreditch et.
+				Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+				nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+				Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+				terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+				skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+			</div>
+			<div class="tab-content fade" id="navpills-3" role="tabpanel">
+				Leggings occaecat craft beer farm-to-table, raw denim aesthetic
+				synth nesciunt you probably haven't heard of them accusamus labore
+				sustainable VHS. Brunch 3 wolf moon tempor, sunt aliqua put a bird
+				on it squid single-origin coffee nulla assumenda shoreditch et.
+				Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred
+				nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo.
+				Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus
+				terry richardson ad squid. 3 wolf moon officia aute, non cupidatat
+				skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod.
+			</div>
+			<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
+
+			<!--  -->
+
 		</div>
 	</div>
 	<!-- footer -->
