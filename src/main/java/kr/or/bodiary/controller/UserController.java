@@ -47,6 +47,15 @@ public class UserController {
 	public String getRoutineBrdDetail() {
 		return "routineBrdDetail";
 	}
+	@RequestMapping("/routineBrdForm")
+	public String getRoutineBrdForm() {
+		return "routineBrdForm";
+	}
+	@RequestMapping("/routineBrdList")
+	public String getRoutineBrdList() {
+		return "routineBrdList";
+	}
+	
 	/*
 	 * @GetMapping("/login") public String
 	 */

@@ -7,11 +7,9 @@
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<!-- 공통 sidenav -->
-	<div class="row mt-4">
-	<nav class="col-2 ml-3 mr-0">
-	</nav>
-	<div class="container-fluid">
-                <div class="routineBrdForm">
+	
+	<div class="bodiary-wrapper">
+               <div class="content">
                 <form action="">
                
                 <div class="row">
@@ -21,9 +19,9 @@
                     	<div class="col-6">
                     	
                                 <div class="card">
-                                    <img class="img-fluid" src="" alt="">
-                                    <div class="card-body">
                                         <h5 class="card-title">시작사진</h5>
+                                    <img class="routine-img " src="assets/images/profile.jpg" alt="">
+                                    <div class="card-body">
                                             <div class="form-group">
                                                 <div class="fallback">
                                                     <input class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" name="file" type="file" multiple="multiple">
@@ -35,9 +33,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="card">
-                                    <img class="img-fluid" src="" alt="">
-                                    <div class="card-body">
                                         <h5 class="card-title">끝사진</h5>
+                                    <img class="routine-img " src="assets/images/dkdk.gif" alt="">
+                                    <div class="card-body">
                                          <div class="form-group">
                                                 <div class="fallback">
                                                     <input class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10" name="file" type="file" multiple="multiple">
@@ -91,7 +89,6 @@
                   </div>
             </div>
 
-	</div>
 	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->
