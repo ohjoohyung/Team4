@@ -34,9 +34,9 @@ public class UserController {
 	public String index() {
 		return "index";
 	}
-	@RequestMapping("/routineBrdForm")
-	public String getRoutineBrdForm() {
-		return "routineBrdForm";
+	@RequestMapping("/main")
+	public String getMain() {
+		return "main";
 	}
 	
 	@RequestMapping("/routineBrdEdit")
