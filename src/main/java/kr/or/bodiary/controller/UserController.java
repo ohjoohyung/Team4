@@ -30,15 +30,41 @@ public class UserController {
 		return "test";
 	}
 	
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
+	
 	@RequestMapping("/main")
 	public String getMain() {
-		return "main";
+		return "myQnaList";
 	}
 	
+	@RequestMapping("/")
+	public String index() {
+		return "myQnaList";
+	}
+	
+	@RequestMapping("/myQnaDetail")
+	public String index2() {
+		return "myQnaDetail";
+	}
+	
+	@RequestMapping("/myQnaEdit")
+	public String index3() {
+		return "myQnaEdit";
+	}
+	
+	@RequestMapping("/myQnaForm")
+	public String qna() {
+		return "myQnaForm";
+	}
+	
+	@RequestMapping("/4")
+	public String a() {
+		return "routineBrdEdit";
+	}
+	
+	@RequestMapping("/5")
+	public String b() {
+		return "routineBrdForm";
+	}
 	/*
 	 * @GetMapping("/login") public String
 	 */
