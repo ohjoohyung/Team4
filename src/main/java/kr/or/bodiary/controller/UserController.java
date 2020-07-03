@@ -31,14 +31,14 @@ public class UserController {
 	}
 	
 	
-	@RequestMapping("/main")
+	@RequestMapping("/myQnaList")
 	public String getMain() {
 		return "myQnaList";
 	}
 	
 	@RequestMapping("/")
 	public String index() {
-		return "myQnaList";
+		return "main";
 	}
 	
 	@RequestMapping("/myQnaDetail")
@@ -56,14 +56,24 @@ public class UserController {
 		return "myQnaForm";
 	}
 	
-	@RequestMapping("/4")
+	@RequestMapping("/noticeList")
 	public String a() {
-		return "routineBrdEdit";
+		return "noticeList";
 	}
 	
-	@RequestMapping("/5")
+	@RequestMapping("/noticeDetail")
 	public String b() {
-		return "routineBrdForm";
+		return "noticeDetail";
+	}
+	
+	@RequestMapping("/noticeEdit")
+	public String b2() {
+		return "noticeEdit";
+	}
+	
+	@RequestMapping("/noticeForm")
+	public String b3() {
+		return "noticeForm";
 	}
 	/*
 	 * @GetMapping("/login") public String
