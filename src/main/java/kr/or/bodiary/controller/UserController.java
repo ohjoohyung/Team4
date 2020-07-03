@@ -81,7 +81,10 @@ public class UserController {
 	
 	
 	
-	
+	@RequestMapping("/myQnaDetail2")
+	public String index1() {
+		return "myQnaDetail2";
+	}
 	
 	
 	
