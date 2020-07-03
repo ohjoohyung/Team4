@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="content">
+
+
+
+			<div class="row">
+					 <div class="col-5">
+                         <div class="card border-primary">
+                                   <div class="card-header">Header</div>
+                                   <div class="card-body">
+                                        <h5 class="card-title">Primary card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-5">
+                                <div class="card border-primary">
+                                    <div class="card-header">Header</div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">Primary card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p><a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    </div>
+                                </div>
+                            </div>
+				<div class="col-2">
+				<a href="#" class="btn btn-primary">방만들기</a>
+				</div>
+				<div class="col-5">
+                         <div class="card border-primary">
+                                   <div class="card-header">Header</div>
+                                   <div class="card-body">
+                                        <h5 class="card-title">Primary card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-5">
+                         <div class="card border-primary">
+                                   <div class="card-header">Header</div>
+                                   <div class="card-body">
+                                        <h5 class="card-title">Primary card title</h5>
+                                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                                    </div>
+                                    <div class="card-footer"><small>Last updateed 3 min ago</small>
+                                    </div>
+                                </div>
+                            </div>
+			</div>
+		</div>
+
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

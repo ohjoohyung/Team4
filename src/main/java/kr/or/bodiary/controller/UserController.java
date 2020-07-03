@@ -55,6 +55,10 @@ public class UserController {
 	public String getRoutineBrdList() {
 		return "routineBrdList";
 	}
+	@RequestMapping("/chatList")
+	public String getChatList() {
+		return "chatList";
+	}
 	
 	/*
 	 * @GetMapping("/login") public String

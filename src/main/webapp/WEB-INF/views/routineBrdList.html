@@ -1,159 +1,172 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<!-- 공통 헤더-->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
-	
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<!-- 공통 sidenav -->
 	<div class="bodiary-wrapper">
-	<div class="content">
-	
-	
-              <div class="row">
-                    <div class="col-12">
-                        <h4 class="d-inline">가장 인기있는 루틴</h4>
-                        <p class="text-muted">날짜</p>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름1</h5>
-                                        <p class="card-text">루틴컨텐츠1일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크1</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름2</h5>
-                                        <p class="card-text">루틴컨텐츠2</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크2</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/profile.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름3</h5>
-                                        <p class="card-text">루틴컨텐츠3</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크3</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/dkdk.gif" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름4</h5>
-                                        <p class="card-text">루틴컨텐츠4</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크4</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-                <hr>
-                <div class="row">
-                    <div class="col-12">
-                        <h4 class="d-inline">오늘의 루틴</h4>
-                        <p class="text-muted">날짜</p>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름1</h5>
-                                        <p class="card-text">루틴컨텐츠1</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크1</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름2</h5>
-                                        <p class="card-text">루틴컨텐츠2</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크2</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름3</h5>
-                                        <p class="card-text">루틴컨텐츠3</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크3</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">루틴이름4</h5>
-                                        <p class="card-text">루틴컨텐츠4</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>루틴링크4</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-lg-3">
-                                <div class="card">
-                                    <img class="routine-img " src="assets/images/hand.jpg" alt="">
-                                    <div class="card-body">
-                                        <h5 class="card-title">비동기로 계속 뿌려보자</h5>
-                                        <p class="card-text">비동기로 계속 뿌려보자</p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <p class="card-text d-inline">
-                                        </p><a href="#" class="card-link float-right"><small>비동기로 계속 뿌려보자</small></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            
+		<div class="content">
+
+
+			<div class="row">
+				<div class="col-12">
+					<h4 class="d-inline">가장 인기있는 루틴</h4>
+					<p class="text-muted">날짜</p>
+					<hr>
+					<div class="row">
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<img class="routine-img " src="assets/images/hand.jpg" alt="">
+								<div class="card-body">
+									<h5 class="card-title">루틴이름1</h5>
+									<p class="card-text">루틴컨텐츠1일부러컨텐츠를 길게써보자일부러컨텐츠를
+										길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를
+										길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를
+										길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를
+										길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를 길게써보자일부러컨텐츠를
+										길게써보자일부러컨텐츠를 길게써보자</p>
+								</div>
+								<div class="card-footer">
+									<p class="card-text d-inline"></p>
+									<a href="#" class="card-link float-right"><small>루틴링크1</small></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<img class="routine-img " src="assets/images/hand.jpg" alt="">
+								<div class="card-body">
+									<h5 class="card-title">루틴이름2</h5>
+									<p class="card-text">루틴컨텐츠2</p>
+								</div>
+								<div class="card-footer">
+									<p class="card-text d-inline"></p>
+									<a href="#" class="card-link float-right"><small>루틴링크2</small></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<img class="routine-img " src="assets/images/profile.jpg" alt="">
+								<div class="card-body">
+									<h5 class="card-title">루틴이름3</h5>
+									<p class="card-text">루틴컨텐츠3</p>
+								</div>
+								<div class="card-footer">
+									<p class="card-text d-inline"></p>
+									<a href="#" class="card-link float-right"><small>루틴링크3</small></a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-3">
+							<div class="card">
+								<img class="routine-img " src="assets/images/dkdk.gif" alt="">
+								<div class="card-body">
+									<h5 class="card-title">루틴이름4</h5>
+									<p class="card-text">루틴컨텐츠4</p>
+								</div>
+								<div class="card-footer">
+									<p class="card-text d-inline"></p>
+									<a href="#" class="card-link float-right"><small>루틴링크4</small></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<hr>
+			<!-- 오늘의 루틴 -->
+			<div class="row">
+				<div class="col-12">
+					<h4 class="d-inline">오늘의 루틴</h4>
+					<p class="text-muted">날짜</p>
+					<hr>
+				</div>
+			</div>
+			<!-- 핀터레스트 -->
+			
+			<!-- masonry -->
+			<!-- 살려놈 -->
+			<div class="row">
+				<div class="col-md-6 col-lg-3">
+					<div class="card">
+						<img class="routine-img " src="assets/images/profile.jpg" alt="">
+						<div class="card-body">
+							<h5 class="card-title">루틴이름1</h5>
+							<p class="card-text">루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1루틴컨텐츠1</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text d-inline"></p>
+							<a href="#" class="card-link float-right"><small>루틴링크1</small></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="card">
+						<img class="routine-img " src="assets/images/dkdk.gif" alt="">
+						<div class="card-body">
+							<h5 class="card-title">루틴이름2</h5>
+							<p class="card-text">루틴컨텐츠2</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text d-inline"></p>
+							<a href="#" class="card-link float-right"><small>루틴링크2</small></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="card">
+						<img class="routine-img " src="assets/images/dkdk.gif" alt="">
+						<div class="card-body">
+							<h5 class="card-title">루틴이름2</h5>
+							<p class="card-text">루틴컨텐츠2</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text d-inline"></p>
+							<a href="#" class="card-link float-right"><small>루틴링크2</small></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="card">
+						<img class="routine-img " src="assets/images/dkdk.gif" alt="">
+						<div class="card-body">
+							<h5 class="card-title">루틴이름2</h5>
+							<p class="card-text">루틴컨텐츠2</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text d-inline"></p>
+							<a href="#" class="card-link float-right"><small>루틴링크2</small></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 col-lg-3">
+					<div class="card">
+						<img class="routine-img " src="assets/images/dkdk.gif" alt="">
+						<div class="card-body">
+							<h5 class="card-title">루틴이름2</h5>
+							<p class="card-text">루틴컨텐츠2</p>
+						</div>
+						<div class="card-footer">
+							<p class="card-text d-inline"></p>
+							<a href="#" class="card-link float-right"><small>루틴링크2</small></a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 
 	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<!-- masonry 스크립트 -->
+	
 </body>
 </html>
