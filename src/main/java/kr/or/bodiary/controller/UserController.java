@@ -50,6 +50,11 @@ public class UserController {
 		return "myBodiaryDetail";
 	}
 	
+	@RequestMapping("/myBodiaryEdit.html")
+	public String myBodiaryEdit() {
+		return "myBodiaryEdit";
+	}
+	
 	/*
 	 * @GetMapping("/login") public String
 	 */
