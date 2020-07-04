@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div class="bodiary-wrapper">
+
+
+		<!-- 글 상세정보 시작 -->
+		<div class="content mt-4">
+
+			<div class="card">
+
+				<div class="card-body">
+					<div class="row">
+						<div class="col-11">
+							<span class="card-text text-primary">팁</span>
+							<h2 class="mt-2">개꿀팁임다</h2>
+							<p class="card-text">
+								<i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03 11:23
+							</p>
+							<p class="card-text">
+								<i class="icon-eye"></i>&nbsp;&nbsp;5
+							</p>
+						</div>
+						<div class="col">
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+
+
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">수정</a> <a
+										class="dropdown-item" href="#">삭제</a>
+
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+					<hr>
+					<div class="contentFBD">
+						<img class="img-fluid" src="assets/images/imgs/1.png" alt="">
+						<p class="mt-3">밥은 맛있게 먹으면 0칼로리임ㅋㅋ 모르는 사람들 많을듯?</p>
+					</div>
+
+
+					<hr>
+					<div class="row">
+
+
+						<div class="col mt-2">
+							<span class="card-text"> <i class="icon-bubble"></i>&nbsp;&nbsp;댓글
+								5
+							</span>
+						</div>
+						<div class="col-9"></div>
+
+
+
+						<div class="col">
+							<button type="button" onclick="location.href='freeBrdList'"
+								class="btn btn-outline-primary">글 목록</button>
+						</div>
+
+					</div>
+
+
+					<!-- 댓글 시작 -->
+					<hr>
+					<div class="mt-4 mb-4">
+						<div class="row">
+							<div class="col-11">
+								<b>익명 1</b> &nbsp;<span class="badge badge-pill badge-info">&nbsp;작성자&nbsp;</span>&nbsp;
+								<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
+									11:23</span> <span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
+							</div>
+
+							<!-- 수정, 삭제, 신고 드롭다운 -->
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">수정</a> <a
+										class="dropdown-item" href="#">삭제</a>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="mt-3">꿀팁감사</div>
+
+
+					</div>
+
+					<div class="mt-4 pl-5 mb-4">
+						<div class="row">
+							<div class="col-11">
+								<i class="mdi mdi-subdirectory-arrow-right"></i>&nbsp;&nbsp;<b>익명
+									2</b> &nbsp;&nbsp;<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
+									11:23</span>
+							</div>
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">신고</a>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="mt-3">ㅋㅋ뭐하냐?</div>
+
+
+					</div>
+
+					<hr>
+					<div class="mt-4 mb-4">
+						<div class="row">
+							<div class="col-11">
+								<b>익명 3</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
+									11:23</span>
+							</div>
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">신고</a>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="mt-3">개소리ㅋㅋ</div>
+
+
+					</div>
+					<hr>
+					<div class="mt-4 mb-4">
+						<div class="row">
+							<div class="col-11">
+								<b>익명 4</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
+									11:23</span>
+							</div>
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">신고</a>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="mt-3">꿀팁감사</div>
+					</div>
+
+					<hr>
+					<div class="mt-4 mb-4">
+						<div class="row">
+							<div class="col-11">
+								<b>익명 5</b> &nbsp;&nbsp;<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
+									11:23</span>
+							</div>
+							<div class="user-img c-pointer position-relative"
+								data-toggle="dropdown">
+								<span class="activity active"></span> <i
+									class="icon-options-vertical"></i>
+							</div>
+							<div class="basic-dropdown">
+
+
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="#">신고</a>
+
+								</div>
+
+							</div>
+						</div>
+						<div class="mt-3">꿀팁감사</div>
+
+
+					</div>
+
+					<hr>
+
+					<!-- 댓글 쓰기 -->
+
+					<div class="commentFB basic-form mt-5 p-2">
+						<div>
+							<form>
+								<div class="form-group">
+
+
+									<textarea class="textFB form-control h-50px" rows="3"
+										id="comment"></textarea>
+
+
+								</div>
+								<div class="row">
+									<div class="col-11"></div>
+									<button type="submit" class="btn mb-1 btn-outline-light">등록</button>
+								</div>
+							</form>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

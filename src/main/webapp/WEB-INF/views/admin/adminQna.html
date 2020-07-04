@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<style>
+#table {
+	background-color: white;
+	/* position:absolute;
+ height:300px;
+ width:400px;
+ margin:-150px 0px 0px -200px;
+ top: 50%;
+ left: 50%;
+ padding: 5px; */
+}
+
+.pagination {
+	justify-content: center;
+	margin-top: 31px;
+}
+
+#adminok, #adminnook {
+	margin-left: 15px;
+}
+
+input[type=checkbox]{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border: 2px solid #bcbcbc;
+	cursor: pointer;
+	margin-left: 10px;
+}
+
+hr{
+	margin-top:8px;
+}
+
+.dropdown-menu{
+padding:20px;
+height: 250px; 
+width: 300px;
+}
+</style>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav"
+					th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+
+			<div class="col mr-5">
+				<div class="card pt-2 pb-2 pl-4">운영자 문의/신고 게시판</div>
+
+
+				<div class="basic-dropdown"
+					style="margin-bottom: 20px; margin-left: 0px;">
+
+					
+						<div class="dropdown" >
+							<button type="button" class="btn btn-primary dropdown-toggle"
+								data-toggle="dropdown">선택</button>
+							<div class="dropdown-menu" style="background-color:white; ">
+							<b>게시글 유형</b>	<hr>
+								<input type="checkbox" id="checkbox">문의
+								<input type="checkbox" id="checkbox">신고 <br><br>
+							<b>답변/처리 여부</b>	<hr>
+								<input type="checkbox" id="checkbox">완료
+								<input type="checkbox" id="checkbox">미확인	
+								<input type="checkbox" id="checkbox">확인	
+								<br><br>
+								<button type="button" class="btn mb-1 btn-info">선택</button>
+							</div>
+						</div>
+					
+				</div>
+
+
+
+				<div class="card pt-2 pb-2 pl-4">
+					<div id="table" class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th>순번</th>
+									<th>제목</th>
+									<th>답변/처리 여부</th>
+									<th>작성일</th>
+									<th>조회수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th>3</th>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
+											class="badge badge-success px-2">문의</span>
+									</a></td>
+									<td>완료</td>
+									<td>January 22</td>
+
+
+								</tr>
+								<tr>
+									<th>2</th>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
+											class="badge badge-danger px-2">신고</span>
+									</a></td>
+									<td>미확인</td>
+									<td>January 30</td>
+
+
+								</tr>
+								<tr>
+									<th>1</th>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
+											class="badge badge-success px-2">문의</span>
+									</a></td>
+									<td>확인</td>
+									<td>January 25</td>
+
+
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+
+				<div class="pagination">
+					<nav>
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Previous"><span aria-hidden="true">&laquo;</span>
+									<span class="sr-only">Previous</span></a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Next"><span aria-hidden="true">&raquo;</span> <span
+									class="sr-only">Next</span></a></li>
+						</ul>
+					</nav>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

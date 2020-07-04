@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div style="height:70px;"></div>
+	<!-- 공통 sidenav -->
+	<div class="row mt-4">
+	<nav class="col-3 ml-3 mr-0 sidenav">
+		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+		</aside>
+	</nav>
+	
+		<!--  목표세우기   -->
+		<div class="bodiary-wrapper">
+		
+		<div class="col mr-5">
+			<div class="card">
+                         <div class="card-body">                      
+                                <div class="basic-form">
+                                    <form>
+                                    
+                                  	  <!-- 목표제목 -->
+                                        <div class="form-group row">
+                                            <div class="col-sm col-md col-lg">
+                                            	
+                                            	<label class="m-t-30">새로운 목표 타이틀</label>
+                                                <input type="email" class="form-control" placeholder="GOAL_TITLE">
+                                            </div>                                         
+                                        </div>
+                                        
+                                       
+                                      <!-- 기간선택하기,루틴선택 -->   
+                                        <div class="form-group row">
+                                        			                                   
+		                                   <div class="col-sm-6">
+                                            	<label class="m-t-30">기간 선택하기</label>
+                                               	<input class="form-control input-daterange-datepicker" type="text" name="daterange" value="01/01/2015 - 01/31/2015">
+                                            </div> 
+                                            
+		                               
+		                                   <div class="col-sm-6">	
+		                                   			 <label class="m-t-30">루틴 선택</label>
+		                                    		  <div class="bootstrap-modal">
+							                                 <!-- Modal -->
+							                                 <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+							                                     <div class="modal-dialog modal-dialog-centered" role="document">
+							                                         <div class="modal-content">
+							                                             <div class="modal-header">
+							                                                 <select class="form-control" id="sel1">
+								                                                <option>1번 루틴</option>
+								                                                <option>2번 루틴</option>
+								                                                <option>3번 루틴</option>
+								                                                <option>4번 루틴</option>
+								                                            </select>
+							                                             </div>
+							                                             <div class="modal-body">
+							                                             	<div class="row">
+							                                             		<div class="col-6 mb-2">
+							                                             			 <h3>유산소 운동</h3>
+							                                             			 <div class="basic-list-group">
+													                                    <ul class="list-group">
+													                                        <li class="list-group-item list-group-item-info">걷기        30분</li>
+													                                        <li class="list-group-item list-group-item-info">로드사이클 1시간</li>
+													                                        <li class="list-group-item list-group-item-info">달리기 1시간</li>								
+													                                    </ul>
+													                                </div>
+																				</div>	
+																				<div class="col-6 mb-2">
+																					 <h3>무산소 운동</h3>
+																					 <div class="basic-list-group">
+													                                    <ul class="list-group">
+													                                        <li class="list-group-item list-group-item-secondary">레그레이즈 30회 3세트</li>
+													                                        <li class="list-group-item list-group-item-secondary">벤치프레스 50회 2세트</li>
+													                                        <li class="list-group-item list-group-item-secondary">스쿼트 100회 3세트</li>
+													                                        <li class="list-group-item list-group-item-secondary">아령들기 100회 5세트</li>
+													                                        <li class="list-group-item list-group-item-secondary">풀업 2020회 1세트</li>										
+													                                    </ul>
+													                                </div>
+																				</div>	
+							                                             	</div>	
+							                                                
+							                                             </div>
+							                                             <div class="modal-footer">
+							                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="location.href='myHistoryDetail?seq=1'">루틴선택</button>
+							                                                 <button type="button" class="btn btn-primary">취소</button>
+							                                             </div>
+							                                         </div>
+							                                     </div>
+							                                 </div>
+							                           </div>		   
+		                                        <div class="basic-dropdown">
+					                                    
+				                                        <button id="RoutineSelectTitle" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" 
+				                                        aria-expanded="false" style="width:100%;">루틴 선택하기
+				                                        </button>
+				                                        <div class="dropdown-menu" x-placement="right-start" style="position: absolute; 
+				                                        transform: translate3d(166px, 0px, 0px); top: 0px; left: 0px; will-change: transform; width:94%;">
+					                                        
+					                                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">
+						                  						<!-- 기존 루틴 선택하기를 누르면 내가 이전까지 만들었던 루틴리스트들을 선택해서 볼수있음 -->
+								                                                                       기존 루틴 선택하기           
+					                                   		</a> 
+					                                   		<a class="dropdown-item" href="#" >
+					                                   			<!-- 클릭시 루틴만들기 페이지로 이동 -->
+					                                   			나만의 루틴만들기
+					                                        </a> 
+				                                        </div>
+				                                </div>        
+						                   </div>          
+                                  	   </div>
+                                  	  <!-- 기간선택,루틴선택 END -->
+                                  	  
+                                  	  
+                                  	 	<!-- 칼로리 컨트롤 -->
+                                  	 	<div class="form-group row">
+                                        	<div class="col-sm-4">         
+                                        		<label class="m-t-30">칼로리 컨트롤</label>                            		
+			                                        <div style="margin-bottom: 10px;">
+			                                       		<button type="button" class="btn btn-primary" style="width:100%;">쉬움</button>
+			                                        </div>
+			                                        <div style="margin-bottom: 10px;">
+			                                       		<button type="button" class="btn btn-primary" style="width:100%;">보통</button>
+			                                        </div>
+			                                        <div>
+			                                       		<button type="button" class="btn btn-primary" style="width:100%;">어려움</button>
+			                                        </div>			                                    
+			                                 </div>			                                 
+			                                 <div class="col-sm-8">     			                                        
+				                                    <div class="card">
+					                                    <div class="card-body" style="background-color:#ffffff">			                                       
+					                                        <p class="card-text">
+					                                  		    기초 대사량보다 적은 칼로리 섭취를 기준으로 합니다. 이제 숨만 쉬어도 살은 빠져야 해요.
+					                                        </p>
+					                                         <p class="card-text">
+					                                  		    ※ 단, 자신의 건강 및 질병을 고려하여 진행하세요. 바디로그는 건강한 운동문화를 지향합니다.
+					                                        </p>
+					                                    </div>
+					                                </div>				                                
+					                           </div>                                     
+                                        </div>
+                                  	 	<!-- 칼로리 컨트롤 END-->
+                                  	 
+                                        <div class="form-group row">
+                                        	                              	
+                                            <div class="col" align="center">
+                                                <button type="submit" class="btn btn-primary" id="Goal_Ts">취소</button>
+                                                <button type="submit" class="btn btn-primary">등록하기</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- <div class="basic-form"> END -->
+                            </div>
+                            	<!-- <div class="card-body"> END -->
+                        </div>
+							<!-- <div class="card"> END -->
+		</div>
+	</div>
+		
+	</div>
+	<!-- 기본 폼 완성 -->
+	
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	
+</body>
+</html>
+
+
+
+

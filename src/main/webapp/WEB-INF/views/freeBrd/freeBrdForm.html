@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+
+
+
+	<div class="bodiary-wrapper">
+
+
+		<!-- 글쓰기 폼 시작 -->
+		<div class="content mt-4">
+
+			<div class="card">
+				<form action="freeBrdDetail">
+					<!-- 카테고리 선택 드롭다운 -->
+					<div class="dropdown custom-dropdown pl-4 mt-4">
+						<button type="button" class="btn btn-sm btn-outline-primary"
+							data-toggle="dropdown">
+							&nbsp;카테고리&nbsp;<i class="fa fa-angle-down m-l-5"></i>
+						</button>
+						<div class="dropdown-menu dropdown-menu-right">
+							<a class="dropdown-item" href="#">자유게시판</a> <a
+								class="dropdown-item" href="#">질문게시판</a> <a
+								class="dropdown-item" href="#">팁게시판</a>
+						</div>
+					</div>
+					<div class="row">
+						<!-- 제목 -->
+						<div class="col-11">
+							<div class="mb-3 pl-4 mt-2">
+								
+								<input type="text" id="title" name="title" class="form-control"
+									placeholder="제목을 입력하세요">
+							</div>
+						</div>
+						<div></div>
+					</div>
+					<!-- 썸머노트 -->
+					<div class="card-body">
+						<div class="summernote">
+							<h3>Default Summernote</h3>
+						</div>
+
+
+			
+						<hr>
+						<div class="mt-4 text-center">
+						<button type="button" onclick="location.href='freeBrdList'" class="btn btn-outline-primary">취소</button>
+							<button type="submit" class="btn btn-primary">등록</button>
+							
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+
+		</div>
+	</div>
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

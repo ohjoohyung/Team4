@@ -2,10 +2,10 @@ package kr.or.bodiary.food.dao;
 
 import java.sql.SQLException;
 
-import kr.or.bodiary.chat.dto.User;
+import kr.or.bodiary.chat.dto.NotYet;
 
 
 public interface FoodDao {
-	public User getUser(String id) throws ClassNotFoundException, SQLException;
+	public NotYet getUser(String id) throws ClassNotFoundException, SQLException;
 
 }

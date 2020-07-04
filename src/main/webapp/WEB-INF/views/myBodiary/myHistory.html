@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div style="height:70px;"></div>
+	<!-- 공통 sidenav -->
+	<div class="row mt-4">
+		<nav class="col-3 ml-3 mr-0 sidenav">
+			<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+			</aside>
+		</nav>
+		
+				<!-- MyHistory(내가쓴글/댓글) -->
+		<div class="col mr-5">
+				<div class="card">
+					<div class="card-body">
+	                                <ul class="nav nav-pills mb-3">
+	                                    <li class="nav-item"><a href="#navpills-1" class="nav-link active show" data-toggle="tab" aria-expanded="false">자유게시판</a>
+	                                    </li>
+	                                    <li class="nav-item"><a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">루틴자랑 게시판</a>
+	                                    </li>
+	                                </ul>
+	                                
+	                                <div class="tab-content br-n pn">
+	                                	<!--자유게시판(내가쓴글/댓글)  -->
+	                                    <div id="navpills-1" class="tab-pane active show">
+	                                    	<!-- 자유게시판 내가 쓴글 -->
+		                                       <div class="table-responsive">
+		                                       		<div>
+		                                       			<label class="m-t-30">내가 쓴 글</label>
+		                                       			<div style="display:inline;" align="right">
+			                                       			<select>
+			                                       				<option>10개씩 보기</option>
+			                                       				<option>20개씩 보기</option>
+			                                       				<option>30개씩 보기</option>
+			                                       			</select>
+			                                       		</div>
+		                          
+		                                       		</div>
+				                                    <table class="table table-hover">
+				                                        <thead class="table-info">
+				                                            <tr>
+				                                                <th >글번호</th>
+				                                                <th>제목</th>
+				                                                <th >작성일</th>
+				                                                <th >신고수</th>
+																<th >카테고리</th>	
+																<th >수정</th>
+																<th >삭제</th>		
+				                                            </tr>
+				                                        </thead>
+				                                        <tbody>
+				                                            <tr>
+				                                                <th>1</th>
+				                                                <td><a href="myHistoryDetail?seq=1">줄넘기하는 팁드림</a></td>
+				                                                <td>2080-07-02</td>
+				                                                <td>80</td>	
+				                                                <td>팁</td>
+				                                                <td><i class="fa fa-pencil color-muted m-r-5"></i></td>	
+                                                   				<td><i class="ti-close m-r-5 f-s-12"></i></td>
+                                                      
+				                                            </tr>
+				                                            <tr>
+				                                                <th>2</th>
+				                                                <td><a href="myHistoryDetail?seq=2">자전거타는 일상</a></td>
+				                                                <td>2080-07-01</td>
+				                                                <td>20</td>	
+				                                                <td>자유</td>		
+				                                                <td><i class="fa fa-pencil color-muted m-r-5"></i></td>	
+                                                   				<td><i class="ti-close m-r-5 f-s-12"></i></td>
+				                                            </tr>
+				                                             <tr>
+				                                                <th>3</th>
+				                                                <td><a href="myHistoryDetail?seq=2">다이어트를 어떻게 해야하나요?</a></td>
+				                                                <td>2080-06-29</td>
+				                                                <td>30</td>	
+				                                                <td>궁금</td>		
+				                                                <td><i class="fa fa-pencil color-muted m-r-5"></i></td>	
+                                                   				<td><i class="ti-close m-r-5 f-s-12"></i></td>
+				                                            </tr>
+				                                        </tbody>
+				                                    </table>
+		                                		</div>
+	                                         <div class="bootstrap-pagination">
+			                                    <nav>
+			                                        <ul class="pagination justify-content-center">
+			                                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a>
+			                                            </li>
+			                                            <li class="page-item"><a class="page-link" href="#">1</a>
+			                                            </li>
+			                                            <li class="page-item"><a class="page-link" href="#">2</a>
+			                                            </li>
+			                                            <li class="page-item"><a class="page-link" href="#">3</a>
+			                                            </li>
+			                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+			                                            </li>
+			                                        </ul>
+			                                    </nav>
+			                                </div>
+	                                		
+	                                		 <!-- 자유게시판 내가 단 댓글 -->
+		                                <div class="table-responsive" id="myHistory_comment">
+		                                	<label class="m-t-30">내가 쓴 댓글</label>
+		                                	
+		                                    <table class="table table-hover">
+		                                        <thead class="table-info">
+		                                            <tr>
+		                                                <th >댓글</th>
+		                                                <th >작성일</th>           	
+		                                            </tr>
+		                                        </thead>
+		                                        <tbody>
+		                                            <tr>	
+		                                            
+		                                            	<td>
+		                                            	<!-- 댓글이 너무길면 모달창으로 보여주도록함 (댓글을 삭제만 가능할껀지 수정도가능하게 할껀지??) --> 
+		                                                <div class="bootstrap-modal">
+							                                 <!-- Button trigger modal -->
+							                                 <h5 data-toggle="modal" data-target="#exampleModalCenter">자유영 할시 팁에 대해서...</h5>
+							                                 <!-- Modal -->
+							                                 <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+							                                     <div class="modal-dialog modal-dialog-centered" role="document">
+							                                         <div class="modal-content">
+							                                             <div class="modal-header">
+							                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
+							                                                 </button>
+							                                             </div>
+							                                             <div class="modal-body">
+							                                                 <p>자유영 할시 팁에 대해서...첫번째로, 손끝으로부터 물속으로 들어가 물을 잡아 당길때에는 물을 최대한 많이 담아 밀어서 최대 추진력을 얻을수 있도록 손바닥의 방향을 신경써주세요</p>
+							                                             </div>
+							                                             <div class="modal-footer">
+							                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="location.href='myHistoryDetail?seq=1'">원본글 보러가기</button>						  
+							                                             </div>
+							                                         </div>
+							                                     </div>
+							                                 </div>
+							                             </div>
+							                             </td>
+							                             <td>2080-07-02</td>                              
+		                                            </tr>
+		                                            <tr>		                                  
+		                                                <td ><h5>줄넘기하는 팁드림</h5></td>
+		                                                <td >2080-07-02</td>	  
+		                                            </tr>
+		                                            
+		                                        </tbody>
+		                                    </table>
+                                		</div>
+                                		<div class="bootstrap-pagination">
+		                                    <nav>
+		                                        <ul class="pagination justify-content-center">
+		                                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a>
+		                                            </li>
+		                                            <li class="page-item"><a class="page-link" href="#">1</a>
+		                                            </li>
+		                                            <li class="page-item"><a class="page-link" href="#">2</a>
+		                                            </li>
+		                                            <li class="page-item"><a class="page-link" href="#">3</a>
+		                                            </li>
+		                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+		                                            </li>
+		                                        </ul>
+		                                    </nav>
+		                                </div>
+                                    </div>   
+	                                    
+	                               <!--루틴 자랑 게시판(내가쓴글/댓글)  -->
+	                            <div id="navpills-2" class="tab-pane">
+	                                    
+	                               <div class="row">
+	                                  <!-- 루틴 자랑게시판 댓글////////////////////  -->	
+	                                   <div class="col-8">
+	                                      <div class="table-responsive" id="myHistory_comment">
+	                                       
+		                                    <table class="table table-hover">
+		                                        <thead class="table-info">
+		                                            <tr>
+		                                                <th >댓글</th>
+		                                                <th >작성일</th>           	
+		                                            </tr>
+		                                        </thead>
+		                                        <tbody>
+		                                            <tr>	
+		                                            
+		                                            	<td>
+		                                            	
+		                                            	<!-- 댓글이 너무길면 모달창으로 보여주도록함 (댓글을 삭제만 가능할껀지 수정도가능하게 할껀지??) --> 
+		                                                <div class="bootstrap-modal">
+							                                 <!-- Button trigger modal -->
+							                                 <h5>좋은 영감....</h5>
+							                                 <!-- Modal -->
+							                                 <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+							                                     <div class="modal-dialog modal-dialog-centered" role="document">
+							                                         <div class="modal-content">
+							                                             <div class="modal-header">
+							                                                 <h5 class="modal-title">좋은 영감....</h5>
+							                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
+							                                                 </button>
+							                                             </div>
+							                                             <div class="modal-body">
+							                                                 <p>좋은 영감 얻고갑니다....</p>
+							                                             </div>
+							                                             <div class="modal-footer">
+							                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="location.href='myHistoryDetail?seq=1'">원본글 보러가기</button>
+							                                                 <button type="button" class="btn btn-primary">Close</button>
+							                                             </div>
+							                                         </div>
+							                                     </div>
+							                                 </div>
+							                             </div>
+							                             </td>
+							                             <td>2080-07-02</td>                              
+		                                            </tr>
+		                                          
+		                                            
+		                                        </tbody>
+		                                    </table>
+				                                 <div class="bootstrap-pagination">
+				                                    <nav>
+				                                        <ul class="pagination justify-content-center">
+				                                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">1</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">2</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">3</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+				                                            </li>
+				                                        </ul>
+				                                    </nav>
+				                                </div>
+                                		  </div>                              		  		
+                                		</div>
+			                               	
+	                               <!--  <div class="col-8"> END -->
+	                               
+	                                <!--  <div class="col-4">-->
+	                                	 <div class="col-4">
+			                                 <div class="table-responsive" id="myHistory_comment">
+	                                       
+		                                    <table class="table table-hover">
+		                                        <thead class="table-info">
+		                                            <tr>
+		                                                <th >댓글</th>
+		                                                <th >작성일</th>           	
+		                                            </tr>
+		                                        </thead>
+		                                        <tbody>
+		                                            <tr>	
+		                                            	<td><h5>좋은 영감....</h5> </td>
+							                            <td>2080-07-02</td>                              
+		                                            </tr>
+		                                          	 <tr>	
+		                                            	<td><h5>좋은 영감....</h5> </td>
+							                            <td>2080-07-02</td>                              
+		                                            </tr>
+		                                             <tr>	
+		                                            	<td><h5>좋은 영감....</h5> </td>
+							                            <td>2080-07-02</td>                              
+		                                            </tr>
+		                                             <tr>	
+		                                            	<td><h5>좋은 영감....</h5> </td>
+							                            <td>2080-07-02</td>                              
+		                                            </tr>
+		                                             <tr>	
+		                                            	<td><h5>좋은 영감....</h5> </td>
+							                            <td>2080-07-02</td>                              
+		                                            </tr>
+		                                            
+		                                        </tbody>
+		                                    </table>
+                                		  </div>
+                                		  		<div class="bootstrap-pagination">
+				                                    <nav>
+				                                        <ul class="pagination justify-content-center">
+				                                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">1</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">2</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#">3</a>
+				                                            </li>
+				                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+				                                            </li>
+				                                        </ul>
+				                                    </nav>
+				                                </div>
+			                             </div>
+						                            	
+			                          <!--  <div class="col-4"> END --> 
+			                             
+	                                </div>
+	                                <!--  <div class="row">  루틴 자랑게시판 댓글////////////////////-->
+                                		
+                                		
+	                                	<!--////////////////////  -->	     
+                                </div>
+                                <!--<div class="tab-content br-n pn">END-->
+	                                
+	                  </div>
+	                  <!--<div class="card-body"> END  -->
+	                  
+			   </div>
+			   <!--<div class="card"> END  -->		
+		</div>
+		<!--<div class="col mr-5">END  -->
+		
+	</div>
+	<!-- 기본 폼 완성 -->
+	</div>
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>
