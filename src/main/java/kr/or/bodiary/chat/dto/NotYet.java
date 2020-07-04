@@ -1,4 +1,4 @@
-package kr.or.bodiary.myBodiary.dto;
+package kr.or.bodiary.chat.dto;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class User {
+public class NotYet {
 	private String id;
 	private String pwd;
 	/*
