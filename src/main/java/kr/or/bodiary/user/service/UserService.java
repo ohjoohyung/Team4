@@ -1,0 +1,27 @@
+package kr.or.bodiary.user.service;
+
+import java.sql.SQLException;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import kr.or.bodiary.chat.dto.User;
+import kr.or.bodiary.user.dao.UserDao;
+
+
+@Service
+public class UserService {
+	
+private SqlSession sqlsession;
+	
+	@Autowired
+	public void setSqlsession(SqlSession sqlsession) {
+		this.sqlsession = sqlsession;
+	}
+	public User getUser(String id) throws ClassNotFoundException, SQLException {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		System.out.println(userdao.getUser(id));
+		return userdao.getUser(id);
+	}
+}

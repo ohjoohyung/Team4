@@ -6,9 +6,8 @@
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
-	
-	<div class="bodiary-wrapper">
 	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
 	<div class="row mt-4">
 	<nav class="col-3 ml-3 mr-0 sidenav">
 		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
@@ -29,11 +28,11 @@
 				</div>
 			</div>
 			<!--  -->
-			
+			</div>
 		</div>
 	</div>
 	<!-- 기본 폼 완성 -->
-	</div>
+	
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
