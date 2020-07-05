@@ -81,10 +81,7 @@ public class UserController {
 	      return "freeBrd/freeBrdForm";
 	   }
 	   
-	   @RequestMapping("/freeBrdList")
-	   public String freeBrdList() {
-	      return "freeBrd/freeBrdList";
-	   }
+	  
 	
 	
 	
