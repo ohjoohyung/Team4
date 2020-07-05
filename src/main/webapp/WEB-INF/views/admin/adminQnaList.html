@@ -2,7 +2,8 @@
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- 공통 헤더-->
-<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+
 <style>
 #table {
 	background-color: white;
@@ -45,16 +46,11 @@ width: 300px;
 </style>
 <body>
 	<!-- 공통 nav -->
-	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<!-- 공통 sidenav -->
-	<div class="bodiary-wrapper">
-		<div class="row mt-4">
-			<nav class="col-3 ml-3 mr-0 sidenav">
-				<aside id="sidebar" class="js-custom-scroll side-nav"
-					th:replace="common/sidebar :: sidebarFragment"></aside>
-			</nav>
-
-			<div class="col mr-5">
+	<div class="bodiary-wrapper main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+	
+			
+			<div class="content-body p-4">
 				<div class="card pt-2 pb-2 pl-4">운영자 문의/신고 게시판</div>
 
 
@@ -147,13 +143,19 @@ width: 300px;
 					</nav>
 				</div>
 
-
-			</div>
 		</div>
+		 <!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
 	</div>
 	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->
-	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+	
 </body>
 </html>

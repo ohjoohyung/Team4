@@ -2,7 +2,6 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- 공통 헤더 -->
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
-
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
@@ -10,8 +9,7 @@
 	<div class="bodiary-wrapper">
 		<div class="row mt-4">
 			<nav class="col-3 ml-3 mr-0 sidenav">
-				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
-				</aside>
+				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
 			</nav>
 			<!-- myBodiary 내 공통 목표 띠  -->
 			<div class="col mr-5">
@@ -32,7 +30,7 @@
                     <div class="card-body">
                         <h4 class="card-title">ㅇㅇ님!</h4>
                         <p class="card-text">오늘의 일지가 비어있어요. 작성하러 가볼까요?</p>
-                        <a href="myBodiaryForm.html" class="btn btn-primary">작성하러 가기 <i class="icon-note menu-icon"></i></a>                    
+                        <a href="myBodiaryForm" class="btn btn-primary">작성하러 가기 <i class="icon-note menu-icon"></i></a>
                     </div>
                 </div>
             </div>

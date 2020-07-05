@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+
+<body>
+		<!-- 공통 nav -->
+	<div class="bodiary-wrapper main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+	
+			
+			<div class="content-body p-4">
+		<!-- 유저관리 페이지  -->
+				<div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">유저관리</h4>
+                                <div class="row">
+                                
+                                	<div class="col-2">
+	                                    <select class="form-control" id="val-skill" name="val-skill">
+                                              <option value="">10개</option>
+                                              <option value="html">20개</option>
+                                              <option value="css">30개</option>                                        
+                                         </select>
+                                	</div>                               	
+                                	<div class="col-4"></div>
+                                	<div class="col-3">
+                                		<select class="form-control" id="val-skill" name="val-skill">
+                                               <option value="">닉네임</option>
+                                               <option value="html">이메일</option>
+                                         </select>
+                                	</div>
+                                	<div class="col-2">
+                                		 <input type="search" class="form-control" placeholder="Search Dashboard" aria-label="Search Dashboard">
+                                	</div>	 
+                                	<div class="col-1" style="padding:0px;">
+                                		 <i class="mdi mdi-magnify" style="font-size:35px"></i>
+                                	</div>
+                                	
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table header-border">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">이메일</th>
+                                                <th scope="col">비밀번호</th>
+                                                <th scope="col">닉네임</th>
+                                                <th scope="col">성별</th>
+                                                <th scope="col">누적신고수</th>
+                                                <th scope="col">권한수정</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>155@naver.com</th>
+                                                <td>J23123</td>
+                                                <td>G.Bearden</td>
+                                                <td>남</td>
+                                                <td>120</td>
+                                                <td>
+                                                	<div class="bootstrap-modal">
+						                                 <!-- Button trigger modal -->
+						                                 <i class="fa fa-pencil color-muted m-r-5" data-toggle="modal" data-target="#exampleModalCenter"></i>						       
+						                                 <!-- Modal -->
+						                                 <div class="modal fade" id="exampleModalCenter" style="display: none;" aria-hidden="true">
+						                                     <div class="modal-dialog modal-dialog-centered" role="document">
+						                                         <div class="modal-content">
+						                                             <div class="modal-header">
+						                                                 <button type="button" class="close" data-dismiss="modal"><span>×</span>
+						                                                 </button>
+						                                             </div>
+						                                             <div class="modal-body">
+						                                                 <select class="form-control" id="val-skill" name="val-skill">
+								                                              <option value="">권한선택</option>
+								                                              <option value="html">일반유저 권한</option>
+								                                              <option value="html">관리자 권한</option>
+								                                              <option value="html">휴먼유저 권한</option>
+								                                        </select>
+						                                             </div>
+						                                             <div class="modal-footer">
+						                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick="location.href='#'">확인</button>						  
+						                                             </div>
+						                                         </div>
+						                                     </div>
+						                                 </div>
+							                         </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>152@naver.com</th>
+                                                <td>J231223</td>
+                                                <td>A.Bearden</td>
+                                                <td>여</td>
+                                                <td>1200</td>
+                                                <td>
+                                                	<i class="fa fa-pencil color-muted m-r-5"></i>
+                                                </td>
+                                            </tr>                                         
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="bootstrap-pagination">
+                                    <nav>
+                                        <ul class="pagination justify-content-center">
+                                            <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span> <span class="sr-only">Previous</span></a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a>
+                                            </li>
+                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span> <span class="sr-only">Next</span></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                 <!-- <div class="card"> END -->
+			</div>
+			</div>
+		</div>
+		<!-- 유저관리 페이지  END  -->
+		 <!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+	</div>
+	<!-- 기본 폼 완성 -->
+	<!-- 공통 스크립트-->
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+	
+</body>
+</html>

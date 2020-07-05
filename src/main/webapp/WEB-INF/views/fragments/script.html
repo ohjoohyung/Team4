@@ -69,6 +69,13 @@
 
                   }
               });   
+            $('#inputState').change(function() {
+                var state = $('#inputState option:selected').val();
+                console.log("ㅋㅋ : "+state);
+                if(state == "루틴 1") {
+                    $('#basicModal').modal('show');
+                    }
+                });
        });
   
     </script>
