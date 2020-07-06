@@ -52,6 +52,10 @@ public class UserController {
 	   public String freeBrdList() {
 	      return "freeBrd/freeBrdList";
 	   }
+	   @RequestMapping("/deleteAccount")
+	   public String deleteAccount() {
+		   return "user/deleteAccount";
+	   }
 	
 	
 	

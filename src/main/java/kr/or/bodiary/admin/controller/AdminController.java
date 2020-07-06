@@ -22,5 +22,22 @@ public class AdminController {
 	public String adminUserBrdList() {
 		return "admin/adminUserBrdList";
 	}
+	//어드민 운동 CRUD
+	@RequestMapping("/adminExcsDetail")
+	public String adminExcsDetail() {
+		return "admin/adminExcsDetail";
+	}
+	@RequestMapping("/adminExcsEdit")
+	public String adminExcsEdit() {
+		return "admin/adminExcsEdit";
+	}
+	@RequestMapping("/adminExcsForm")
+	public String adminExcsForm() {
+		return "admin/adminExcsForm";
+	}
+	@RequestMapping("/adminExcsList")
+	public String adminExcsList() {
+		return "admin/adminExcsList";
+	}
 
 }

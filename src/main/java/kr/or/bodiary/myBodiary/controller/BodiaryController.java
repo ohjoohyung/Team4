@@ -12,9 +12,13 @@ import kr.or.bodiary.chat.dto.NotYet;
 @Controller
 public class BodiaryController {
 
-	@RequestMapping("/myGoal")
-	public String myGoal() {
-		return "myBodiary/myGoal";
+	@RequestMapping("/myGoalForm")
+	public String myGoalForm() {
+		return "myBodiary/myGoalForm";
+	}
+	@RequestMapping("/myGoalList")
+	public String myGoalList() {
+		return "myBodiary/myGoalList";
 	}
 
 	@RequestMapping("/myHistory")
@@ -94,6 +98,10 @@ public class BodiaryController {
 	@RequestMapping("/myQnaForm")
 	public String getMyQnaForm() {
 		return "myBodiary/myQnaForm";
+	}
+	@RequestMapping("/myRoutineList")
+	public String getMyRoutineList() {
+		return "myBodiary/myRoutineList";
 	}
 
 

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+<body>
+	<!--**********************************
+        Main wrapper start
+    ***********************************-->
+    <div id="main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+
+     <!--**********************************
+            Content body start
+        ***********************************-->
+        <div class="content-body">
+<!-- 뿌려줄 내용 수정하고 페이징 처리도 해야함 -->
+			<div class="card m-4">
+				<div class="card-body">
+					<h2>운동 목록</h2>
+					<div class="table-responsive mt-5">
+                                    <table class="table header-border">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">First Name</th>
+                                                <th scope="col">Last Name</th>
+                                                <th scope="col">User Name</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>1</th>
+                                                <td>Jacklyn</td>
+                                                <td>G.Bearden</td>
+                                                <td>@jacklyn</td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td>Nancy</td>
+                                                <td>J. Daniels</td>
+                                                <td>@daniels</td>
+                                            </tr>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>Betty</td>
+                                                <td>R. Christensen</td>
+                                                <td>@betty</td>
+                                            </tr>
+                                            <tr>
+                                                <th>4</th>
+                                                <td>Lucinda</td>
+                                                <td>D. Sears</td>
+                                                <td>@lucinda</td>
+                                            </tr>
+                                            <tr>
+                                                <th>5</th>
+                                                <td>William</td>
+                                                <td>T. Marks</td>
+                                                <td>@william.marks</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="bootstrap-pagination">
+									<nav>
+										<ul class="pagination justify-content-center">
+											<li class="page-item disabled"><a class="page-link"
+												href="#" tabindex="-1">Previous</a></li>
+											<li class="page-item"><a class="page-link" href="#">1</a>
+											</li>
+											<li class="page-item"><a class="page-link" href="#">2</a>
+											</li>
+											<li class="page-item"><a class="page-link" href="#">3</a>
+											</li>
+											<li class="page-item"><a class="page-link" href="#">Next</a>
+											</li>
+										</ul>
+									</nav>
+								</div>
+						</div>
+				</div>
+		</div>
+		
+		<!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+	</div>
+<!-- 공통 스크립트-->
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+</body>
+</html>
