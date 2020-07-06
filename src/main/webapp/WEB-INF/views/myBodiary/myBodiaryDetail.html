@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더 -->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+			<!-- myBodiary 내 공통 목표 띠  -->
+			<div class="col mr-5">
+				<!-- 목표 인원수 + 목표 설정하기  -->
+				<div class="card card-body pt-0 pb-0 pl-4">
+					<div class="row">
+						<div class="col pl-3 mt-3 mb-2">
+							현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이 목표를 달성하고 있어요!
+						</div>
+						<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
+						<div class="col-1 mt-2 mb-2">
+							<button class="btn btn-primary btn-flat"><i class="mdi mdi-plus"></i></button>
+						</div>
+					</div>
+				</div>
+				<!--  -->
+				
+				<div class="row">
+					<div class="col">
+						<div class="card card-widget">
+							<div class="card-body">
+	                            <h3 class="mt-4">ㅇㅇ님의 목표까지 <span class="text-info">20</span>일!</h3>
+	                            <div class="mt-4">
+	                                <h5><span class="pull-right">&nbsp;&nbsp;10%</span></h5>
+	                    			<div class="progress mb-3" style="height: 10px">
+	                                   <div class="progress-bar bg-primary active progress-bar-striped" style="width: 10%;" role="progressbar"><span class="sr-only"></span>
+	                                   </div>
+	                                </div>                                
+	                			</div>
+	            			</div>
+	            		</div>
+	            	
+	            		<!--  -->
+	            		<div class="row">
+		                    <div class="col-12">
+		                        <div class="card">
+		                            <div class="card-head mt-3">
+		                                <div class="text-center">
+		                                    <h4 class="card-title"><span class="mdi mdi-fire gradient-1-text"></span> 여름대비 하드플랜 2020 ver.</h4>
+		                                </div>
+		                            </div>
+		                            <div class="card-body border-0 bg-transparent">
+		                                <div class="row">
+		                                    <div class="col-6 border-right-1 pt-3">			                            	
+		                                    	<div class="text-center">
+			                                        <h5 class="text-muted mb-3" href="javascript:void()">유산소</h5>
+						                            <h2><span class="text-info">1시간 30분</span></h2>
+					                            </div>
+		                                    </div>
+		                                    <div class="col-6 pt-3">
+		                                    	<div class="text-center">
+			                                    	<h5 class="text-muted mb-3" href="javascript:void()">무산소</h5>
+						                            <div class="row">
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+													</div>
+						                            <div class="row">
+														<div class="col-4">
+															<div class="text">
+																가슴
+															</div>
+														</div>
+														<div class="col-4">
+															<div class="text">
+																등
+															</div>
+														</div>
+														<div class="col-4">
+															<div class="text">
+																팔
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+														<div class="col-4">
+															<h3 class="text"><span class="text-info">20</span>%</h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-4">
+															<div class="text">
+																가슴
+															</div>
+														</div>
+														<div class="col-4">
+															<div class="text">
+																등
+															</div>
+														</div>
+														<div class="col-4">
+															<div class="text">
+																팔
+															</div>
+														</div>															
+													</div>
+					                            </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+                   			</div>
+	            		</div>
+
+						<div class="row">
+							<!-- 사진 start -->
+							<div class="bodiary-img-card col-lg-4 col-sm-12">
+								<div class="card card-body h-100 ">
+									<div class="img-fluid">
+										<div class="bodiary-img">
+											<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+												<img class="img-fluid w-100" src="assets/images/users/healthymealprep.jpg"
+													 style="width :auto; height: auto; transform: translate(-50%, -50%);">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- 사진 end -->
+							
+							<!-- 오늘의 한마디 start -->
+							<div class="col-lg-4 col-sm-6">
+		                        <div class="card h-100 justify-content-center">
+			                        <div class="text-center">
+			                        	<div class="card-header"><span class="float-right display-5 opacity-5"><i class="fa fa-commenting" aria-hidden="true"></i></span></div>
+			                            <div class="card-body">
+			                                <div class="d-inline-block">
+			                                    <p class="text">오늘의 한마디 ㅁㄴㅍㄴㅁ대러매냐ㅓㄹㄹㅇ러ㅠdsfscs귣갸갿ㅜ쇼ㅜ수쇼ㅜ쇼ㅗ쇼ㅗ쇼ㅗ소ㅓㄷㄱ소소고곡소곡속속소ㅗ4ㅗ45ㅗ45ㅗ45ㅗㄱㅎㄷ7ㄳㄷㄱㄷ숟돋ㅎㄷㄱㄱㅈ두지ㅏr햐6ㅏ4ㅑㅑㅓㅓㄷㅎ두ㅐㅑ후댜ㅐㄱㅎㄷㄱㅎㄷㄱㅎ렂디ㅏ허지ㅏ헞디ㅏ허ㅏㅣㅓㅣㅑㅓㅑㅓㅜㄴㅇ라ㅓㅠㄷㄱㅍ슈ㅎㅍㅍㅈㅍㅈㄷㅍㅈㅍㅈㅍㅈㅍㅈㄷㅍㅈㄷㅍㅈㅍㅈㄷㅍ</p>
+			                                </div>
+			                            </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <!-- 오늘의 한마디 end -->
+		                    
+		                    <!-- 오늘의 몸무게 start -->
+		                    <div class="col-lg-4 col-sm-6">
+		                        <div class="card h-100 justify-content-center">
+									<div class="text-center">
+										<div class="card-body">
+											<h2 class="mt-3"><span class="text-info">100</span>&nbsp;kg</h2>
+											<div class="card-footer">
+												<small>Nice, you are doing great!</small>
+											</div>
+										</div>
+			                        </div>
+			                    </div>
+		                    </div>
+		                    <!-- 오늘의 몸무게 end -->
+						</div>
+						
+						<div class="row mt-4">
+							<!-- 오늘의 컨디션 start -->								
+							<div class="col-md-6">
+								<div class="card h-100">
+	                                <h4 class="card-title mt-4 ml-4"><i class="mdi mdi-heart-pulse gradient-3-text" aria-hidden="true"></i> Health Condition</h4>
+                            		<div class="card-body">
+                            			<div class="text-center">
+		                                	<h1><i class="mdi mdi-emoticon-happy gradient-1-text"></i>
+	                                		<i class="mdi mdi-emoticon-neutral"></i>
+		                                	<i class="mdi mdi-emoticon-sad"></i></h1>
+	                                	</div>
+                                	</div>
+								</div>
+							</div>
+		                    <!-- 오늘의 컨디션 end -->
+		                    
+		                    <!-- 오늘 마신 물 start -->
+							<div class="col-md-6">
+								<div class="card h-100">
+									<h4 class="card-title mt-4 ml-4"><i class="fa fa-tint gradient-3-text" aria-hidden="true"></i> Daily Water Intake</h4>
+		                            <div class="card-body">
+		                                <div class="progress" style="height: 10px">
+		                                    <div class="progress-bar bg-success" style="width: 75%;" role="progressbar">75%</div>
+		                                </div>
+		                            </div>
+		                        </div>
+		                    </div>
+		                    <!-- 오늘 마신 물 end -->
+	                    </div>
+	                    
+	                    <!-- 식단 start -->
+	                    <div class="card mt-4">
+	            			<div class="text-center">
+		            			<div class="card-head mt-3">
+		            				<h4 class="text-dark"><span class="mdi mdi-food gradient-3-text"></span> 오늘의 식단</h4>
+		            			</div>
+		            			<div class="row p-3">
+		                            <div class="col-md-6 col-lg-3">
+		                                <div class="col border-right-1">
+		                                    <div class="card-body">
+		                                    	<div class="row">
+													<div class="col-4">
+														<p class="text">음식</p>
+													</div>
+													<div class="col-4">
+														<p class="text">수량</p>
+													</div>
+													<div class="col-4">
+														<p class="text">칼로리</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-6 col-lg-3">
+		                                <div class="col border-right-1">
+		                                    <div class="card-body">
+		                                    	<div class="row">
+													<div class="col-4">
+														<p class="text">음식</p>
+													</div>
+													<div class="col-4">
+														<p class="text">수량</p>
+													</div>
+													<div class="col-4">
+														<p class="text">칼로리</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-6 col-lg-3">
+		                                <div class="col border-right-1">
+		                                    <div class="card-body">
+		                                    	<div class="row">
+													<div class="col-4">
+														<p class="text">음식</p>
+													</div>
+													<div class="col-4">
+														<p class="text">수량</p>
+													</div>
+													<div class="col-4">
+														<p class="text">칼로리</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                            <div class="col-md-6 col-lg-3">
+		                                <div class="col">
+		                                    <div class="card-body">
+		                                    	<div class="row">
+													<div class="col-4">
+														<p class="text">음식</p>
+													</div>
+													<div class="col-4">
+														<p class="text">수량</p>
+													</div>
+													<div class="col-4">
+														<p class="text">칼로리</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-4">
+														<p class="text">샌드위치</p>
+													</div>
+													<div class="col-4">
+														<p class="text">1</p>
+													</div>
+													<div class="col-4">
+														<p class="text">200kcal</p>
+													</div>
+												</div>
+		                                    </div>
+		                                </div>
+		                            </div>
+								</div>
+							</div>
+						</div>
+						<!-- 식단 end -->
+			            		
+						<!--  -->
+		           		<div class="card mt-4">
+		           			<div class="text-center">
+		           				<h4 class="card-title mt-3"><span class="mdi mdi-fire gradient-1-text"></span> 여름대비 하드플랜 2020 ver.</h4>
+		           			</div>
+		            		<div class="row">
+								<div class="col-lg-6">
+									<div class="card h-100">
+			                            <div class="card-body">
+											<div class="text-center">
+			                                	<h4 class="card-title mb-4"><span class="mdi mdi-run gradient-3-text"></span> 유산소</h4>
+				                                <div class="basic-form">
+				                                    <form>
+				                                        <div class="row">
+															<div class="col-4">
+																<p class="text">걷기</p>
+															</div>
+															<div class="col-4">
+																<p class="text">1시간</p>
+															</div>
+															<div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-4">
+																<p class="text">걷기</p>
+															</div>
+															<div class="col-4">
+																<p class="text">1시간</p>
+															</div>
+															<div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div>
+														</div>															
+				                                    </form>
+				                                </div>
+				                            </div>
+										</div>
+			                        </div>
+			                    </div>
+								<div class="col-lg-6">
+									<div class="card h-100">
+			                            <div class="card-body">
+											<div class="text-center">
+			                                	<h4 class="card-title mb-4"><span class="mdi mdi-dumbbell gradient-3-text"></span> 무산소</h4>
+				                                <div class="basic-form">
+				                                    <form>
+				                                        <div class="row">
+															<div class="col-4">
+																<p class="text">걷기</p>
+															</div>
+															<div class="col-4">
+																<p class="text">1시간</p>
+															</div>
+															<div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-4">
+																<p class="text">걷기</p>
+															</div>
+															<div class="col-4">
+																<p class="text">1시간</p>
+															</div>
+															<div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-4">
+																<p class="text">걷기</p>
+															</div>
+															<div class="col-4">
+																<p class="text">1시간</p>
+															</div>
+															<div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div>
+														</div>
+				                                    </form>
+				                                </div>
+				                            </div>
+										</div>
+			                        </div>
+			                    </div>
+							</div>
+						</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+	
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

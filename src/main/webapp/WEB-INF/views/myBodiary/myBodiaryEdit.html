@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더 -->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+			<!-- myBodiary 내 공통 목표 띠  -->
+			<div class="col mr-5">
+				<!-- 목표 인원수 + 목표 설정하기  -->
+				<div class="card card-body pt-0 pb-0 pl-4">
+					<div class="row">
+						<div class="col pl-3 mt-3 mb-2">
+							현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이 목표를 달성하고 있어요!
+						</div>
+						<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
+						<div class="col-1 mt-2 mb-2">
+							<button class="btn btn-primary btn-flat"><i class="mdi mdi-plus"></i></button>
+						</div>
+					</div>
+				</div>
+				<!--  -->				
+				<div class="card">		
+					<div class="d-flex justify-content-center">
+						<div class="card">
+							<div class="card-body">
+								<div class="basic-form">
+									<form>
+										<div class="form-row">
+											<div class="form-group col-md-4">
+						                        <div class="card">
+				                                    <form>
+				                                        <div class="form-group">
+				                                            <input type="file" class="form-control-file">
+				                                        </div>
+				                                    </form>													
+						                        </div>
+						                    </div>	                                          
+											
+											<div class="form-group col-md-4">
+												<label>오늘의 몸무게</label>
+                                            	<input type="text" class="form-control input-default" placeholder="">
+                                        	</div>
+                                        	                                        	
+                                        	<div class="form-group col-md-4">
+												<label>오늘의 컨디션</label>
+                                            	<input type="text" class="form-control input-default" placeholder="">
+                                        	</div>	                                        	
+										</div>
+										
+										<div class="form-group">
+											<label>오늘의 한마디</label>
+											<input type="text" class="form-control input-default" placeholder="">
+										</div>											
+										<div class="form-group">
+											<label>오늘 먹은 음식</label>
+											<input type="search" class="form-control input-default" placeholder="Search">
+										</div>
+										<div class="form-group">
+											<label>오늘의 루틴</label>
+											<select id="inputState" class="form-control input-default">
+												<option selected="selected">루틴 선택하기</option>
+												<option>루틴 1</option>
+												<option>루틴 2</option>
+												<option>루틴 3</option>
+											</select>
+										</div>
+										
+										<div class="row">
+											<div class="form-group col-md-6">
+												<label for="exampleFormControlTextarea1">유산소</label>
+												<textarea class="form-control rounded-0" id="exampleFormControlTextarea1" rows="10"></textarea>
+											</div>
+												
+											<div class="form-group col-md-6">
+												<label for="exampleFormControlTextarea2">무산소</label>
+												<textarea class="form-control rounded-0" id="exampleFormControlTextarea2" rows="10"></textarea>
+											</div>
+										</div>
+										
+										<div class="text-right">
+											<button type="submit" class="btn btn-outline-primary btn-sm">임시저장</button>
+											<a href="myBodiaryDetail.html" class="btn btn-primary btn-sm">확인</a>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>			
+			</div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+	
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

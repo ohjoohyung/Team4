@@ -39,19 +39,74 @@ public class UserController {
 		return "main";
 	}
 	
-	@RequestMapping("/myBodiaryEdit.html")
-	public String myBodiaryEdit() {
-		return "myBodiaryEdit";
+	@RequestMapping("/myBodiaryMain")
+	public String myBodiaryMain() {
+		return "myBodiary/myBodiaryMain";
+	}
+
+	@RequestMapping("/myBodiaryForm")
+	public String myBodiaryForm() {
+		return "myBodiary/myBodiaryForm";
+	}
+
+	@RequestMapping("/myBodiaryDetail")
+	public String myBodiaryDetail() {
+		return "myBodiary/myBodiaryDetail";
 	}
 	
+	@RequestMapping("/myBodiaryEdit")
+	public String myBodiaryEdit() {
+		return "myBodiary/myBodiaryEdit";
+	}
+	
+	@RequestMapping("/myRoutineList")
+	public String myRoutineList() {
+		return "myBodiary/myRoutineList";
+	}
+	
+	@RequestMapping("/routineBrdEdit")
+	   public String getRoutineBrdEdit() {
+	      return "routineBrd/routineBrdEdit";
+	}
+	
+	@RequestMapping("/routineBrdDetail")
+	public String getRoutineBrdDetail() {
+		return "routineBrd/routineBrdDetail";
+	}
+	
+	@RequestMapping("/routineBrdForm")
+	public String getRoutineBrdForm() {
+		return "routineBrd/routineBrdForm";
+	}
+	
+	@RequestMapping("/routineBrdList")
+	public String getRoutineBrdList() {
+		return "routineBrd/routineBrdList";
+	}
+
+	@RequestMapping("/myPageEdit")
+	public String myPageEdit() {
+		return "myBodiary/myPageEdit";
+	}
+	
+	@RequestMapping("/myProfileDetail")
+	public String myProfileDetail() {
+		return "myBodiary/myProfileDetail";
+	}
+	
+	@RequestMapping("/myProfileEdit")
+	public String myProfileEdit() {
+		return "myBodiary/myProfileEdit";
+	}
+	
+	@RequestMapping("/deleteAccount")
+	public String deleteAccount() {
+		return "myBodiary/deleteAccount";
+	}
+	
+	   
 	/*
 	 * @GetMapping("/login") public String
 	 */
-	
-	
-	
-	
-	
-	
 	
 }

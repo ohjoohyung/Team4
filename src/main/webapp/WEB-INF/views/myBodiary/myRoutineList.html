@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+			
+			<div class="col mr-5">
+				<div class="card">
+					<div class="d-flex justify-content-center">
+						<div class="col-lg-10">
+							<!-- 루틴리스트 게시판 start -->
+                            <div class="card-body">
+								<div class="dropdown-button text-right mb-3">
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-light btn-sm dropdown-toggle mb-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">10개씩</button>
+                                        <div class="dropdown-menu">
+	                                        <a class="dropdown-item" href="#">5개씩</a>
+	                                        <a class="dropdown-item" href="#">15개씩</a>
+	                                        <a class="dropdown-item" href="#">20개씩</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>루틴</th>
+                                                <th>Date</th>
+                                                <th>난이도</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th>3</th>
+                                                <td>Kolor Tea Shirt For Man</td>
+                                                <td>2020.07.06</td>
+                                                <td><span class="badge badge-primary px-2">중</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>2</th>
+                                                <td>Kolor Tea Shirt For Women</td>
+                                                <td>2020.07.03</td>
+                                                <td><span class="badge badge-danger px-2">상</span>
+                                                </td>                                                
+                                            </tr>
+                                            <tr>
+                                                <th>1</th>
+                                                <td>Blue Backpack For Baby</td>
+                                                <td>2020.07.01</td>
+                                                <td><span class="badge badge-success px-2">하</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- 루틴리스트 게시판 end -->
+                            <!-- 페이지처리 start -->
+                            <div class="col-lg-12">
+                                <div class="bootstrap-pagination">
+                                    <nav>
+                                        <ul class="pagination pagination-small justify-content-center">
+                                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+                                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#"aria-label="Next"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <!-- 페이지처리 end -->
+                            
+                            <!-- 검색 start -->
+                            <div class="col-lg-12">
+	                            <div class="header-right mb-5">
+				                    <div class="input-group icons">
+					                    <div class="d-flex justify-content-center">
+					                        <input type="search" class="form-control" placeholder="Search" aria-label="Search">
+					                        <div class="drop-down d-md-none">
+												<form action="#">
+													<input type="text" class="form-control" placeholder="Search">
+												</form>
+					                        </div>
+					                    </div>
+				                	</div>
+			                	</div>
+			                </div>
+                			<!-- 검색 end -->
+                        </div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>
