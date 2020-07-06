@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bodiary.freeBrd.dao.FreeBrdDao">
+
+	
+	   <!-- 전체게시글 가져오는 쿼리문 -->
+	   <select id="allFreeBrd"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   				SELECT *
+	   				FROM freeboard					
+	   </select>
+	   
+	  <!-- 게시글 상세보기 쿼리문 -->
+	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   			SELECT * 
+	     		FROM freeboard 
+	     		WHERE free_brd_seq=#{free_brd_seq}								
+	   </select>
+	  
+</mapper>
+
+
+
+

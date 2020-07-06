@@ -1,11 +1,16 @@
 package kr.or.bodiary.freeBrd.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import kr.or.bodiary.chat.dto.NotYet;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 
 
 public interface FreeBrdDao {
-	public NotYet getUser(String id) throws ClassNotFoundException, SQLException;
+	
+	//전체 게시글 가져오기(팁,자유,궁금)
+	public List<FreeBrdDto> allFreeBrd() throws ClassNotFoundException, SQLException;
 
+	//해당 게시글 세부 목록 가져오기 
+	public FreeBrdDto freebrdDetail(String seq) throws ClassNotFoundException, SQLException;
 }
