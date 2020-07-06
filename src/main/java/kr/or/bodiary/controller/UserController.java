@@ -75,6 +75,11 @@ public class UserController {
 	public String b3() {
 		return "noticeForm";
 	}
+	
+	@RequestMapping("/adminReport")
+	public String getAdminReport() {
+		return "admin/adminReport";
+	}
 	/*
 	 * @GetMapping("/login") public String
 	 */

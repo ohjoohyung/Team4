@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<!-- 공통 헤더-->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <style>
 #table {
- background-color:white;
-/* position:absolute;
+	background-color: white;
+	/* position:absolute;
  height:300px;
  width:400px;
  margin:-150px 0px 0px -200px;
@@ -13,31 +14,31 @@
  left: 50%;
  padding: 5px; */
 }
+
 .pagination {
-   justify-content: center;
-   margin-top: 31px;
-}
-.bodiary-wrapper{
-	margin-left:300px;
-	margin-right:300px;	
-}
-#adminok, #adminnook{
-	margin-left: 15px;
+	justify-content: center;
+	margin-top: 31px;
 }
 
+#adminok, #adminnook {
+	margin-left: 15px;
+}
 </style>
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<!-- 공통 sidenav -->
 	<div class="bodiary-wrapper">
-	<div class="row mt-4">
-	
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav"
+					th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
 
-		<div class="col mr-0">
-			<div class="card pt-2 pb-2 pl-4">공지 게시판</div>
-			
-			
+			<div class="col mr-5">
+				<div class="card pt-2 pb-2 pl-4">신고 게시판</div>
+				
+
 <!--//////////////////////////////////////////////////////// 검색설정, 검색창, 검색버튼 - (1) ////////////////////////////////////////////////////////////  -->
 				<div id="searcharea">
 
@@ -47,7 +48,8 @@
 						<button id="btnGroupDrop1" type="button" style="margin-bottom: 3px;"
 							class="btn btn-primary dropdown-toggle" data-toggle="dropdown">검색설정</button>
 						<div class="dropdown-menu">
-							 <a class="dropdown-item" href="#">글제목</a>
+							<a class="dropdown-item" href="#">닉네임</a> <a
+								class="dropdown-item" href="#">글제목</a>
 						</div>
 					</div>
 				<!--************************************************************************* -->
@@ -71,14 +73,17 @@
 
 
 
-<!--////////////////////////////////////////////////////////////////////// 문의 게시판 목록 - (2) ////////////////////////////////////////////////////////////////////////////  -->
-				<div class="card pt-2 pb-2 pl-4">
+<!--//////////////////////////////////////////////////////// 신고 게시판 목록 - (2)////////////////////////////////////////////////////////////  -->
+
+				<div id="report-board" class="card pt-2 pb-2 pl-4">
 					<div id="table" class="table-responsive">
 						<table class="table">
 							<thead>
 								<tr>
 									<th>순번</th>
 									<th>제목</th>
+									<th>닉네임</th>
+									<th>처리여부</th>
 									<th>작성일</th>
 									<th>조회수</th>
 								</tr>
@@ -86,27 +91,27 @@
 							<tbody>
 								<tr>
 									<th>3</th>
-									<td><a href="noticeDetail">Kolor Tea Shirt For Man</a></td>
-
-
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
+									<td></td>
+									<td><span class="badge badge-info px-2">처리완료</span></td>
 									<td>January 22</td>
 
 
 								</tr>
 								<tr>
 									<th>2</th>
-									<td><a href="noticeDetail">Kolor Tea Shirt For Man</a></td>
-
-
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
+									<td></td>
+									<td><span class="badge badge-danger px-2">미확인</span></td>
 									<td>January 30</td>
 
 
 								</tr>
 								<tr>
 									<th>1</th>
-									<td><a href="noticeDetail">Kolor Tea Shirt For Man</a></td>
-
-
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
+									<td></td>
+									<td><span class="badge badge-success px-2">확인</span></td>
 									<td>January 25</td>
 
 
@@ -116,23 +121,14 @@
 
 					</div>
 				</div>
-<!--******************************************************************************** (2) ***********************************************************************************  -->            
-            
 
-
-
-            
-<!--////////////////////////////////////////////////////////////////////////// 공지하기 버튼 - (3) /////////////////////////////////////////////////////////////////////  -->
-				<button type="button" class="btn mb-1 btn-info"
-					style="margin-left: 0px; float: right;"
-					onclick="location.href='noticeForm'">공지하기</button>
-<!--******************************************************************************** (3) ***********************************************************************************  -->
+<!--********************************************************************** (2) **********************************************************************  -->
 
 
 
 
 
-<!--////////////////////////////////////////////////////////////////////////// 페이지 선택 - (4) //////////////////////////////////////////////////////////////////////////////  -->
+<!--////////////////////////////////////////////////////////////////// 페이지 선택 -(3)////////////////////////////////////////////////////////////////////////  -->
 				<div class="pagination">
 					<nav>
 						<ul class="pagination">
@@ -148,11 +144,14 @@
 						</ul>
 					</nav>
 				</div>
-<!--******************************************************************************** (4) *****************************************************************************************  -->			
-			
+<!--********************************************************************** (3) **********************************************************************  -->
+
+
+			</div>
 		</div>
 	</div>
-	</div>
+	
+	
 	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->
