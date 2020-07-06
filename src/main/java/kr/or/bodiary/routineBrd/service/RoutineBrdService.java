@@ -1,13 +1,12 @@
 package kr.or.bodiary.routineBrd.service;
 
-import java.sql.SQLException;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.bodiary.chat.dto.NotYet;
-import kr.or.bodiary.user.dao.UserDao;
+import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
+import kr.or.bodiary.routineBrd.dto.routineBrdDTO;
 
 
 @Service
@@ -19,9 +18,14 @@ private SqlSession sqlsession;
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-	public NotYet getUser(String id) throws ClassNotFoundException, SQLException {
-		UserDao userdao = sqlsession.getMapper(UserDao.class);
-		System.out.println(userdao.getUser(id));
-		return userdao.getUser(id);
+	public int insertRoutineBrd(routineBrdDTO routineBrdDTO){
+		RoutineBrdDao RoutineBrdDao = sqlsession.getMapper(RoutineBrdDao.class);
+		int result = 0;
+		try {
+			result = RoutineBrdDao.insertRoutineBrd(routineBrdDTO);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return result;
 	}
 }
