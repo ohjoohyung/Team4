@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
 	<!-- 공통 헤더-->
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <style>
@@ -22,6 +23,7 @@
 }
 
 </style>
+</head>
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
@@ -40,20 +42,11 @@
 				<div id="searcharea">
 
 
-				<!--//////////////////////////////////// 검색설정 //////////////////////////////  -->
-					<div class="btn-group">
-						<button id="btnGroupDrop1" type="button" style="margin-bottom: 3px;"
-							class="btn btn-primary dropdown-toggle" data-toggle="dropdown">검색설정</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">닉네임</a> <a
-								class="dropdown-item" href="#">글제목</a>
-						</div>
-					</div>
-				<!--************************************************************************* -->
+				
 
 
 				<!--//////////////////////////////////// 검색창 //////////////////////////////  -->
-					<input type="text" id="search" class=" input-default"
+					<input type="text" id="search" class=" input-default" placeholder="글 제목을 검색하세요"
 						style="width: 250px; margin-bottom: 25px; height: 37px; padding-left: 5px;">
 				<!--********************************************************************** -->
 
@@ -77,8 +70,7 @@
 							<thead>
 								<tr>
 									<th>순번</th>
-									<th>제목</th>
-									<th>닉네임</th>
+									<th>제목</th>								
 									<th>답변여부</th>
 									<th>작성일</th>
 									
@@ -87,8 +79,7 @@
 							<tbody>
 								<tr>
 									<th>3</th>
-									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
-									<td></td>
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>								
 									<td><span class="badge badge-info px-2">답변완료</span></td>
 									<td>January 22</td>
 
@@ -96,8 +87,7 @@
 								</tr>
 								<tr>
 									<th>2</th>
-									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
-									<td></td>
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>		
 									<td><span class="badge badge-danger px-2">미확인</span></td>
 									<td>January 30</td>
 
@@ -105,8 +95,7 @@
 								</tr>
 								<tr>
 									<th>1</th>
-									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>
-									<td></td>
+									<td><a href="myQnaDetail">Kolor Tea Shirt For Man</a></td>								
 									<td><span class="badge badge-success px-2">확인</span></td>
 									<td>January 25</td>
 

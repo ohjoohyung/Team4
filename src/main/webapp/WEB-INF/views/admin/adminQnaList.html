@@ -38,11 +38,7 @@ hr{
 	margin-top:8px;
 }
 
-.dropdown-menu{
-padding:20px;
-height: 250px; 
-width: 300px;
-}
+
 </style>
 <body>
 	<!-- 공통 nav -->
@@ -51,41 +47,43 @@ width: 300px;
 	
 			
 			<div class="content-body p-4">
-				<div class="card pt-2 pb-2 pl-4">운영자 문의/신고 게시판</div>
+				<div class="card pt-2 pb-2 pl-4">운영자 문의 게시판</div>
 
 
-				<div class="basic-dropdown"
-					style="margin-bottom: 20px; margin-left: 0px;">
 
 					
-						<div class="dropdown" >
-							<button type="button" class="btn btn-primary dropdown-toggle"
-								data-toggle="dropdown">선택</button>
-							<div class="dropdown-menu" style="background-color:white; ">
-							<b>게시글 유형</b>	<hr>
-								<input type="checkbox" id="checkbox">문의
-								<input type="checkbox" id="checkbox">신고 <br><br>
-							<b>답변/처리 여부</b>	<hr>
-								<input type="checkbox" id="checkbox">완료
-								<input type="checkbox" id="checkbox">미확인	
-								<input type="checkbox" id="checkbox">확인	
-								<br><br>
-								<button type="button" class="btn mb-1 btn-info">선택</button>
+				
+							<button type="button" class="btn btn-primary dropdown-toggle" style="margin-bottom: 2px;"
+								data-toggle="dropdown">답변여부</button>
+							<div class="dropdown-menu" style="background-color:white; ">													
+								<a class="dropdown-item" href="#">완료</a> 
+								<a class="dropdown-item" href="#" id="checkbox">확인</a> 
+								<a class="dropdown-item" href="#" id="checkbox">미확인</a>	
+								
 							</div>
-						</div>
-					
-				</div>
+				
+				
+
+			
+<!--//////////////////////////////////// 검색창 //////////////////////////////  -->
+					<input type="text" id="search" class=" input-default"  
+						style="width: 250px; margin-bottom: 25px; height: 37px; padding-left: 5px;">
+				<!--********************************************************************** -->
 
 
+				<!--//////////////////////////////////// 검색버튼 //////////////////////////////  -->
+					<button type="button" class="btn btn-info" style="margin-bottom: 2px;"
+						 onclick="#">검색</button>
+				<!--********************************************************************** -->
 
-				<div class="card pt-2 pb-2 pl-4">
+			<div class="card pt-2 pb-2 pl-4">
 					<div id="table" class="table-responsive">
 						<table class="table">
 							<thead>
 								<tr>
 									<th>순번</th>
 									<th>제목</th>
-									<th>답변/처리 여부</th>
+									<th>답변 여부</th>
 									<th>작성일</th>
 									<th>조회수</th>
 								</tr>
@@ -93,8 +91,7 @@ width: 300px;
 							<tbody>
 								<tr>
 									<th>3</th>
-									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
-											class="badge badge-success px-2">문의</span>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man 
 									</a></td>
 									<td>완료</td>
 									<td>January 22</td>
@@ -103,8 +100,7 @@ width: 300px;
 								</tr>
 								<tr>
 									<th>2</th>
-									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
-											class="badge badge-danger px-2">신고</span>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man 
 									</a></td>
 									<td>미확인</td>
 									<td>January 30</td>
@@ -113,8 +109,7 @@ width: 300px;
 								</tr>
 								<tr>
 									<th>1</th>
-									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man <span
-											class="badge badge-success px-2">문의</span>
+									<td><a href="adminQnaDetail">Kolor Tea Shirt For Man 
 									</a></td>
 									<td>확인</td>
 									<td>January 25</td>
