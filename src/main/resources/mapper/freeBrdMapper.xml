@@ -18,6 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	     		WHERE free_brd_seq=#{free_brd_seq}								
 	   </select>
 	  
+	  <!-- 게시글 Insert 쿼리문 -->
+	   <select id="freeBrdInsert"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   			INSERT INTO freeboard(free_cat,user_email,free_brd_title,profile_image,free_brd_image,free_brd_content,free_brd_date) 
+	     		VALUES(#{free_cat},'bit155@gmail.com',#{free_brd_title},'profile_a.jpg',#{free_brd_image},#{free_brd_content},NOW())     									
+	   </select>
+
 </mapper>
 
 

@@ -65,6 +65,7 @@ public class FreeBrdController {
 		try {
 					url = freeBrdService.freeBrdFormInsert(n, request, image);
 		}catch (Exception e) {
+					System.out.println("에러발생...");
 				    System.out.println(e.getMessage());
 		}
 		

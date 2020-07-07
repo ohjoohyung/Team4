@@ -13,4 +13,14 @@ public interface FreeBrdDao {
 
 	//해당 게시글 세부 목록 가져오기 
 	public FreeBrdDto freebrdDetail(String seq) throws ClassNotFoundException, SQLException;
+	
+	//게시물 Insert 
+	public Integer freeBrdInsert(FreeBrdDto freeBrdDto) throws ClassNotFoundException, SQLException;
+	
+	//게시물 Insert 
+	//public int freeBrdInsert(FreeBrdDto freeBrdDto) throws ClassNotFoundException, SQLException;
+	// -> Mapper method 'freeBrdInsert' (interface kr.or.bodiary.freeBrd.dao.FreeBrdDao) 
+	//attempted to return null from a method with a primitive return type (int). 이런 에러발생 ?? 왜지??
+	
+	
 }
