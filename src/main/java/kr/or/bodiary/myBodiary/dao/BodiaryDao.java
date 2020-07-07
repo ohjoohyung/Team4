@@ -6,6 +6,7 @@ import java.util.List;
 
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
+import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 
 
 public interface BodiaryDao {
@@ -18,4 +19,9 @@ public interface BodiaryDao {
 	//음식 검색하기
 	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException;
 
+	//식단 장바구니 시퀀스 추가
+	public int insertMealCart(dailyMealDTO dailymealdto) throws ClassNotFoundException, SQLException;
+	
+	//식단 추가
+	public int writeDailyMeal(List<dailyMealDTO> list) throws ClassNotFoundException, SQLException;
 }

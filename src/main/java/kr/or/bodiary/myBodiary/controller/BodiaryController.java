@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
+import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
 import kr.or.bodiary.user.dto.userDTO;
 import kr.or.bodiary.user.service.UserService;
@@ -138,27 +139,32 @@ public class BodiaryController {
 	}
 	
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.POST)
-	public String myBodiaryForm(String[] food_morning, String[] food_lunch, bodiaryDTO bodiarydto, HttpServletRequest request) {
+	public String myBodiaryForm(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		System.out.println("안녕");
-		System.out.println(bodiarydto);
+		System.out.println(bodiarydto.toString());
+		System.out.println(dailymealdto.getDailyMealList().toString());
 		
 		
-		List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
-		HashMap<String, String> map = new HashMap<String, String>();
+		String url = bodiaryservice.writeBodiary(dailymealdto, bodiarydto);
+		
+		
+		/*
+		 * List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
+		 * HashMap<String, String> map = new HashMap<String, String>();
+		 */
 		
 		
 		
 		
 		
-		System.out.println(food_morning[0]);
-		System.out.println(food_lunch[0]);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("morning", food_morning);
-		map.put("lunch", food_lunch);
+		/*
+		 * System.out.println(food_morning[0]); System.out.println(food_lunch[0]);
+		 * HashMap<String, Object> map = new HashMap<String, Object>();
+		 * map.put("morning", food_morning); map.put("lunch", food_lunch);
+		 */
 		
 		
 
-		String url = "";
 		
 		/*
 		 * for(int i = 1; i < 5; i++) { dao(key, value); }
@@ -171,7 +177,7 @@ public class BodiaryController {
 		 * 
 		 * System.out.println(e.getMessage()); }
 		 */
-		return "myBodiary/myBodiaryForm";
+		return url;
 	}
 
 	@RequestMapping("/myBodiaryDetail")

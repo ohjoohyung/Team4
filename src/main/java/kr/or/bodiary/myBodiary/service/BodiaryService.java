@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
+import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.userDTO;
 
@@ -38,6 +40,45 @@ private SqlSession sqlsession;
 		return bodiarydao.foodNameSearch(food_name);
 	}
 	
+	public int insertMealCart(dailyMealDTO dailymealdto) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+	
+		return bodiarydao.insertMealCart(dailymealdto);
+	}
+	
+	public int writeDailyMeal(List<dailyMealDTO> list) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		
+		
+		
+		return bodiarydao.writeDailyMeal(list);
+	}
+	
+	@Transactional
+	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto) {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		try {
+			
+			List<dailyMealDTO> list = dailymealdto.getDailyMealList();
+			bodiarydao.insertMealCart(dailymealdto);
+			
+			for(dailyMealDTO d : list) {
+				d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+			}
+			
+			bodiarydao.writeDailyMeal(list);
+			
+			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+			
+			bodiarydao.writeBodiary(bodiarydto);
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return "myBodiary/myBodiaryDetail";
+	}
 	//유저 정보 가져오기 (나중에 시큐리티 사용하면 어떻게 해야될지 생각)
 	/*
 	 * public userDTO getUser(String user_email) throws ClassNotFoundException,

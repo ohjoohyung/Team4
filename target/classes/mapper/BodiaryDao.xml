@@ -10,22 +10,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select> -->
 	
 	
-	<insert id="insertMealCart">
+	<insert id="insertMealCart" parameterType="kr.or.bodiary.myBodiary.dto.dailyMealDTO" useGeneratedKeys="true" keyProperty="meal_cart_seq">
 		insert into mealcart values()
+		
 	</insert>
 	
+
 	
-	
-	<insert id="writeDailyMeal" parameterType="map">
-		<selectKey order="BEFORE" keyProperty="meal_cart_seq" resultType="String">
-     		select max(meal_cart_seq) from mealcart
-     	</selectKey>
+	<insert id="writeDailyMeal" parameterType="java.util.List">
 		insert into dailymeal(food_seq, meal_seq, meal_cart_seq)
 		values
-     	<foreach collection="list" index="key" item="value" separator=",">
-     		(#{value} , #{key}, #{meal_cart_seq})
+     	<foreach collection="list" item="item" separator=",">
+     		(#{item.food_seq} , #{item.meal_seq}, #{item.meal_cart_seq})
      	</foreach>	
 	</insert>
+	
+	
+	<insert id="writeBodiary" parameterType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq, user_nickname
+, diary_condition, diary_main_img, diary_sub_img1, diary_sub_img2,diary_sub_img3, diary_date, diary_pubchk
+, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
+values (#{meal_cart_seq}, '1@1', 1, #{diary_content}, null, '홍길동', #{diary_condition}, '1.img', null, null, null, now(), 'y', #{diary_today_weight}, 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1')),(((select user_height from user where user_email = '1@1')-100)*0.9)*35,1000)
+	
+	</insert>
+	
 	
 	<select id="foodNameSearch" parameterType="String" resultType="kr.or.bodiary.myBodiary.dto.FoodDto">
 		select food_seq, food_name, food_cal from food where food_name like concat('%', #{food_name}, '%')
