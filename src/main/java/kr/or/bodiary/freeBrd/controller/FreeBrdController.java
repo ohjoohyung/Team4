@@ -1,5 +1,6 @@
 package kr.or.bodiary.freeBrd.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class FreeBrdController {
 	
 	//글쓰기 처리(POST 방식)	
 	@RequestMapping(value="freeBrdForm",method=RequestMethod.POST)
-	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request,MultipartFile image) {
+	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request,MultipartFile image) throws UnsupportedEncodingException {
 		
 		String url="redirect:freeBrd/freeBrdForm";
 	
