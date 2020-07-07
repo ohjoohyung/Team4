@@ -16,30 +16,39 @@
 		<div class="content mt-4">
 
 			<div class="card">
-				<form action="freeBrdDetail">
+				<form action="freeBrdForm" method="post" enctype="multipart/form-data">
 					<!-- 카테고리 선택 드롭다운 -->
-					<div class="dropdown custom-dropdown pl-4 mt-4">
-						<button type="button" class="btn btn-sm btn-outline-primary"
-							data-toggle="dropdown">
-							&nbsp;카테고리&nbsp;<i class="fa fa-angle-down m-l-5"></i>
-						</button>
-						<div class="dropdown-menu dropdown-menu-right">
-							<a class="dropdown-item" href="#">자유게시판</a> <a
-								class="dropdown-item" href="#">질문게시판</a> <a
-								class="dropdown-item" href="#">팁게시판</a>
+					<div class="row">
+						<div class="col-2">
+							<div class="mb-3 pl-4 mt-2">		
+	                            <select class="form-control" name="freeBrdCat">
+								    <option>카테고리</option>
+								    <option value="1">자유게시판</option>
+								    <option value="2">궁금게시판</option>
+								    <option value="3">팁게시판</option>
+								</select>
+							</div>
 						</div>
-					</div>
+					</div>	
 					<div class="row">
 						<!-- 제목 -->
 						<div class="col-11">
 							<div class="mb-3 pl-4 mt-2">
-								
 								<input type="text" id="title" name="title" class="form-control"
 									placeholder="제목을 입력하세요">
-							</div>
+							</div>			
 						</div>
+						
 						<div></div>
 					</div>
+					<!-- 사진 업로드(JPG,PNG,GIF) -->
+					<div class="row">
+						<div class="col-11">
+							<div class="mb-3 pl-4 mt-2">
+	                              <input type="file" id="image" name="image" class="form-control-file">
+	                         </div>
+	                    </div>
+					</div>	                         
 					<!-- 썸머노트 -->
 					<div class="card-body">
 						<div class="summernote">
