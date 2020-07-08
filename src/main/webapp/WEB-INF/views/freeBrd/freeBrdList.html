@@ -112,10 +112,20 @@
 												</p>
 											
 											</div>
-											<div class="col-3" th:if="${list.free_brd_image != null}">	
+											
+											<!-- 해당글의 이미지가 있는경우  -->
+											<div class="col-3" th:if="${list.free_brd_image != null && list.free_brd_image != ''}">	
 												<!-- root경로 webapp 부터 시작(생략) -->
 												 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" style="width:200px;height:150px;"  />																															
 											</div>
+											
+											<!-- 해당글의 이미지가 없는경우  -->
+											<div class="col-3" th:if="${list.free_brd_image == null || list.free_brd_image == ''}">	
+												<!-- root경로 webapp 부터 시작(생략) -->
+												 <div style="width:200px;height:150px;"  ></div>																															
+											</div>																																									
+											
+											
 											<div class="col mt-0 pt-0">
 												<div class="mr-3">
 													<ul>

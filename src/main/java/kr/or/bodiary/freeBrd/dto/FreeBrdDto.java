@@ -10,11 +10,32 @@ public class FreeBrdDto {
 	private int free_cat;
 	private String user_email;
 	private String free_brd_title;
-	private String profile_image;
 	private String free_brd_image;
 	private String free_brd_content;
 	private Date free_brd_date;
 	private int free_brd_report_num;
+	
+	//User 테이블에서 조인해서 얻어온 닉네임
+	private String user_nickname;
+	
+	public String getUser_nickname() {
+		return user_nickname;
+	}
+	public void setUser_nickname(String user_nickname) {
+		this.user_nickname = user_nickname;
+	}
+	
+	//User 테이블에서 조인해서 얻어온 프로필 사진 
+	private String user_img;
+	
+	public String getUser_img() {
+		return user_img;
+	}
+	public void setUser_img(String user_img) {
+		this.user_img = user_img;
+	}
+	
+	
 	
 	public int getFree_brd_seq() {
 		return free_brd_seq;
@@ -39,12 +60,6 @@ public class FreeBrdDto {
 	}
 	public void setFree_brd_title(String free_brd_title) {
 		this.free_brd_title = free_brd_title;
-	}
-	public String getProfile_image() {
-		return profile_image;
-	}
-	public void setProfile_image(String profile_image) {
-		this.profile_image = profile_image;
 	}
 	public String getFree_brd_image() {
 		return free_brd_image;

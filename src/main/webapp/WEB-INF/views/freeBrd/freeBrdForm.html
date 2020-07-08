@@ -24,7 +24,7 @@
 	                            <select class="form-control" name="freeBrdCat">
 								    <option>카테고리</option>
 								    <option value="1">자유게시판</option>
-								    <option value="2">궁금게시판</option>
+								    <option value="2">질문게시판</option>
 								    <option value="3">팁게시판</option>
 								</select>
 							</div>
@@ -52,7 +52,7 @@
 					<!-- 썸머노트 -->
 					<div class="card-body">
 							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
-							 <textarea name="content" style="display: none;"></textarea>
+							 <textarea name="content" style="display: none;" th:text></textarea>
 							 <!-- 썸머노트가 적용되는 부분 -->
 							 <div id="summernote" ></div>					
 						<hr>

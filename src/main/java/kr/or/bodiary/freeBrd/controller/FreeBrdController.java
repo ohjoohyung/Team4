@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 import kr.or.bodiary.freeBrd.service.FreeBrdService;
@@ -58,13 +59,13 @@ public class FreeBrdController {
 	
 	//글쓰기 처리(POST 방식)	
 	@RequestMapping(value="freeBrdForm",method=RequestMethod.POST)
-	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request,MultipartFile image) throws UnsupportedEncodingException {
+	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request,MultipartFile image,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
 		
 		String url="redirect:freeBrd/freeBrdForm";
 	
 		//트랜잭션 처리 .... 코드 수정...... 글쓰기 처리 서비스 호출 
 		try {
-					url = freeBrdService.freeBrdFormInsert(n, request, image);
+					url = freeBrdService.freeBrdFormInsert(n, request, image,redirectAttributes);
 		}catch (Exception e) {
 					System.out.println("에러발생...");
 				    System.out.println(e.getMessage());

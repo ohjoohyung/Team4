@@ -11,19 +11,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   				FROM freeboard					
 	   </select>
 	   
-	  <!-- 게시글 상세보기 쿼리문 -->
+	   <!-- 게시글 상세보기 쿼리문 -->
 	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
-	   			SELECT * 
-	     		FROM freeboard 
-	     		WHERE free_brd_seq=#{free_brd_seq}								
+			    SELECT freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_image,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img
+				FROM freeboard
+				INNER JOIN User
+				ON freeboard.user_email = User.user_email
+				WHERE freeboard.free_brd_seq=#{free_brd_seq}						
 	   </select>
 	  
-	  <!-- 게시글 Insert 쿼리문 -->
+	   <!-- 게시글 Insert 쿼리문 -->
 	   <select id="freeBrdInsert"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
-	   			INSERT INTO freeboard(free_cat,user_email,free_brd_title,profile_image,free_brd_image,free_brd_content,free_brd_date) 
-	     		VALUES(#{free_cat},'bit155@gmail.com',#{free_brd_title},'profile_a.jpg',#{free_brd_image},#{free_brd_content},NOW())     									
+	   			INSERT INTO freeboard(free_cat,user_email,free_brd_title,free_brd_image,free_brd_content,free_brd_date) 
+	     		VALUES(#{free_cat},'bit155@naver.com',#{free_brd_title},#{free_brd_image},#{free_brd_content},NOW())     									
 	   </select>
 
+	   <!-- 글쓰기후 생성된 글번호(가장큰) 가져오기 -->
+	   <select id="afterInsert_SelectDetail"  resultType="int">
+	   				select max(free_brd_seq)
+					from freeboard;			
+	   </select>
+	   
 </mapper>
 
 

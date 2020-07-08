@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
@@ -47,8 +48,13 @@ public class FreeBrdService {
 	public FreeBrdDto freebrdDetail(String seq) {
 		FreeBrdDto freeBrdDto = null;
 		try {
-			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);			
+			
 			freeBrdDto = FreeBrd.freebrdDetail(seq);
+			
+			System.out.println("글내용->"+freeBrdDto.getFree_brd_content());
+			System.out.println("닉네임->"+freeBrdDto.getUser_nickname());
+			System.out.println("프로필 사진->"+freeBrdDto.getUser_img());
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
@@ -57,7 +63,7 @@ public class FreeBrdService {
 	}
 
 	// 글쓰기 처리 서비스 함수
-	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request, MultipartFile image) throws IOException {
+	public String freeBrdFormInsert(FreeBrdDto n, HttpServletRequest request, MultipartFile image,RedirectAttributes redirectAttributes) throws IOException {
 
 		// 업로드한 이미지 이름 얻어오기 ex)a.PNG
 		String imageName = image.getOriginalFilename();
@@ -86,8 +92,14 @@ public class FreeBrdService {
 		n.setFree_cat(Integer.parseInt(request.getParameter("freeBrdCat")));
 		// 글제목
 		n.setFree_brd_title(request.getParameter("title"));
-		// 업로드한 사진이름
-		n.setFree_brd_image(imageName);
+		// 업로드한 사진이름(글쓰기 뷰단에서 이미지를 첨부안하면 "" 공백으로 인식해서 들어옴)
+		if(imageName != null && imageName != "") {
+			System.out.println("업로드한 사진있음");
+			n.setFree_brd_image(imageName);
+		}else {
+			System.out.println("업로드한 사진없음");
+			n.setFree_brd_image(null);
+		}
 		// 글내용
 		n.setFree_brd_content(request.getParameter("content"));
 
@@ -98,15 +110,22 @@ public class FreeBrdService {
 
 		// DB연동해서 클라이언트가 입력한 데이터들을 DB안에 테이블에 넣어주기
 		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		int seq=0;
 		
 		try {
 			FreeBrd.freeBrdInsert(n);
-			System.out.println("게시글 INSERT 완료"); 
+			System.out.println("게시글 INSERT 완료");
+			 
+			//Insert후 맨마지막(가장큰) 글번호를 들고오는 함수 
+			seq = FreeBrd.afterInsert_SelectDetail();
+			System.out.println("글번호 출력"+seq);
 		}catch (Exception e) {
 			System.out.println("게시글 INSERT 문제발생..."+e.getMessage());
 		}
-			
-		return "redirect:freeBrdList";
+
+	    redirectAttributes.addAttribute("seq",seq);
+		 
+		return "redirect:freeBrdDetail";
 	}
 
 }
