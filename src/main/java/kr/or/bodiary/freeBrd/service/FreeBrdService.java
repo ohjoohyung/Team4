@@ -127,6 +127,39 @@ public class FreeBrdService {
 		 
 		return "redirect:freeBrdDetail";
 	}
+	
+	
+	
+	// 글 수정폼 이동 서비스 함수(게시물 상세랑 비슷)
+	public FreeBrdDto freeBrdEdit(String seq) {
+		FreeBrdDto freeBrdDto = null;
+		try {
+			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);			
+			
+			freeBrdDto = FreeBrd.freebrdDetail(seq);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return freeBrdDto;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 }
 

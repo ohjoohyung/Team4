@@ -15,46 +15,68 @@
 		<!-- 글쓰기 폼 시작 -->
 		<div class="content mt-4">
 
-			<div class="card">
-				<form action="freeBrdDetail">
+			<div class="card" th:each="list : ${freeBrdEdit}">
+				<form action="freeBrdEdit" method="post" enctype="multipart/form-data" onsubmit="postForm()">
 					<!-- 카테고리 선택 드롭다운 -->
-					<div class="dropdown custom-dropdown pl-4 mt-4">
-						<button type="button" class="btn btn-sm btn-outline-primary"
-							data-toggle="dropdown">
-							&nbsp;팁게시판&nbsp;<i class="fa fa-angle-down m-l-5"></i>
-						</button>
-						<div class="dropdown-menu dropdown-menu-right">
-							<a class="dropdown-item" href="#">자유게시판</a> <a
-								class="dropdown-item" href="#">질문게시판</a> <a
-								class="dropdown-item" href="#">팁게시판</a>
+					<div class="row">
+						<div class="col-2">
+							<div class="mb-3 pl-4 mt-2">		
+	                            <select class="form-control" name="freeBrdCat" th:if="${list.free_cat} == 1" >
+								    <option>카테고리</option>
+								    <option value="1" selected="selected" >자유게시판</option>
+								    <option value="2" >질문게시판</option>
+								    <option value="3" >팁게시판</option>
+								</select>
+								<select class="form-control" name="freeBrdCat" th:if="${list.free_cat} == 2" >
+								    <option>카테고리</option>
+								    <option value="1" >자유게시판</option>
+								    <option value="2" selected="selected">질문게시판</option>
+								    <option value="3" >팁게시판</option>
+								</select>
+								<select class="form-control" name="freeBrdCat" th:if="${list.free_cat} == 3" >
+								    <option>카테고리</option>
+								    <option value="1" >자유게시판</option>
+								    <option value="2" >질문게시판</option>
+								    <option value="3" selected="selected">팁게시판</option>
+								</select>
+							</div>
 						</div>
-					</div>
+					</div>	
+					
 					<div class="row">
 						<!-- 제목 -->
 						<div class="col-11">
 							<div class="mb-3 pl-4 mt-2">
-								
 								<input type="text" id="title" name="title" class="form-control"
-									value="개꿀팁임다">
-							</div>
+									placeholder="제목을 입력하세요" th:value="${list.free_brd_title}"></input>
+							</div>			
 						</div>
+						
 						<div></div>
+					</div>
+					<!-- 사진 업로드(JPG,PNG,GIF) -->
+					<div class="row">
+						<div class="col-11">
+							<div class="mb-3 pl-4 mt-2">
+	                              <input type="file" id="image" name="image" class="form-control-file" th:value="${list.free_brd_image}">
+	                         </div>
+	                    </div>
 					</div>
 					<!-- 썸머노트 -->
 					<div class="card-body">
-						<div class="summernote">
-							<p>밥은 맛있게 먹으면 0칼로리임ㅋㅋ 모르는 사람들 많을듯?</p>
-						</div>
-
-
-						
+							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
+							 <textarea name="content" style="display: none;" th:text></textarea>
+							 <!-- 썸머노트가 적용되는 부분 -->
+							 <div id="summernote" th:utext="${list.free_brd_content}"></div>					
 						<hr>
 						<div class="mt-4 text-center">
-						<button type="button" onclick="location.href='freeBrdDetail'" class="btn btn-outline-primary">취소</button>
-							<button type="submit" class="btn btn-primary">수정</button>
+						<!-- 글번호를 hidden 으로 숨김  -->
+						<input type="hidden" name="seq" th:value="${list.free_brd_seq}" />
+						<a th:href="@{/freeBrdDetail(seq=${list.free_brd_seq})}" ><button type="button" class="btn btn-outline-primary">취소</button></a>
+						<button type="submit" class="btn btn-primary">수정</button>
 							
 						</div>
-					</div>
+					</div>	     
 
 				</form>
 			</div>
@@ -65,4 +87,22 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
+<!-- 위에 있는 코드들이 로딩되고 나면 썸머노트를 설정해줌  -->
+<script>
+$(document).ready(function() {
+	  $('#summernote').summernote({
+	        minHeight: 500,
+	        maxHeight: null,
+	        focus: true, 
+	        lang : 'ko-KR'
+	  });
+	});
+</script>
+<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
+출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
+<script>
+function postForm() {
+    $('textarea[name="content"]').val($('#summernote').summernote('code'));
+}
+</script>
 </html>

@@ -1,6 +1,8 @@
 package kr.or.bodiary.freeBrd.controller;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 import kr.or.bodiary.freeBrd.service.FreeBrdService;
+
 
 @Controller
 public class FreeBrdController {
@@ -74,6 +77,30 @@ public class FreeBrdController {
 		//예외 발생에 상관없이 목록 페이지 새로고침 처리
 		return url;
 
+	}
+	
+	//글수정하기 (화면 단)
+	@RequestMapping(value="freeBrdEdit", method=RequestMethod.GET)
+	public String freeBrdEdit(String seq, Model model) throws ClassNotFoundException, SQLException {
+		System.out.println("글번호:"+seq);
+		
+		FreeBrdDto freeBrdEdit = freeBrdService.freeBrdEdit(seq);
+
+		model.addAttribute("freeBrdEdit",freeBrdEdit);
+		return   "freeBrd/freeBrdEdit";//"noticeEdit.jsp";
+	}
+	
+	
+	//글수정하기(처리 단)
+	@RequestMapping(value="freeBrdEdit", method=RequestMethod.POST)
+	public String freeBrdEditOk(String seq, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		
+		System.out.println("카테고리번호"+request.getParameter("freeBrdCat"));
+		System.out.println("글제목"+request.getParameter("title"));
+		System.out.println("글내용"+request.getParameter("content"));
+		System.out.println("글번호"+request.getParameter("seq"));
+		
+		return "freeBrd/freeBrdEdit";
 	}
 	
 }
