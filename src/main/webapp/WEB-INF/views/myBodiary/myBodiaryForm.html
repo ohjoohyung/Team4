@@ -41,18 +41,19 @@
 
 							<div class="card-body">
 								<div class="basic-form">
-									<form action="myBodiaryForm" method="post" id="diaryForm">
+									<form action="myBodiaryForm" method="post" id="diaryForm" enctype="multipart/form-data">
 										<div class="form-row">
 											<div class="form-group col-md-4">
 												<div class="card">
 
 													<div class="form-group">
-														<!-- 파일 선택 -->
-												<!-- 		<div class="mt-3">
+														이미지 선택
+														<div class="mt-3">
 															<label class="btn btn-outline-light btn-file"><i
-																class="icon-plus"></i> <input type="file" id="imgFile" name="files[0]" /></label>
+																class="icon-plus"></i> <input type="file" id="imgFile" name="file" onchange="readURL(this)"/></label>
+																<img id="img" src="assets/upload/myBodiaryUpload/${param.diary_main_img}" alt="your image" />
 
-														</div> -->
+														</div>
 													</div>
 
 												</div>
@@ -123,56 +124,16 @@
 												<div class="p-2">
 													
 
-														<div class="food-form outline-primary mt-1 p-1">
+														<div class="food-form outline-primary mt-1 p-1" id="morning">
 														
-														<input type="hidden" name="dailyMealList[0].food_seq" value="1">
-														<input type="hidden" name="dailyMealList[0].meal_seq" value="1">
-														<input type="hidden" name="dailyMealList[1].food_seq" value="2">
-														<input type="hidden" name="dailyMealList[1].meal_seq" value="1">
 														
-															<!-- <div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
-
-
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div> -->
 														</div>
 													
 												</div>
 												<div class="row mt-4">
 													<div class="col">
 														<h3>점심</h3>
-														
+													
 													</div>
 												
 												</div>
@@ -180,47 +141,8 @@
 												<div class="p-2">
 													
 
-														<div class="food-form outline-primary mt-1 p-1">
-														<input type="hidden" name="dailyMealList[2].food_seq" value="3">
-														<input type="hidden" name="dailyMealList[2].meal_seq" value="2">
-														<input type="hidden" name="dailyMealList[3].food_seq" value="4">
-														<input type="hidden" name="dailyMealList[3].meal_seq" value="2">
-
-															<!-- <div class="row mb-3">
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
-
-
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div> -->
+														<div class="food-form outline-primary mt-1 p-1" id="lunch">
+													
 														</div>
 													
 												</div>
@@ -228,7 +150,7 @@
 												<div class="row mt-4">
 													<div class="col">
 														<h3>저녁</h3>
-													
+														
 													</div>
 													
 												</div>
@@ -236,44 +158,9 @@
 												<div class="p-2">
 													
 
-														<div class="food-form outline-primary mt-1 p-1">
+														<div class="food-form outline-primary mt-1 p-1" id="dinner">
 
-															<!-- <div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
-
-
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div> -->
+													
 														</div>
 													
 												</div>
@@ -281,6 +168,7 @@
 												<div class="row mt-4">
 													<div class="col">
 														<h3>간식</h3>
+														
 													</div>
 													
 												</div>
@@ -288,44 +176,8 @@
 												<div class="p-2">
 													
 
-														<div class="food-form outline-primary mt-1 p-1">
+														<div class="food-form outline-primary mt-1 p-1" id="dessert">
 
-															<!-- <div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
-
-
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div> -->
 														</div>
 												
 												</div> 
@@ -334,15 +186,17 @@
 										
 										<div class="form-group mt-5">
 											<label>오늘의 루틴</label> <select id="routine_cart_seq" name="routine_cart_seq"
-												class="form-control input-default">
-												<option selected="selected">루틴 선택하기</option>
-												<option>루틴 1</option>
-												<option>루틴 2</option>
-												<option>루틴 3</option>
+												class="form-control input-default" th:each="item : ${routineList}">
+												
+												
+													<option>선택없음</option>
+													<option th:text="${item.routine_cart_title}" th:value="${item.routine_cart_seq}">routine_cart_title</option>
+													
+											
 											</select>
 										</div>
 
-										<div class="modal fade" id="basicModal">
+									<!-- 	<div class="modal fade" id="basicModal">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -360,71 +214,33 @@
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="row mt-5">
 											<div class="form-group col-md-6">
 												<label for="exampleFormControlTextarea1">유산소</label>
-												<div class="cardio-cart p-2">
-													<div>
+												<div class="cardio-cart p-2" >
+													
 
-														<div class="exs-form w-100 outline-primary mt-1 p-1 ">
+														<div class="exs-form w-100 outline-primary mt-1 p-1 " id="cardio">
 
-															<div class="row cart-item-card mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>달리기</h5>
-																</div>
-
-
-																<div class="col-3 center pt-2">
-																	<h5>1시간 30분</h5>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>수영</h5>
-																</div>
-																<div class="col-3 center ">
-																	<h5>2시간</h5>
-																</div>
-															</div>
+															
 														</div>
-													</div>
+													
 												</div>
 											</div>
 
 											<div class="form-group col-md-6">
 												<label for="exampleFormControlTextarea2">무산소</label>
 												<div class="cardio-cart p-2">
-													<div>
+													
 
-														<div class="exs-form w-100 outline-primary mt-1 p-1 ">
+														<div class="exs-form w-100 outline-primary mt-1 p-1" id="weightTraining">
 
-															<div class="row cart-item-card mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>벤치프레스</h5>
-																</div>
-
-
-																<div class="col-3 center pt-2">
-																	<h5>5세트 10회</h5>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>딥스</h5>
-																</div>
-																<div class="col-3 center ">
-																	<h5>5세트 5회</h5>
-																</div>
-															</div>
+															
 														</div>
 													</div>
-												</div>
+												
 											</div>
 										</div>
 										<div class="form-group mt-5">
@@ -460,38 +276,163 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 		<script type="text/javascript">
-$(function(){
-	$('#foodsearch').keyup(function(){
-		var data = {food_name : $('#foodsearch').val()};
-		console.log(data);
-		$.ajax(
-				 {
-					 type:"get",
-					 data: data,
-					 url:"foodNameSearch",
-					 dataType:"json",
-					 success:function(responsedata){ 
-						$('#foodBox').empty();
-						console.log(responsedata);
-						var table="<table class='table table-bordered'><thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th>";
-						$.each(responsedata,function(index,obj){
-							table += "<tr><td>"+obj.food_seq+"</td>" +
-								"<td>"+obj.food_name+"</td>" +
-								"<td>"+obj.food_cal+"</td>"+
-								"<td><input type = 'number' min = '1' max = '100' step = '1' name = 'number'></td>"+
-								"<td>"+"<button class='btn btn-outline-primary' onclick=alert('"+obj.food_seq+"눌림')>추가</button>"+"</td><tr>";
-						});
-						table += "</table>";
-						$('#foodBox').append(table);
-						
-
-					 }
+			$(function(){
+				$('#foodsearch').keyup(function(){
+					var data = {food_name : $('#foodsearch').val()};
+					console.log(data);
+					$.ajax(
+							 {
+								 type:"get",
+								 data: data,
+								 url:"foodNameSearch",
+								 dataType:"json",
+								 success:function(responsedata){ 
+									$('#foodBox').empty();
+									console.log(responsedata);
+									var table="<table class='table table-bordered'><thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th>";
+									$.each(responsedata,function(index,obj){
+										table += "<tr><td>"+obj.food_seq+"</td>" +
+											"<td>"+obj.food_name+"</td>" +
+											"<td>"+obj.food_cal+"</td>"+
+											"<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]' id='count"+obj.food_seq+"'></td>"+
+											"<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
+									});
+									table += "</table>";
+									$('#foodBox').append(table);
+								 }	
+							 }
+					      );
+				});
+				
+				$('#routine_cart_seq').change(function() {
+	                var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+	          
+	                console.log(data);
+	                $.ajax(
+							 {
+								 type:"get",
+								 data: data,
+								 url:"getRoutine",
+								 dataType:"json",
+								 success:function(responsedata){ 
+									$('#cardio').empty();
+									$('#weightTraining').empty();
+									console.log(responsedata);
+									
+									$.each(responsedata,function(index,obj){
+										console.log(obj.excs_kind);
+										if(obj.excs_kind == '1') {
+											$('#cardio').append(
+													'<div class="row cart-item-card mb-3">'+													
+														'<div class="col pt-2">'+
+															'<h5>'+obj.excs_name+'</h5>'+
+														'</div>'+
+														'<div class="col-3 center pt-2">'+
+															'<h5>'+obj.routine_exercise_hour+'시간</h5>'+
+														'</div>'+
+													'</div>'
+											);
+										}else {
+												$('#weightTraining').append(
+														'<div class="row cart-item-card mb-3">'+														
+															'<div class="col pt-2">'+
+																'<h5>'+obj.excs_name+'</h5>'+
+															'</div>'+
+															'<div class="col-3 center pt-2">'+
+																'<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+															'</div>'+
+														'</div>'	
+										)}
+									});
+									
+									
+								 	
+							 }
+							 });
+	                });
+				
+				
+			});
+			var number = 0;
+			function addFood(food_seq, food_name) {
+				
+				console.log($('#count'+food_seq).val());
+				console.log($('#meal option:selected').val());
+				var count = $('#count'+food_seq).val();
+				var meal = $('#meal option:selected').val();
+				
+				if(meal == '아침') {
+					meal = 1;
+				}else if(meal == '점심') {
+					meal = 2;
+				}else if(meal == '저녁') {
+					meal = 3;
+				}else {
+					meal = 4;
+				}
+				
+				var div = '<div class="row cart-item-card mb-3">'+
+									'<div class="col">'+
+										'<h5>'+food_name+'</h5>'+
+									'</div>'+
+									'<div class="col-3">'+count+
+									'</div>'+
+									'<div class="col-2 center">'+
+										'<i class="mdi mdi-minus"></i>'+
+									'</div>'+
+							'</div>' +
+							'<input type="hidden" name="dailyMealList['+number+'].food_seq" value="'+food_seq+'">'+
+							'<input type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+meal+'">'+
+							'<input type="hidden" name="dailyMealList['+number+'].food_count" value="'+count+'">';
+				
+				switch(meal) {
+				case 1 :
+				
+					$('#morning').append(div);
+					number++;
+					break;
+				case 2 :
 					
-				 }
-		
-		      );
-	});
-});
+					$('#lunch').append(div);
+					number++;
+					break;
+				case 3 :
+					
+					$('#dinner').append(div);
+					number++;
+					break;
+				default :
+					
+					$('#dessert').append(div);
+					number++;
+				}
+				
+				/* if($('#meal option:selected').val() == '아침') {
+					$('#morning').append(
+							'<div class="row cart-item-card mb-3">'+
+							'<div class="col">'+
+								'<h5>'+food_name+'</h5>'+
+							'</div>'+
+							'<div class="col-2 center ">'+
+								'<i class="mdi mdi-minus"></i>'+
+							'</div>'+
+						'</div>'		
+					
+					)
+					
+				} */
+			}
+			
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('#img').attr('src', e.target.result);
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+				/* $('#imgFileName').html(input.files[0].name); */
+			};
 </script>
 </body>
 </html>

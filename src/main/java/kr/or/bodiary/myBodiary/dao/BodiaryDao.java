@@ -5,8 +5,10 @@ import java.util.List;
 
 
 import kr.or.bodiary.myBodiary.dto.FoodDto;
+import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
+import kr.or.bodiary.routineBrd.dto.routineCartDTO;
 
 
 public interface BodiaryDao {
@@ -24,4 +26,10 @@ public interface BodiaryDao {
 	
 	//식단 추가
 	public int writeDailyMeal(List<dailyMealDTO> list) throws ClassNotFoundException, SQLException;
+	
+	//루틴 불러오기 (나중에는 루틴 카트 번호를 파라미터로 추가)
+	public List<RoutineJoinDto> getRoutine(String routine_cart_seq) throws ClassNotFoundException, SQLException;
+	
+	//루틴 리스트 불러오기 (나중에는 유저 이메일로 판별하고 불러와야함)
+	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException;
 }

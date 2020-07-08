@@ -1,5 +1,6 @@
 package kr.or.bodiary.myBodiary.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
+import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
@@ -134,49 +136,26 @@ public class BodiaryController {
 	}
 
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.GET)
-	public String myBodiaryForm() {
+	public String myBodiaryForm(Model model) throws ClassNotFoundException, SQLException {
+		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
+		model.addAttribute("routineList", list);
 		return "myBodiary/myBodiaryForm";
 	}
 	
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.POST)
-	public String myBodiaryForm(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	public String myBodiaryForm(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
 		System.out.println("안녕");
-		System.out.println(bodiarydto.toString());
-		System.out.println(dailymealdto.getDailyMealList().toString());
+		System.out.println("컨트롤 : "+bodiarydto.toString());
+		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
 		
+		if(bodiarydto.getDiary_pubchk() == null) {
+			bodiarydto.setDiary_pubchk("N");
+		} else {
+			bodiarydto.setDiary_pubchk("Y");
+		}
 		
-		String url = bodiaryservice.writeBodiary(dailymealdto, bodiarydto);
+		String url = bodiaryservice.writeBodiary(dailymealdto, bodiarydto, request);
 		
-		
-		/*
-		 * List<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
-		 * HashMap<String, String> map = new HashMap<String, String>();
-		 */
-		
-		
-		
-		
-		
-		/*
-		 * System.out.println(food_morning[0]); System.out.println(food_lunch[0]);
-		 * HashMap<String, Object> map = new HashMap<String, Object>();
-		 * map.put("morning", food_morning); map.put("lunch", food_lunch);
-		 */
-		
-		
-
-		
-		/*
-		 * for(int i = 1; i < 5; i++) { dao(key, value); }
-		 */
-		
-		
-		/*
-		 * try { url = bodiaryservice.writeBodiary(bodiaryDTO, request); }catch
-		 * (Exception e) {
-		 * 
-		 * System.out.println(e.getMessage()); }
-		 */
 		return url;
 	}
 
@@ -201,6 +180,15 @@ public class BodiaryController {
 		return foodlist;
 	}
 	
+	
+	@ResponseBody 
+	@RequestMapping("/getRoutine")
+	public List<RoutineJoinDto> getRoutine(@RequestParam String routine_cart_seq) throws ClassNotFoundException, SQLException {
+		System.out.println("routine_cart_seq:"+routine_cart_seq);
+		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(routine_cart_seq);
+		System.out.println(routinelist.toString());
+		return routinelist;
+	}
 	
 
 

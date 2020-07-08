@@ -18,6 +18,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
+import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.user.dao.UserDao;
@@ -40,6 +41,12 @@ private SqlSession sqlsession;
 		return bodiarydao.foodNameSearch(food_name);
 	}
 	
+	public List<RoutineJoinDto> getRoutine(String routine_cart_seq) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		System.out.println("루틴");
+		return bodiarydao.getRoutine(routine_cart_seq);
+	}
+	
 	public int insertMealCart(dailyMealDTO dailymealdto) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 	
@@ -55,8 +62,22 @@ private SqlSession sqlsession;
 	}
 	
 	@Transactional
-	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto) {
+	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		//실제 글쓰기 처리
+		//private CommonsMultipartFile file;
+		String filename = bodiarydto.getFile().getOriginalFilename();
+		
+		System.out.println(filename);
+		String path = request.getSession().getServletContext().getRealPath("/assets/upload/myBodiaryUpload");
+				
+		String fpath = path + "\\" + filename;
+		FileOutputStream fs = new FileOutputStream(fpath);
+		fs.write(bodiarydto.getFile().getBytes());
+		fs.close();
+		String url = "";	
+		//파일명
+		bodiarydto.setDiary_main_img(filename);
 		try {
 			
 			List<dailyMealDTO> list = dailymealdto.getDailyMealList();
@@ -70,15 +91,30 @@ private SqlSession sqlsession;
 			
 			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
 			
-			bodiarydao.writeBodiary(bodiarydto);
+			int result = bodiarydao.writeBodiary(bodiarydto);
 			
-			
+			 System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
+			 System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
+			if(result > 0) { 
+				url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
+			} else { 
+				url = "redirect:myBodiaryForm";
+			}
+
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 		
-		return "myBodiary/myBodiaryDetail";
+		return url;
 	}
+	
+	
+	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		return bodiarydao.getRoutineListById();
+	}
+	
+	
 	//유저 정보 가져오기 (나중에 시큐리티 사용하면 어떻게 해야될지 생각)
 	/*
 	 * public userDTO getUser(String user_email) throws ClassNotFoundException,
