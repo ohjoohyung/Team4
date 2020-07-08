@@ -29,9 +29,14 @@ public class UserController {
 	
 	
 	//------------- 로그인 --------------
+	//로그인 페이지 
 	@RequestMapping("/login")
 	public String login() {
 		return "user/login";
+	}
+	@RequestMapping("/nCallback")
+	public String naverCallback() {
+		return "user/nCallback";
 	}
 	//------------- 회원가입 --------------
 	//회원가입 페이지
@@ -48,11 +53,13 @@ public class UserController {
 	}
 	
 	//------------- 이메일 확인 --------------
+	@ResponseBody
 	@RequestMapping("/emailCheck")
-	public int emailcheck(UserDto user) {
-		return userService.emailCheck(user);
+	public int emailcheck(String email) {
+		return userService.emailCheck(email);
 	}
 	//------------- 이메일 인증번호 전송 -------------
+	@ResponseBody
 	@RequestMapping("/confirmEmail")
 	public int sendConfirmEmail(EmailDto emaildto) throws Exception {
         return userService.sendConfirmEmail(emaildto);

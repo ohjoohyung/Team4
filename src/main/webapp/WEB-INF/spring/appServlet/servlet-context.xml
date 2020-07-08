@@ -15,7 +15,6 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 
-	
 	<context:component-scan base-package="kr.or.bodiary.**.controller" />
 	<context:component-scan base-package="kr.or.bodiary.**.service"/>
 	
@@ -23,5 +22,7 @@
 	
 	<!-- 리캡차 -->
 	<context:component-scan base-package="org.alpreah.reCAptcha" />
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+
 	
 </beans>

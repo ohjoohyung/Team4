@@ -3,10 +3,10 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bodiary.user.dao.UserDao">
-	<select id="getUser" resultType="kr.or.bodiary.user.dto.UserDto">
+	<select id="getUser" parameterType="String" resultType="kr.or.bodiary.user.dto.UserDto">
 		select *
 		from User
-		where user_email=#{user_email}
+		where user_email= #{user_email}
 	</select>
 	<insert id="insertUser">
 		INSERT INTO User(
@@ -20,9 +20,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where userid = #{userid}
 	</update> -->
 	<!-- 회원가입시 이메일 체크 -->
-	<select id="emailCheck" resultType="Integer">
+	<select id="emailCheck" resultType="int">
 		select count(*)
 		from User
 		where user_email=#{user_email}
 	</select>
+	
 </mapper>

@@ -52,11 +52,13 @@
 		</security:authentication-provider> </security:authentication-manager> -->
 	<!-- 3단계 : JDBC사용한 DB연결 -->
 	<security:http>
-		<security:csrf disabled="true" />
-		<security:form-login default-target-url="/index.html" 
-							 login-page="/user/login.html"
-							 authentication-failure-url="/user/login.html?error" />
-		<security:logout logout-success-url="/index.html"/>
+		<security:csrf disabled="true"/>
+		<security:form-login username-parameter="user_email"
+    						 password-parameter="user_pwd"
+							 login-page="/login"
+							 authentication-success-handler-ref="loginSuccessHandler"
+							 authentication-failure-url="/login?error" />
+		<security:logout logout-success-url="/"/>
 		<security:intercept-url pattern="/myBodiary/myBodiaryMain.html" access="hasRole('ROLE_ASSOCIATE_USER')" />
 		<security:intercept-url pattern="/myBodiary/myPageEdit.html" access="hasRole('ROLE_ASSOCIATE_USER')" />
 		<security:intercept-url pattern="/myBodiary/myProfile*.html" access="hasRole('ROLE_ASSOCIATE_USER')" />
@@ -72,15 +74,19 @@
 					authorities="ROLE_ADMIN,ROLE_USER" />
 			</security:user-service> -->
 		 <security:jdbc-user-service data-source-ref="driverManagerDataSource"
-	   								 users-by-username-query="SELECT user_email, user_pwd AS PASSWORD, 1 enabled FROM User where user_email=?" 
+	   								 users-by-username-query="SELECT user_email, user_pwd, 1 enabled FROM User where user_email=?" 
 	   								 authorities-by-username-query="select u.user_email , r.ROLE_NAME  
 	   								 								from User u join Role r on u.user_email = r.user_email
 	   								 								where u.user_email=?" />
 		<!-- 추가된 부분임 -->
-		<security:password-encoder ref="bCryptPasswordEncoder"/>
+		<!-- <security:password-encoder ref="bCryptPasswordEncoder"/> -->
 		
 		</security:authentication-provider>
 	</security:authentication-manager>
+	<bean id="loginSuccessHandler" class="kr.or.bodiary.interceptor.LoginSuccessHandler">
+	    <property name="loginEmail" value="user_email"/>
+	    <property name="defaultUrl" value="/main"/>
+	</bean>
 
 </beans>  
 

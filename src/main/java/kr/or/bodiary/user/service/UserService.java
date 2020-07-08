@@ -6,6 +6,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,9 @@ public class UserService {
 	private SqlSession sqlsession;
 	
 	@Autowired
+	private JavaMailSender mailSender; 
+	
+	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
@@ -27,7 +31,20 @@ public class UserService {
 //		System.out.println(userdao.getUser(id));
 //		return userdao.getUser(id);
 //	}
-	
+	//-----------유저찾기 서비스-----------
+	public UserDto getUser(String user_email) {
+		System.out.println("유저 찾아야됨");
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		UserDto currentUser = null;
+		try {
+			currentUser = userdao.getUser(user_email);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return currentUser;
+	}
 	//-----------회원가입 서비스-----------
 	public String register(UserDto user) {
 		System.out.println(user.toString());
@@ -43,11 +60,11 @@ public class UserService {
 	}
 	
 	//-----------이메일 체크-----------
-	public int emailCheck(UserDto user) {
+	public int emailCheck(String email) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		int result=0;
 		try {
-			result = userdao.emailCheck(user);
+			result = userdao.emailCheck(email);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -56,7 +73,7 @@ public class UserService {
 	
 	//------------이메일 발송 서비스------------
 	public int sendConfirmEmail(EmailDto emaildto) throws Exception{
-        MimeMessage messagedto = emailSender.createMimeMessage();
+        MimeMessage messagedto = mailSender.createMimeMessage();
         MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
         
         Random random = new Random(System.currentTimeMillis());
@@ -69,10 +86,10 @@ public class UserService {
         
         messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.        
         messageHelper.setTo(emaildto.getReceiveMail());
-        messageHelper.setSubject("Serendipity : 요청하신 인증번호입니다.");
+        messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
         messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
  
-        emailSender.send(messagedto);
+        mailSender.send(messagedto);
         
         return confirmation;
     }

@@ -55,7 +55,7 @@
 
 			<div class="profile col-4 p-0">
 				<!-- 비로그인 -->
-				<div class="header-right mr-3">
+				<div sec:authorize="isAnonymous()" class="header-right mr-3"> 
 					<a class="btn btn-outline-primary " href="login">
 						<span>LOG IN</span>
 						<i class="gd-themify-favicon icon-text align-middle ml-3"></i>
@@ -121,11 +121,12 @@
                                 </div>
                             </div>
                         </li>
-                        
-                        <li class="icons dropdown">
+                        <th:block sec:authorize="isAuthenticated()">
+                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
                                 <img src="assets/images/user/2.png" height="40" width="40" alt="">
+                                <span sec:authentication="principal.user_nickname" ></span> 님
                             </div>
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
@@ -138,10 +139,29 @@
                                         </li>
                                         <hr class="my-2">
                                         <!-- 관리자일때만 -->
-                                        <li>
+                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
                                             <a href="admin"><i class="icon-pencil"></i> <span>관리자 페이지</span></a>
                                         </li>
                                         <!--  -->
+                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                        </th:block>
+                        
+                        <li sec:authorize="hasRole('ROLE_ASSOCIATE_USER')" class="icons dropdown">
+                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
+                                <span class="activity active"></span>
+                                <img src="assets/images/user/2.png" height="40" width="40" alt="">
+                            </div>
+                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
+                                <div class="dropdown-content-body">
+                                    <ul>
+                                        <li>
+                                            <a href="myProfileEdit"><i class="icon-user"></i> <span>내 정보 등록하기</span></a>
+                                        </li>
+                                        <hr class="my-2">
                                         <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
