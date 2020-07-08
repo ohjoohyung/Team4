@@ -63,7 +63,7 @@
       
        var data = [{
            date: year + '-' + month + '-' + (date - 1),
-           value: '운동함'
+           value: "myBodiaryForm"
        }];
        $(function() {
             $('#eventCalendar').calendar({
@@ -77,6 +77,8 @@
                       console.log('view:' + view)
                       console.log('date:' + date)
                       console.log('data:' + (data));
+                      location.href=data;
+                      
                   },
                   viewChange: function (view, y, m) {
                       console.log(view, y, m)
