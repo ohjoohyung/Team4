@@ -3,6 +3,8 @@ package kr.or.bodiary.myBodiary.dto;
 import lombok.Data;
 
 @Data
+
+//routine이랑 routinebunddle이랑 exercise 테이블 조인
 public class RoutineJoinDto {
 	
 	private String excs_kind ;

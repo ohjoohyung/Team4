@@ -37,32 +37,34 @@ private SqlSession sqlsession;
 		this.sqlsession = sqlsession;
 	}
 	
+	//음식 검색하기
 	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		System.out.println("서비스");
 		return bodiarydao.foodNameSearch(food_name);
 	}
 	
+	//루틴 정보 불러오기
 	public List<RoutineJoinDto> getRoutine(String routine_cart_seq) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		System.out.println("루틴");
 		return bodiarydao.getRoutine(routine_cart_seq);
 	}
 	
+	//식단 카트 번호 추가
 	public int insertMealCart(dailyMealDTO dailymealdto) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-	
 		return bodiarydao.insertMealCart(dailymealdto);
 	}
 	
+	//식단 작성하기
 	public int writeDailyMeal(List<dailyMealDTO> list) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		
-		
-		
 		return bodiarydao.writeDailyMeal(list);
 	}
 	
+	
+	//트랜잭션 처리
 	@Transactional(rollbackFor=Exception.class)
 	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);

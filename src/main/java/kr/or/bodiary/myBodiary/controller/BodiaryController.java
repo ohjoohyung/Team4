@@ -177,8 +177,16 @@ public class BodiaryController {
 		return "myBodiary/myBodiaryDetail";
 	}
 	
-	//일지 수정하기
-	@RequestMapping("/myBodiaryEdit")
+	//일지 수정 페이지 이동
+	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
+	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
+		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		model.addAttribute("bodiary", bodiarydto);
+		return "myBodiary/myBodiaryEdit";
+	}
+	
+	//일지 수정
+	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.POST)
 	public String myBodiaryEdit() {
 		return "myBodiary/myBodiaryEdit";
 	}

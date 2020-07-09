@@ -3,6 +3,8 @@ package kr.or.bodiary.myBodiary.dto;
 import lombok.Data;
 
 @Data
+
+//dailymeal과 food 테이블 조인
 public class DailyMealFoodJoinDto {
 	
 	private int meal_seq;
