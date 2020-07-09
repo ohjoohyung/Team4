@@ -16,9 +16,9 @@
 						<h6>filter</h6>
 						<!-- 유산소 무산소 선택 시작 -->
 						<ul class="nav nav-pills mb-3 pt-4" style="font-weight: 300;">
-							<li class="nav-item"><a href="#navpills-1"
+							<li class="nav-item" onclick="exer_c();"><a href="#navpills-1"
 								class="nav-link active" data-toggle="tab" aria-expanded="false">유산소</a></li>
-							<li class="nav-item"><a href="#navpills-2" class="nav-link"
+							<li class="nav-item" onclick="exer_n();"><a href="#navpills-2" class="nav-link"
 								data-toggle="tab" aria-expanded="false">무산소</a></li>
 						</ul>
 						<div class="tab-content ">
@@ -36,16 +36,16 @@
 								<div class="align-items-center">
 									<div class="excs-part mt-2 mb-2">
 										<h6>운동 부위</h6>
-										<label class="pr-2"><input type="checkbox" value="복부">&nbsp;복부</label>
-										<label class="pr-2"><input type="checkbox" value="등">&nbsp;등</label>
-										<label class="pr-2"><input type="checkbox" value="가슴">&nbsp;가슴</label>
-										<label class="pr-2"><input type="checkbox" value="다리">&nbsp;다리</label>
-										<label class="pr-2"><input type="checkbox" value="팔">&nbsp;팔</label>
+										<label class="pr-2"><input name="exer_part" type="checkbox" value="복부" id="exer_ab" onchange="exer_check(this);">&nbsp;복부</label>
+										<label class="pr-2"><input name="exer_part" type="checkbox" value="등" id="exer_ba" onchange="exer_check(this);">&nbsp;등</label>
+										<label class="pr-2"><input name="exer_part" type="checkbox" value="가슴" id="exer_ch" onchange="exer_check(this);">&nbsp;가슴</label>
+										<label class="pr-2"><input name="exer_part" type="checkbox" value="다리" id="exer_le" onchange="exer_check(this);">&nbsp;다리</label>
+										<label class="pr-2"><input name="exer_part" type="checkbox" value="팔" id="exer_ar" onchange="exer_check(this);">&nbsp;팔</label>
 									</div>
 									<div class="excs-part mt-2 mb-2">
 										<h6>운동 도구</h6>
-										<label class="pr-2"><input type="checkbox" value="기구">&nbsp;기구</label>
-										<label class="pr-2"><input type="checkbox" value="소도구">&nbsp;소도구</label>
+										<label class="pr-2"><input name="exer_equi" type="checkbox" value="O" onchange="exer_equi_check(this);">&nbsp;기구</label>
+										<label class="pr-2"><input name="exer_equi" type="checkbox" value="X" onchange="exer_equi_check(this);">&nbsp;소도구</label>
 									</div>
 									<div class="excs-part mt-2 mb-2">
 										<h6>운동 난이도</h6>
@@ -266,10 +266,9 @@
 							<hr>
 							<div class="cardio-cart p-2">
 								<div class="cardio-cart-item">
-									<span class="excs-part">th:text로 운동부위 뿌려질 곳</span>
-									<div class="select-excs w-100 outline-primary mt-1 p-3 ">
+									<div class="select-excs w-100 outline-primary mt-1 p-3" id="exer_c_add">
 										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3"style="height:40px;">
+										<!-- <div class="row cart-item-card mb-3"style="height:40px;">
 											<div class="col pt-2">
 												<h5>걷기</h5>
 											</div>
@@ -287,72 +286,8 @@
 											<div class="col-2 center pt-2">
 												<a href="#"><i class="mdi mdi-minus"></i></a>
 											</div>
-										</div>
+										</div> -->
 										<!-- 비동기로? 선택한 운동 끝  -->
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -367,10 +302,9 @@
 							<hr />
 							<div class="weight-cart">
 								<div class="weight-cart-item">
-									<span class="excs-part">th:text로 운동부위 뿌려질 곳</span>
-									<div class="select-excs w-100 outline-primary mt-1 p-3 ">
+									<div class="select-excs w-100 outline-primary mt-1 p-3" id="exer_n_add">
 										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3"style="height:40px;">
+										<!-- <div class="row cart-item-card mb-3"style="height:40px;">
 											<div class="col pt-2">
 												<h5>레그 레이즈</h5>
 											</div>
@@ -389,48 +323,9 @@
 											<div class="col-2 center pt-2">
 												<i class="mdi mdi-minus"></i>
 											</div>
-										</div>
+										</div> -->
 										<!-- 비동기로? 선택한 운동 끝  -->
-										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<!-- 비동기로? 선택한 운동 끝 -->
-										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<!-- 비동기로? 선택한 운동 끝 -->
-										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<!-- 비동기로? 선택한 운동 끝 -->
-										<!-- 비동기로? 선택한 운동 -->
-										<div class="row cart-item-card mb-3">
-											<div class="col">
-												<h5>걷기</h5>
-											</div>
-											<div class="col-2 center ">
-												<i class="mdi mdi-minus"></i>
-											</div>
-										</div>
-										<!-- 비동기로? 선택한 운동 끝 -->
+										
 									</div>
 								</div>
 							</div>
@@ -473,34 +368,7 @@
 		<!-- 공통 스크립트-->
 		
 		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-		<script type="text/javascript">
-		$(function(){
-			$('#exercisesearch').keyup(function(){
-				var data = {excs_name : $('#exercisesearch').val()};
-				console.log(data);
-				$.ajax(
-						 {
-							 type:"get",
-							 data: data,
-							 url:"exerciseNameSearch.exer",
-							 dataType:"json",
-							 success:function(responsedata){ 
-								$('#exercisetable').empty();
-								
-								$.each(responsedata,function(index,obj){	
-									$('#exercisetable').append(	
-											"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-											+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
-											+obj.excs_cal_per_minweight+"</span></div></div><div class='col-2 center'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-											);
-								});
-							 }
-						 }
-				      );
-			});
-		})
-
-
-		</script>
+		<th:block th:replace="fragments/exercisescript :: scriptFragment"></th:block>
+		
 </body>
 </html>
