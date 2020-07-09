@@ -395,9 +395,9 @@
 							</div>
 							
 							<div class="mt-4 text-center">
-							<button type="button" onclick="location.href='myBodiayEdit'"
+							<button type="button" th:onclick="|location.href='myBodiaryEdit?diary_seq=${bodiary.diary_seq}'|"
 								class="btn btn-primary">수정</button>
-							<button type="button" onclick="location.href='myBodiayDelete'" class="btn btn-primary">삭제</button>
+							<button type="button" onclick="location.href='myBodiaryDelete'" class="btn btn-primary">삭제</button>
 
 						</div>
 						</div>

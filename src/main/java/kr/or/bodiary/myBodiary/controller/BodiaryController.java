@@ -181,13 +181,20 @@ public class BodiaryController {
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
 	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
 		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
+		model.addAttribute("routineList", list);
 		model.addAttribute("bodiary", bodiarydto);
 		return "myBodiary/myBodiaryEdit";
 	}
 	
 	//일지 수정
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.POST)
-	public String myBodiaryEdit() {
+	public String myBodiaryEdit(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) {
+		if(bodiarydto.getDiary_pubchk() == null) {
+			bodiarydto.setDiary_pubchk("N");
+		} else {
+			bodiarydto.setDiary_pubchk("Y");
+		}
 		return "myBodiary/myBodiaryEdit";
 	}
 	
