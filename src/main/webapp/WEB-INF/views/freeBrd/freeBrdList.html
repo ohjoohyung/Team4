@@ -58,7 +58,7 @@
 									</button>
 									<div class="dropdown-menu dropdown-menu-right">
 										<a class="dropdown-item" href="#">조회순</a> <a
-											class="dropdown-item" href="#">9 AM</a> <a
+											class="dropdown-item" href="#">댓글순</a> <a
 											class="dropdown-item" href="#">12 AM</a>
 									</div>
 								</div>&nbsp;
@@ -77,7 +77,7 @@
 							</div>
 						</div>
 						<!-- 글쓰기 버튼 -->
-						<button type="button" onclick="location.href='freeBrdForm'"
+						<button type="button" onclick="location.href='freeBrdForm'" 
 							class="btn btn-lg w-100 mb-1 btn-primary">
 							글쓰기&nbsp;&nbsp;&nbsp;<span><i class="icon-note"></i></span>
 						</button>
@@ -87,19 +87,24 @@
 								<div class="p-t-15">
 
 
-									<div class="card">
+									<div class="card" th:each="list : ${freeBrdList}">
 									
 									<!-- 얘가 기준 (다른 게시글도 이거랑 동일하게) --> 
 										<div class="row card-body">
 											<div class="col-8">
-												<span class="card-text text-primary">팁</span>
+												<!-- 카테고리 부분(자유-1,질문-2,팁-3) -->
+												<span class="card-text text-primary" th:if="${list.free_cat} == 1 ">자유</span>
+												<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
+												<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
+												<!-- 글제목 부분 -->
 												<h5 class="card-title mt-3">
-													<a href="freeBrdDetail">개꿀팁임다</a>
+													<a th:href="@{/freeBrdDetail(seq=${list.free_brd_seq})}" th:text="${list.free_brd_title}"></a>
 												</h5>
-
+												<!-- 해당 글쓴 시간-->
 												<p class="card-text">
-													<i class="icon-clock"></i>&nbsp;&nbsp;13분 전
+													<i class="icon-clock" th:text="${list.free_brd_date}"></i>
 												</p>
+												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
 													<i class="icon-eye"></i>&nbsp;&nbsp;5
 													&nbsp;&nbsp;
@@ -107,9 +112,20 @@
 												</p>
 											
 											</div>
-											<div class="col-3">
-												<img class="img-fluid" src="assets/images/imgs/1.png" alt="">
+											
+											<!-- 해당글의 이미지가 있는경우  -->
+											<div class="col-3" th:if="${list.free_brd_image != null && list.free_brd_image != ''}">	
+												<!-- root경로 webapp 부터 시작(생략) -->
+												 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" style="width:200px;height:150px;"  />																															
 											</div>
+											
+											<!-- 해당글의 이미지가 없는경우  -->
+											<div class="col-3" th:if="${list.free_brd_image == null || list.free_brd_image == ''}">	
+												<!-- root경로 webapp 부터 시작(생략) -->
+												 <div style="width:200px;height:150px;"  ></div>																															
+											</div>																																									
+											
+											
 											<div class="col mt-0 pt-0">
 												<div class="mr-3">
 													<ul>
@@ -123,9 +139,8 @@
 
 
 																<div class="dropdown-menu">
-																	<a class="dropdown-item" href="#">Link 1</a> <a
-																		class="dropdown-item" href="#">Link 2</a> <a
-																		class="dropdown-item" href="#">Link 3</a>
+																	<a class="dropdown-item" th:href="@{/freeBrdDelete(seq=${list.free_brd_seq})}">삭제</a> 
+																	<a	class="dropdown-item" href="#">신고</a> 
 																</div>
 
 															</div>
@@ -137,60 +152,6 @@
 
 									</div>
 									<!-- 얘가 기준 --> 
-
-
-
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body">
-											<span class="card-text text-primary">자유</span>
-											<h5 class="card-title mt-3">운동하기 싫다</h5>
-
-											<p class="card-text">
-												<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-											</p>
-											<p class="card-text">
-												<i class="icon-eye"></i>&nbsp;&nbsp;10
-											</p>
-
-										</div>
-									</div>
-
-
-
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body">
-											<span class="card-text text-primary">질문</span>
-											<h5 class="card-title mt-3">어깨 운동 이렇게 하면 되나요?</h5>
-
-											<p class="card-text">
-												<i class="icon-clock"></i>&nbsp;&nbsp;30분 전
-											</p>
-											<p class="card-text">
-												<i class="icon-eye"></i>&nbsp;&nbsp;30
-											</p>
-										</div>
-									</div>
-
-
-
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body">
-											<span class="card-text text-primary">팁</span>
-											<h5 class="card-title mt-3">운동하기 싫을때 팁</h5>
-
-											<p class="card-text">
-												<i class="icon-clock"></i>&nbsp;&nbsp;33분 전
-											</p>
-											<p class="card-text">
-												<i class="icon-eye"></i>&nbsp;&nbsp;20
-											</p>
-										</div>
-									</div>
-
-
 
 								</div>
 
