@@ -22,7 +22,6 @@
  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
  	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
  	<property name="url" value="jdbc:mysql://localhost:3306/body_diary?useSSL=false&amp;serverTimezone=UTC" />
-
  	<property name="username" value="root" />
  	<property name="password" value="1234" />
  </bean>
@@ -68,7 +67,7 @@
  
  
  <!-- Mybatis 설정
-기본 자바코드 : SqlMapConfig.xml 에서 설정했던 작업 (DB연결 ,mapper 설정)
+기본 자바코드 : SqlpperpConfig.xml 에서 설정했던 작업 (DB연결  설정)
 파일 없어지고 설명파일안에서   > SqlSessionFactoryBean
 기존 java 코드 : builder 사용 > Factory 객체 > sqlsession 생성 > 사용 
 

@@ -3,18 +3,16 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.or.bodiary.routineBrd.dao.routineBrdDao">
-	
-    <!-- 
-    <select id="getFoodListByFoodName" parameterType="String" resultType="a.b.c.FoodDTO.FoodDTO">
-    	select food_seq, food_name, food_cal from food where food_name  like concat('%', #{food_name} , '%')
-    </select> 
-    -->
-    <insert id="insertRoutineBrd" parameterType="kr.or.bodiary.routineBrd.dto.routineBrdDTO">
-    	INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
-		VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
-    </insert>
-    
-</mapper>
 
- 
+<mapper namespace="kr.or.bodiary.routineBrd.dao.RoutineBrdDao">
+    
+   
+	 <!-- 리스트 -->
+    <select id="routineBoardList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
+		select u.user_nickname, b.routine_brd_title
+		  from user as u
+		  join routineboard as b
+		    on u.user_email = b.user_email
+	</select>
+	
+</mapper>

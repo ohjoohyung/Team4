@@ -1,104 +1,95 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!-- 공통 헤더-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더 -->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
-
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<!-- 공통 sidenav -->
-
-	<div class="bodiary-wrapper mt-3">
-		<div class="content">
+	<div class="bodiary-wrapper">
+		<div class="content mt-4">
 			<form action="">
-				<!-- Rounded switch -->
-				<div class="row">
-				
-					<div class="col-12">
-						<input type="text" class="form-control bg-transparent"
-							placeholder="제목을 입력하세요">
-					</div>
-					<div class="col-6">
-
-						<div class="card">
-							<h5 class="card-title">시작사진</h5>
-							<img class="routine-img " src="assets/images/profile.jpg" alt="">
-							<div class="card-body">
-								<div class="form-group">
-									<div class="fallback">
-										<input
-											class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-											name="file" type="file" multiple="multiple">
+				<div class="card">
+					<div class="card-body">
+					
+						<!-- 제목 start -->
+						<div class="col-12">
+							<input type="text" class="form-control bg-transparent" placeholder="제목을 입력하세요">
+						</div>
+						<!-- 제목 end -->
+						
+						<!-- 이미지 start -->
+						<div class="row p-3">
+							<div class="col-6">
+								<h5 class="card-title p-3">Before</h5>
+								<img class="routine-img" src="assets/images/profile.jpg" alt="">
+								<div class="card-body">
+									<div class="form-group">
+										<div class="fallback">
+										    <input class="btn btn-outline-primary" name="file" type="file" multiple="multiple">
+										</div>
 									</div>
 								</div>
-
 							</div>
-						</div>
-					</div>
-					<div class="col-6">
-						<div class="card">
-							<h5 class="card-title">끝사진</h5>
-							<img class="routine-img " src="assets/images/dkdk.gif" alt="">
-							<div class="card-body">
-								<div class="form-group">
-									<div class="fallback">
-										<input
-											class="btn btn-outline-primary m-b-30 m-t-15 f-s-14 p-l-20 p-r-20 m-r-10"
-											name="file" type="file" multiple="multiple">
+							
+							<div class="col-6">
+								<h5 class="card-title p-3">After</h5>
+						        <img class="routine-img" src="assets/images/dkdk.gif" alt="">
+						        <div class="card-body">
+									<div class="form-group">
+										<div class="fallback">
+											<input class="btn btn-outline-primary" name="file" type="file" multiple="multiple">
+										</div>
 									</div>
+							    </div>
+							</div>
+						</div>
+						<!-- 이미지 end -->
+	                    
+						<!-- 루틴 선택하기 start -->
+						<div class="col-12">
+							<div class="form-group">
+								<select class="form-control">
+								    <option>루틴 선택하기</option>
+								    <option>&nbsp;루틴 1</option>
+								    <option>&nbsp;루틴 2</option>
+								</select>
+							</div>
+						</div>
+						<!-- 루틴 선택하기 end -->
+	
+						<!-- 썸머노트 start -->
+	                    <div class="col-12">
+	                    	<div class="summernote">
+	                        </div>
+	                    </div>
+						<!-- 썸머노트 end -->
+						
+						<div class="row">
+							<div class="form-group mt-4 ml-4">
+								<div class="form-check form-check-inline">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" value=""> 몸무게 비공개
+									</label>
 								</div>
-
-							</div>
-						</div>
-					</div>
-					<div class="col-12">
-						<div class="form-group">
-							<select class="form-control">
-								<option>루틴선택하기</option>
-								<option>Option 2</option>
-								<option>Option 3</option>
-							</select>
-						</div>
-					</div>
-
-					<div class="col-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="summernote">
-									<h3>Default Summernote</h3>
+								<div class="form-check form-check-inline">
+									<label class="form-check-label">
+										<input type="checkbox" class="form-check-input" value=""> 동성에게만 공개하기
+									</label>
 								</div>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="form-check form-check-inline">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" value="">몸무게비공개
-								</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" value="">동성에게만공개
-								</label>
-							</div>
+						
+						<div class="text-right mr-3">
+							<button id="save" class="btn btn-outline-primary" onclick="" type="button">임시저장</button>
+							<button id="submit" class="btn btn-primary" onclick="location.href='routineBrdList'" type="submit" value="submit">수정</button>
 						</div>
-						<div class="card">
-							<div class="card-body">
-								<div class="click2edit m-b-40">루틴을 자랑할까요?</div>
-								<button id="submit" class="btn btn-info btn-rounded" onclick=""
-									type="submit" value="submit">수정하기</button>
-								<button id="save" class="btn btn-success btn-rounded"
-									href="routineBrdList" type="button">뒤로가기</button>
-							</div>
-						</div>
+						
 					</div>
-
 				</div>
 			</form>
 		</div>
 	</div>
-
-	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
