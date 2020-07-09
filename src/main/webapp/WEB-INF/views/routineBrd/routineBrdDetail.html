@@ -1,129 +1,156 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<!-- 공통 헤더-->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더 -->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
-
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<!-- 공통 sidenav -->
-	
-	<div class="bodiary-wrapper mt-5">
-		<div class="content">
-		<div class="row">
-			<div class="col-11">
-               <h2 class="text-primary ml-3 mb-3">제목</h2>
-              </div>
-              <div class="col-1">
-               <div class="user-img c-pointer position-relative mt-3" data-toggle="dropdown">
-                        <span class="activity active"></span> 
-                        <i class="icon-options-vertical"></i>
-                     </div>
-                                    <div class="basic-dropdown">
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">신고</a>
-                           <a class="dropdown-item" href="#">삭제</a>
-                        </div>
-
-                                    </div>
-              </div>
+	<div class="bodiary-wrapper">
+		<div class="content mt-4">
+		
+			<!-- 제목 start -->
+			<div class="row">
+				<div class="col-11">
+					<div class="card" style="height: 50px;">
+						<h3 class="text-primary ml-3 mb-3">제목</h3>
+					</div>
+				</div>
+              	<div class="col-1">
+	              	<div class="card" style="height: 50px;">
+	               		<div class="user-img c-pointer position-relative center mt-3" data-toggle="dropdown">
+							<span class="activity active"></span>
+	                        <i class="icon-options-vertical"></i>
+						</div>
+						<div class="basic-dropdown">
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#">신고</a>
+								<a class="dropdown-item" href="#">삭제</a>
+	                        </div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- 제목 end -->
+			
+			<!-- 이미지 start -->
+			<div class="row">
 				<div class="col-6">
-							<div class="card p-4">
-									<h5 class="card-title">시작사진</h5>
-								<img class="routine-img " src="assets/images/profile.jpg" alt="">
-								<div class="card-body">
-								</div>
-							</div>
+					<div class="card h-100 p-4">
+						<h5 class="card-title">BEFORE</h5>
+						<div class="card-body">
+							<img class="routine-img" src="assets/images/profile/1.jpg" alt="">
 						</div>
-						<div class="col-6">
-							<div class="card p-4">
-									<h5 class="card-title">끝사진</h5>
-								<img class="routine-img " src="assets/images/dkdk.gif" alt="">
-								<div class="card-body">
-								</div>
-							</div>
+					</div>
+				</div>
+				<div class="col-6">
+					<div class="card h-100 p-4">
+					<h5 class="card-title">AFTER</h5>
+						<div class="card-body">
+							<img class="routine-img" src="assets/images/profile/2.jpg" alt="">
 						</div>
-					<div class="col-12">	
+					</div>
+				</div>
+			</div>
+			<!-- 이미지 end -->
+			
+			<!-- 루틴 start -->			
+			<div class="row mt-4">
+				<div class="col-12">
 					<div class="card">
-					<div class="card-body">
-						<div class="media mb-4 mt-1">
-							<div class="media-body">
-								<span class="float-right">날짜?</span>
-								
+						<div class="card-body border-0 bg-transparent">
+							<div class="row">
+								<div class="col-6 pt-3">			                            	
+									<div class="text-center">
+										<div class="basic-list-group">
+											<ul class="list-group">
+												<li class="list-group-item active">루틴이름-유산소</li>
+												<li class="list-group-item">걷기</li>
+												<li class="list-group-item">달리기</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<div class="col-6 pt-3">
+									<div class="text-center">
+										<div class="basic-list-group">
+											<ul class="list-group">
+												<li class="list-group-item active">루틴이름-무산소</li>
+												<li class="list-group-item">벤치프레스</li>
+												<li class="list-group-item">데드리프트</li>
+												<li class="list-group-item">오버헤드밀리터리프레스</li>
+												<li class="list-group-item">스쿼트</li>
+											</ul>
+										</div>  
+									</div>
+								</div>
 							</div>
 						</div>
-						<p id="">
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-							컨텐츠<br>
-						</p>
+					</div>
+				</div>
+			</div>
+			<!-- 루틴 end -->
+			
+			<!-- 내용 end -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="media mb-4 mt-1">
+								<div class="media-body">
+									<span class="float-right">날짜</span>
+								</div>
+							</div>
+							<p id="">
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+								컨텐츠<br>
+							</p>
 						</div>
-						</div>
-						<hr>
-						</div>
-                            <div class="col-6"> 
-                        <div class="card">
-                            <div class="card-body">
-                              <div class="basic-list-group">
-                                    <ul class="list-group">
-                                        <li class="list-group-item active">루틴이름-유산소</li>
-                                        <li class="list-group-item">걷기</li>
-                                        <li class="list-group-item">달리기</li>
-                                    </ul>
-                                </div>  
-                                  </div>  
-                                </div>
-                                </div>
-                                <div class="col-6"> 
-                                 <div class="card">
-                            <div class="card-body">
-                              <div class="basic-list-group">
-                                    <ul class="list-group">
-                                        <li class="list-group-item active">루틴이름-무산소</li>
-                                        <li class="list-group-item">벤치프레스</li>
-                                        <li class="list-group-item">데드리프트</li>
-                                        <li class="list-group-item">오버헤드밀리터리프레스</li>
-                                        <li class="list-group-item">스쿼트</li>
-                                    </ul>
-                                </div>  
-                                </div>
-                            </div>
-                    </div>
-                    	<div class="col-12">
-                    	<div class="row">
-                                    <div class="col-6">
-                                        <a class="text-center d-block text-muted" href="javascript:void()">
-                                            <i class="fa fa-star gradient-1-text" aria-hidden="true"></i>
-                                            <p class="">00개</p>
-                                        </a>
-                                    </div>
-                                    <div class="col-6"><a class="text-center d-block text-muted" href="javascript:void()">
-                                        <i class="fa fa-heart gradient-3-text"></i>
-                                            <p class="">00개</p>
-                                        </a>
-                                    </div>
-                                   
-                                </div>
-						<div class="col-12 card p-5">
+					</div>
+				</div>
+			</div>
+			<!-- 내용 end -->
+			
+			<!-- 좋아요 추천수 start -->
+			<div class="col-12">
+				<div class="row">
+					<div class="col-6">
+						<a class="text-center d-block text-muted" href="javascript:void()">
+							<i class="fa fa-star gradient-1-text" aria-hidden="true"></i>
+							<p class="">00개</p>
+						</a>
+					</div>
+					<div class="col-6">
+						<a class="text-center d-block text-muted" href="javascript:void()">
+							<i class="fa fa-heart gradient-3-text"></i>
+							<p class="">00개</p>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!-- 좋아요 추천수 end -->
+			
+			<!-- 댓글 start -->
+			<div class="col card p-5">
 						<!-- 오주시작 -->
 						<p class="card-text ">
-                  <i class="icon-bubble"></i>댓글 5
+                  <i class="icon-bubble"></i> 댓글 5
                </p>
 
                <div class="mt-5">
                   <div class="row ">
                      <div class="col-11">
-                        <b>익명 1</b> <span class="badge badge-pill badge-info">작성자</span> <span><i class="icon-clock"></i>2020.07.03
+                        <b>익명 1</b> <span class="badge badge-pill badge-info">작성자</span> <span><i class="icon-clock"></i> 2020.07.03
                            11:23</span>
                            <span>&nbsp;&nbsp;답글쓰기</span>
                      </div>
@@ -150,7 +177,7 @@
                   <div class="mt-5 pl-5">
                   <div class="row">
                      <div class="col-11">
-                        <b>익명 2</b> <span><i class="icon-clock"></i>2020.07.03
+                        <b>익명 2</b> <span><i class="icon-clock"></i> 2020.07.03
                            11:23</span>
                      </div>
                      <div class="user-img c-pointer position-relative"
@@ -175,7 +202,7 @@
                   <div class="mt-5">
                   <div class="row">
                      <div class="col-11">
-                        <b>익명 3</b> <span><i class="icon-clock"></i>2020.07.03
+                        <b>익명 3</b> <span><i class="icon-clock"></i> 2020.07.03
                            11:23</span>
                      </div>
                      <div class="user-img c-pointer position-relative"
@@ -200,7 +227,7 @@
                   <div class="mt-5">
                   <div class="row">
                      <div class="col-11">
-                        <b>익명 4</b> <span><i class="icon-clock"></i>2020.07.03
+                        <b>익명 4</b> <span><i class="icon-clock"></i> 2020.07.03
                            11:23</span>
                      </div>
                      <div class="user-img c-pointer position-relative"
@@ -225,7 +252,7 @@
                   <div class="mt-5">
                   <div class="row">
                      <div class="col-11">
-                        <b>익명 5</b> <span><i class="icon-clock"></i>2020.07.03
+                        <b>익명 5</b> <span><i class="icon-clock"></i> 2020.07.03
                            11:23</span>
                      </div>
                      <div class="user-img c-pointer position-relative"
@@ -247,26 +274,25 @@
 
 
                </div>
-						<!-- 오주끝-->
+			<!-- 댓글 start -->
+						<!-- 오주끝 -->
 						<hr>
 						
 						<div class="form-group p-t-15">
 						<form>
-							<textarea class="w-100 p-20 l-border-1" name="" id="" cols="30"
-								rows="5"
-								placeholder="댓글을 입력해주세요"></textarea>
-								<button id="submit" class="btn btn-info btn-rounded" onclick="" type="submit" value="submit">등록하기</button>
-						<button id="" class="btn btn-info btn-rounded" onclick="location.href='routineBrdList'" value="목록보" style="float:right">목록보</button>
+							<textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="댓글을 입력해주세요"></textarea>
+								<button id="submit" class="btn-outline-primary btn-sm" onclick="" type="submit" value="submit">등록하기</button>
 						</form>
 						
 						</div>
 						</div>
+						<button id="" class="btn btn-primary btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기" style="float:right">목록보기</button>
 					
 					</div>
 				</div>
 		</div>
 	</div>
-
+</div>
 	<!-- 기본 폼 완성 -->
 
 	<!-- 공통 스크립트-->

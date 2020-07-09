@@ -1,0 +1,83 @@
+<th:block th:fragment="scriptFragment">
+  	<script type="text/javascript">
+		//$("input:checkbox[id='exer_ab']").is(":checked")
+		$(function(){
+			$('#exercisesearch').keyup(function(){
+				var data = {excs_name : $('#exercisesearch').val()};
+				$.ajax(
+						 {
+							 type:"post",
+							 data: data,
+							 url:"exerciseNameSearch.exer",
+							 dataType:"json",
+							 success:function(responsedata){ 
+								 console.log(responsedata);
+								$('#exercisetable').empty();
+								
+								$.each(responsedata,function(index,obj){
+									if(obj.excs_cal_per_minweight==0){
+										$('#exercisetable').append(	
+												"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+												+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소"
+												+"</span></div></div><div class='col-2 center'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+												);	
+										
+									}else{
+									$('#exercisetable').append(	
+											"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+											+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
+											+obj.excs_cal_per_minweight.toFixed(3)+"</span></div></div><div class='col-2 center'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+											);
+									}
+								});
+							 }
+						 }
+				      );
+			});
+		})
+	
+		function exer_c(){
+			$.ajax(
+					 {
+						 type:"post",
+						 url:"exercisecNameSearch.exer",
+						 dataType:"json",
+						 success:function(responsedata){ 
+							 console.log(responsedata);
+							$('#exercisetable').empty();
+							
+							$.each(responsedata,function(index,obj){	
+								$('#exercisetable').append(	
+										"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+										+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
+										+obj.excs_cal_per_minweight.toFixed(3)+"</span></div></div><div class='col-2 center'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+										);
+							});
+						 }
+					 }
+			      );
+		}
+		function exer_n(){
+			$.ajax(
+					 {
+						 type:"post",
+						 url:"exercisenNameSearch.exer",
+						 dataType:"json",
+						 success:function(responsedata){ 
+							 console.log(responsedata);
+							$('#exercisetable').empty();
+							
+							$.each(responsedata,function(index,obj){	
+								$('#exercisetable').append(	
+										"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+										+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소"
+										+"</span></div></div><div class='col-2 center'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+										);
+							});
+						 }
+					 }
+			      );
+		}
+
+		</script>
+</th:block>
