@@ -15,7 +15,10 @@
   function naverSignInCallback() {
     alert(naver_id_login.getProfileData('email'));
     alert(naver_id_login.getProfileData('nickname'));
-    alert(naver_id_login.getProfileData('age'));
+    alert(naver_id_login.getProfileData('gender'));
+    
+    window.location.replace("http://" + window.location.hostname + 
+            ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/bodiary/main");
   }
 </script>
 </body>

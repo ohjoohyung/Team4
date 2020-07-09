@@ -1,28 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	
+   xmlns:context="http://www.springframework.org/schema/context"
+   xmlns:mvc="http://www.springframework.org/schema/mvc"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:tx="http://www.springframework.org/schema/tx"
+   xmlns:task="http://www.springframework.org/schema/task"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/mvc 
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/context 
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                     	   http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-	<mvc:annotation-driven/>
-	<context:annotation-config />
-	<!-- <context:component-scan base-package="ncontroller" />
-	<context:component-scan base-package="service"/> -->
+   <task:annotation-driven />
+   <tx:annotation-driven
+      transaction-manager="transactionManager" />
+   <mvc:annotation-driven />
+   <context:annotation-config />
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+   <!-- <bean id="urlBasedViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"> 
+      <property name="cache" value="false" /> <property name="prefix" value="/WEB-INF/views/" 
+      /> <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" 
+      /> <property name="suffix" value=".jsp" /> <property name="order" value="0" 
+      /> </bean> -->
 
-	<context:component-scan base-package="kr.or.bodiary.**.controller" />
-	<context:component-scan base-package="kr.or.bodiary.**.service"/>
-	
-	<mvc:resources mapping="/assets/**" location="/assets/" />
-	
-	<!-- 리캡차 -->
-	<context:component-scan base-package="org.alpreah.reCAptcha" />
-	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+<!--     <bean id="urlBasedViewResolver"
+      class="kr.or.ns.util.CustomViewResolver">
+      <property name="prefix" value="/WEB-INF/views/" />
+      <property name="viewClass"
+         value="org.springframework.web.servlet.view.JstlView" />
+      <property name="suffix" value=".jsp" />
+      <property name="order" value="0" />
+   </bean>  -->
 
-	
+
+
+   <bean id="templateEngine"
+      class="org.thymeleaf.spring4.SpringTemplateEngine">
+      <property name="templateResolver">
+         <ref bean="templateResolver" />
+      </property>
+      <property name="additionalDialects">
+         <set>
+            <bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
+            <bean
+               class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+            <bean
+               class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+         </set>
+      </property>
+   </bean>
+
+   <!-- thymeleaf laytout ViewResolver 설정 -->
+   <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+      <property name="templateEngine" ref="templateEngine" />
+      <property name="characterEncoding" value="UTF-8" />
+      <property name="order" value="2" />
+   </bean>
+
+   <!-- bean네임추가 -->
+   <bean id="viewResolver"
+      class="org.springframework.web.servlet.view.BeanNameViewResolver">
+      <property name="order" value="3"></property>
+   </bean>
+
+   <!-- 파일 다운로드할 클래스 경로 설정 -->
+   <!-- <bean id="download" class=""/> -->
+
+   <!-- 트랜잭션에 관련된 bean 객체 생성하고 inject을 통해서 구동 -->
+   <bean id="transactionManager"
+      class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+      <property name="dataSource" ref="driverManagerDataSource" />
+      <!-- driverManagerDataSource는 루트컨테이너에 있는거 사용 그럼왜 트랜잭션을 루트에안만들었는가?? 적용할라고 
+         하는 빈객체가 servlet-context.xml에 있기 때문에 여기에 사용 -->
+   </bean>
+   <tx:annotation-driven
+      transaction-manager="transactionManager" />
+
+      <context:component-scan base-package="kr.or.bodiary.**.controller" />
+      <context:component-scan base-package="kr.or.bodiary.**.service"/>
+      
+      <mvc:resources mapping="/assets/**" location="/assets/" />
+      
+      <!-- 리캡차 -->
+      <context:component-scan base-package="org.alpreah.reCAptcha" />
+      <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+
+
+
 </beans>
