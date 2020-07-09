@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
+import kr.or.bodiary.freeBrd.dto.FreeCriteria;
 
 @Service
 public class FreeBrdService {
@@ -27,6 +28,20 @@ public class FreeBrdService {
 		this.sqlsession = sqlsession;
 	}
 
+	//페이지 처리 
+	public List<FreeBrdDto> listPage() throws ClassNotFoundException, SQLException{
+		
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		FreeCriteria cri = new FreeCriteria();
+		List<FreeBrdDto> list = FreeBrd.criteriaList(cri);
+		
+		for(FreeBrdDto free : list) {
+			System.out.println("글번호"+free.getFree_brd_seq());
+		}
+		
+		return list;
+	}
+	
 	// 전체 게시글(자유,팁,궁금) 목록보기
 	public List<FreeBrdDto> allFreeBrd() {
 

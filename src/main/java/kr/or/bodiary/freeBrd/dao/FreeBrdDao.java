@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
+import kr.or.bodiary.freeBrd.dto.FreeCriteria;
 
 
 
@@ -32,4 +33,6 @@ public interface FreeBrdDao {
 	//해당 게시글 삭제
 	public Integer freeBrdDelete(String seq) throws ClassNotFoundException, SQLException;
 	
+	//페이징 처리 
+	public List<FreeBrdDto> criteriaList(FreeCriteria cri) throws ClassNotFoundException, SQLException;
 }

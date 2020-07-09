@@ -29,6 +29,15 @@ public class FreeBrdController {
 		this.freeBrdService = freeBrdService;
 	}
 	
+	//페이징 처리 보기 
+	@RequestMapping("freepage")
+	public String listPage(Model model) throws ClassNotFoundException, SQLException {
+		List<FreeBrdDto> freeBrdList = freeBrdService.listPage();
+		model.addAttribute("freeBrdList",freeBrdList);
+		
+		return "freeBrd/freeBrdList";
+	}
+	
 	//전체 게시글(자유,팁,궁금) 보기
 	@RequestMapping("freeBrdList")
 	public String AllFreeBrdList(Model model) {

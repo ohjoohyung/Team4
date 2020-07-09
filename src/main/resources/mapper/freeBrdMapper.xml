@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   <!-- 글쓰기후 생성된 글번호(가장큰) 가져오기 -->
 	   <select id="afterInsert_SelectDetail"  resultType="int">
 	   				select max(free_brd_seq)
-					from freeboard;			
+					from freeboard		
 	   </select>
 	   
 	   <!-- 게시글 Update 쿼리문 -->
@@ -46,7 +46,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   			WHERE free_brd_seq=#{seq}    									
 	   </select>
 	   
+	   <!-- 페이징 처리 -->
+	    <select id="criteriaList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   			select * 
+	   			from freeboard 
+	   			where free_brd_seq>0
+	   			order by free_brd_seq desc 
+	   			limit #{pageStart},#{perPageNum}   									
+	   </select> 
+	   
+	   
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
