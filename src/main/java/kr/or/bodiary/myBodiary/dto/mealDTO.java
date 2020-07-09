@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 
 public class mealDTO {
-	private int meal_seq ;
+	private int meal_seq;
 	private String meal_name ;
 	
 }

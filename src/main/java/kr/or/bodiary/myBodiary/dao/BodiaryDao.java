@@ -3,7 +3,7 @@ package kr.or.bodiary.myBodiary.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-
+import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
@@ -32,4 +32,10 @@ public interface BodiaryDao {
 	
 	//루틴 리스트 불러오기 (나중에는 유저 이메일로 판별하고 불러와야함)
 	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException;
+	
+	//식단 불러오기
+	public List<DailyMealFoodJoinDto> getDailyMeal(int meal_cart_seq) throws ClassNotFoundException, SQLException;
+	
+	//일지 리스트 불러오기
+	public List<bodiaryDTO> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException;
 }

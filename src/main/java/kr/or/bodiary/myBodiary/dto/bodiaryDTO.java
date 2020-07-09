@@ -20,7 +20,9 @@ public class bodiaryDTO {
 	private String routine_cart_seq;
 	private String diary_pubchk;
 	private String diary_condition;
-	private Date diary_date;
+	
+	//String으로 바꾸기
+	private String diary_date;
 
 	private int diary_metabolism;
 	private int diary_recom;
@@ -32,7 +34,7 @@ public class bodiaryDTO {
 	// 파일 업로드 지원
 	private CommonsMultipartFile file;
 	/*
-	 * private String user_nickname; private String diary_main_img;
+	 * private String user_nickname; 
 	 * 
 	 * 
 	 * 
