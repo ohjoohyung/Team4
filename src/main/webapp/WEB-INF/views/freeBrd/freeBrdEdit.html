@@ -58,7 +58,11 @@
 					<div class="row">
 						<div class="col-11">
 							<div class="mb-3 pl-4 mt-2">
-	                              <input type="file" id="image" name="image" class="form-control-file" th:value="${list.free_brd_image}">
+							 	   
+	                              <input type="file" id="image" name="image" class="form-control-file" ></input>
+	                              <div th:if="${list.free_brd_image != null && list.free_brd_image != ''}">
+	                              	<input type="hidden" name="image_2" th:value="${list.free_brd_image}" ></input>
+	                              </div>	
 	                         </div>
 	                    </div>
 					</div>
@@ -105,4 +109,37 @@ function postForm() {
     $('textarea[name="content"]').val($('#summernote').summernote('code'));
 }
 </script>
+
+<script type="text/javascript">
+function file_change(file){
+var str=file.lastIndexOf("\\")+1;	//파일 마지막 "\" 루트의 길이 이후부터 글자를 잘라 파일명만 가져온다.
+file = file.substring(str, file.length);
+document.getElementById('fileName').value=file;
+}
+</script>
+
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

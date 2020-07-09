@@ -6,6 +6,7 @@ import java.util.List;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 
 
+
 public interface FreeBrdDao {
 	
 	//전체 게시글 가져오기(팁,자유,궁금)
@@ -24,4 +25,11 @@ public interface FreeBrdDao {
 	
 	//게시물 Insert후 생성된 글번호만 가져오기 
 	public int afterInsert_SelectDetail() throws ClassNotFoundException, SQLException;
+	
+	//게시물 Update
+	public int freeBrdUpdate(FreeBrdDto freeBrdDto) throws ClassNotFoundException, SQLException;
+	
+	//해당 게시글 삭제
+	public Integer freeBrdDelete(String seq) throws ClassNotFoundException, SQLException;
+	
 }

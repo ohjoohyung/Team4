@@ -91,17 +91,60 @@ public class FreeBrdController {
 	}
 	
 	
-	//글수정하기(처리 단)
+	//글수정하기(처리 단) 뷰단에서 올린 파일을 받아올라면 (MultipartFile image) 이걸써줘서 받아줘야됨
 	@RequestMapping(value="freeBrdEdit", method=RequestMethod.POST)
-	public String freeBrdEditOk(String seq, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
-		
+	public String freeBrdEditOk(FreeBrdDto n,String seq, HttpServletRequest request,MultipartFile image,RedirectAttributes redirectAttributes) throws IOException, ClassNotFoundException, SQLException {
+
 		System.out.println("카테고리번호"+request.getParameter("freeBrdCat"));
 		System.out.println("글제목"+request.getParameter("title"));
 		System.out.println("글내용"+request.getParameter("content"));
 		System.out.println("글번호"+request.getParameter("seq"));
 		
-		return "freeBrd/freeBrdEdit";
+		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
+		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
+			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
+		}else {
+			System.out.println("올린첨부파일"+image.getOriginalFilename());
+		}
+		
+		String url="redirect:freeBrd/freeBrdEdit";
+		
+		//트랜잭션 처리 .... 코드 수정...... 글수정 서비스 호출 
+		try {
+					url = freeBrdService.freeBrdEditOk(n,seq,request,image);
+					redirectAttributes.addAttribute("seq",seq);
+		}catch (Exception e) {
+					System.out.println("에러발생...");
+				    System.out.println(e.getMessage());
+		}
+		
+		//예외 발생에 상관없이 목록 페이지 새로고침 처리
+		return url;
 	}
+	
+	
+	
+	//글삭제하기 
+	@RequestMapping("freeBrdDelete")
+	public String freeBrdDelete(String seq) {
+		
+		String url="redirect:freeBrd/freeBrdList";
+		
+		//트랜잭션 처리 .... 코드 수정...... 글 삭제 서비스 호출
+		try {
+					url = freeBrdService.freeBrdDelete(seq);
+		}catch (Exception e) {
+					System.out.println("에러발생...");
+				    System.out.println(e.getMessage());
+		}
+		
+		//예외 발생에 상관없이 목록 페이지 새로고침 처리
+		return url;
+	}
+	
+	
+	
+	
 	
 }
 

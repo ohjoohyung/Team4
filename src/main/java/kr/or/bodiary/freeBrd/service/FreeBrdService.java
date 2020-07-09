@@ -3,6 +3,7 @@ package kr.or.bodiary.freeBrd.service;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -146,14 +147,75 @@ public class FreeBrdService {
 	}
 	
 	
+	// 글 수정 서비스 함수
+	public String freeBrdEditOk(FreeBrdDto n,String seq, HttpServletRequest request, MultipartFile image) throws IOException {
+		
+		//새로올린 이미지
+		String newImage = "";
+		//과거에 올렸던 이미지 
+		String pastImage = "";
+		
+		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
+		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
+			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
+			pastImage = request.getParameter("image_2");
+		}else {
+			System.out.println("새로 올린첨부파일"+image.getOriginalFilename());
+			newImage = image.getOriginalFilename();
+			// 클라이언트가 첨부한 이미지를 저장할 실제 서버파일 경로
+			// ex)
+			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload
+			String path = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
+			// 업로드 경로 + 저장할 파일이름(a.PNG)
+			// ex)
+			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload\a.PNG
+			String fpath = path + "\\" + newImage;
+			System.out.println("실경로"+fpath);
+			// FileOutput 이용해 실제 업로드하기
+			FileOutputStream fs = new FileOutputStream(fpath);
+			fs.write(image.getBytes());
+			fs.close();
+		}
+		
+		
+		// DTO에 게시판에서 작성한 값 넣어주기
+
+		//글번호
+		n.setFree_brd_seq(Integer.parseInt(request.getParameter("seq")));
+		// 카테고리
+		n.setFree_cat(Integer.parseInt(request.getParameter("freeBrdCat")));
+		// 글제목
+		n.setFree_brd_title(request.getParameter("title"));
+		// 업로드한 사진이름(글쓰기 뷰단에서 이미지를 첨부안하면 "" 공백으로 인식해서 들어옴)
+		if(newImage != null && newImage != "") {
+			n.setFree_brd_image(newImage); //글 수정할때 새로올린 이미지가 있다면 실행 
+		}else {
+			n.setFree_brd_image(pastImage); //글 수정할때 새로올린 이미지 없다면 기존이미지를 들고옴 
+		}
+		// 글내용
+		n.setFree_brd_content(request.getParameter("content"));
+		
+		// DB연동해서 클라이언트가 입력한 데이터들을 DB안에 테이블에 넣어주기
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		
+		try {
+			FreeBrd.freeBrdUpdate(n);
+			System.out.println("게시글 Update 완료");
+
+		}catch (Exception e) {
+			System.out.println("게시글 Update 문제발생..."+e.getMessage());
+		}
+			
+		return "redirect:freeBrdDetail";
+	}
 	
 	
-	
-	
-	
-	
-	
-	
+	 //글삭제하기 서비스 함수
+	 public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
+		 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			FreeBrd.freeBrdDelete(seq);
+			return "redirect:freeBrdList";
+	}
 	
 	
 	

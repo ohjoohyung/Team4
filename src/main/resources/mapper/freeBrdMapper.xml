@@ -32,6 +32,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					from freeboard;			
 	   </select>
 	   
+	   <!-- 게시글 Update 쿼리문 -->
+	   <select id="freeBrdUpdate"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   			UPDATE freeboard 
+	   			SET free_cat=#{free_cat},free_brd_title=#{free_brd_title},free_brd_image=#{free_brd_image},free_brd_content=#{free_brd_content}
+	   			WHERE free_brd_seq=#{free_brd_seq}    									
+	   </select>
+	   
+	   <!-- 게시글 Delete 쿼리문 -->
+	   <select id="freeBrdDelete">
+	   			DELETE 
+	   			FROM freeboard
+	   			WHERE free_brd_seq=#{seq}    									
+	   </select>
+	   
 </mapper>
 
 
