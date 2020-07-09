@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
@@ -19,30 +21,49 @@ import org.springframework.stereotype.Component;
 
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.UserDto;
-import kr.or.bodiary.user.service.UserService;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
-@ToString
-@Getter
-@Setter
 @Component
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 	private RequestCache requestCache = new HttpSessionRequestCache();
     private RedirectStrategy redirectStratgy = new DefaultRedirectStrategy();
-	private UserService userservice;
+    
+    public LoginSuccessHandler() {
+    	System.out.println("LoginSuccessHandler 생성");
+    }
+	
+//    private UserService userService;
+//	@Autowired
+//	public void setUserService(UserService userService) {
+//		this.userService = userService;
+//	}
+    @Autowired
+    private SqlSession sqlsession;
     
 	private String loginEmail;
-    private String defaultUrl;
-
+	private String defaultUrl;
+	
+	public String getLoginEmail() {
+		return loginEmail;
+	}
+	public void setLoginEmail(String loginEmail) {
+		this.loginEmail = loginEmail;
+	}
+	public String getDefaultUrl() {
+		return defaultUrl;
+	}
+	public void setDefaultUrl(String defaultUrl) {
+		this.defaultUrl = defaultUrl;
+	}
+	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
 		
 		resultRedirectStrategy(request, response, authentication);
 		clearAuthenticationAttributes(request);
+		sessionAdd(request, authentication);
+		
 	}
     protected void resultRedirectStrategy(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -65,20 +86,21 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     
     
     //세션 저장
-//    protected void sessionAdd(HttpServletRequest request , Authentication authentication) {
-//        HttpSession session = request.getSession(true);
-//        UserDto currentUser = null;
-//        
-//        System.out.println(authentication.getName());
-//        currentUser= userservice.getUser(authentication.getName());
-////        try {	
-////        	System.out.println(authentication.getName());
-////        currentUser = userdao.getUser(authentication.getName());
-////		} catch (Exception e) {
-////			e.printStackTrace();
-////		}
-//        System.out.println(currentUser);
-//        session.setAttribute("currentUser", currentUser);
-//    }
+    protected void sessionAdd(HttpServletRequest request , Authentication authentication) {
+        HttpSession session = request.getSession(true);
+        UserDto currentUser = null;
+        System.out.println("sqlsession : "+ sqlsession);
+//        currentUser= userService.getUser(authentication.getName());
+      try {	
+        	System.out.println("authentication.getName() : "+authentication.getName());
+        	UserDao userdao = sqlsession.getMapper(UserDao.class);
+        	System.out.println(userdao);
+        currentUser = userdao.getUser(authentication.getName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+        System.out.println("currentUser : "+currentUser);
+        session.setAttribute("currentUser", currentUser);
+        }
 
 }

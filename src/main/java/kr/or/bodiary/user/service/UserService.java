@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.EmailDto;
@@ -32,8 +34,9 @@ public class UserService {
 //		return userdao.getUser(id);
 //	}
 	//-----------유저찾기 서비스-----------
+
 	public UserDto getUser(String user_email) {
-		System.out.println("유저 찾아야됨");
+		System.out.println("유저 찾아야됨"+user_email);
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		UserDto currentUser = null;
 		try {

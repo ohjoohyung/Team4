@@ -14,5 +14,5 @@ public interface UserDao {
 	public int insertUser(UserDto user) throws ClassNotFoundException, SQLException;
 
 	//----------- 이메일 체크 -----------
-	public int emailCheck(String email) throws ClassNotFoundException, SQLException;
+	public int emailCheck(String user_email) throws ClassNotFoundException, SQLException;
 }

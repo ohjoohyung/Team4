@@ -87,7 +87,7 @@
 	    <property name="loginEmail" value="user_email"/>
 	    <property name="defaultUrl" value="/main"/>
 	</bean>
-
+	<context:component-scan base-package="kr.or.bodiary.interceptor"/>
 </beans>  
 
 

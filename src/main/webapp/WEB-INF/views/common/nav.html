@@ -54,7 +54,6 @@
 
 
 			<div class="profile col-4 p-0">
-			<a href="logout"><i class="icon-key"></i> <span>Logout</span></a>
 				<!-- 비로그인 -->
 				<div sec:authorize="isAnonymous()" class="header-right mr-3"> 
 					<a class="btn btn-outline-primary " href="login">
@@ -65,10 +64,10 @@
 				<!-- 로그인 했을 때 (일반 유저) -->
 				<!-- 시큐리티로 구분 반영 -->
 				
-				<div class="header-right mt-2 mr-3" sec:authorize="hasRole('ROLE_REGULAR_USER')" >
+				<div class="header-right mt-2 mr-3" >
                     <ul class="clearfix">
                         
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2">3</span>
                             </a>
@@ -122,17 +121,21 @@
                                 </div>
                             </div>
                         </li>
-                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown">
+                        
+                        <li sec:authorize="hasAnyRole('ROLE_REGULAR_USER','ROLE_ASSOCIATE_USER')" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
                                 <img src="assets/images/user/2.png" height="40" width="40" alt="">
-                                <span sec:authentication="principal.authorities"></span> 님
                             </div>
+                                <span sec:authentication="principal.authorities"></span> 님
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
-                                        <li>
+                                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')">
                                             <a href="myBodiaryMain"><i class="icon-user"></i> <span>내 바디어리</span></a>
+                                        </li>
+                                        <li sec:authorize="hasRole('ROLE_ASSOCIATE_USER')">
+                                            <a href="myProfileEdit"><i class="icon-user"></i> <span>내 정보 등록하기</span></a>
                                         </li>
                                         <li>
                                             <a href="myPageEdit"><i class="icon-pencil"></i> <span>계정 관리</span></a>
@@ -143,24 +146,6 @@
                                             <a href="admin"><i class="icon-pencil"></i><span>관리자 페이지</span></a>
                                         </li>
                                         <!--  -->
-                                        <li><a href="logout"><i class="icon-key"></i> <span>Logout</span></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </li>
-                        
-                        <li sec:authorize="hasRole('ROLE_ASSOCIATE_USER')" class="icons dropdown">
-                            <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
-                                <span class="activity active"></span>
-                                <img src="assets/images/user/2.png" height="40" width="40" alt="">
-                            </div>
-                            <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
-                                <div class="dropdown-content-body">
-                                    <ul>
-                                        <li>
-                                            <a href="myProfileEdit"><i class="icon-user"></i> <span>내 정보 등록하기</span></a>
-                                        </li>
-                                        <hr class="my-2">
                                         <li><a href="logout"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>

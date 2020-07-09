@@ -3,7 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bodiary.user.dao.UserDao">
-	<select id="getUser" parameterType="String" resultType="kr.or.bodiary.user.dto.UserDto">
+	<select id="getUser" resultType="kr.or.bodiary.user.dto.UserDto">
 		select *
 		from User
 		where user_email= #{user_email}

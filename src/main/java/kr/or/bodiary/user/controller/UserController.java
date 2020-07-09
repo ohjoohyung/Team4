@@ -32,8 +32,11 @@ public class UserController {
 	//로그인 페이지 
 	@RequestMapping("/login")
 	public String login() {
+		
 		return "user/login";
 	}
+	
+
 	@RequestMapping("/nCallback")
 	public String naverCallback() {
 		return "user/nCallback";
@@ -55,8 +58,10 @@ public class UserController {
 	//------------- 이메일 확인 --------------
 	@ResponseBody
 	@RequestMapping("/emailCheck")
-	public int emailcheck(String email) {
-		return userService.emailCheck(email);
+	public int emailcheck(String user_email) {
+		System.out.println(user_email);
+		System.out.println(userService.getUser(user_email));
+		return userService.emailCheck(user_email);
 	}
 	//------------- 이메일 인증번호 전송 -------------
 	@ResponseBody
