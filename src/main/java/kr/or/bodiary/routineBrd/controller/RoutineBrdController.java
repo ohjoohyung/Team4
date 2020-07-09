@@ -9,15 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-<<<<<<< HEAD
 
-import kr.or.bodiary.chat.dto.NotYet;
-import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
-import kr.or.bodiary.routineBrd.dto.routineBrdDTO;
-import kr.or.bodiary.routineBrd.service.RoutineBrdService;
-
-
-=======
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;

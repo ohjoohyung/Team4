@@ -21,8 +21,7 @@ import com.mysql.cj.protocol.x.Notice;
 import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 
-<<<<<<< HEAD
-=======
+
 import kr.or.bodiary.user.dao.UserDao;
 
 

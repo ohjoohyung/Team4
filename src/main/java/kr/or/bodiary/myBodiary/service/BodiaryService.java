@@ -24,7 +24,7 @@ import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.user.dao.UserDao;
-import kr.or.bodiary.user.dto.userDTO;
+import kr.or.bodiary.user.dto.UserDto;
 
 
 @Service
