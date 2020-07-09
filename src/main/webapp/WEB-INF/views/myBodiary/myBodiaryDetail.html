@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<!-- 공통 헤더 -->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더 -->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
@@ -9,7 +10,8 @@
 	<div class="bodiary-wrapper">
 		<div class="row mt-4">
 			<nav class="col-3 ml-3 mr-0 sidenav">
-				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+				<aside id="sidebar" class="js-custom-scroll side-nav"
+					th:replace="common/sidebar :: sidebarFragment"></aside>
 			</nav>
 			<!-- myBodiary 내 공통 목표 띠  -->
 			<div class="col mr-5">
@@ -17,16 +19,19 @@
 				<div class="card card-body pt-0 pb-0 pl-4">
 					<div class="row">
 						<div class="col pl-3 mt-3 mb-2">
-							현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이 목표를 달성하고 있어요!
+							현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이
+							목표를 달성하고 있어요!
 						</div>
 						<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
 						<div class="col-1 mt-2 mb-2">
-							<button class="btn btn-primary btn-flat"><i class="mdi mdi-plus"></i></button>
+							<button class="btn btn-primary btn-flat">
+								<i class="mdi mdi-plus"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 				<!--  -->
-				
+
 				<div class="row">
 					<div class="col">
 						<!-- <div class="card card-widget">
@@ -41,9 +46,9 @@
 	                			</div>
 	            			</div>
 	            		</div> -->
-	            	
-	            		<!--  -->
-	            		<!-- <div class="row">
+
+						<!--  -->
+						<!-- <div class="row">
 		                    <div class="col-12">
 		                        <div class="card">
 		                            <div class="card-head mt-3">
@@ -129,132 +134,190 @@
 						<div class="row">
 							<!-- 사진 start -->
 							<div class="bodiary-img-card col-lg-4 col-sm-12">
-								<div class="card card-body h-100 ">
+								<div class="card card-body">
 									<div class="img-fluid">
 										<div class="bodiary-img">
-											<div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
-												<img class="img-fluid w-100" src="assets/images/users/healthymealprep.jpg"
-													 style="width :auto; height: auto; transform: translate(-50%, -50%);">
+											<div
+												style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+												<img class="img-fluid w-100"
+													th:src="@{assets/upload/myBodiaryUpload/}+${bodiary.diary_main_img}"
+													style="width: auto; height: auto; transform: translate(-50%, -50%);">
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 							<!-- 사진 end -->
-							
+
 							<div class="col-8">
 								<div class="row">
 									<div class="col-lg-6 col-sm-6">
-		                        <div class="card h-100 justify-content-center">
-									<div class="text-center">
-										<div class="card-body">
-											<h2 class="mt-3"><span class="text-info">100kg</span></h2>
-											<div class="card-footer">
-												<small>Nice, you are doing great!</small>
+										<div class="card justify-content-center">
+											<div class="text-center">
+												<div class="card-body">
+													<h2 class="mt-3">
+														<span class="text-info"
+															th:text="${bodiary.diary_today_weight}"></span>kg
+													</h2>
+													<div class="card-footer">
+														<small>Nice, you are doing great!</small>
+													</div>
+												</div>
 											</div>
 										</div>
-			                        </div>
-			                    </div>
-		                    </div>
-		                    <div class="col-lg-6 col-sm-6">
-								<div class="card h-100">
-	                                <h4 class="card-title mt-4 ml-4"><i class="mdi mdi-heart-pulse gradient-3-text" aria-hidden="true"></i> Health Condition</h4>
-                            		<div class="card-body">
-                            			<div class="text-center">
-		                                	<h1><i class="mdi mdi-emoticon-happy gradient-1-text"></i>
-	                                		<i class="mdi mdi-emoticon-neutral gradient-1-text"></i>
-		                                	<i class="mdi mdi-emoticon-sad gradient-1-text"></i></h1>
-	                                	</div>
-                                	</div>
-								</div>
-							</div>
-								</div>
-								<div>
-									<div>
-		                        <div class="card h-100 justify-content-center">
-			                        <div class="text-center">
-			                        	<div class="card-header"><span class="float-right display-5 opacity-5"><i class="fa fa-commenting" aria-hidden="true"></i></span></div>
-			                            <div class="card-body">
-			                                <div class="d-inline-block">
-			                                    <p class="text">오늘의 한마디 ㅁㄴㅍㄴㅁ대러매냐ㅓㄹㄹㅇ러ㅠdsfscs귣갸갿ㅜ쇼ㅜ수쇼ㅜ쇼ㅗ쇼ㅗ쇼ㅗ소ㅓㄷㄱ소소고곡소곡속속소ㅗ4ㅗ45ㅗ45ㅗ45ㅗㄱㅎㄷ7ㄳㄷㄱㄷ숟돋ㅎㄷㄱㄱㅈ두지ㅏr햐6ㅏ4ㅑㅑㅓㅓㄷㅎ두ㅐㅑ후댜ㅐㄱㅎㄷㄱㅎㄷㄱㅎ렂디ㅏ허지ㅏ헞디ㅏ허ㅏㅣㅓㅣㅑㅓㅑㅓㅜㄴㅇ라ㅓㅠㄷㄱㅍ슈ㅎㅍㅍㅈㅍㅈㄷㅍㅈㅍㅈㅍㅈㅍㅈㄷㅍㅈㄷㅍㅈㅍㅈㄷㅍ</p>
-			                                </div>
-			                            </div>
-		                            </div>
-		                        </div>
-		                    </div>
-								</div>
-							</div>
-							
-							
-							<!-- 오늘의 한마디 start -->
-						<!-- 	<div class="col-lg-4 col-sm-6">
-		                        <div class="card h-100 justify-content-center">
-			                        <div class="text-center">
-			                        	<div class="card-header"><span class="float-right display-5 opacity-5"><i class="fa fa-commenting" aria-hidden="true"></i></span></div>
-			                            <div class="card-body">
-			                                <div class="d-inline-block">
-			                                    <p class="text">오늘의 한마디 ㅁㄴㅍㄴㅁ대러매냐ㅓㄹㄹㅇ러ㅠdsfscs귣갸갿ㅜ쇼ㅜ수쇼ㅜ쇼ㅗ쇼ㅗ쇼ㅗ소ㅓㄷㄱ소소고곡소곡속속소ㅗ4ㅗ45ㅗ45ㅗ45ㅗㄱㅎㄷ7ㄳㄷㄱㄷ숟돋ㅎㄷㄱㄱㅈ두지ㅏr햐6ㅏ4ㅑㅑㅓㅓㄷㅎ두ㅐㅑ후댜ㅐㄱㅎㄷㄱㅎㄷㄱㅎ렂디ㅏ허지ㅏ헞디ㅏ허ㅏㅣㅓㅣㅑㅓㅑㅓㅜㄴㅇ라ㅓㅠㄷㄱㅍ슈ㅎㅍㅍㅈㅍㅈㄷㅍㅈㅍㅈㅍㅈㅍㅈㄷㅍㅈㄷㅍㅈㅍㅈㄷㅍ</p>
-			                                </div>
-			                            </div>
-		                            </div>
-		                        </div>
-		                    </div> -->
-		                    <!-- 오늘의 한마디 end -->
-		                    
-		                    <!-- 오늘의 몸무게 start -->
-		          <!--           <div class="col-lg-4 col-sm-6">
-		                        <div class="card h-100 justify-content-center">
-									<div class="text-center">
-										<div class="card-body">
-											<h2 class="mt-3"><span class="text-info">100kg</span></h2>
-											<div class="card-footer">
-												<small>Nice, you are doing great!</small>
+									</div>
+									<div class="col-lg-6 col-sm-6">
+										<div class="card">
+											<h4 class="card-title mt-4 ml-4">
+												<i class="mdi mdi-heart-pulse gradient-3-text"
+													aria-hidden="true"></i> Health Condition
+											</h4>
+											<div class="card-body">
+												<div class="text-center">
+
+													<h1 th:if="${bodiary.diary_condition.equals('좋아요')}">
+														<i class="mdi mdi-emoticon-happy gradient-1-text"></i>
+													</h1>
+													<h1 th:if="${bodiary.diary_condition.equals('평범해요')}">
+														<i class="mdi mdi-emoticon-neutral gradient-1-text"></i>
+													</h1>
+													<h1 th:if="${bodiary.diary_condition.equals('나빠요')}">
+														<i class="mdi mdi-emoticon-sad gradient-1-text"></i>
+													</h1>
+
+												</div>
 											</div>
 										</div>
-			                        </div>
-			                    </div>
-		                    </div> -->
-		                    <!-- 오늘의 몸무게 end -->
-						<!-- </div>
-						
-						<div class="row mt-4"> -->
-							<!-- 오늘의 컨디션 start -->								
-							<!-- <div class="col-md-6">
-								<div class="card h-100">
-	                                <h4 class="card-title mt-4 ml-4"><i class="mdi mdi-heart-pulse gradient-3-text" aria-hidden="true"></i> Health Condition</h4>
-                            		<div class="card-body">
-                            			<div class="text-center">
-		                                	<h1><i class="mdi mdi-emoticon-happy gradient-1-text"></i>
-	                                		<i class="mdi mdi-emoticon-neutral gradient-1-text"></i>
-		                                	<i class="mdi mdi-emoticon-sad gradient-1-text"></i></h1>
-	                                	</div>
-                                	</div>
+									</div>
 								</div>
-							</div> -->
-		                    <!-- 오늘의 컨디션 end -->
-		                    
-		                    <!-- 오늘 마신 물 start -->
-						<!-- 	<div class="col-md-6">
-								<div class="card h-100">
-									<h4 class="card-title mt-4 ml-4"><i class="fa fa-tint gradient-3-text" aria-hidden="true"></i> Daily Water Intake</h4>
-		                            <div class="card-body">
-		                                <div class="progress" style="height: 10px">
-		                                    <div class="progress-bar bg-success" style="width: 75%;" role="progressbar">75%</div>
-		                                </div>
-		                            </div>
-		                        </div>
-		                    </div> -->
-		                    <!-- 오늘 마신 물 end -->
-	                    </div>
-	                    
-	                    <!-- 식단 start -->
-	                    <div class="card mt-4">
-	            			<div class="text-center">
-		            			<div class="card-head mt-3">
-		            				<h4 class="text-dark"><span class="mdi mdi-food gradient-3-text"></span> 오늘의 식단</h4>
-		            			</div>
-		            			<div class="row p-3">
-		                            <div class="col-md-6 col-lg-3">
+								<div class="row">
+									<div class="col-12">
+										<div class="card justify-content-center">
+											<div class="text-center">
+												<div class="card-header">
+													<span class="float-right display-5 opacity-5"><i
+														class="fa fa-commenting" aria-hidden="true"></i></span>
+												</div>
+												<div class="card-body">
+													<div class="d-inline-block">
+														<p class="text" th:text="${bodiary.diary_content}"></p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+
+						<!-- 식단 start -->
+						<div class="row">
+							<div class="card mt-5 col-3"></div>
+							<div class="card mt-5 col-9">
+								
+									<div class="card-head mt-3 text-center">
+										<h4 class="text-dark">
+											<span class="mdi mdi-food gradient-3-text"></span> 오늘의 식단
+										</h4>
+									</div>
+									<div class="row p-3">
+									<div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                
+                                <div id="accordion-three" class="accordion">
+                              
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseOne4" aria-expanded="true" aria-controls="collapseOne4"><i class="fa" aria-hidden="true"></i>아침</h5>
+                                        </div>
+                                        <div id="collapseOne4" class="collapse" data-parent="#accordion-three">
+                                        
+                                       
+                                       	<div class="card-body"  >
+                                            <table class="table table-bordered">
+                                            	<tr><td>이름</td><td>칼로리</td><td>개수</td></tr>
+                                            	<tr  th:each="d : ${dailymeallist}">
+                                            	<th:block th:if="${d.meal_seq}==1 ">
+                                            		<td th:text="${d.food_name}"></td><td th:text="${d.food_cal}+'  kcal'"></td><td th:text="${d.food_count}"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            </table>
+                                            </div>
+                                  
+                                         
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseTwo5" aria-expanded="false" aria-controls="collapseTwo5"><i class="fa" aria-hidden="true"></i>점심</h5>
+                                        </div>
+                                        <div id="collapseTwo5" class="collapse" data-parent="#accordion-three" >
+                                           
+                                            
+                                             <div class="card-body" >
+                                            <table class="table table-bordered">
+                                            	<tr><td>이름</td><td>칼로리</td><td>개수</td></tr>
+                                            	<tr  th:each="d : ${dailymeallist}">
+                                            	<th:block th:if="${d.meal_seq}==2 ">
+                                            		<td th:text="${d.food_name}"></td><td th:text="${d.food_cal}+'  kcal'"></td><td th:text="${d.food_count}"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            </table>
+                                            </div>
+                                         
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseThree6" aria-expanded="false" aria-controls="collapseThree6"><i class="fa" aria-hidden="true"></i>저녁</h5>
+                                        </div>
+                                        <div id="collapseThree6" class="collapse" data-parent="#accordion-three">
+                                            
+                                            
+                                            <div class="card-body" >
+                                            <table class="table table-bordered">
+                                         <tr><td>이름</td><td>칼로리</td><td>개수</td></tr>
+                                            	<tr  th:each="d : ${dailymeallist}">
+                                            	<th:block th:if="${d.meal_seq}==3 ">
+                                            		<td th:text="${d.food_name}"></td><td th:text="${d.food_cal}+'  kcal'"></td><td th:text="${d.food_count}"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            	</table>
+                                            </div>
+                                 
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5 class="mb-0 collapsed" data-toggle="collapse" data-target="#collapseFour7" aria-expanded="false" aria-controls="collapseFour7"><i class="fa" aria-hidden="true"></i>간식</h5>
+                                        </div>
+                                        <div id="collapseFour7" class="collapse" data-parent="#accordion-three">
+                                            
+                                           
+                                            <div class="card-body" >
+                                            <table class="table table-bordered">
+                                         <tr><td>이름</td><td>칼로리</td><td>개수</td></tr>
+                                            	<tr  th:each="d : ${dailymeallist}">
+                                            	<th:block th:if="${d.meal_seq}==4 ">
+                                            		<td th:text="${d.food_name}"></td><td th:text="${d.food_cal}+'  kcal'"></td><td th:text="${d.food_count}"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            	</table>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+										<!-- <div class="col-md-6 col-lg-3">
 		                                <div class="col border-right-1">
 		                                    <div class="card-body">
 		                                    	<div class="row">
@@ -303,8 +366,8 @@
 												</div>
 		                                    </div>
 		                                </div>
-		                            </div>
-		                            <div class="col-md-6 col-lg-3">
+		                            </div> -->
+										<!-- <div class="col-md-6 col-lg-3">
 		                                <div class="col border-right-1">
 		                                    <div class="card-body">
 		                                    	<div class="row">
@@ -353,8 +416,8 @@
 												</div>
 		                                    </div>
 		                                </div>
-		                            </div>
-		                            <div class="col-md-6 col-lg-3">
+		                            </div> -->
+										<!--      <div class="col-md-6 col-lg-3">
 		                                <div class="col border-right-1">
 		                                    <div class="card-body">
 		                                    	<div class="row">
@@ -403,8 +466,8 @@
 												</div>
 		                                    </div>
 		                                </div>
-		                            </div>
-		                            <div class="col-md-6 col-lg-3">
+		                            </div> -->
+										<!--    <div class="col-md-6 col-lg-3">
 		                                <div class="col">
 		                                    <div class="card-body">
 		                                    	<div class="row">
@@ -453,109 +516,99 @@
 												</div>
 		                                    </div>
 		                                </div>
-		                            </div>
+		                            </div> -->
+									</div>
 								</div>
 							</div>
-						</div>
+						
 						<!-- 식단 end -->
-			            		
+
 						<!--  -->
-		           		<div class="card mt-4">
-		           			<div class="text-center">
-		           				<h4 class="card-title mt-3"><span class="mdi mdi-fire gradient-1-text"></span> 여름대비 하드플랜 2020 ver.</h4>
-		           				<h3 class="text-right mr-4"><span class="text-info">80</span>%</h3>
-		           			</div>
-		            		<div class="row">
-								<div class="col-lg-6">
-									<div class="card h-100">
-			                            <div class="card-body">
-											<div class="text-center">
-			                                	<h4 class="card-title mb-4"><span class="mdi mdi-run gradient-3-text"></span> 유산소</h4>
-				                                <div class="basic-form">
-				                                    <form>
-				                                        <div class="row">
-															<div class="col-4">
-																<p class="text">걷기</p>
-															</div>
-															<div class="col-4">
-																<p class="text">1시간</p>
-															</div>
-															<div class="col-4">
-																<span class="mdi mdi-check gradient-3-text"></span>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-4">
-																<p class="text">걷기</p>
-															</div>
-															<div class="col-4">
-																<p class="text">1시간</p>
-															</div>
-															<div class="col-4">
-																<span class="mdi mdi-check gradient-3-text"></span>
-															</div>
-														</div>															
-				                                    </form>
-				                                </div>
-				                            </div>
-										</div>
-			                        </div>
-			                    </div>
-								<div class="col-lg-6">
-									<div class="card h-100">
-			                            <div class="card-body">
-											<div class="text-center">
-			                                	<h4 class="card-title mb-4"><span class="mdi mdi-dumbbell gradient-3-text"></span> 무산소</h4>
-				                                <div class="basic-form">
-				                                    <form>
-				                                        <div class="row">
-															<div class="col-4">
-																<p class="text">걷기</p>
-															</div>
-															<div class="col-4">
-																<p class="text">1시간</p>
-															</div>
-															<div class="col-4">
-																<span class="mdi mdi-check gradient-3-text"></span>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-4">
-																<p class="text">걷기</p>
-															</div>
-															<div class="col-4">
-																<p class="text">1시간</p>
-															</div>
-															<div class="col-4">
-																<span class="mdi mdi-check gradient-3-text"></span>
-															</div>
-														</div>
-														<div class="row">
-															<div class="col-4">
-																<p class="text">걷기</p>
-															</div>
-															<div class="col-4">
-																<p class="text">1시간</p>
-															</div>
-															<div class="col-4">
-																<span class="mdi mdi-check gradient-3-text"></span>
-															</div>
-														</div>
-				                                    </form>
-				                                </div>
-				                            </div>
-										</div>
-			                        </div>
-			                    </div>
+						<div class="card mt-4">
+							<div class="text-center">
+								<!-- <h4 class="card-title mt-3">
+									<span class="mdi mdi-fire gradient-1-text"></span> 여름대비 하드플랜
+									2020 ver.
+								</h4>
+								<h3 class="text-right mr-4">
+									<span class="text-info">80</span>%
+								</h3> -->
 							</div>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="card h-100">
+										<div class="card-body">
+											<div class="text-center">
+												<h4 class="card-title mb-4">
+													<span class="mdi mdi-run gradient-3-text"></span> 유산소
+												</h4>
+												<div class="basic-form"   th:each="r : ${routinelist}">
+													<th:block th:if="${r.excs_kind}==1">
+														<div class="row">
+															<div class="col-6">
+																<p class="text" th:text="${r.excs_name}"></p>
+															</div>
+															<div class="col-6">
+																<p class="text" th:text="${r.routine_exercise_hour}+ '시간'"></p>
+															</div>
+															<!-- <div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div> -->
+														</div>
+													</th:block>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="card h-100">
+										<div class="card-body">
+											<div class="text-center">
+												<h4 class="card-title mb-4">
+													<span class="mdi mdi-dumbbell gradient-3-text"></span> 무산소
+												</h4>
+												<div class="basic-form"   th:each="r : ${routinelist}">
+												
+														<th:block th:if="${r.excs_kind}==2">
+														<div class="row">
+															<div class="col-6">
+																<p class="text" th:text="${r.excs_name}"></p>
+															</div>
+															<div class="col-6">
+																<p class="text" th:text="${r.routine_set}+ '세트  '+ ${r.routine_reps_per_set}+'회'"></p>
+															</div>
+															<!-- <div class="col-4">
+																<span class="mdi mdi-check gradient-3-text"></span>
+															</div> -->
+														</div>
+													</th:block>
+													
+													
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="mt-4 text-center">
+							<button type="button" onclick="location.href='myBodiayEdit'"
+								class="btn btn-primary">수정</button>
+							<button type="button" onclick="location.href='myBodiayDelete'" class="btn btn-primary">삭제</button>
+
 						</div>
-		            </div>
-		        </div>
-		    </div>
+						</div>
+						
+						
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<!-- 기본 폼 완성 -->
-	
+
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>

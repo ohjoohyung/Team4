@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import kr.or.bodiary.chat.dto.NotYet;
+import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
@@ -134,7 +135,8 @@ public class BodiaryController {
 		 */
 		return "myBodiary/myBodiaryMain";
 	}
-
+	
+	//일지 폼 페이지 들어가기
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.GET)
 	public String myBodiaryForm(Model model) throws ClassNotFoundException, SQLException {
 		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
@@ -142,6 +144,7 @@ public class BodiaryController {
 		return "myBodiary/myBodiaryForm";
 	}
 	
+	//일지 작성하기
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.POST)
 	public String myBodiaryForm(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
 		System.out.println("안녕");
@@ -158,19 +161,29 @@ public class BodiaryController {
 		
 		return url;
 	}
-
+	
+	//일지 상세보기
 	@RequestMapping("/myBodiaryDetail")
 	public String myBodiaryDetail(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
-		/* bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq); */
-		/* model.addAttribute("bodiary", bodiarydto); */
+		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		List<DailyMealFoodJoinDto> dailymeal = bodiaryservice.getDailyMeal(bodiarydto.getMeal_cart_seq());
+		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(bodiarydto.getRoutine_cart_seq());
+		System.out.println(bodiarydto.getMeal_cart_seq());
+		System.out.println(dailymeal.toString());
+		System.out.println(routinelist.toString());
+		model.addAttribute("bodiary", bodiarydto);
+		model.addAttribute("dailymeallist", dailymeal);
+		model.addAttribute("routinelist", routinelist);
 		return "myBodiary/myBodiaryDetail";
 	}
-
+	
+	//일지 수정하기
 	@RequestMapping("/myBodiaryEdit")
 	public String myBodiaryEdit() {
 		return "myBodiary/myBodiaryEdit";
 	}
 	
+	//음식 검색하기
 	@ResponseBody 
 	@RequestMapping("/foodNameSearch")
 	public List<FoodDto> foodNameSearch(@RequestParam String food_name) throws ClassNotFoundException, SQLException {
@@ -181,6 +194,7 @@ public class BodiaryController {
 	}
 	
 	
+	//루틴 불러오기
 	@ResponseBody 
 	@RequestMapping("/getRoutine")
 	public List<RoutineJoinDto> getRoutine(@RequestParam String routine_cart_seq) throws ClassNotFoundException, SQLException {
@@ -188,6 +202,15 @@ public class BodiaryController {
 		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(routine_cart_seq);
 		System.out.println(routinelist.toString());
 		return routinelist;
+	}
+	
+	//일지 리스트 불러오기
+	@ResponseBody
+	@RequestMapping("/getBodiaryList")
+	public List<bodiaryDTO> getBodiaryList(@RequestParam String user_email) throws ClassNotFoundException, SQLException {
+		List<bodiaryDTO> bodiarylist = bodiaryservice.getBodiaryList(user_email);
+		return bodiarylist;
+	
 	}
 	
 

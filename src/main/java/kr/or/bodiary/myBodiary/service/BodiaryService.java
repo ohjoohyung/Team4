@@ -13,10 +13,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
+import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
@@ -61,7 +63,7 @@ private SqlSession sqlsession;
 		return bodiarydao.writeDailyMeal(list);
 	}
 	
-	@Transactional
+	@Transactional(rollbackFor=Exception.class)
 	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		//실제 글쓰기 처리
@@ -103,6 +105,7 @@ private SqlSession sqlsession;
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 		}
 		
 		return url;
@@ -114,6 +117,23 @@ private SqlSession sqlsession;
 		return bodiarydao.getRoutineListById();
 	}
 	
+	//일지 상세정보 
+	public bodiaryDTO getBodiary(String diary_seq) throws ClassNotFoundException, SQLException { 
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class); 
+		return bodiarydao.getBodiary(diary_seq); 
+		}
+	
+	//식단 불러오기
+	public List<DailyMealFoodJoinDto> getDailyMeal(int meal_cart_seq) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		return bodiarydao.getDailyMeal(meal_cart_seq);
+	}
+	
+	//일지 리스트 불러오기
+	public List<bodiaryDTO> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		return bodiarydao.getBodiaryList(user_email);
+	}
 	
 	//유저 정보 가져오기 (나중에 시큐리티 사용하면 어떻게 해야될지 생각)
 	/*
