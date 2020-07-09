@@ -56,7 +56,7 @@ public class UserService {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return "user/login";
+		return "redirect:/login";
 	}
 	
 	//-----------이메일 체크-----------

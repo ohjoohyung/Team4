@@ -155,6 +155,7 @@
     		<artifactId>thymeleaf-extras-springsecurity4</artifactId>
     		<version>3.0.2.RELEASE</version>
 		</dependency>
+		<!-- 추가해줘야 정상 작동 -->
 		<dependency>
 	        <groupId>org.thymeleaf.extras</groupId>
 	        <artifactId>thymeleaf-extras-java8time</artifactId>

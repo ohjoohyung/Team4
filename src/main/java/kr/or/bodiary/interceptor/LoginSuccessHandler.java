@@ -40,10 +40,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-//		response.sendRedirect("/");
+		
 		resultRedirectStrategy(request, response, authentication);
 		clearAuthenticationAttributes(request);
-//		sessionAdd(request, authentication);
 	}
     protected void resultRedirectStrategy(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
@@ -63,6 +62,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         if(session==null) return;
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
+    
+    
     //세션 저장
 //    protected void sessionAdd(HttpServletRequest request , Authentication authentication) {
 //        HttpSession session = request.getSession(true);

@@ -54,6 +54,7 @@
 
 
 			<div class="profile col-4 p-0">
+			<a href="logout"><i class="icon-key"></i> <span>Logout</span></a>
 				<!-- 비로그인 -->
 				<div sec:authorize="isAnonymous()" class="header-right mr-3"> 
 					<a class="btn btn-outline-primary " href="login">
@@ -64,7 +65,7 @@
 				<!-- 로그인 했을 때 (일반 유저) -->
 				<!-- 시큐리티로 구분 반영 -->
 				
-				<div class="header-right mt-2 mr-3">
+				<div class="header-right mt-2 mr-3" sec:authorize="hasRole('ROLE_REGULAR_USER')" >
                     <ul class="clearfix">
                         
                         <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
@@ -121,7 +122,6 @@
                                 </div>
                             </div>
                         </li>
-                        <th:block sec:authorize="isAuthenticated()">
                         <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
@@ -139,8 +139,8 @@
                                         </li>
                                         <hr class="my-2">
                                         <!-- 관리자일때만 -->
-                                        <li sec:authorize="hasRole('ROLE_ADMIN')"s>
-                                            <a href="admin"><i class="icon-pencil"></i> <span>관리자 페이지</span></a>
+                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                            <a href="admin"><i class="icon-pencil"></i><span>관리자 페이지</span></a>
                                         </li>
                                         <!--  -->
                                         <li><a href="logout"><i class="icon-key"></i> <span>Logout</span></a></li>
@@ -148,7 +148,6 @@
                                 </div>
                             </div>
                         </li>
-                        </th:block>
                         
                         <li sec:authorize="hasRole('ROLE_ASSOCIATE_USER')" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
