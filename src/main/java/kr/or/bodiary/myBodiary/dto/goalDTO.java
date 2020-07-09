@@ -12,8 +12,8 @@ import lombok.ToString;
 @Setter
 
 public class goalDTO {
-	private int goal_ctrl_num    ;
-	private int goal_cal  ;
+	private int goal_ctrl_num;
+	private int goal_cal;
 	
 	
 }

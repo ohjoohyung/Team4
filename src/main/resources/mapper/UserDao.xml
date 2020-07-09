@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.user.dao.UserDao">
+	<select id="getUser" resultType="kr.or.bodiary.user.dto.userDTO">
+		select user_email, role_seq, user_pwd, user_nickname, user_gender, user_age, user_height, user_weight, user_img, user_reportedcount 
+		from user where user_email = #{user_email}
+	</select>
+</mapper>

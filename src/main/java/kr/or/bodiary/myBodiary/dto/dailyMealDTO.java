@@ -1,5 +1,7 @@
 package kr.or.bodiary.myBodiary.dto;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -11,7 +13,10 @@ import lombok.ToString;
 
 public class dailyMealDTO {
 	private int food_seq;
-	private String food_name;
-	private String food_cal;
+	private int meal_seq;
+	private int meal_cart_seq;
+	private int food_count;
+	
+	private List<dailyMealDTO> dailyMealList;
 	
 }

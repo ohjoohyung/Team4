@@ -4,6 +4,8 @@
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 
+
+
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
@@ -39,17 +41,20 @@
 
 							<div class="card-body">
 								<div class="basic-form">
-									<form>
+									<form action="myBodiaryForm" method="post" id="diaryForm"
+										enctype="multipart/form-data">
 										<div class="form-row">
 											<div class="form-group col-md-4">
 												<div class="card">
 
 													<div class="form-group">
-														<!-- 파일 선택 -->
+														이미지 선택
 														<div class="mt-3">
 															<label class="btn btn-outline-light btn-file"><i
-																class="icon-plus"></i> <input name="file" type="file"
-																multiple="multiple"> </label>
+																class="icon-plus"></i> <input type="file" id="imgFile"
+																name="file" onchange="readURL(this)" /></label> <img id="img"
+																src="assets/upload/myBodiaryUpload/${param.diary_main_img}"
+																alt="your image" />
 
 														</div>
 													</div>
@@ -59,12 +64,14 @@
 
 											<div class="form-group col-md-4">
 												<label>오늘의 몸무게</label> <input type="text"
+													id="diary_today_weight" name="diary_today_weight"
 													class="form-control input-default" placeholder="">
 											</div>
 
 											<div class="form-group col-md-4">
 												<label>오늘의 컨디션</label> <select
-													class="form-control input-default" id="sel1">
+													class="form-control input-default" id="diary_condition"
+													name="diary_condition">
 													<option>좋아요</option>
 													<option>평범해요</option>
 													<option>나빠요</option>
@@ -74,8 +81,9 @@
 										</div>
 										<div class="form-group mt-5">
 											<label>오늘의 한마디</label>
-											<textarea type="text" class="form-control input-default"
-												placeholder="최대 150자"></textarea>
+											<textarea class="form-control input-default"
+												placeholder="최대 150자" id="diary_content"
+												name="diary_content"></textarea>
 										</div>
 
 
@@ -87,7 +95,8 @@
 													<label>오늘 먹은 음식</label>
 													<div class="row">
 														<div class="col-3">
-															<select class="form-control input-default">
+															<select class="form-control input-default" id="meal"
+																name="meal">
 																<option selected="selected">아침</option>
 																<option>점심</option>
 																<option>저녁</option>
@@ -97,16 +106,8 @@
 													</div>
 													<div class="mt-3">
 														<input type="search" class="form-control input-default"
-															placeholder="Search">
-														<!-- 스타일 따로 빼자 -->
-														<div class="food-search mt-5">
-															<ul>
-																<li class="mt-3">김치</li>
-																<li class="mt-3">김치찜</li>
-																<li class="mt-3">김치찌개</li>
-															</ul>
-
-														</div>
+															placeholder="Search" id="foodsearch" name="foodsearch">
+														<div class="table-responsive" id="foodBox"></div>
 													</div>
 												</div>
 
@@ -116,230 +117,86 @@
 												<div class="row mt-3">
 													<div class="col">
 														<h3>아침</h3>
+
 													</div>
-													<div class="col-2 center">
-														<i class="mdi mdi-window-close"></i>
-													</div>
+
 												</div>
 												<hr>
 												<div class="p-2">
-													
-
-														<div class="food-form outline-primary mt-1 p-1">
-
-															<div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
 
 
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
+													<div class="food-form outline-primary mt-1 p-1"
+														id="morning"></div>
 
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-														</div>
-													
 												</div>
 												<div class="row mt-4">
 													<div class="col">
-														<h3>아침</h3>
+														<h3>점심</h3>
+
 													</div>
-													<div class="col-2 center">
-														<i class="mdi mdi-window-close"></i>
-													</div>
+
 												</div>
 												<hr>
 												<div class="p-2">
-													
-
-														<div class="food-form outline-primary mt-1 p-1">
-
-															<div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
 
 
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
+													<div class="food-form outline-primary mt-1 p-1" id="lunch">
 
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-														</div>
-													
+													</div>
+
 												</div>
-											
+
 												<div class="row mt-4">
 													<div class="col">
-														<h3>아침</h3>
+														<h3>저녁</h3>
+
 													</div>
-													<div class="col-2 center">
-														<i class="mdi mdi-window-close"></i>
-													</div>
+
 												</div>
 												<hr>
 												<div class="p-2">
-													
-
-														<div class="food-form outline-primary mt-1 p-1">
-
-															<div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
 
 
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
+													<div class="food-form outline-primary mt-1 p-1" id="dinner">
 
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-														</div>
-													
+
+													</div>
+
 												</div>
-												
+
 												<div class="row mt-4">
 													<div class="col">
-														<h3>아침</h3>
+														<h3>간식</h3>
+
 													</div>
-													<div class="col-2 center">
-														<i class="mdi mdi-window-close"></i>
-													</div>
+
 												</div>
 												<hr>
 												<div class="p-2">
-													
-
-														<div class="food-form outline-primary mt-1 p-1">
-
-															<div class="row mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>샌드위치</h5>
-																</div>
 
 
-																<div class="col-2 center pt-2">
-																	<a href="#"><i class="mdi mdi-minus"></i></a>
-																</div>
-															</div>
+													<div class="food-form outline-primary mt-1 p-1"
+														id="dessert"></div>
 
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>김치</h5>
-																</div>
-																<div class="col-2 center ">
-																	<i class="mdi mdi-minus"></i>
-																</div>
-															</div>
-														</div>
-													
 												</div>
 											</div>
 										</div>
+
 										<div class="form-group mt-5">
-											<label>오늘의 루틴</label> <select id="inputState"
-												class="form-control input-default">
-												<option selected="selected">루틴 선택하기</option>
-												<option>루틴 1</option>
-												<option>루틴 2</option>
-												<option>루틴 3</option>
+											<label>오늘의 루틴</label> <select id="routine_cart_seq"
+												name="routine_cart_seq" class="form-control input-default"
+												th:each="item : ${routineList}">
+
+
+												<option>선택없음</option>
+												<option th:text="${item.routine_cart_title}"
+													th:value="${item.routine_cart_seq}">routine_cart_title</option>
+
+
 											</select>
 										</div>
 
-										<div class="modal fade" id="basicModal">
+										<!-- 	<div class="modal fade" id="basicModal">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
@@ -357,81 +214,39 @@
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 
 										<div class="row mt-5">
 											<div class="form-group col-md-6">
 												<label for="exampleFormControlTextarea1">유산소</label>
 												<div class="cardio-cart p-2">
-													<div>
-
-														<div class="exs-form w-100 outline-primary mt-1 p-1 ">
-
-															<div class="row cart-item-card mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>달리기</h5>
-																</div>
 
 
-																<div class="col-3 center pt-2">
-																	<h5>1시간 30분</h5>
-																</div>
-															</div>
+													<div class="exs-form w-100 outline-primary mt-1 p-1 "
+														id="cardio"></div>
 
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>수영</h5>
-																</div>
-																<div class="col-3 center ">
-																	<h5>2시간</h5>
-																</div>
-															</div>
-														</div>
-													</div>
 												</div>
 											</div>
 
 											<div class="form-group col-md-6">
 												<label for="exampleFormControlTextarea2">무산소</label>
 												<div class="cardio-cart p-2">
-													<div>
-
-														<div class="exs-form w-100 outline-primary mt-1 p-1 ">
-
-															<div class="row cart-item-card mb-3"
-																>
-																<div class="col pt-2">
-																	<h5>벤치프레스</h5>
-																</div>
 
 
-																<div class="col-3 center pt-2">
-																	<h5>5세트 10회</h5>
-																</div>
-															</div>
-
-															<div class="row cart-item-card mb-3">
-																<div class="col">
-																	<h5>딥스</h5>
-																</div>
-																<div class="col-3 center ">
-																	<h5>5세트 5회</h5>
-																</div>
-															</div>
-														</div>
-													</div>
+													<div class="exs-form w-100 outline-primary mt-1 p-1"
+														id="weightTraining"></div>
 												</div>
+
 											</div>
 										</div>
 										<div class="form-group mt-5">
 											<label>일지 공개 여부</label>
 											<div class="mt-3 ml-3">
-										<label class="switch">
-										  <input type="checkbox">
-										  <span class="slider round"></span>
-										</label>
-										</div>
+												<label class="switch"> <input type="checkbox"
+													id="diary_pubchk" name="diary_pubchk"> <span
+													class="slider round"></span>
+												</label>
+											</div>
 										</div>
 
 										<div class="text-right">
@@ -440,7 +255,9 @@
 										</div>
 									</form>
 								</div>
+
 							</div>
+
 						</div>
 					</div>
 
@@ -450,7 +267,157 @@
 	</div>
 	<!-- 기본 폼 완성 -->
 
+
+
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script type="text/javascript">
+			$(function(){
+				
+				//음식 검색하기
+				$('#foodsearch').keyup(function(){
+					var data = {food_name : $('#foodsearch').val()};
+					console.log(data);
+					$.ajax(
+							 {
+								 type:"get",
+								 data: data,
+								 url:"foodNameSearch",
+								 dataType:"json",
+								 success:function(responsedata){ 
+									$('#foodBox').empty();
+									console.log(responsedata);
+									var table="<table class='table table-bordered'><thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th>";
+									$.each(responsedata,function(index,obj){
+										table += "<tr><td>"+obj.food_seq+"</td>" +
+											"<td>"+obj.food_name+"</td>" +
+											"<td>"+obj.food_cal+"</td>"+
+											"<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]' id='count"+obj.food_seq+"'></td>"+
+											"<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
+									});
+									table += "</table>";
+									$('#foodBox').append(table);
+								 }	
+							 }
+					      );
+				});
+				
+				//저장된 루틴 불러오기
+				$('#routine_cart_seq').change(function() {
+	                var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+	          
+	                console.log(data);
+	                $.ajax(
+							 {
+								 type:"get",
+								 data: data,
+								 url:"getRoutine",
+								 dataType:"json",
+								 success:function(responsedata){ 
+									$('#cardio').empty();
+									$('#weightTraining').empty();
+									console.log(responsedata);
+									
+									$.each(responsedata,function(index,obj){
+										console.log(obj.excs_kind);
+										if(obj.excs_kind == '1') {
+											$('#cardio').append(
+													'<div class="row cart-item-card mb-3">'+													
+														'<div class="col pt-2">'+
+															'<h5>'+obj.excs_name+'</h5>'+
+														'</div>'+
+														'<div class="col-3 center pt-2">'+
+															'<h5>'+obj.routine_exercise_hour+'시간</h5>'+
+														'</div>'+
+													'</div>'
+											);
+										}else {
+												$('#weightTraining').append(
+														'<div class="row cart-item-card mb-3">'+														
+															'<div class="col pt-2">'+
+																'<h5>'+obj.excs_name+'</h5>'+
+															'</div>'+
+															'<div class="col-3 center pt-2">'+
+																'<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+															'</div>'+
+														'</div>'	
+										)}
+									}); 	
+							 	}
+							 });
+	                });		
+			});
+			
+			//식단 인덱스
+			var number = 0;
+			//음식 추가하기 메소드
+			function addFood(food_seq, food_name) {
+				
+				console.log($('#count'+food_seq).val());
+				console.log($('#meal option:selected').val());
+				var count = $('#count'+food_seq).val();
+				var meal = $('#meal option:selected').val();
+				
+				if(meal == '아침') {
+					meal = 1;
+				}else if(meal == '점심') {
+					meal = 2;
+				}else if(meal == '저녁') {
+					meal = 3;
+				}else {
+					meal = 4;
+				}
+				
+				var div = '<div class="row cart-item-card mb-3">'+
+									'<div class="col">'+
+										'<h5>'+food_name+'</h5>'+
+									'</div>'+
+									'<div class="col-3">'+count+
+									'</div>'+
+									'<div class="col-2 center">'+
+										'<i class="mdi mdi-minus"></i>'+
+									'</div>'+
+							'</div>' +
+							'<input type="hidden" name="dailyMealList['+number+'].food_seq" value="'+food_seq+'">'+
+							'<input type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+meal+'">'+
+							'<input type="hidden" name="dailyMealList['+number+'].food_count" value="'+count+'">';
+				
+				switch(meal) {
+				case 1 :
+				
+					$('#morning').append(div);
+					number++;
+					break;
+				case 2 :
+					
+					$('#lunch').append(div);
+					number++;
+					break;
+				case 3 :
+					
+					$('#dinner').append(div);
+					number++;
+					break;
+				default :
+					
+					$('#dessert').append(div);
+					number++;
+				}
+				
+			
+			}
+			
+			//이미지 추가 했을 때 화면에 띄우기
+			function readURL(input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+					reader.onload = function(e) {
+						$('#img').attr('src', e.target.result);
+					}
+					reader.readAsDataURL(input.files[0]);
+				}
+				/* $('#imgFileName').html(input.files[0].name); */
+			};
+</script>
 </body>
 </html>

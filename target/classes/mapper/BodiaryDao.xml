@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.myBodiary.dao.BodiaryDao">
+	<!-- <select id="getUser" resultType="kr.or.bodiary.user.dto.userDTO">
+		select user_email, role_seq, user_pwd, user_nickname, user_gender, user_age, user_height, user_weight, user_img, user_reportedcount 
+		from user where user_email = #{user_email}
+	</select> -->
+	
+	
+	<!-- 식단 카트 번호 추가하기 -->
+	<insert id="insertMealCart" parameterType="kr.or.bodiary.myBodiary.dto.dailyMealDTO" useGeneratedKeys="true" keyProperty="meal_cart_seq">
+		insert into mealcart values()
+		
+	</insert>
+	
+	<!-- 식단 작성하기 -->
+	<insert id="writeDailyMeal" parameterType="java.util.List">
+		insert into dailymeal(food_seq, meal_seq, meal_cart_seq, food_count)
+		values
+     	<foreach collection="list" item="item" separator=",">
+     		(#{item.food_seq} , #{item.meal_seq}, #{item.meal_cart_seq}, #{item.food_count})
+     	</foreach>	
+	</insert>
+	
+	<!-- 일지 쓰기 (나중에 email이랑 닉네임 등 입력받는거 넣어줘야함) 성별에 따라 바꾸는걸 성별을 파라미터로 받아서 그걸로 조건식을 만들어야할듯 트랜잭션도 확실한지 아직 모르겠음-->
+	<insert id="writeBodiary" parameterType="kr.or.bodiary.myBodiary.dto.bodiaryDTO" useGeneratedKeys="true" keyProperty="diary_seq">
+		<!-- <selectKey order="BEFORE" keyProperty="gender" resultType="String">
+			select user_gender from user where user_email = '1@1'
+		</selectKey> -->
+		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq, user_nickname
+		, diary_condition, diary_main_img, diary_date, diary_pubchk
+		, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
+		values (#{meal_cart_seq}, '1@1', 1, #{diary_content}, null, '홍길동', #{diary_condition}, #{diary_main_img}, now(), 
+		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
+		<!-- <choose>
+			<when test="gender == '남'.toString()">
+				66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
+			</when>
+			<otherwise>
+				655.1 + (9.56*#{diary_today_weight})+(1.85*(select user_height from user where user_email = '1@1'))-(4.68*(select user_age from user where user_email = '1@1'))
+			</otherwise>
+		</choose> -->
+		,(((select user_height from user where user_email = '1@1')-100)*0.9)*35 , 
+		(select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
+		from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
+		ON d.food_seq = f.food_seq) a))
+	</insert>
+	
+	<!-- 루틴 불러오기 (나중에 좀 더 변경해야함) -->
+	<select id="getRoutine" resultType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto">
+		select * from routinecart c
+		join routinebundle b
+		on c.routine_cart_seq = b.routine_cart_seq
+		join routine r
+		on b.routine_seq = r.routine_seq
+		join exercise e
+		on r.excs_seq = e.excs_seq where c.routine_cart_seq=1;
+	</select>
+	
+	<!-- 루틴 리스트 불러오기 (나중에 더 변경해야함) -->
+	<select id="getRoutineListById" resultType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto">
+		select distinct c.routine_cart_seq, c.routine_cart_title from routinecart c
+		join routinebundle b
+		on c.routine_cart_seq = b.routine_cart_seq
+		where b.user_email = '1@1';
+	</select>
+	
+	<!-- 음식 검색하기 -->
+	<select id="foodNameSearch" parameterType="String" resultType="kr.or.bodiary.myBodiary.dto.FoodDto">
+		select food_seq, food_name, food_cal from food where food_name like concat('%', #{food_name}, '%')
+	</select>
+	
+	<!-- 일지 상세정보 -->
+	<select id="getBodiary" resultType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+		select * from diary where diary_seq = #{diary_seq}
+	</select>
+	
+	
+	<!-- 식단 불러오기 -->
+	<select id="getDailyMeal" resultType="kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto">
+		select m.meal_cart_seq, d.meal_seq, d.food_count,f.food_name,f.food_cal from mealcart m
+		join dailymeal d
+		on m.meal_cart_seq = d.meal_cart_seq
+		join food f
+		on d.food_seq = f.food_seq
+		where m.meal_cart_seq = #{meal_cart_seq} 
+	</select>
+	
+	<!-- 일지 리스트 불러오기 -->
+	<select id="getBodiaryList" resultType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+		select * from diary where user_email=#{user_email}
+	</select>
+</mapper>
