@@ -151,11 +151,7 @@ public class BodiaryController {
 		System.out.println("컨트롤 : "+bodiarydto.toString());
 		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
 		
-		if(bodiarydto.getDiary_pubchk() == null) {
-			bodiarydto.setDiary_pubchk("N");
-		} else {
-			bodiarydto.setDiary_pubchk("Y");
-		}
+		
 		
 		String url = bodiaryservice.writeBodiary(dailymealdto, bodiarydto, request);
 		
@@ -181,21 +177,22 @@ public class BodiaryController {
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
 	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
 		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		
 		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
 		model.addAttribute("routineList", list);
 		model.addAttribute("bodiary", bodiarydto);
+		
 		return "myBodiary/myBodiaryEdit";
 	}
 	
 	//일지 수정
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.POST)
-	public String myBodiaryEdit(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) {
-		if(bodiarydto.getDiary_pubchk() == null) {
-			bodiarydto.setDiary_pubchk("N");
-		} else {
-			bodiarydto.setDiary_pubchk("Y");
-		}
-		return "myBodiary/myBodiaryEdit";
+	public String myBodiaryEdit(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
+		System.out.println("안녕 수정");
+		System.out.println("컨트롤 : "+bodiarydto.toString());
+		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
+		String url = bodiaryservice.updateBodiary(dailymealdto, bodiarydto, request);
+		return url;
 	}
 	
 	//음식 검색하기
@@ -226,6 +223,15 @@ public class BodiaryController {
 		List<bodiaryDTO> bodiarylist = bodiaryservice.getBodiaryList(user_email);
 		return bodiarylist;
 	
+	}
+	
+	//식단 불러오기
+	@ResponseBody
+	@RequestMapping("/getDailyMeal")
+	public List<DailyMealFoodJoinDto> getDailyMeal(@RequestParam String meal_cart_seq) throws ClassNotFoundException, SQLException {
+		List<DailyMealFoodJoinDto> dailyMealList = bodiaryservice.getDailyMeal(meal_cart_seq);
+		return dailyMealList;
+		
 	}
 	
 

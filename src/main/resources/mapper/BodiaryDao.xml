@@ -81,7 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 식단 불러오기 -->
 	<select id="getDailyMeal" resultType="kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto">
-		select m.meal_cart_seq, d.meal_seq, d.food_count,f.food_name,f.food_cal from mealcart m
+		select m.meal_cart_seq, d.meal_seq, d.food_count,f.food_name,f.food_cal, f.food_seq from mealcart m
 		join dailymeal d
 		on m.meal_cart_seq = d.meal_cart_seq
 		join food f
@@ -93,4 +93,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getBodiaryList" resultType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
 		select * from diary where user_email=#{user_email}
 	</select>
+	
+	<!-- 일지 수정
+	
+	우선 식단 수정부터함 (따로)
+	루틴 수정을 하는데 이건 insert 되게 해야할듯?
+	그 후 루틴 카트 번호를 새로운걸로 입력
+	식단 카트 번호는 그대로이나 안에 음식이 달라졌을거임
+	
+	그리고 권장섭취량 남 여 에 따라 다르게 해야함
+	 -->
+	<update id="updateBodiary" parameterType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+		update diary
+    	set diary_content=#{diary_content}, 
+	    	diary_condition=#{diary_condition},
+	    	diary_today_weight=#{diary_today_weight}, 
+	    	diary_main_img=#{diary_main_img} , 
+	    	diary_date=now(),
+	    	diary_pubchk=#{diary_pubchk},
+	    	meal_cart_seq=#{meal_cart_seq},
+	    	routine_cart_seq=#{routine_cart_seq},
+	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1')),
+	    	diary_nut = (select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
+						from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
+						ON d.food_seq = f.food_seq) a)
+    	where diary_seq=#{diary_seq}
+	</update>
+	
+	
+
 </mapper>

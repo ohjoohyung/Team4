@@ -8,8 +8,9 @@ import lombok.Data;
 public class DailyMealFoodJoinDto {
 	
 	private int meal_seq;
-	private int meal_cart_seq;
+	private String meal_cart_seq;
 	private int food_count;
 	private String food_name;
 	private String food_cal;
+	private int food_seq;
 }

@@ -65,11 +65,17 @@ private SqlSession sqlsession;
 	
 	
 	//트랜잭션 처리
+	//일지 작성
 	@Transactional(rollbackFor=Exception.class)
 	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		//실제 글쓰기 처리
-		//private CommonsMultipartFile file;
+	
+		
+		if(bodiarydto.getDiary_pubchk() == null) {
+			bodiarydto.setDiary_pubchk("N");
+		} else {
+			bodiarydto.setDiary_pubchk("Y");
+		}
 		String filename = bodiarydto.getFile().getOriginalFilename();
 		
 		System.out.println(filename);
@@ -113,7 +119,60 @@ private SqlSession sqlsession;
 		return url;
 	}
 	
+	//일지 수정하기
+	@Transactional(rollbackFor=Exception.class)
+	public String updateBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		
+		if(bodiarydto.getDiary_pubchk() == null) {
+			bodiarydto.setDiary_pubchk("N");
+		} else {
+			bodiarydto.setDiary_pubchk("Y");
+		}
+		String filename = bodiarydto.getFile().getOriginalFilename();
+		
+		System.out.println(filename);
+		String path = request.getSession().getServletContext().getRealPath("/assets/upload/myBodiaryUpload");
+				
+		String fpath = path + "\\" + filename;
+		FileOutputStream fs = new FileOutputStream(fpath);
+		fs.write(bodiarydto.getFile().getBytes());
+		fs.close();
+		String url = "";	
+		//파일명
+		bodiarydto.setDiary_main_img(filename);
+		System.out.println(bodiarydto.getDiary_main_img());
+		try {
+			
+			List<dailyMealDTO> list = dailymealdto.getDailyMealList();
+			bodiarydao.insertMealCart(dailymealdto);
+			
+			for(dailyMealDTO d : list) {
+				d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+			}
+			System.out.println(list.toString());
+			bodiarydao.writeDailyMeal(list);
+			
+			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+			
+			int result = bodiarydao.updateBodiary(bodiarydto);
+			
+			 System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
+			 System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
+			if(result > 0) { 
+				url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
+			} else { 
+				url = "redirect:myBodiaryEdit?diary_seq="+bodiarydto.getDiary_seq();
+			}
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		}
+		return url;
+	}
 	
+	//루틴 리스트 아이디로 불러오기
 	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.getRoutineListById();
@@ -126,7 +185,7 @@ private SqlSession sqlsession;
 		}
 	
 	//식단 불러오기
-	public List<DailyMealFoodJoinDto> getDailyMeal(int meal_cart_seq) throws ClassNotFoundException, SQLException {
+	public List<DailyMealFoodJoinDto> getDailyMeal(String meal_cart_seq) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.getDailyMeal(meal_cart_seq);
 	}
