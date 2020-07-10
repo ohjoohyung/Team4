@@ -16,7 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
-import kr.or.bodiary.freeBrd.dto.FreeCriteria;
+import kr.or.bodiary.freeBrd.dto.Pagination;
+
 
 @Service
 public class FreeBrdService {
@@ -28,30 +29,29 @@ public class FreeBrdService {
 		this.sqlsession = sqlsession;
 	}
 
-	//페이지 처리 
-	public List<FreeBrdDto> listPage() throws ClassNotFoundException, SQLException{
-		
+	//총 게시물수 얻어오는 함수
+	public int allFreeBrdCount() throws Exception {
 		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-		FreeCriteria cri = new FreeCriteria();
-		List<FreeBrdDto> list = FreeBrd.criteriaList(cri);
+		int result = FreeBrd.getFreeBoardListCnt();
+		System.out.println("총 게시물수 "+result);
 		
-		for(FreeBrdDto free : list) {
-			System.out.println("글번호"+free.getFree_brd_seq());
-		}
-		
-		return list;
+		return result;
 	}
 	
 	// 전체 게시글(자유,팁,궁금) 목록보기
-	public List<FreeBrdDto> allFreeBrd() {
+	public List<FreeBrdDto> allFreeBrd(int startIndex,int pageSize) {
 
 		List<FreeBrdDto> list = null;
 
 		try {
 			// mapper 를 통한 FreeBrdDao 인터페이스 연결
 			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-			list = FreeBrd.allFreeBrd();
-			System.out.println("게시판 리스트 주소" + list);
+			list = FreeBrd.allFreeBrd(startIndex,pageSize);
+			
+			for(int i=0;i<list.size();i++) {
+				System.out.println(list.get(i).getFree_brd_seq()+"번호");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("allFreeBrd() 함수 실행중 오류발생" + e.getMessage());

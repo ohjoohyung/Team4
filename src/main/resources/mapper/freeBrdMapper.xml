@@ -6,10 +6,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	
 	   <!-- 전체게시글 가져오는 쿼리문 -->
-	   <select id="allFreeBrd"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   <select id="allFreeBrd"   parameterType="int" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
 	   				SELECT *
-	   				FROM freeboard					
+	   				FROM freeboard
+	   				LIMIT #{startIndex},#{pageSize}				
 	   </select>
+		
+	   <!-- 게시글 총개수 가져오기 -->
+	   <select id="getFreeBoardListCnt" resultType="int">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+		</select>
+
 	   
 	   <!-- 게시글 상세보기 쿼리문 -->
 	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
@@ -46,14 +54,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   			WHERE free_brd_seq=#{seq}    									
 	   </select>
 	   
-	   <!-- 페이징 처리 -->
-	    <select id="criteriaList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
-	   			select * 
-	   			from freeboard 
-	   			where free_brd_seq>0
-	   			order by free_brd_seq desc 
-	   			limit #{pageStart},#{perPageNum}   									
-	   </select> 
 	   
 	   
 </mapper>

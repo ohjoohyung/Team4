@@ -12,10 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.freeBrd.service.FreeBrdService;
 
 
@@ -29,23 +31,26 @@ public class FreeBrdController {
 		this.freeBrdService = freeBrdService;
 	}
 	
-	//페이징 처리 보기 
-	@RequestMapping("freepage")
-	public String listPage(Model model) throws ClassNotFoundException, SQLException {
-		List<FreeBrdDto> freeBrdList = freeBrdService.listPage();
-		model.addAttribute("freeBrdList",freeBrdList);
-		
-		return "freeBrd/freeBrdList";
-	}
 	
 	//전체 게시글(자유,팁,궁금) 보기
 	@RequestMapping("freeBrdList")
-	public String AllFreeBrdList(Model model) {
+	public String AllFreeBrdList(Model model,@RequestParam(defaultValue = "1")int page) throws Exception {		
 		
-		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd();
+		//총 게시물 수 
+		int totalListCnt = freeBrdService.allFreeBrdCount();
+		
+		//Pagination 객체 생성 
+		Pagination pagination = new Pagination(totalListCnt,page);
+		
+		
+		int startIndex = pagination.getStartIndex();
+		//페이지당 보여지는 게시글 최대 개수 
+		int pageSize = pagination.getPageSize();
+
+		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd(startIndex,pageSize);
+		
+		model.addAttribute("pagination",pagination);
 		model.addAttribute("freeBrdList",freeBrdList);
-		
-		System.out.println("자유게시판 목록페이지로 이동");
 		
 		return "freeBrd/freeBrdList";
 	}

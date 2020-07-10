@@ -3,15 +3,18 @@ package kr.or.bodiary.freeBrd.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
-import kr.or.bodiary.freeBrd.dto.FreeCriteria;
+import kr.or.bodiary.freeBrd.dto.Pagination;
+
 
 
 
 public interface FreeBrdDao {
-	
+
 	//전체 게시글 가져오기(팁,자유,궁금)
-	public List<FreeBrdDto> allFreeBrd() throws ClassNotFoundException, SQLException;
+	public List<FreeBrdDto> allFreeBrd(@Param("startIndex")int startIndex,@Param("pageSize")int pageSize) throws ClassNotFoundException, SQLException;
 
 	//해당 게시글 세부 목록 가져오기 
 	public FreeBrdDto freebrdDetail(String seq) throws ClassNotFoundException, SQLException;
@@ -33,6 +36,7 @@ public interface FreeBrdDao {
 	//해당 게시글 삭제
 	public Integer freeBrdDelete(String seq) throws ClassNotFoundException, SQLException;
 	
-	//페이징 처리 
-	public List<FreeBrdDto> criteriaList(FreeCriteria cri) throws ClassNotFoundException, SQLException;
+	//게시글 총 개수 가져오기 
+	public int getFreeBoardListCnt() throws Exception;
+	
 }
