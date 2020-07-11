@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -66,7 +67,8 @@ private SqlSession sqlsession;
 	
 	//트랜잭션 처리
 	//일지 작성
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
+
 	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 	
@@ -113,14 +115,14 @@ private SqlSession sqlsession;
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
 		}
 		
 		return url;
 	}
 	
 	//일지 수정하기
-	@Transactional(rollbackFor=Exception.class)
+	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
 	public String updateBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		
@@ -154,23 +156,30 @@ private SqlSession sqlsession;
 			bodiarydao.writeDailyMeal(list);
 			
 			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
-			
+			System.out.println(bodiarydto.toString());
 			int result = bodiarydao.updateBodiary(bodiarydto);
 			
-			 System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
 			 System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
 			if(result > 0) { 
 				url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
 			} else { 
-				url = "redirect:myBodiaryEdit?diary_seq="+bodiarydto.getDiary_seq();
+				url = "redirect:history.go(-1)";
 			}
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			
 		}
 		return url;
 	}
+	
+	//일지 삭제하기
+	public String myBodiaryDelete(String diary_seq) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		bodiarydao.deleteBodiary(diary_seq);
+		return "redirect:myBodiaryMain";
+	}
+	
 	
 	//루틴 리스트 아이디로 불러오기
 	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException {

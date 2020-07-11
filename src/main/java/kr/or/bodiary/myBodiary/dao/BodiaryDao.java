@@ -41,4 +41,7 @@ public interface BodiaryDao {
 	
 	//일지 수정하기
 	public int updateBodiary(bodiaryDTO bodiarydto) throws ClassNotFoundException, SQLException;
+	
+	//일지 삭제하기
+	public int deleteBodiary(String diary_seq) throws ClassNotFoundException, SQLException;
 }

@@ -109,7 +109,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    	diary_condition=#{diary_condition},
 	    	diary_today_weight=#{diary_today_weight}, 
 	    	diary_main_img=#{diary_main_img} , 
-	    	diary_date=now(),
 	    	diary_pubchk=#{diary_pubchk},
 	    	meal_cart_seq=#{meal_cart_seq},
 	    	routine_cart_seq=#{routine_cart_seq},
@@ -120,6 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     	where diary_seq=#{diary_seq}
 	</update>
 	
-	
+	<delete id="deleteBodiary">
+		delete from diary where diary_seq = #{diary_seq}
+	</delete>
 
 </mapper>

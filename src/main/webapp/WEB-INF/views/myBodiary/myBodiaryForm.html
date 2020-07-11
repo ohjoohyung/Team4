@@ -36,24 +36,30 @@
 				<!--  -->
 
 				<div class="col-lg-12">
+				
 					<div class="card">
+					
 						<div class="d-flex justify-content-center">
 
 							<div class="card-body">
-								<div class="basic-form">
+							<h5>* 항목은 필수 입력 항목입니다.</h5>
+								<div class="basic-form mt-5">
 									<form action="myBodiaryForm" method="post" id="diaryForm"
 										enctype="multipart/form-data">
 										<div class="form-row">
+										
 											<div class="form-group col-md-4">
 												<div class="card">
-
+													
+														
+													
 													<div class="form-group">
-														이미지 선택
+														이미지 선택&nbsp;&nbsp;*
 														<div class="mt-3">
 															<label class="btn btn-outline-light btn-file"><i
 																class="icon-plus"></i> <input type="file" id="imgFile"
-																name="file" onchange="readURL(this)" /></label> <img id="img"
-																src="assets/upload/myBodiaryUpload/${param.diary_main_img}"
+																name="file" onchange="readURL(this)" accept="image/*"/></label> <img id="img"
+																
 																alt="your image" />
 
 														</div>
@@ -63,9 +69,10 @@
 											</div>
 
 											<div class="form-group col-md-4">
-												<label>오늘의 몸무게</label> <input type="text"
+												<label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="text"
 													id="diary_today_weight" name="diary_today_weight"
 													class="form-control input-default" placeholder="">
+													<div class="tdweight"></div>
 											</div>
 
 											<div class="form-group col-md-4">
@@ -184,7 +191,7 @@
 										</div>
 
 										<div class="form-group mt-5">
-											<label>오늘의 루틴</label> <select id="routine_cart_seq"
+											<label>오늘의 루틴&nbsp;&nbsp;*</label> <select id="routine_cart_seq"
 												name="routine_cart_seq" class="form-control input-default"
 												th:each="item : ${routineList}">
 
@@ -348,6 +355,36 @@
 							 	}
 							 });
 	                });		
+				
+				
+				//일지 유효성 검증
+				$('#diary_today_weight').keyup(function() {
+							let weight = /^[0-9]*$/;
+							if (!weight.test($('#diary_today_weight').val())) {
+								$('.tdweight')
+										.html(
+												'<b style="color:red">몸무게는 숫자만 입력해주세요.</b>');
+								/* validate[0] = false; */
+							} else {
+								$('.tdweight').html('');
+								/* validate[0] = true; */
+							}
+							/* console.log(validate[0]); */
+						});
+				
+				$('button:submit').click(function() {
+					var imgFile = $('#imgFile').val();
+					var routineVal = $('#routine_cart_seq option:selected').val();
+					var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+					console.log(imgFile);
+					console.log(routineVal);
+					if(imgFile == "") {
+						alert("ㅋㅋ");
+						$('#routine_cart_seq').focus();
+						return false;
+					}
+					
+				});
 			});
 			
 			//식단 인덱스

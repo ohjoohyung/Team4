@@ -177,7 +177,7 @@ public class BodiaryController {
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
 	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
 		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
-		
+		System.out.println("수정페이지 이동 전 : "+bodiarydto.toString());
 		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
 		model.addAttribute("routineList", list);
 		model.addAttribute("bodiary", bodiarydto);
@@ -232,6 +232,12 @@ public class BodiaryController {
 		List<DailyMealFoodJoinDto> dailyMealList = bodiaryservice.getDailyMeal(meal_cart_seq);
 		return dailyMealList;
 		
+	}
+	
+	//일지 삭제하기
+	@RequestMapping("/myBodiaryDelete")
+	public String myBodiaryDelete(String diary_seq) throws ClassNotFoundException, SQLException {
+		return bodiaryservice.myBodiaryDelete(diary_seq);
 	}
 	
 
