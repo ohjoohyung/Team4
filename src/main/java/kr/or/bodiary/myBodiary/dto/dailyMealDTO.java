@@ -14,7 +14,7 @@ import lombok.ToString;
 public class dailyMealDTO {
 	private int food_seq;
 	private int meal_seq;
-	private int meal_cart_seq;
+	private String meal_cart_seq;
 	private int food_count;
 	
 	private List<dailyMealDTO> dailyMealList;

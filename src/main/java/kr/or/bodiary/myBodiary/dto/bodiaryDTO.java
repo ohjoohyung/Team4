@@ -14,7 +14,7 @@ import lombok.ToString;
 public class bodiaryDTO {
 
 	private int diary_seq;
-	private int meal_cart_seq;
+	private String meal_cart_seq;
 	private String diary_today_weight;
 	private String diary_content;
 	private String routine_cart_seq;
