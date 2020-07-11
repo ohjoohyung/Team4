@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-11">
 					<div class="card" style="height: 50px;">
-						<h3 class="text-primary ml-3 mb-3">제목</h3>
+						<h3 class="text-primary ml-3 mb-3"><span th:text="${routineBoardSelect.routine_brd_title}"></span></h3>
 					</div>
 				</div>
               	<div class="col-1">
@@ -25,7 +25,8 @@
 						<div class="basic-dropdown">
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">신고</a>
-								<a class="dropdown-item" href="#">삭제</a>
+								<a class="dropdown-item" href="routineBrdEdit">수정</a>
+								<a class="dropdown-item" href="noticeDel.do?seq=${notice.seq}">삭제</a>
 	                        </div>
 						</div>
 					</div>
@@ -102,18 +103,7 @@
 								</div>
 							</div>
 							<p id="">
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
-								컨텐츠<br>
+								<span th:text="${routineBoardSelect.routine_brd_content}"></span>
 							</p>
 						</div>
 					</div>
@@ -156,8 +146,8 @@
                      </div>
                      <div class="user-img c-pointer position-relative"
                         data-toggle="dropdown">
-                        <span class="activity active"></span> <i
-                           class="icon-options-vertical"></i>
+                        <span class="activity active"></span>
+                        <i class="icon-options-vertical"></i>
                      </div>
                      <div class="basic-dropdown">
 
@@ -281,12 +271,16 @@
 						<div class="form-group p-t-15">
 						<form>
 							<textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="댓글을 입력해주세요"></textarea>
-								<button id="submit" class="btn-outline-primary btn-sm" onclick="" type="submit" value="submit">등록하기</button>
+								<button id="submit" class="btn btn-outline-primary btn-sm mb-3" type="submit" value="submit" style="float:right">등록하기</button>
+
+
+
+								
 						</form>
 						
 						</div>
-						</div>
-						<button id="" class="btn btn-primary btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기" style="float:right">목록보기</button>
+						</div>						
+						<button id="" class="btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기">목록보기</button>
 					
 					</div>
 				</div>
