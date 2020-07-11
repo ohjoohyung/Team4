@@ -8,8 +8,10 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class UserDto {
+
+public class userDTO {
 	private String user_email;
+	private int role_seq;
 	private String user_pwd;
 	private String user_nickname;
 	private String user_gender;
@@ -18,6 +20,5 @@ public class UserDto {
 	private int user_weight;
 	private String user_img;
 	private int user_reportedcount;
-	private int enabled;
 	
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class RoutineDto {
+public class routineDTO {
 	private int routine_seq;
 	private int excs_seq;
 	private int routine_exercise_hour;

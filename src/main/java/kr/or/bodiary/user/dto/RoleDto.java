@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class RoleDto {
+public class roleDTO {
 	private int role_seq ;
 	private String role_name ;
 }

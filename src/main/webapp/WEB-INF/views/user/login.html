@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- 공통 헤더-->
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 
@@ -57,30 +55,22 @@
 								d="M132,11.57a.37.37,0,0,1,.36.44l-3.12,14.71a4.76,4.76,0,0,0-.13,1.12c0,1,.31,2,1.34,2,1.74,0,2.89-1.7,3.56-3.92l2.9-13.7a.77.77,0,0,1,.76-.61h5.39a.37.37,0,0,1,.36.44l-5.35,25.41C136.74,43.8,132.91,45,130,45a5,5,0,0,1-5.26-4.81c0-4.15,3.47-5.44,7.71-6.69l.44-2a6.88,6.88,0,0,1-5.43,2.58c-2.68,0-4.77-1.6-4.77-5.35a14.78,14.78,0,0,1,.35-2.89l2.9-13.7a.78.78,0,0,1,.76-.61ZM128.94,41c.89,0,2.05-.84,2.63-3.47l.54-2.63c-2.81.93-5,2.22-5,4.63A1.79,1.79,0,0,0,128.94,41Z"
 								transform="translate(0.11 -0.42)" /></svg></div>
                                 </a>
-                                <!-- <span color="red" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]?.message}">Invalid credentials</span> -->
-                                <form class="mt-5 mb-5 login-input"  method="post">
+        
+                                <form class="mt-5 mb-5 login-input">
                                     <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Email" id="user_email" name="user_email">
+                                        <input type="email" class="form-control" placeholder="Email">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" id="user_pwd" name="user_pwd">
+                                        <input type="password" class="form-control" placeholder="Password">
                                     </div>
-                                    <button class="submit btn login-form__btn w-100">로그인 하기</button>
+                                    <button class="btn login-form__btn submit w-100">로그인 하기</button>
                                 </form>
                                 <hr>
+                           
                                     <button class="btn login-form__btn submit w-100 mb-3 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button>
                                     <button class="btn login-form__btn submit w-100">카카오 로그인과..</button>
-                                    <!-- 네이버 로그인 창으로 이동 -->
-									<div id="naver_id_login" style="text-align:center"></div>
-									<script type="text/javascript">
-									  	var naver_id_login = new naver_id_login("AYWBY1dmBWBJwgS4UqNE", "http://localhost:8090/bodiary/nCallback");
-									  	var state = naver_id_login.getUniqState();
-									  	naver_id_login.setButton("white", 2,40);
-									  	naver_id_login.setDomain("http://localhost:8090/bodiary/login");
-									  	naver_id_login.setState(state);
-									  	/* naver_id_login.setPopup(); */
-									  	naver_id_login.init_naver_id_login();
-								  	</script>
+                                    <button class="btn login-form__btn submit w-100">네이버 로그인과..</button>
+                                
                                 <p class="mt-5 login-form__footer">아직 회원이 아니신가요? <a href="register" class="text-primary">회원가입</a>을 통해 바디어리를 함께하세요!</p>
                             </div>
                         </div>

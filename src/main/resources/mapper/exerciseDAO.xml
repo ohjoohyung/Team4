@@ -5,32 +5,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bodiary.exercise.dao.exerciseDAO">
     <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
+    	select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
     </select> 
     <select id="getExercisecListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_kind='C'
+    	select * from Exercise where excs_kind='C'
     </select>
     <select id="getExercisenListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_kind='N'
+    	select * from Exercise where excs_kind='N'
     </select>
     <select id="exercisepartSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_body_part=#{excs_body_part}
+    	select * from Exercise where excs_body_part=#{excs_body_part}
     </select>
     <select id="exerciseEquiSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_equipment=#{excs_equipment}
+    	select * from Exercise where excs_equipment=#{excs_equipment}
     </select>
     
     <select id="exercisepartequiSearch" parameterType="hashmap" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_equipment=#{excs_equipment} and excs_body_part=#{excs_body_part}
+    	select * from Exercise where excs_equipment=#{excs_equipment} and excs_body_part=#{excs_body_part}
     </select>
     
     <select id="exerciseadd" parameterType="int" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       select * from Exercise where excs_seq=#{excs_seq}
+    	select * from Exercise where excs_seq=#{excs_seq}
     </select>
     <!--  
     <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
-      VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
+    	INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
+		VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
     </insert>
     -->
 </mapper>

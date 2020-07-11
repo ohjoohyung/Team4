@@ -8,6 +8,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
+
 public class foodDTO {
 	private String user_email;
 	private int role_seq;

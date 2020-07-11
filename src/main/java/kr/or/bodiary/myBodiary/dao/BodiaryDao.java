@@ -8,7 +8,7 @@ import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
-import kr.or.bodiary.routineBrd.dto.RoutineCartDto;
+import kr.or.bodiary.routineBrd.dto.routineCartDTO;
 
 
 public interface BodiaryDao {

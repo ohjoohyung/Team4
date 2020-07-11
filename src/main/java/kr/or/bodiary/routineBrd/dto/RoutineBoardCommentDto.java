@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class RoutineBoardCommentDto {
+public class routineBoardCommentDTO {
 	private int routine_cmt_seq ;
 	private int routine_brd_seq ;
 	private String routine_cmt_writer ;

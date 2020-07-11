@@ -26,7 +26,7 @@ import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
-import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.user.dto.userDTO;
 import kr.or.bodiary.user.service.UserService;
 
 

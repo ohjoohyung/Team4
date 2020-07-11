@@ -59,113 +59,37 @@
 								transform="translate(0.11 -0.42)" /></svg></div>
 									</a>
         
-                                <form class="mt-5 mb-5 login-input" action="" method="post">
+                                <form class="mt-5 mb-5 login-input">
                                     <div class="form-group">
-                                        <input type="email" class="form-control"  placeholder="Email" required id="user_email" name="user_email">
-                                    	<label class="btn btn-outline-primary" id="emailCheck">이메일 확인</label>
-                                    	<input type="text" class="form-control" placeholder="Email Check" id="confirmNum">
-                                    	<label class="btn btn-outline-primary" id="confirm">인증번호 확인</label>
-                                    	<input type="hidden" class="form-control" id="#confirmVal" required>
+                                        <input type="text" class="form-control"  placeholder="Nicname" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control"  placeholder="Nick name" required id="user_nickname" name="user_nickname">
+                                        <input type="email" class="form-control"  placeholder="Email" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" required id="user_pwd" name="user_pwd">
+                                        <input type="password" class="form-control" placeholder="Password" required>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password Check" required id="user_pwd_chk" name="user_pwd_chk">
+                                        <input type="password" class="form-control" placeholder="Password" required>
                                     </div>
-                                    <!-- <div class="g-recaptcha" data-sitekey="6LfpFq4ZAAAAAPpsMTbRBQXDSLrP7EvV19hS8cnW"></div> -->
-                                    <button id="registerBtn" class="btn login-form__btn submit w-100">가입하기</button>
+                                    <button class="btn login-form__btn submit w-100">가입하기</button>
                                 </form>
                                 <hr>
-                                    <button class="btn login-form__btn submit w-100 mb-2 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button>
-                                    <button class="btn login-form__btn submit w-100 mb-2 ">카카오 회갑....</button>
-                                    <button class="btn login-form__btn submit w-100 mb-2 ">네이버 회갑...</button>
+                           
+                                    <button class="btn login-form__btn submit w-100 mb-3 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button>
+                                    <button class="btn login-form__btn submit w-100">카카오 회갑....</button>
+                                    <button class="btn login-form__btn submit w-100">네이버 회갑...</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 	<!-- 기본 폼 완성 -->
 	</div>
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-	<!-- 리캡차 스크립트 -->
-    <script src='https://www.google.com/recaptcha/api.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	
-	<script>
-         $(document).ready(function() {
-        	 $("#emailCheck").click(function(){
-        		 console.log("emailCheck버튼 눌림")
-        		 $.ajax({
-                     type: "post",
-                     url : "emailCheck",
-                     data : {"user_email" : $('#user_email').val()},
-                     success : function(data) {
-                           console.log(data);
-                           if(data == 1) {
-                           		alert("이미 같은 메일이 존재합니다!");
-                           		$('#user_email').focus();
-                           		return false;
-                           } else {
-                               alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
-                               $.ajax({
-                                     type : "post",
-                                     url : "confirmEmail",
-                                     data : {"receiveMail" : $('#user_email').val()},
-                                     success : function(data) {
-                                         alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
-                                         $('#confirm').click(function() {
-					        		 		console.log("confirm버튼 눌림")
-                                             console.log(data);
-                                             if($('#confirmNum').val() != data) {
-                                                 alert("인증정보가 정확하지 않습니다!")
-                                             } else {
-                                                 alert("인증정보가 확인되었습니다!")
-                                                 $('#confirmVal').val('1');
-                                             }
-                                         })
-                                     }
-                                 });
-                           }
-                       }
-                 })
-        	 });
-         });
-        	 
-        	 /*$("#registerBtn").click(function() {
-                $.ajax({
-                    url: '/bodiary/VerifyRecaptcha',
-                    type: 'post',
-                    data: {
-                        recaptcha: $("#g-recaptcha-response").val()
-                    },
-                    success: function(data) {
-                        switch (data) {
-                            case 0:
-                                alert("자동 가입 방지 봇 통과");
-                                break;
-
-                            case 1:
-                                alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
-                                break;
-
-                            default:
-                                alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
-                                break;
-                        }
-                    }
-                });
-            });
-        }); */
-
-    </script>
-    
 </body>
 </html>
