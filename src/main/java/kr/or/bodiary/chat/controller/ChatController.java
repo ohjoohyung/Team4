@@ -31,18 +31,8 @@ public class ChatController {
 	public String getSearchExcs() {
 		return "searchExcs/searchExcs";
 	}
-	@RequestMapping("/login")
-	public String getLogin() {
-		return "user/login";
-	}
-	@RequestMapping("/register")
-	public String getRegister() {
-		return "user/register";
-	}
-	
-	/*
-	 * @GetMapping("/login") public String
-	 */
+
+
 	
 	
 	

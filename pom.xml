@@ -172,6 +172,25 @@
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>2.3.0</version>
 		</dependency>
+		
+		<!-- Thymeleaf lagacy html5를 위한 라이브러리 -->
+	     <dependency>
+	        <groupId>net.sourceforge.nekohtml</groupId>
+	        <artifactId>nekohtml</artifactId>
+	        <version>1.9.22</version>
+	     </dependency>
+		<!-- 타임리프 스프링시큐리티 -->
+		<dependency>
+    		<groupId>org.thymeleaf.extras</groupId>
+    		<artifactId>thymeleaf-extras-springsecurity4</artifactId>
+    		<version>3.0.2.RELEASE</version>
+		</dependency>
+		<!-- 추가해줘야 정상 작동 -->
+		<dependency>
+	        <groupId>org.thymeleaf.extras</groupId>
+	        <artifactId>thymeleaf-extras-java8time</artifactId>
+	        <version>3.0.4.RELEASE</version>
+     	</dependency>
 
 				
 		<!-- AspectJ -->
@@ -223,6 +242,11 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+		    <groupId>org.bgee.log4jdbc-log4j2</groupId>
+		    <artifactId>log4jdbc-log4j2-jdbc4</artifactId>
+		    <version>1.16</version>
+		</dependency>
 		
 		
 
@@ -259,32 +283,40 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency> 
-		 <dependency>
-          <groupId>org.springframework</groupId>
-          <artifactId>spring-websocket</artifactId>
-          <version>${org.springframework-version}</version>
-      </dependency>
-      
-         <!-- jackson -->
-      <dependency>
-          <groupId>com.fasterxml.jackson.core</groupId>
-          <artifactId>jackson-databind</artifactId>
-          <version>2.9.8</version>
-      </dependency>
-
-      <dependency>
-          <groupId>org.codehaus.jackson</groupId>
-          <artifactId>jackson-mapper-asl</artifactId>
-          <version>1.4.2</version>
-      </dependency>
-      
-      <!-- json simple  -->
-      <dependency>
-        <groupId>com.googlecode.json-simple</groupId>
-        <artifactId>json-simple</artifactId>
-        <version>1.1.1</version>
-      </dependency>
-      <!-- json simple  -->          
+		
+		
+		<!-- 구글 리캡챠 -->
+        <dependency>
+            <groupId>net.tanesha.recaptcha4j</groupId>
+            <artifactId>recaptcha4j</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+ 
+        <!-- 구글 리캡챠 사용하기 위한 json -->
+        <dependency>
+            <groupId>javax.json</groupId>
+            <artifactId>javax.json-api</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+ 
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.json</artifactId>
+            <version>1.1</version>
+        </dependency>
+        
+        <!-- 이메일 발송 관련 라이브러리 -->
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>1.4.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+               
 	</dependencies>
     <build>
         <plugins>

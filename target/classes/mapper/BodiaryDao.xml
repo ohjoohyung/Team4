@@ -33,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq, user_nickname
 		, diary_condition, diary_main_img, diary_date, diary_pubchk
 		, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
-		values (#{meal_cart_seq}, '1@1', 1, #{diary_content}, null, '홍길동', #{diary_condition}, #{diary_main_img}, now(), 
+		values (#{meal_cart_seq}, 'aa@a.a', 1, #{diary_content}, null, '하하', #{diary_condition}, #{diary_main_img}, now(), 
 		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
 		<!-- <choose>
 			<when test="gender == '남'.toString()">
