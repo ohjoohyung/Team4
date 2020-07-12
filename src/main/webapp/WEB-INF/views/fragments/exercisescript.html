@@ -19,7 +19,59 @@
 										$('#exercisetable').append(	
 												"<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
 												+obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소"
-												+"</span></div></div><div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+												+"</span></div></div>"
+												
+												
+												+"<div class='col-2 center'>"
+												+"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1' >정보보기</button>"
+												+"</div>"
+												
+												+"<div class='modal fade bd-example-modal-lg-1' tabindex='-1' role='dialog' aria-hidden='true'>"
+		                                        +"<div class='modal-dialog modal-lg'>"
+		                                        +    "<div class='modal-content'>"
+		                                        +        "<div class='modal-header'>"
+		                                        +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
+		                                        +            "<button type='button' class='close' data-dismiss='modal'>"
+		                                        +            	"<span>&times;</span>"
+		                                        +            "</button>"
+		                                        +        "</div>"
+		                                        +        "<div class='modal-body p-4'>"
+												+			"<div class='row'>"
+												+				"<div class='col'>"
+												+					"<h5>운동 설명</h5>"
+												+					"<p>"+obj.excs_description+"</p>"
+												+				"</div>"
+												+				"<div class='col-3 youtube-box'>"
+																	<!-- 유튜브링크 -->
+												+					"<h5>관련 영상</h5>"
+												+					"<div class='w-100 bg-primary mb-2' style='height:110px;'><inframe src='"+obj.excs_video_link+"'>youtube</inframe></div>"
+												+					"<div class='w-100 bg-primary mb-2' style='height:110px;'></div>"
+												+				"</div>"
+												+			"</div>"
+												+			"<hr/>"
+															<!-- 좋아요 버튼 -->
+												+			"<div class='m-auto'>"
+												+				"<div>"
+												+					"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
+												+				"</div>"
+												+				"<div>"
+												+					"<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
+												+				"</div>"
+												+			"</div>"
+												+		"</div>"
+		                                         +      "<div class='modal-footer'>" 
+		                                         +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
+		                                          +  "</div>"    
+		                                          +  "</div>"
+		                                        +"</div>"
+		                                   +"</div>" 
+												
+												
+												
+												
+												
+												
+												+"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
 												);	
 										
 									}else{
@@ -238,21 +290,28 @@
 											//유산소에 달자
 											if(obj.excs_kind == "C"){
 												$('#exer_c_add').append(	
-												"<div  id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'><div class='col pt-2'><h9>"
-												+obj.excs_name+"</h9></div><div class='form-group col-5'>"
-												+"<select class='form-control form-control-sm input-rounded input-excs-cart' id='sel1'>"
-												+"<option selected>30분</option><option>1시간</option><option>1시간 30분</option><option>2시간</option><option>2시간 30분</option><option>3시간 이상</option>"
-												+"</select></div><div class='col-2 center pt-2'><a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
+													"<div  id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'>"
+													+"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
+													+"<div class='form-group col-5'>"
+														+"<select class='form-control form-control-sm input-rounded input-excs-cart' id='sel1' onchange='eselected1();'>"
+															+"<option selected >선택</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간 이상</option>"
+														+"</select></div>"
+														+"<div class='col-2 center pt-2'>"
+														+"<a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
 												);
+												
+												
 											//무산소에 달자
 											}else if(obj.excs_kind == "N"){
 												$('#exer_n_add').append(	
 														"<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'><div class='col pt-2'><h10>"
-														+obj.excs_name+"</h10></div><div class='form-group col-3'><select class='form-control form-control-sm input-rounded input-excs-cart' id='sel2'>"
-														+"<option selected='selected'>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>"
-														+"</div><div class='form-group col-2'><input type='text' class='form-control form-control-sm input-rounded input-excs-cart' placeholder='ex) 30회'>"
+														+obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2();'class='form-control form-control-sm input-rounded input-excs-cart'>"
+														+"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
+														+"</div><div class='form-group col-3'><select  id='sel2' onchange='eselected2();'class='form-control form-control-sm input-rounded input-excs-cart'>"
+														+"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
 														+"</div><div class='col-2 center pt-2'><a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
 														);
+										
 											}
 									});
 								 }
@@ -263,6 +322,21 @@
 					var elem = document.getElementById(es);
 					console.log(elem);
 				    elem.parentNode.removeChild(elem);
+				}
+				function eselected1(){
+					var eselect = document.getElementById("sel1");
+					$("#sel1 option:selected").val();
+					alert($("#sel1 option:selected").val());
+				}
+				function eselected2(){
+					var eselect = document.getElementById("sel2");
+					$("#sel2 option:selected").val();
+					alert($("#sel2 option:selected").val());
+				}
+				function eselected3(){
+					var eselect = document.getElementById("sel3");
+					$("#sel3 option:selected").val();
+					alert($("#sel3 option:selected").val());
 				}
 
 		</script>
