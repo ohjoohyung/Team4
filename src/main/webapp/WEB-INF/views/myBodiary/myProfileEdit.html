@@ -48,8 +48,6 @@
 							</div>
 							<hr>
 							<div class="form-group row mt-5 mb-5">
-									<input id="user_email" name="user_email" type="email" hidden="hidden" class="form-control input-default"  th:value="${session.currentUser.user_email}">
-									<input id="user_img" name="user_img" type="text" hidden="hidden" class="form-control input-default">
 								<label class="col-sm-3 col-form-label text-primary">나이</label>
 								<div class="col-sm-9">
 									<input id="user_age" name="user_age" type="text" class="form-control input-default" th:value="${session.currentUser.user_age}">
@@ -75,12 +73,18 @@
 								<div class="col-sm-9">
 									<div class="form-check">
 										<label class="form-check-label"> 
-										<input id="user_gender" name="user_gender" type="text" class="form-check-input" th:value="${session.currentUser.user_gender}" readonly>
+										<span th:text="${session.currentUser.user_gender}"></span>
+										<input id="user_gender" name="user_gender" type="hidden" class="form-check-input" th:value="${session.currentUser.user_gender}" readonly>
 										</label> 
 										<!-- <label class="form-check-label ml-5"> 
 										<input type="checkbox" class="form-check-input" value="여자" disabled>여자
 										</label> -->
 									</div>
+								</div>
+								<div class="hidden-input">
+									<input id="user_email" name="user_email" type="email" hidden="hidden" class="form-control input-default"  th:value="${session.currentUser.user_email}">
+									<input id="user_nickname" name="user_nickname" type="hidden" class="form-check-input" th:value="${session.currentUser.user_nickname}" readonly>
+									<input id="user_img" name="user_img" type="hidden" class="form-check-input" th:value="${session.currentUser.user_img}" readonly>
 								</div>
 							</div>
 							<div class="text-center">
@@ -102,7 +106,6 @@
           var reader = new FileReader();
           reader.onload = function(e) {
              $('#user_img_div').attr('src', e.target.result);
-             /* $('#user_img').attr('th:value', e.target.result); */
           }
           reader.readAsDataURL(input.files[0]);
        }

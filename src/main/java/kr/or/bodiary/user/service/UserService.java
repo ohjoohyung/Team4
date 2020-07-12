@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,15 +75,25 @@ public class UserService {
 			fs= new FileOutputStream(fpath);
 			fs.write(user.getFile().getBytes());
 			fs.close();
-			System.out.println(filename);
-			user.setUser_img(filename);
+			System.out.println("filename : "+filename);
+			if(filename.isEmpty() && filename == "") {
+				user.setUser_img(user.getUser_img());
+			}else {
+				user.setUser_img(filename);
+			}
 			result = userdao.updateUser(user);
 		} catch (Exception e) {
 		}
 		System.out.println("유저정보 수정 서비스 내 user : "+user);
 		String resultReturn = null;
-		if (result >0) resultReturn= "redirect:/myProfileDetail";
+		if (result >0) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentUser", user);
+			
+			resultReturn= "redirect:/myProfileDetail";
+		}
 		else if (result == 0) resultReturn="redirect:/myProfileEdit";
+		
 		
 		return resultReturn;
 	}

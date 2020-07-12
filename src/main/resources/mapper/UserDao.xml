@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<update id="updateUser">
 		update User
-		set user_age = #{user_age}, user_height=#{user_height}, user_weight=#{user_weight}, user_gender=#{user_gender}, user_img=#{user_img}
+		set user_age = #{user_age}, user_height=#{user_height}, user_weight=#{user_weight}, user_img=#{user_img}
 		where user_email = #{user_email}
 	</update>
 	<!-- 회원가입시 이메일 체크 -->
