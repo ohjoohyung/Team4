@@ -5,8 +5,8 @@ public class Pagination {
 	/** 1. 페이지 당 보여지는 게시글의 최대 개수 **/
 	private int pageSize = 5;
 
-	/** 2. 페이징된 버튼의 블럭당 최대 개수 **/
-	private int blockSize = 10;
+	/** 2. 페이징된 버튼의 블럭당 최대 개수(화면에 몇개의 페이징블럭이 보일것인지) **/
+	private int blockSize = 5;
 
 	/** 3. 현재 페이지 **/
 	private int page = 1;
@@ -82,7 +82,7 @@ public class Pagination {
 		return totalPageCnt;
 	}
 
-	public void setTotalPageCnt(int totalPageCnt) {
+	public void TotalPageCnt(int totalPageCnt) {
 		this.totalPageCnt = totalPageCnt;
 	}
 
@@ -134,29 +134,43 @@ public class Pagination {
 		this.nextBlock = nextBlock;
 	}
 	
-	public Pagination(int totalListCnt, int page) {
+	public void pageInfo(int totalListCnt, int page) {
 
 		// 총 게시물 수와 현재 페이지를 Controller로 부터 받아온다.
 
 		// 총 게시물 수	- totalListCnt
 		// 현재 페이지	- page
 		
-		
-		/** 3. 현재 페이지 **/
+		/**
+         * 페이징 처리 순서
+         * 1. 총 페이지수
+         * 2. 총 블럭(range)수
+         * 3. range setting
+         */
+	
+		/** 현재 페이지 **/
 		setPage(page);
 		
         
-		/** 5. 총 게시글 수 **/
+		/** 총 게시글 수 **/
 		setTotalListCnt(totalListCnt);
 
 
-		/** 6. 총 페이지 수 **/
+		/** 총 페이지 수 **/
 		// 한 페이지의 최대 개수를 총 게시물 수 * 1.0로 나누어주고 올림 해준다.
 		// 총 페이지 수 를 구할 수 있다.
-		setTotalPageCnt((int) Math.ceil(totalListCnt * 1.0 / pageSize));
+		
+		//방법1
+		//setTotalPageCnt((int) Math.ceil(totalListCnt * 1.0 / pageSize));
+		
+		//방법2
+		this.totalPageCnt = totalListCnt/pageSize;
+		
+		if(totalListCnt % pageSize > 0) {
+			this.totalPageCnt++;
+		}
 
-
-		/** 7. 총 블럭 수 **/
+		/** 총 블럭 수 **/
 		// 한 블럭의 최대 개수를 총  페이지의 수 * 1.0로 나누어주고 올림 해준다.
 		// 총 블럭 수를 구할 수 있다.
 		setTotalBlockCnt((int) Math.ceil(totalPageCnt * 1.0 / blockSize));
