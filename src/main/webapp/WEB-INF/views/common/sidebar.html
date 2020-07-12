@@ -1,4 +1,7 @@
-
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<!-- 기본 폼 완성 -->
 	<th:block th:fragment="sidebarFragment">
 		<main class="main" >
@@ -13,11 +16,15 @@
 					<li class="side-nav-info card card-body border-primary pt-4 pb-4 pl-3 pr-3 mb-2">
 						<div class="row mt-1" style="width:100%">
 							<div class="col-5 ">
-								<img style="width:100%;" class="side-nav-photo rounded-circle" th:src="@{assets/images/users/2.jpg}" alt="Image Description"/>
+								<!-- 에러 분기점 -->
+								<th:block th:if="${session.currentUser != null}">
+								<img style="width:100%;" class="side-nav-photo rounded-circle" th:src="@{assets/upload/userUpload/}+${session.currentUser.user_img}" alt="Image Description"/>
+								</th:block>
 							</div>
 							<div class="col-6 p-0 mt-3">
-								<h3>지희 님&nbsp;&nbsp;<a href="myProfileDetail"><i class="fa fa-pencil-square-o text-secondary"></i></a></h3>
-								<p class="text-muted">158cm | 00kg</p>
+								<!-- 에러 분기점 -->
+								<h3><span th:if="${session.currentUser != null}" th:text="${session.currentUser.user_nickname}"></span> 님&nbsp;&nbsp;<a href="myProfileDetail"><i class="fa fa-pencil-square-o text-secondary"></i></a></h3>
+								<p class="text-muted"><span th:if="${session.currentUser!= null} " th:text="${session.currentUser.user_height}"></span>cm | <span th:if="${session.currentUser != null}" th:text="${session.currentUser.user_weight}"></span> kg</p> 
 							</div>
 						</div>
 						
@@ -86,4 +93,4 @@
 				</ul>
 		</main>    
 	</th:block>
-	
+</html>

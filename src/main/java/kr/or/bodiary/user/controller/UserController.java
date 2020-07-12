@@ -55,6 +55,30 @@ public class UserController {
 		return userService.register(user);
 	}
 	
+	
+	//---------- 계정정보 수정 -----------
+	@RequestMapping("/myPageEdit")
+	public String myPageEdit() {
+		return "myBodiary/myPageEdit";
+	}
+	
+	//---------- 계정정보 외 프로필정보 수정 -----------
+	@RequestMapping("/myProfileDetail")
+	public String myProfileDetail() {
+		return "myBodiary/myProfileDetail";
+	}
+	@RequestMapping("/myProfileEdit")
+	public String myProfileEdit() {
+		return "myBodiary/myProfileEdit";
+	}
+	
+	
+	@RequestMapping(value="/myProfileEdit" , method=RequestMethod.POST)
+	public String myProfileEdit(UserDto user,HttpServletRequest request) {
+		System.out.println("myProfileEdit 컨트롤러");
+		System.out.println("form에서 넘어오는 값 : " + user);
+		return userService.updateUser(user, request);
+	}
 	//------------- 이메일 확인 --------------
 	@ResponseBody
 	@RequestMapping("/emailCheck")

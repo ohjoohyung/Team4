@@ -1,13 +1,7 @@
 package kr.or.bodiary.myBodiary.controller;
 
-import java.sql.SQLException;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import kr.or.bodiary.chat.dto.NotYet;
 
 @Controller
 public class BodiaryController {
@@ -64,20 +58,6 @@ public class BodiaryController {
 	@RequestMapping("/myBodiaryEdit")
 	public String myBodiaryEdit() {
 		return "myBodiary/myBodiaryEdit";
-	}
-
-	@RequestMapping("/myPageEdit")
-	public String myPageEdit() {
-		return "myBodiary/myPageEdit";
-	}
-
-	@RequestMapping("/myProfileDetail")
-	public String myProfileDetail() {
-		return "myBodiary/myProfileDetail";
-	}
-	@RequestMapping("/myProfileEdit")
-	public String myProfileEdit() {
-		return "myBodiary/myProfileEdit";
 	}
 
 	@RequestMapping("/myQnaList")

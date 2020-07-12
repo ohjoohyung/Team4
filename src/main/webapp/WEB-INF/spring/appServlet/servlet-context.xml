@@ -74,6 +74,15 @@
       <!-- driverManagerDataSource는 루트컨테이너에 있는거 사용 그럼왜 트랜잭션을 루트에안만들었는가?? 적용할라고 
          하는 빈객체가 servlet-context.xml에 있기 때문에 여기에 사용 -->
    </bean>
+   
+   <!-- multipart --> 
+   <!-- root에 이미있어서 주석처리 -->
+  <!--  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"> 
+   		<property name="maxUploadSize"> 
+   			<value>100000000</value> 
+   		</property> 
+   </bean> -->
+
    <tx:annotation-driven transaction-manager="transactionManager" />
 
       <context:component-scan base-package="kr.or.bodiary.**.controller" />

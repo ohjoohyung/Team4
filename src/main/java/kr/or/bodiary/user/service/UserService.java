@@ -1,16 +1,16 @@
 package kr.or.bodiary.user.service;
 
+import java.io.FileOutputStream;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.EmailDto;
@@ -60,6 +60,31 @@ public class UserService {
 			System.out.println(e.getMessage());
 		}
 		return "redirect:/login";
+	}
+	//-----------유저정보 수정 서비스-----------
+	public String updateUser(UserDto user, HttpServletRequest request ) {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		String filename = user.getFile().getOriginalFilename();
+		String path = request.getSession().getServletContext().getRealPath("assets/upload/userUpload");
+		String fpath = path +"\\" +filename;
+		FileOutputStream fs = null;
+		int result = 0;
+		try {
+			System.out.println("updateUser try문");
+			fs= new FileOutputStream(fpath);
+			fs.write(user.getFile().getBytes());
+			fs.close();
+			System.out.println(filename);
+			user.setUser_img(filename);
+			result = userdao.updateUser(user);
+		} catch (Exception e) {
+		}
+		System.out.println("유저정보 수정 서비스 내 user : "+user);
+		String resultReturn = null;
+		if (result >0) resultReturn= "redirect:/myProfileDetail";
+		else if (result == 0) resultReturn="redirect:/myProfileEdit";
+		
+		return resultReturn;
 	}
 	
 	//-----------이메일 체크-----------
