@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class routineBoardLikeDTO {
+public class RoutineBoardLikeDto {
 	private int routine_brd_like_seq  ;
 	private String user_email  ;
 	private int routine_brd_seq  ;
