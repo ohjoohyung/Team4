@@ -3,137 +3,151 @@
 <!-- 공통 헤더 -->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
-	<!-- 공통 nav -->
-	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<!-- 공통 sidenav -->
-	<div class="bodiary-wrapper">
-		<div class="content mt-4">
-		
-			<!-- 제목 start -->
-			<div class="row">
-				<div class="col-11">
-					<div class="card" style="height: 50px;">
-						<h3 class="text-primary ml-3 mb-3"><span th:text="${routineBoardSelect.routine_brd_title}"></span></h3>
-					</div>
-				</div>
-              	<div class="col-1">
-	              	<div class="card" style="height: 50px;">
-	               		<div class="user-img c-pointer position-relative center mt-3" data-toggle="dropdown">
-							<span class="activity active"></span>
-	                        <i class="icon-options-vertical"></i>
-						</div>
-						<div class="basic-dropdown">
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">신고</a>
-								<a class="dropdown-item" href="routineBrdEdit">수정</a>
-								<a class="dropdown-item" href="noticeDel.do?seq=${notice.seq}">삭제</a>
-	                        </div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 제목 end -->
-			
-			<!-- 이미지 start -->
-			<div class="row">
-				<div class="col-6">
-					<div class="card h-100 p-4">
-						<h5 class="card-title">BEFORE</h5>
-						<div class="card-body">
-							<img class="routine-img" src="assets/images/profile/1.jpg" alt="">
-						</div>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="card h-100 p-4">
-					<h5 class="card-title">AFTER</h5>
-						<div class="card-body">
-							<img class="routine-img" src="assets/images/profile/2.jpg" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 이미지 end -->
-			
-			<!-- 루틴 start -->			
-			<div class="row mt-4">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-body border-0 bg-transparent">
-							<div class="row">
-								<div class="col-6 pt-3">			                            	
-									<div class="text-center">
-										<div class="basic-list-group">
-											<ul class="list-group">
-												<li class="list-group-item active">루틴이름-유산소</li>
-												<li class="list-group-item">걷기</li>
-												<li class="list-group-item">달리기</li>
-											</ul>
-										</div>
-									</div>
-								</div>
-								<div class="col-6 pt-3">
-									<div class="text-center">
-										<div class="basic-list-group">
-											<ul class="list-group">
-												<li class="list-group-item active">루틴이름-무산소</li>
-												<li class="list-group-item">벤치프레스</li>
-												<li class="list-group-item">데드리프트</li>
-												<li class="list-group-item">오버헤드밀리터리프레스</li>
-												<li class="list-group-item">스쿼트</li>
-											</ul>
-										</div>  
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 루틴 end -->
-			
-			<!-- 내용 end -->
-			<div class="row">
-				<div class="col-12">
-					<div class="card">
-						<div class="card-body">
-							<div class="media mb-4 mt-1">
-								<div class="media-body">
-									<span class="float-right">날짜</span>
-								</div>
-							</div>
-							<p id="">
-								<span th:text="${routineBoardSelect.routine_brd_content}"></span>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- 내용 end -->
-			
-			<!-- 좋아요 추천수 start -->
-			<div class="col-12">
-				<div class="row">
-					<div class="col-6">
-						<a class="text-center d-block text-muted" href="javascript:void()">
-							<i class="fa fa-star gradient-1-text" aria-hidden="true"></i>
-							<p class="">00개</p>
-						</a>
-					</div>
-					<div class="col-6">
-						<a class="text-center d-block text-muted" href="javascript:void()">
-							<i class="fa fa-heart gradient-3-text"></i>
-							<p class="">00개</p>
-						</a>
-					</div>
-				</div>
-			</div>
-			<!-- 좋아요 추천수 end -->
-			
-			<!-- 댓글 start -->
-			<div class="col card p-5">
-						<!-- 오주시작 -->
-						<p class="card-text ">
+   <!-- 공통 nav -->
+   <th:block th:replace="common/nav :: navFragment"></th:block>
+   <!-- 공통 sidenav -->
+   <div class="bodiary-wrapper">
+      <div class="content mt-4">
+      
+         <!-- 제목 start -->
+         <div class="row">
+            <div class="col-11">
+               <div class="card p-2 mb-1" >
+                  <h2 class="pt-2 pl-4"><span th:text="${routineBoard.routine_brd_title}"></span></h2>
+               </div>
+            </div>
+            <div class="col-1">
+            	<div class="user-img c-pointer position-relative center mt-3" data-toggle="dropdown">
+                     <span class="activity active"></span>
+                           <i class="icon-options-vertical"></i>
+                </div>
+                <div class="basic-dropdown">
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">신고</a>
+                        <a class="dropdown-item" href="routineBrdEdit">수정</a>
+                        <a class="dropdown-item" href="noticeDel.do?seq=${notice.seq}">삭제</a>
+                	</div>
+                </div>
+            </div>
+         </div>
+         <!-- 제목 end -->
+         <div class="media m-3">
+         	<div class="media-body">
+            	<i class="icon-clock"></i>&nbsp;&nbsp;
+                	<span th:text="${routineBoard.routine_brd_regdate}" class="card-text"></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <i class="icon-eye"></i>
+                     &nbsp;&nbsp;
+                    <span th:text="${routineBoard.routine_brd_hit}" class="card-text" ></span>
+            </div>
+         </div>
+         <!-- 이미지 start -->
+         <!-- 이미지 & 글 묶어버림 -->
+         <div class="card">
+         
+         <div class="row m-3">
+            <div class="col-6">
+               <div class="h-100 p-3">
+                  <h5 class="card-title">BEFORE</h5>
+                  <div class="card-body">
+                     
+                     <img class="routine-img"
+                                       th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image1}"
+                                       >
+                  </div>
+               </div>
+            </div>
+            <div class="col-6">
+               <div class="h-100 p-3">
+               <h5 class="card-title">AFTER</h5>
+                  <div class="card-body">
+                     <img class="routine-img"
+                                       th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image2}"
+                                       >
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- 이미지 end -->
+         
+         <!-- 내용 end -->
+         <div class="row mt-4">
+            <div class="col-12">
+               <div class="m-5">
+                     <p>
+                        <span th:text="${routineBoard.routine_brd_content}"></span>
+                     </p>
+               </div>
+            </div>
+         </div>
+         </div>
+         <!-- 내용 end -->
+         
+         <!-- 루틴 start -->         
+         <div class="row mt-2">
+            <div class="col-12">
+               <div class="card">
+                  <div class="card-body border-0 bg-transparent">
+                     <div class="row">
+                        <div class="col-6 pt-3">                                        
+                           <div class="text-center">
+                              <div class="basic-list-group">
+                                  <table class="table table-hover">
+                                         <tr><td colspan="2" style="border-bottom: 1px solid #7571f9; border-top:none; color:#7571f9; font-size :18px;">유산소</td></tr>
+                                               <tr  th:each="r : ${routine}">
+                                               <th:block th:if="${r.excs_kind}=='C' ">
+                                                  <td th:text="${r.excs_name}"></td><td th:text="${r.routine_exercise_hour}+'  시간'"></td>
+                                               </th:block>
+                                               </tr>
+                                               </table>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="col-6 pt-3">
+                           <div class="text-center">
+                              <div class="basic-list-group">
+                                 <table class="table table-hover">
+                                         <tr><td colspan="2" style="border-bottom: 1px solid #7571f9;border-top:none; color:#7571f9; font-size :18px;">무산소</td></tr>
+                                               <tr  th:each="r : ${routine}">
+                                               <th:block th:if="${r.excs_kind}=='N' ">
+                                                  <td th:text="${r.excs_name}"></td><td th:text="${r.routine_set}+'  세트    '+${r.routine_reps_per_set}+'   회'"></td>
+                                               </th:block>
+                                               </tr>
+                                               </table>
+                              </div>  
+                           </div>
+                        </div>
+                     </div>
+            		<button type="button" class="btn btn-lg btn-outline-primary w-100 mt-5">내 루틴에 추가하기</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- 루틴 end -->
+         
+         <!-- 좋아요 추천수 start -->
+         <div class="col-12">
+            <div class="row">
+               <div class="col-6">
+                  <a class="text-center d-block text-muted" href="javascript:void()">
+                     <i class="fa fa-star gradient-1-text" aria-hidden="true"></i>
+                     <p class="">00개</p>
+                  </a>
+               </div>
+               <div class="col-6">
+                  <a class="text-center d-block text-muted" href="javascript:void()">
+                     <i class="fa fa-heart gradient-3-text"></i>
+                     <p th:text="${routineBoard.brd_rec}+'  개'"></p>
+                  </a>
+               </div>
+            </div>
+         </div>
+         <!-- 좋아요 추천수 end -->
+         
+         <!-- 댓글 start -->
+         <div class="col card p-5">
+                  <!-- 오주시작 -->
+                  <p class="card-text ">
                   <i class="icon-bubble"></i> 댓글 5
                </p>
 
@@ -262,34 +276,30 @@
                   </div>
                   <div>꿀팁감사</div>
 
-
                </div>
-			<!-- 댓글 start -->
-						<!-- 오주끝 -->
-						<hr>
-						
-						<div class="form-group p-t-15">
-						<form>
-							<textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="댓글을 입력해주세요"></textarea>
-								<button id="submit" class="btn btn-outline-primary btn-sm mb-3" type="submit" value="submit" style="float:right">등록하기</button>
+         <!-- 댓글 start -->
+                  <!-- 오주끝 -->
+                  <hr>
+                  
+                  <div class="form-group p-t-15">
+                  <form>
+                     <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="댓글을 입력해주세요"></textarea>
+                        <button id="submit" class="btn btn-outline-primary btn-sm mb-3" type="submit" value="submit" style="float:right">등록하기</button>
 
-
-
-								
-						</form>
-						
-						</div>
-						</div>						
-						<button id="" class="btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기">목록보기</button>
-					
-					</div>
-				</div>
-		</div>
-	</div>
+                  </form>
+                  
+                  </div>
+                  </div>                  
+                  <button id="" class="btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기">목록보기</button>
+               
+               </div>
+            </div>
+      </div>
+   </div>
 </div>
-	<!-- 기본 폼 완성 -->
+   <!-- 기본 폼 완성 -->
 
-	<!-- 공통 스크립트-->
-	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   <!-- 공통 스크립트-->
+   <th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 </html>

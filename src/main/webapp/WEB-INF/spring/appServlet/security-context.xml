@@ -62,9 +62,10 @@
 		<security:logout 	logout-url="/logout"
 							logout-success-url="/main"/>
 		<security:intercept-url pattern="/profileEditAssociate" access="hasRole('ROLE_ASSOCIATE_USER')" />
-		<security:intercept-url pattern="/myBodiary/myPageEdit.html" access="hasRole('ROLE_ASSOCIATE_USER')" />
-		<security:intercept-url pattern="/myBodiary/myProfile*.html" access="hasRole('ROLE_ASSOCIATE_USER')" />
-		<security:intercept-url pattern="/myBodiary/my*.html" access="hasRole('ROLE_REGULAR_USER')" />
+		<security:intercept-url pattern="/myProfile*" access="hasRole('ROLE_ASSOCIATE_USER')" />
+		<security:intercept-url pattern="/my*" access="hasRole('ROLE_REGULAR_USER')" />
+		<security:intercept-url pattern="/free*" access="hasRole('ROLE_REGULAR_USER')" />
+		<security:intercept-url pattern="/routineBrd*" access="hasRole('ROLE_REGULAR_USER')" />
   		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
 	
 		<security:session-management invalid-session-url="/login">

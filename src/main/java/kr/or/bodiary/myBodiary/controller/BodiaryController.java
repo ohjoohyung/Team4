@@ -125,10 +125,14 @@ public class BodiaryController {
 	
 	//일지 폼 페이지 들어가기
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.GET)
-	public String myBodiaryForm(Model model) throws ClassNotFoundException, SQLException {
-		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
-		model.addAttribute("routineList", list);
-		return "myBodiary/myBodiaryForm";
+	public String myBodiaryForm(Model model , HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+	      String user_email = user.getUser_email();
+
+	      System.out.println("유저 정보 : " +user_email);
+	      List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
+	      model.addAttribute("routineList", list);
+	      return "myBodiary/myBodiaryForm";
 	}
 	
 	//일지 작성하기
@@ -165,7 +169,8 @@ public class BodiaryController {
 	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
 		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
 		System.out.println("수정페이지 이동 전 : "+bodiarydto.toString());
-		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById();
+		String user_email = bodiarydto.getUser_email();
+		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
 		model.addAttribute("routineList", list);
 		model.addAttribute("bodiary", bodiarydto);
 		
