@@ -42,6 +42,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     
 	private String loginEmail;
 	private String defaultUrl;
+	private String associateUrl;
 	
 	public String getLoginEmail() {
 		return loginEmail;
@@ -55,6 +56,12 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 	public void setDefaultUrl(String defaultUrl) {
 		this.defaultUrl = defaultUrl;
 	}
+	public String getAssociateUrl() {
+		return associateUrl;
+	}
+	public void setAssociateUrl(String associateUrl) {
+		this.associateUrl = associateUrl;
+	}
 	
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
@@ -63,17 +70,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 		resultRedirectStrategy(request, response, authentication);
 		clearAuthenticationAttributes(request);
 		sessionAdd(request, authentication);
-		
 	}
     protected void resultRedirectStrategy(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
         
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-        
+//        System.out.println("권한값 :"+authentication.getAuthorities().toString().equals("[ROLE_ASSOCIATE_USER]"));
         if(savedRequest!=null) {
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStratgy.sendRedirect(request, response, targetUrl);
-        } else {
+        } else if(authentication.getAuthorities().toString().equals("[ROLE_ASSOCIATE_USER]")){
+        	redirectStratgy.sendRedirect(request, response, associateUrl);
+        }else {
             redirectStratgy.sendRedirect(request, response, defaultUrl);
         }
         
@@ -83,7 +91,6 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         if(session==null) return;
         session.removeAttribute(WebAttributes.AUTHENTICATION_EXCEPTION);
     }
-    
     
     //세션 저장
     protected void sessionAdd(HttpServletRequest request , Authentication authentication) {
@@ -102,5 +109,5 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         System.out.println("currentUser : "+currentUser);
         session.setAttribute("currentUser", currentUser);
         }
-
+    
 }

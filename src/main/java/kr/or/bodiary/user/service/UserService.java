@@ -62,12 +62,62 @@ public class UserService {
 		}
 		return "redirect:/login";
 	}
+	//----------- 준회원 유저정보 수정 서비스-----------
+	public String updateUserAssociate(UserDto user, HttpServletRequest request) {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		String filename = user.getFile().getOriginalFilename();
+		String path = request.getSession().getServletContext().getRealPath("assets/upload/userUpload");
+		String fpath = path +"\\" +filename;
+		System.out.println(fpath);
+		FileOutputStream fs = null;
+		int updateUserResult = 0;
+		int updateRoleResult = 0;
+		try {
+			System.out.println("updateUser try문");
+			fs= new FileOutputStream(fpath);
+			fs.write(user.getFile().getBytes());
+			fs.close();
+			System.out.println("filename : "+filename);
+			if(filename.isEmpty() && filename == "") {
+				user.setUser_img(user.getUser_img());
+			}else {
+				user.setUser_img(filename);
+			}
+			updateUserResult = userdao.updateUser(user);
+		} catch (Exception e) {
+		}
+		System.out.println("유저정보 수정 서비스 내 user : "+user);
+		String resultReturn = null;
+		if (updateUserResult >0) {
+			try {
+				System.out.println("롤 업데이트치러 갑니다");
+				updateRoleResult = userdao.updateRole(user);
+				System.out.println("롤 업데이트 : "+updateRoleResult);
+				if(updateUserResult >0) {
+					resultReturn= "redirect:/myProfileDetail";
+				}else {
+					resultReturn="redirect:/myProfileEdit";
+					return resultReturn;
+				}
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentUser", user);
+			
+		}
+		else if (updateUserResult == 0) resultReturn="redirect:/myProfileEdit";
+		
+		return resultReturn;
+	}
 	//-----------유저정보 수정 서비스-----------
 	public String updateUser(UserDto user, HttpServletRequest request ) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		String filename = user.getFile().getOriginalFilename();
 		String path = request.getSession().getServletContext().getRealPath("assets/upload/userUpload");
 		String fpath = path +"\\" +filename;
+		System.out.println(fpath);
 		FileOutputStream fs = null;
 		int result = 0;
 		try {
@@ -93,7 +143,6 @@ public class UserService {
 			resultReturn= "redirect:/myProfileDetail";
 		}
 		else if (result == 0) resultReturn="redirect:/myProfileEdit";
-		
 		
 		return resultReturn;
 	}

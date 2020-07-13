@@ -36,7 +36,6 @@ public class UserController {
 		return "user/login";
 	}
 	
-
 	@RequestMapping("/nCallback")
 	public String naverCallback() {
 		return "user/nCallback";
@@ -54,8 +53,16 @@ public class UserController {
 		System.out.println("register 탐");
 		return userService.register(user);
 	}
-	
-	
+	//---------- 준회원 정보수정 -----------
+	@RequestMapping("/profileEditAssociate")
+	public String profileEditForAssociateUser() {
+		return "user/profileEditForAssociateUser";
+	}
+	@RequestMapping(value="/profileEditAssociate" , method=RequestMethod.POST)
+	public String profileEditForAssociateUser(UserDto user ,HttpServletRequest request) {
+		
+		return userService.updateUserAssociate(user, request);
+	}
 	//---------- 계정정보 수정 -----------
 	@RequestMapping("/myPageEdit")
 	public String myPageEdit() {

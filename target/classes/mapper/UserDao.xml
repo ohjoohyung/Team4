@@ -19,6 +19,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set user_age = #{user_age}, user_height=#{user_height}, user_weight=#{user_weight}, user_img=#{user_img}
 		where user_email = #{user_email}
 	</update>
+	<update id="updateRole">
+		update Role
+		set role_name='ROLE_REGULAR_USER'
+		where user_email = #{user_email}
+	</update>
 	<!-- 회원가입시 이메일 체크 -->
 	<select id="emailCheck" resultType="int">
 		select count(*)

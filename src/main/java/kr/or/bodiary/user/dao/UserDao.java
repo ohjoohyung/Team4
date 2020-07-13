@@ -16,8 +16,11 @@ public interface UserDao {
 	//----------- 유저 정보 수정 -----------
 	public int updateUser(UserDto user) throws ClassNotFoundException, SQLException;
 	
+	//----------- 유저 롤 권한 승격 -----------
+	public int updateRole(UserDto user) throws ClassNotFoundException, SQLException;
+	
 	//----------- 이메일 체크 -----------
 	public int emailCheck(String user_email) throws ClassNotFoundException, SQLException;
-
+	
 
 }
