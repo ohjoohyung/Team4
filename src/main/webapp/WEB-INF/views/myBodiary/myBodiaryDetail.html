@@ -395,9 +395,9 @@
 							</div>
 							
 							<div class="mt-4 text-center">
-							<button type="button" onclick="location.href='myBodiayEdit'"
+							<button type="button" th:onclick="|location.href='myBodiaryEdit?diary_seq=${bodiary.diary_seq}'|"
 								class="btn btn-primary">수정</button>
-							<button type="button" onclick="location.href='myBodiayDelete'" class="btn btn-primary">삭제</button>
+							<button type="button" onclick="deleteCheck()" class="btn btn-primary">삭제</button>
 
 						</div>
 						</div>
@@ -412,5 +412,16 @@
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+			function deleteCheck() {
+				 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+					location.href="myBodiaryDelete?diary_seq="+/*[[ ${bodiary.diary_seq} ]]*/;
+				 }else{   //취소
+				     return false;
+				 }
+			}	
+			/*]]>*/
+	</script>
 </body>
 </html>

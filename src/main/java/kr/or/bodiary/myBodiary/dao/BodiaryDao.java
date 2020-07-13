@@ -8,7 +8,7 @@ import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
 import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
-import kr.or.bodiary.routineBrd.dto.routineCartDTO;
+
 
 
 public interface BodiaryDao {
@@ -34,8 +34,14 @@ public interface BodiaryDao {
 	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException;
 	
 	//식단 불러오기
-	public List<DailyMealFoodJoinDto> getDailyMeal(int meal_cart_seq) throws ClassNotFoundException, SQLException;
+	public List<DailyMealFoodJoinDto> getDailyMeal(String meal_cart_seq) throws ClassNotFoundException, SQLException;
 	
 	//일지 리스트 불러오기
 	public List<bodiaryDTO> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException;
+	
+	//일지 수정하기
+	public int updateBodiary(bodiaryDTO bodiarydto) throws ClassNotFoundException, SQLException;
+	
+	//일지 삭제하기
+	public int deleteBodiary(String diary_seq) throws ClassNotFoundException, SQLException;
 }

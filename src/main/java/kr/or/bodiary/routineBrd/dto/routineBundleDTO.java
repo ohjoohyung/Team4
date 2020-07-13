@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class routineBundleDTO {
+public class RoutineBundleDto {
 	private int routine_cart_seq    ;
 	private int routine_seq ;
 	private String user_email ;

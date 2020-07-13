@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<!-- 공통 헤더-->
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 
@@ -58,38 +59,249 @@
 								d="M132,11.57a.37.37,0,0,1,.36.44l-3.12,14.71a4.76,4.76,0,0,0-.13,1.12c0,1,.31,2,1.34,2,1.74,0,2.89-1.7,3.56-3.92l2.9-13.7a.77.77,0,0,1,.76-.61h5.39a.37.37,0,0,1,.36.44l-5.35,25.41C136.74,43.8,132.91,45,130,45a5,5,0,0,1-5.26-4.81c0-4.15,3.47-5.44,7.71-6.69l.44-2a6.88,6.88,0,0,1-5.43,2.58c-2.68,0-4.77-1.6-4.77-5.35a14.78,14.78,0,0,1,.35-2.89l2.9-13.7a.78.78,0,0,1,.76-.61ZM128.94,41c.89,0,2.05-.84,2.63-3.47l.54-2.63c-2.81.93-5,2.22-5,4.63A1.79,1.79,0,0,0,128.94,41Z"
 								transform="translate(0.11 -0.42)" /></svg></div>
 									</a>
-        
-                                <form class="mt-5 mb-5 login-input">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control"  placeholder="Nicname" required>
+        						
+                                <form class="mt-5 mb-5 login-input" action="" method="post">
+                                    <div class="form-group row">
+                                        <input type="email" class="form-control col-9 ml-3"  placeholder="사용할 이메일을 입력하세요" id="user_email" name="user_email" email_chk="fail">
+                                    	<button type="button" class="btn btn-primary" id="emailCheck">이메일 확인</button>
+                                    	<div class="tdemail"></div>
+                                    	<div id="emailChecking">
+	                                    	
+                                    	</div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="email" class="form-control"  placeholder="Email" required>
+                                        <input type="text" class="form-control"  placeholder="사용할 닉네임을 입력하세요" id="user_nickname" name="user_nickname" >
+                                    	<div class="tdnickname"></div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" required>
+                                        <input type="password" class="form-control" placeholder="사용할 비밀번호를 입력하세요"  id="user_pwd" name="user_pwd">
+                                        <div class="tdpw"></div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="Password" required>
+                                        <input type="password" class="form-control" placeholder="비밀번호를 다시한번 더 입력하세요"  id="user_pwd_chk" name="user_pwd_chk">
+                                        <div class="tdpwch"></div>
                                     </div>
-                                    <button class="btn login-form__btn submit w-100">가입하기</button>
+                                    <div class="form-group row">
+                                    	<div class="col-lg-6 col-sm-12">
+                                    	<label>나이</label>
+                                    		<input type="number" class="form-control" id="user_age" name="user_age" min="1" max="120" style="ime-mode:disabled" required onkeydown="javascript: return event.keyCode == 69 ? false : true" placeholder="1~120세 중 입력하세요">
+                                    	</div>
+                                    	<div class="col-lg-6 col-sm-12">
+                                    	<label>성별</label>
+	                                    	<div class="mt-2">
+	                                    		<input type="radio" id="user_gender_1" name="user_gender" class="" value="남" checked="checked">&nbsp;&nbsp;<label for="user_gender_1">남성</label>&nbsp;&nbsp;
+												<input type="radio" id="user_gender_2" name="user_gender"class="" value="여" >&nbsp;&nbsp;<label for="user_gender_2">여성</label>
+	                                    	</div>
+                                    	</div>
+                                    </div>
+                                    <!-- <div class="g-recaptcha" data-sitekey="6LfpFq4ZAAAAAPpsMTbRBQXDSLrP7EvV19hS8cnW"></div> -->
+                                    <button id="registerBtn" class="btn login-form__btn submit w-100">가입하기</button>
                                 </form>
                                 <hr>
-                           
-                                    <button class="btn login-form__btn submit w-100 mb-3 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button>
-                                    <button class="btn login-form__btn submit w-100">카카오 회갑....</button>
-                                    <button class="btn login-form__btn submit w-100">네이버 회갑...</button>
+                                    <button class="btn login-form__btn submit w-100 mb-2 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button>
+                                    <button class="btn login-form__btn submit w-100 mb-2 ">카카오 회갑....</button>
+                                    <button class="btn login-form__btn submit w-100 mb-2 ">네이버 회갑...</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
     </div>
 	<!-- 기본 폼 완성 -->
 	</div>
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<!-- 리캡차 스크립트 -->
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	
+	
+	<script>
+	var validate = new Array;
+	
+         $(document).ready(function() {
+        	 for(let i=0; i<4; i++) {
+        			validate[i]=false;
+        		}
+        	 $('#user_email')
+				.keyup(
+						function() {
+							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+							if (!email.test($('#user_email').val())) {
+								$('.tdemail')
+										.html(
+												'<p class="pl-3 mt-2" style="color:red">적합하지 않은 이메일 형식입니다.</p>');
+								validate[0] = false;
+							} else {
+								$('.tdemail').html('<p class="pl-3 mt-2" style="color:#7571f9">적합한 이메일 입니다.</p>');
+								validate[0] = true;
+							}
+							console.log(validate[0]);
+						});
+        	 
+        	 $('#user_nickname')
+				.keyup(
+							function () {
+								let nickname = /^[가-힣a-zA-Z0-9]{2,10}$/;
+								if (!nickname.test($('#user_nickname').val())) {
+									$('.tdnickname')
+											.html(
+													'<p class="pl-1 mt-2" style="color:red">2~10자에 특수문자,공백이 제거된 한글,영어 대소문자,숫자만 사용하세요.</p>');
+									validate[1] = false;
+								} else {
+									$('.tdnickname').html('<p class="pl-1 mt-2" style="color:#7571f9">멋진 닉네임이네요!</p>');
+									validate[1] = true;
+								}
+							}
+         );
+						
+
+		//password
+		$('#user_pwd')
+				.keyup(
+						function() {
+							let pwd = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+							let blank = /\s/g;
+							if (!pwd.test($(this).val()) || blank.test($(this).val())) {
+								$('.tdpw')
+										.html(
+												'<p class="pl-1 mt-2" style="color:red">8~20자에 특수문자가 반드시 포함된 영어 대소문자,숫자를 사용하세요</p>');
+								validate[2] = false;
+							} else {
+								$('.tdpw').html('<p class="pl-1 mt-2" style="color:#7571f9">적합한 패스워드입니다.</p>');
+								validate[2] = true;
+							}
+							console.log(validate[2]);
+						});
+		//password check
+		$('#user_pwd_chk, #user_pwd').keyup(function() {
+			if ($('#user_pwd').val() != $('#user_pwd_chk').val()) {
+				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">비밀번호가 다릅니다.</p>');
+				validate[3] = false;
+			} else {
+				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:#7571f9">비밀번호가 일치합니다.<p>');
+				validate[3] = true;
+			}
+			console.log(validate[3]);
+		});
+
+		$('input').focus(function() {
+			$(this).css('border-bottom', "1px solid #7571f9");
+		});
+		$('input').blur(function() {
+			$(this).css('border-bottom', '1px solid #f5f5f5');
+		});
+		
+		$('button:submit').click(function() {
+			for (let i = 0; i < validate.length; i++) {
+				if (validate[i] == false) {
+					console.log(i);
+					switch (i) {
+					case 0:
+						$('#user_email').focus();
+						$('.tdemail').html('<p class="pl-3 mt-2" style="color:red">필수 정보입니다.</p>');
+						return false;
+					case 1:
+						$('#user_nickname').focus();
+						$('.tdnickname').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+						return false;	
+					case 2:
+						$('#user_pwd').focus();
+						$('.tdpw').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+						return false;
+					case 3:
+						$('#user_pwd_chk').focus();
+						$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+						return false;
+					
+					}
+				}
+			}
+			if ($('#user_email').attr("email_chk") == "fail"){
+				  alert("이메일 인증을 해주시기 바랍니다.");
+				  $('#user_email').focus();
+				    return false;
+			}			
+		});	
+        	 
+        	 
+        	 
+        	 $("#emailCheck").click(function(){
+        		 console.log("emailCheck버튼 눌림")
+        		 $.ajax({
+                     type: "post",
+                     url : "emailCheck",
+                     data : {"user_email" : $('#user_email').val()},
+                     success : function(data) {
+                           console.log(data);
+                           if(data == 1) {
+                           		alert("이미 같은 메일이 존재합니다!");
+                           		$('#user_email').focus();
+                           		return false;
+                           } else {
+                               alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
+                             $('#emailChecking').append(
+                           		"<input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'>"
+                            	+ "<button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button>"
+                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
+                               
+                               );
+								/* $('#confirmNum').attr(type,'text');
+								$('#confirm').removeAttr('hidden'); */
+                               $.ajax({
+                                     type : "post",
+                                     url : "confirmEmail",
+                                     data : {"receiveMail" : $('#user_email').val()},
+                                     success : function(data) {
+                                         alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
+                                         $('#confirm').click(function() {
+					        		 		console.log("confirm버튼 눌림")
+                                             console.log(data);
+					        		 		console.log($('#confirmNum').val());
+                                             if($('#confirmNum').val() != data) {
+                                                 alert("인증정보가 정확하지 않습니다!")
+                                             } else {
+                                                 alert("인증정보가 확인되었습니다!")
+                                                 $('#confirmVal').val('1');
+                                                 $('#user_email').attr("email_chk", "success");
+                                             }
+                                         })
+                                     }
+                                 });
+                           }
+                       }
+                 })
+        	 });
+         });
+        	 
+        	 /*$("#registerBtn").click(function() {
+                $.ajax({
+                    url: '/bodiary/VerifyRecaptcha',
+                    type: 'post',
+                    data: {
+                        recaptcha: $("#g-recaptcha-response").val()
+                    },
+                    success: function(data) {
+                        switch (data) {
+                            case 0:
+                                alert("자동 가입 방지 봇 통과");
+                                break;
+
+                            case 1:
+                                alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
+                                break;
+
+                            default:
+                                alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
+                                break;
+                        }
+                    }
+                });
+            });
+        }); */
+
+    </script>
+    
 </body>
 </html>
