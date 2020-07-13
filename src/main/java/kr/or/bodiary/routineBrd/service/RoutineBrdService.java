@@ -19,7 +19,6 @@ import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 
 
-
 @Service
 public class RoutineBrdService {
 	private SqlSession sqlsession;
@@ -32,11 +31,9 @@ public class RoutineBrdService {
 		
 	//리스트
 	public List<RoutineBrdDto> routineBoardList() throws ClassNotFoundException, SQLException {
-			
-		//DAO 데이터 받아오기
+		
 		List<RoutineBrdDto> rlist = null;
 		try {
-			//mapper를 통한 인터페이스 연결
 			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 			rlist = routinebrddao.routineBoardList();
 		} catch (ClassNotFoundException e) {

@@ -11,6 +11,8 @@ import lombok.Data;
 public class RoutineBrdDto {
 	private int routine_brd_seq;
 	private String user_email;
+	private String user_nickname;
+	private String routine_brd_regdate;
 	private String routine_brd_title;
 	private String routine_brd_content;
 	private int routine_cart_seq;

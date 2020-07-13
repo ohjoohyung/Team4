@@ -45,13 +45,13 @@ public class RoutineBrdController {
 	}
 	
 	//입력(폼)
-	@RequestMapping(value = "routineBrdInsert", method = RequestMethod.GET)
+	@RequestMapping(value = "/routineBrdInsert", method = RequestMethod.GET)
 	public String routineBrdInsert() {
 		return "routineBrd/routineBrdForm";
 	}
 	
 	//입력(처리)
-	@RequestMapping(value = "routineBrdInsert", method = RequestMethod.POST)
+	@RequestMapping(value = "/routineBrdInsert", method = RequestMethod.POST)
 	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request, Principal principal) throws IOException, ClassNotFoundException, SQLException {
 		String url = "redirect:routineBrdList";
 		
@@ -64,7 +64,7 @@ public class RoutineBrdController {
 	}
 	
 	//수정(폼)
-	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.GET)		
+	@RequestMapping(value = "/routineBrdEdit", method = RequestMethod.GET)		
 	public String routineBrdEdit(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdEdit(routine_brd_seq);
 		model.addAttribute("routineBoardUpdate", routinebrddto);
@@ -72,13 +72,13 @@ public class RoutineBrdController {
 	}
 	
 	//수정(처리)
-	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.POST)
+	@RequestMapping(value = "/routineBrdEdit", method = RequestMethod.POST)
 	public String routineBrdEdit(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		return routinebrdservice.routineBrdEdit(routinebrddto, request);
 	}
 	
 	//삭제
-	@RequestMapping("routineBrdDelete")
+	@RequestMapping("/routineBrdDelete")
 	public String routineBrdDelete(int routine_brd_seq) throws ClassNotFoundException, SQLException {
 		routinebrdservice.routineBoardDelete(routine_brd_seq);
 		return "redirect:routineBrdList";

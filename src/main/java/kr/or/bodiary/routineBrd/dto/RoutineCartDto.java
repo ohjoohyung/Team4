@@ -1,14 +1,9 @@
 package kr.or.bodiary.routineBrd.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 
-@ToString
-@Getter
-@Setter
-
+@Data
 public class RoutineCartDto {
 	private int routine_cart_seq;
 	private String routine_cart_title;

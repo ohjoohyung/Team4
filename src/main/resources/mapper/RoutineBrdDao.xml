@@ -14,12 +14,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 상세 -->
 	<select id="routineBoardSelect" parameterType="int" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
 		select routine_brd_seq, user_nickname, routine_brd_title, routine_brd_content, routine_cart_seq, brd_image1, brd_image2
-		  from RoutineBoard where routine_brd_seq = #{routine_brd_seq}
+		  from RoutineBoard
+		 where routine_brd_seq=#{routine_brd_seq}
 	</select>
+	
+	<!-- 입력 -->
+    <insert id="routineBoardInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
+    	insert into RoutineBoard (routine_brd_title, routine_brd_content, routine_brd_regdate) 
+		VALUES (#{routine_brd_title}, #{routine_brd_content}, now())    
+    </insert>
 	
 	<!-- 수정 -->
 	<update id="routineBoardUpdate" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
-		update routineboard
+		update RoutineBoard
 		   set routine_brd_seq=#{routine_brd_seq}, routine_brd_title=#{routine_brd_title}, routine_brd_content=#{routine_brd_content}
 		 where routine_brd_seq=#{routine_brd_seq}
 	</update>
@@ -27,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 삭제 -->
 	<delete id="routineBoardDelete" parameterType="int">
 		delete
-		  from routineboard
+		  from RoutineBoard
 		 where routine_brd_seq=#{routine_brd_seq}
 	</delete>
 	
