@@ -1,4 +1,6 @@
-
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
+				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <!-- 기본 폼 완성 -->
 <th:block th:fragment="navFragment">
 	<!--*******************
@@ -55,7 +57,7 @@
 
 			<div class="profile col-4 p-0">
 				<!-- 비로그인 -->
-				<div class="header-right mr-3">
+				<div sec:authorize="isAnonymous()" class="header-right mr-3"> 
 					<a class="btn btn-outline-primary " href="login">
 						<span>LOG IN</span>
 						<i class="gd-themify-favicon icon-text align-middle ml-3"></i>
@@ -64,10 +66,10 @@
 				<!-- 로그인 했을 때 (일반 유저) -->
 				<!-- 시큐리티로 구분 반영 -->
 				
-				<div class="header-right mt-2 mr-3">
+				<div class="header-right mt-2 mr-3" >
                     <ul class="clearfix">
                         
-                        <li class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
+                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2">3</span>
                             </a>
@@ -121,39 +123,52 @@
                                 </div>
                             </div>
                         </li>
-                        
-                        <li class="icons dropdown">
+                        <li sec:authorize="hasAnyRole('ROLE_REGULAR_USER','ROLE_ASSOCIATE_USER')" class="icons dropdown">
                             <div class="user-img c-pointer position-relative"   data-toggle="dropdown">
                                 <span class="activity active"></span>
-                                <img src="assets/images/user/2.png" height="40" width="40" alt="">
+<!--                                 <img src="assets/images/users/1.jpg" height="40" width="40" alt=""> -->
+                                <!-- 에러 분기점 -->
+                               <th:block th:if="${session.currentUser != null}">
+                                <img th:src="@{assets/upload/userUpload/}+${session.currentUser.user_img}" height="40" width="40" alt="">
+                            	</th:block>
                             </div>
+                            <!-- 권한 확인 -->
+                                <!-- <span sec:authentication="principal.authorities"></span>  -->
                             <div class="drop-down dropdown-profile animated fadeIn dropdown-menu">
                                 <div class="dropdown-content-body">
                                     <ul>
-                                        <li>
+                                    	<li>
+                                    		<!-- 에러 분기점 -->
+<!--                                     		<span sec:authentication="principal.username"></span> -->
+                                    		<th:block th:if="${session.currentUser != null}">
+                                    		<span th:text="${session.currentUser.user_nickname}"></span> 님 :)
+                                    		</th:block>
+                                    	</li>
+                                        <li sec:authorize="hasRole('ROLE_REGULAR_USER')">
                                             <a href="myBodiaryMain"><i class="icon-user"></i> <span>내 바디어리</span></a>
+                                        </li>
+                                        <li sec:authorize="hasRole('ROLE_ASSOCIATE_USER')">
+                                            <a href="myProfileEdit"><i class="icon-user"></i> <span>내 정보 등록하기</span></a>
                                         </li>
                                         <li>
                                             <a href="myPageEdit"><i class="icon-pencil"></i> <span>계정 관리</span></a>
                                         </li>
                                         <hr class="my-2">
                                         <!-- 관리자일때만 -->
-                                        <li>
-                                            <a href="admin"><i class="icon-pencil"></i> <span>관리자 페이지</span></a>
+                                        <li sec:authorize="hasRole('ROLE_ADMIN')">
+                                            <a href="admin"><i class="icon-pencil"></i><span>관리자 페이지</span></a>
                                         </li>
                                         <!--  -->
-                                        <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                        <li><a href="logout"><i class="icon-key"></i> <span>Logout</span></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </li>
                     </ul>
                 </div>
-
-				
-
 			</div>
 		</div>
 	</nav>
 </th:block>
 
+</html>

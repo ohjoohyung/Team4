@@ -30,20 +30,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- <selectKey order="BEFORE" keyProperty="gender" resultType="String">
 			select user_gender from user where user_email = '1@1'
 		</selectKey> -->
-		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq, user_nickname
+		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq
 		, diary_condition, diary_main_img, diary_date, diary_pubchk
 		, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
-		values (#{meal_cart_seq}, '1@1', 1, #{diary_content}, null, '홍길동', #{diary_condition}, #{diary_main_img}, now(), 
-		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
+		values (#{meal_cart_seq}, 'a@aa.a', 1, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(), 
+		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a'))
 		<!-- <choose>
 			<when test="gender == '남'.toString()">
-				66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
+				66.47 + (13.75*#{diary_today_weight}) + (5*(select u
+				ser_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1'))
 			</when>
 			<otherwise>
 				655.1 + (9.56*#{diary_today_weight})+(1.85*(select user_height from user where user_email = '1@1'))-(4.68*(select user_age from user where user_email = '1@1'))
 			</otherwise>
 		</choose> -->
-		,(((select user_height from user where user_email = '1@1')-100)*0.9)*35 , 
+		,(((select user_height from user where user_email = 'a@aa.a')-100)*0.9)*35 , 
 		(select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 		from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 		ON d.food_seq = f.food_seq) a))
@@ -65,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select distinct c.routine_cart_seq, c.routine_cart_title from routinecart c
 		join routinebundle b
 		on c.routine_cart_seq = b.routine_cart_seq
-		where b.user_email = '1@1';
+		where b.user_email = 'a@aa.a';
 	</select>
 	
 	<!-- 음식 검색하기 -->
@@ -112,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    	diary_pubchk=#{diary_pubchk},
 	    	meal_cart_seq=#{meal_cart_seq},
 	    	routine_cart_seq=#{routine_cart_seq},
-	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1')),
+	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a')),
 	    	diary_nut = (select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 						from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 						ON d.food_seq = f.food_seq) a)

@@ -18,8 +18,8 @@
 -->
 <!-- 공통 DB작업  -->
  <bean id="driverManagerDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
- 	<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
- 	<property name="url" value="jdbc:mysql://localhost:3306/body_diary?useSSL=false&amp;serverTimezone=UTC" />
+ 	<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
+ 	<property name="url" value="jdbc:log4jdbc:mysql://localhost:3306/bodiary?useSSL=false&amp;serverTimezone=UTC" />
  	<property name="username" value="root" />
  	<property name="password" value="1004" />
  </bean>
@@ -89,7 +89,21 @@ SqlSessionTemplate
 		<property name="maxUploadSize" value="10485760"></property> <!-- 10M -->
   </bean>
   
-<!--    비밀번호 암호화 
+   <!-- 비밀번호 암호화  -->
  <bean id="bCryptPasswordEncoder"   class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
-</bean> -->
+</bean>
+
+<!-- Gmail -->
+  <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    <property name="host" value="smtp.gmail.com" />
+    <property name="port" value="587" />
+    <property name="username" value="bitcamp155@gmail.com" />
+    <property name="password" value="qlxm1553ck" />
+    <property name="javaMailProperties">
+    <props>
+      <prop key="mail.smtp.auth">true</prop>
+      <prop key="mail.smtp.starttls.enable">true</prop>
+    </props>
+    </property>
+  </bean>
 </beans>

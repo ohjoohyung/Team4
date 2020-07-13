@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lagn="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <th:block th:fragment="headFragment">
 	<head>
 <meta charset="utf-8" />
@@ -42,8 +42,8 @@
 
 
 <!-- 데이트 피커 관련 css -->
-<link href="aseets/plugins/timepicker/bootstrap-timepicker.min.css"
-	rel="stylesheet">
+<!-- <link href="aseets/plugins/timepicker/bootstrap-timepicker.min.css"
+	rel="stylesheet"> -->
 <link
 	href="assets/plugins/bootstrap-daterangepicker/daterangepicker.css"
 	rel="stylesheet">
@@ -61,6 +61,10 @@
 <link
 	href="assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.css"
 	rel="stylesheet">
+	
+<!--  ㄴㅇㅂ --> 
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 <style>
 .bodiary-wrapper {
 	padding-top: 70px;
@@ -110,7 +114,11 @@ ul {
 }
 
 .excs-cart {
+<<<<<<< HEAD
 	max-width: 540px;
+=======
+	max-width: 100%;
+>>>>>>> 63908119c25000253118d15f4a336b7904140740
 	min-width: 200px;
 	max-height: 86vh;
 	/* overflow : auto; */
@@ -249,7 +257,7 @@ ul {
 	height: 0;
 }
 
- .slider {
+.slider {
 	position: absolute;
 	cursor: pointer;
 	top: 0;
@@ -286,15 +294,14 @@ input:checked+.slider:before {
 	-ms-transform: translateX(26px);
 	transform: translateX(26px);
 }
-
 /* Rounded sliders */
- .slider.round {
+.slider.round {
 	border-radius: 34px;
 }
 
 .slider.round:before {
 	border-radius: 50%;
-} 
+}
 
 /*
             일지 식단 css
