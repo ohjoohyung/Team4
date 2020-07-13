@@ -113,12 +113,20 @@ public class FreeBrdController {
 		return "freeBrd/freeBrdList";
 	}
 		
-	//해당 게시글 세부 목록 보기
+	//해당 게시글 세부 목록 보기(게시글 제목을 클릭했을때 조회수 증가가 이루어짐) 글번호는 int로 받았는데 String으로 해도 되네??? 
 	@RequestMapping("freeBrdDetail")
 	public String FreeBrdDetail(String seq,Model model) {
 		System.out.println("글번호:"+seq);
+	
+		FreeBrdDto freeBrdDetail = null;
+		try {
+			freeBrdService.freeBrdHit(seq);
+			freeBrdDetail = freeBrdService.freebrdDetail(seq);
+		}catch (Exception e) {
+			System.out.println("에러발생...");
+		    System.out.println(e.getMessage());
+		}
 		
-		FreeBrdDto freeBrdDetail = freeBrdService.freebrdDetail(seq);
 		model.addAttribute("freeBrdDetail",freeBrdDetail);
 		
 		//System.out.println("자유게시판 목록페이지로 이동");

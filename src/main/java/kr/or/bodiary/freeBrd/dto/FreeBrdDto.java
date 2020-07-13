@@ -14,7 +14,10 @@ public class FreeBrdDto {
 	private String free_brd_content;
 	private Date free_brd_date;
 	private int free_brd_report_num;
+	private int free_brd_hits;
 	
+	
+
 	//User 테이블에서 조인해서 얻어온 닉네임
 	private String user_nickname;
 	
@@ -36,7 +39,12 @@ public class FreeBrdDto {
 	}
 	
 	
-	
+	public int getFree_brd_hits() {
+		return free_brd_hits;
+	}
+	public void setFree_brd_hits(int free_brd_hits) {
+		this.free_brd_hits = free_brd_hits;
+	}
 	public int getFree_brd_seq() {
 		return free_brd_seq;
 	}

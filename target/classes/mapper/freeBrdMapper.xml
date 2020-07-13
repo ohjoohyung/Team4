@@ -224,7 +224,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   
 	   <!-- 게시글 상세보기 쿼리문 -->
 	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
-			    SELECT freeboard.free_brd_seq,freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_image,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img
+			    SELECT freeboard.free_brd_seq,freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_image,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img,freeboard.free_brd_hits
 				FROM freeboard
 				INNER JOIN User
 				ON freeboard.user_email = User.user_email
@@ -234,7 +234,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   <!-- 게시글 Insert 쿼리문 -->
 	   <select id="freeBrdInsert"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
 	   			INSERT INTO freeboard(free_cat,user_email,free_brd_title,free_brd_image,free_brd_content,free_brd_date) 
-	     		VALUES(#{free_cat},'bit156@naver.com',#{free_brd_title},#{free_brd_image},#{free_brd_content},NOW())     									
+	     		VALUES(#{free_cat},'bit155@naver.com',#{free_brd_title},#{free_brd_image},#{free_brd_content},NOW())     									
 	   </select>
 
 	   <!-- 글쓰기후 생성된 글번호(가장큰) 가져오기 -->
@@ -257,8 +257,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   			WHERE free_brd_seq=#{seq}    									
 	   </select>
 	   
-	   
-	   
+	   <!-- 게시판 조회수  seq(글번호) 파라미터가 String으로 들어가는데 잘들어가짐()-->
+		<update id="freeBrdHit" >
+	   		update freeboard set
+			free_brd_hits = free_brd_hits + 1
+			where free_brd_seq = #{seq};
+	   </update>
+   
 </mapper>
 
 

@@ -54,6 +54,9 @@ public interface FreeBrdDao {
     
     //팁 게시글 총 개수 가져오기 
     public int getTipCnt(Search search) throws Exception;
+    
+    //게시판 조회수 증가
+    public void freeBrdHit(String seq) throws Exception;
 	
 }
 

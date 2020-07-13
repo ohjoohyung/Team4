@@ -113,7 +113,7 @@
 												</p>
 												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
-													<i class="icon-eye"></i>&nbsp;&nbsp;5
+													<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 													&nbsp;&nbsp;
 													<i class="icon-bubble"></i>&nbsp;&nbsp;5
 												</p>
@@ -271,7 +271,7 @@
 												</p>
 												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
-													<i class="icon-eye"></i>&nbsp;&nbsp;5
+													<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 													&nbsp;&nbsp;
 													<i class="icon-bubble"></i>&nbsp;&nbsp;5
 												</p>
@@ -425,7 +425,7 @@
 												</p>
 												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
-													<i class="icon-eye"></i>&nbsp;&nbsp;5
+													<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 													&nbsp;&nbsp;
 													<i class="icon-bubble"></i>&nbsp;&nbsp;5
 												</p>
@@ -557,7 +557,7 @@
 							</div>
 							<!-- 질문 게시판 내용 END-->	
 							
-							<!-- 질문게시판 -->
+							<!-- 팁 게시판 -->
 								<div class="p-t-15" th:if="${cateGory} == 3 "> 
 
 									<h1 th:text="${cateGory}"></h1>
@@ -579,7 +579,7 @@
 												</p>
 												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
-													<i class="icon-eye"></i>&nbsp;&nbsp;5
+													<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 													&nbsp;&nbsp;
 													<i class="icon-bubble"></i>&nbsp;&nbsp;5
 												</p>

@@ -4,6 +4,8 @@
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
+
+
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<div class="bodiary-wrapper">
@@ -33,7 +35,8 @@
 								<i class="icon-clock" th:text="${list.free_brd_date}"></i>
 							</p>
 							<p class="card-text">
-								<i class="icon-eye"></i>&nbsp;&nbsp;5
+								<!-- 조회수  -->
+								<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 							</p>
 						</div>
 						<div class="col">
@@ -50,7 +53,8 @@
 								<div class="dropdown-menu">
 									<a class="dropdown-item" th:href="@{/freeBrdEdit(seq=${list.free_brd_seq})}">수정</a>
 									<a	class="dropdown-item" th:href="@{/freeBrdDelete(seq=${list.free_brd_seq})}">삭제</a>
-
+									<!-- 글번호 -->
+									<button id="freeSeq" hidden="hiddne" th:value="${list.free_brd_seq}"></button>
 								</div>
 
 							</div>
@@ -96,29 +100,26 @@
 							<div class="col-11">
 								<b>익명 1</b> &nbsp;<span class="badge badge-pill badge-info">&nbsp;작성자&nbsp;</span>&nbsp;
 								<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span> <span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
+									11:23</span> 
+								<span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
 							</div>
 
-							<!-- 수정, 삭제, 신고 드롭다운 -->
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
+							
+							<div class="user-img c-pointer position-relative" data-toggle="dropdown">
+								<span class="activity active"></span>
+								<i class="icon-options-vertical"></i>
+							</div> 
+							
 							<div class="basic-dropdown">
-
-
 								<div class="dropdown-menu">
 									<a class="dropdown-item" href="#">수정</a> <a
 										class="dropdown-item" href="#">삭제</a>
 
 								</div>
-
 							</div>
 						</div>
+						<!-- 댓글 내용 -->
 						<div class="mt-3">꿀팁감사</div>
-
-
 					</div>
 
 					<div class="mt-4 pl-5 mb-4">
@@ -148,84 +149,8 @@
 
 					</div>
 
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 3</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">개소리ㅋㅋ</div>
-
-
-					</div>
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 4</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">꿀팁감사</div>
-					</div>
-
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 5</b> &nbsp;&nbsp;<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">꿀팁감사</div>
-
-
-					</div>
-
+					<hr>				
+						<div id="listReply"></div>
 					<hr>
 
 					<!-- 댓글 쓰기 -->
@@ -237,13 +162,13 @@
 
 
 									<textarea class="textFB form-control h-50px" rows="3"
-										id="comment"></textarea>
+										id="replytext"></textarea>
 
 
 								</div>
 								<div class="row">
 									<div class="col-11"></div>
-									<button type="submit" class="btn mb-1 btn-outline-light">등록</button>
+									<button type="submit" id="btnReply" class="btn mb-1 btn-outline-light">등록</button>
 								</div>
 							</form>
 						</div>
@@ -256,4 +181,75 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
+<!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
+<th:block layout:fragment="script">
+	<script>
+		$(document).ready(function(){
+			console.log("안녕하세요");			
+			/* seq = $('#freeSeq').val();
+			console.log("글번호"+seq); */			
+			listReply();
+			
+			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리)
+			$("#btnReply").click(function(){
+				var replytext = $("#replytext").val();
+				var seq = $('#freeSeq').val();
+				var param ="replytext="+replytext+"&seq="+seq;
+				alert("글번호:"+seq);
+				//alert("param:"+param); //여기까지 잘넘어옴
+				//댓글 Insert는 되는데 success로 아예 못탐 
+				$.ajax({
+					type:"get",
+					url:"freeReply/insert",
+					async: false,
+					data : param,
+					success:function(){
+						alert("댓글 등록 완료");
+						alert("글번호"+seq);
+						
+						//listReply_1(seq); 이함수를 호출하면 에러가 발생함
+						listReply_1(seq);
+					},
+				 	error : function(error) {
+				        alert("Error!"+error);
+				    }
+				    /* complete : function() {
+				    	listReply();   
+				    }  */
+				});
+				
+			});
+			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리) END
+			
+		});
+						
+		
+		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
+		function listReply(){
+			seq = $('#freeSeq').val();
+			$.ajax({
+				type:"get",
+				url:"freeReply/list?seq="+seq,
+				success:function(result){
+					console.log(result);
+					$("#listReply").html(result); 
+				}
+			});
+		}
+		
+		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
+		function listReply_1(seq){
+			//var bno = seq;
+			$.ajax({
+				type:"get",
+				url:"freeReply/list?seq="+seq,
+				success:function(result){
+					console.log(result);
+					$("#listReply").html(result); 
+				}
+			});
+		}
+		
+	</script>
+</th:block>
 </html>

@@ -39,6 +39,12 @@ public class FreeBrdService {
 //		return result;
 //	}
 	
+	//게시판 제목클릭시 조회수 증가하는 함수
+	public void freeBrdHit(String seq) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		FreeBrd.freeBrdHit(seq);
+	}
+		
 	//자유게시판 총 게시물수 얻어오는 함수 
 	public int getLibertyCnt(Search search) throws Exception {
 		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
