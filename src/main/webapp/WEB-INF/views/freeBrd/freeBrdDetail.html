@@ -157,20 +157,16 @@
 
 					<div class="commentFB basic-form mt-5 p-2">
 						<div>
-							<form>
+							<!-- form 태그쓰니까 Ajax가 안먹힘 -->
 								<div class="form-group">
-
-
 									<textarea class="textFB form-control h-50px" rows="3"
 										id="replytext"></textarea>
-
-
 								</div>
 								<div class="row">
 									<div class="col-11"></div>
 									<button type="submit" id="btnReply" class="btn mb-1 btn-outline-light">등록</button>
 								</div>
-							</form>
+							
 						</div>
 					</div>
 
@@ -184,31 +180,42 @@
 <!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
 <th:block layout:fragment="script">
 	<script>
-		$(document).ready(function(){
-			console.log("안녕하세요");			
-			/* seq = $('#freeSeq').val();
-			console.log("글번호"+seq); */			
+		var seq = $('#freeSeq').val();	
+		
+		$(document).ready(function(){		
+		
 			listReply();
 			
 			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리)
 			$("#btnReply").click(function(){
 				var replytext = $("#replytext").val();
-				var seq = $('#freeSeq').val();
 				var param ="replytext="+replytext+"&seq="+seq;
-				alert("글번호:"+seq);
-				//alert("param:"+param); //여기까지 잘넘어옴
-				//댓글 Insert는 되는데 success로 아예 못탐 
+				//alert("글번호:"+seq);
+				alert("param:"+param); //여기까지 잘넘어옴
 				$.ajax({
-					type:"get",
+					type:"post",
 					url:"freeReply/insert",
-					async: false,
 					data : param,
 					success:function(){
-						alert("댓글 등록 완료");
-						alert("글번호"+seq);
 						
-						//listReply_1(seq); 이함수를 호출하면 에러가 발생함
-						listReply_1(seq);
+						
+						/* alert("글번호1"+seq);
+						seq_1 = seq;
+						alert("글번호2"+seq_1);
+						$.ajax({
+							type:"get",
+							url:"freeReply/list?seq="+seq,
+							success:function(result){
+								alert("결과값"+result);
+								$("#listReply").html(result); 
+							}
+						}); */
+						
+						
+						alert("댓글 등록 완료"+"<글번호>"+seq);
+						
+						listReply(); //이함수를 호출하면 seq=undefined 되는 에러가 발생함(freeReply/list?seq=undefined)
+
 					},
 				 	error : function(error) {
 				        alert("Error!"+error);
@@ -226,7 +233,6 @@
 		
 		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
 		function listReply(){
-			seq = $('#freeSeq').val();
 			$.ajax({
 				type:"get",
 				url:"freeReply/list?seq="+seq,
@@ -237,18 +243,7 @@
 			});
 		}
 		
-		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
-		function listReply_1(seq){
-			//var bno = seq;
-			$.ajax({
-				type:"get",
-				url:"freeReply/list?seq="+seq,
-				success:function(result){
-					console.log(result);
-					$("#listReply").html(result); 
-				}
-			});
-		}
+
 		
 	</script>
 </th:block>

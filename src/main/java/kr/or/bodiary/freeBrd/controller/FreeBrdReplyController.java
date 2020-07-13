@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,8 +31,8 @@ public class FreeBrdReplyController {
 	}
 	
 	//댓글 목록 
-	@RequestMapping("list")
-	public ModelAndView list(@RequestParam("seq") int seq,ModelAndView mav) throws Exception {
+	@RequestMapping(value="list",method=RequestMethod.GET)
+	public ModelAndView list(@RequestParam("seq") String seq,ModelAndView mav) throws Exception {
 		System.out.println("댓글목록글번호"+seq);
 		
 		List<FreeBrdCmtDto> list = freeBrdCmtService.list(seq);
@@ -50,15 +51,14 @@ public class FreeBrdReplyController {
 	}
 	
 	//댓글 INSERT 
-	@RequestMapping("insert")
-	public int insert(@RequestParam("seq") int seq,@RequestParam("replytext") String replytext) throws Exception {
+	@RequestMapping(value="insert",method = RequestMethod.POST)
+	public void insert(@RequestParam("seq") String seq,@RequestParam("replytext") String replytext) throws Exception {
 		
 		System.out.println("댓글 입력시 글번호 출력+"+seq);
 		System.out.println("댓글내용+"+replytext);
 		
 		freeBrdCmtService.create(seq,replytext);
 		
-		return seq;
 	}
 }
 
