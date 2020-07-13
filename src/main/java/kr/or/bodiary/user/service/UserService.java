@@ -62,7 +62,7 @@ public class UserService {
 		}
 		return "redirect:/login";
 	}
-	//----------- 준회원 유저정보 수정 서비스-----------
+	//----------- 준회원 유저정보 수정 서비스 -----------
 	public String updateUserAssociate(UserDto user, HttpServletRequest request) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		String filename = user.getFile().getOriginalFilename();
