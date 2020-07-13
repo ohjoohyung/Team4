@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 import kr.or.bodiary.freeBrd.dto.Pagination;
+import kr.or.bodiary.freeBrd.dto.Search;
 import kr.or.bodiary.freeBrd.service.FreeBrdService;
 
 
@@ -34,27 +36,83 @@ public class FreeBrdController {
 	
 	//전체 게시글(자유,팁,궁금) 보기
 	@RequestMapping("freeBrdList")
-	public String AllFreeBrdList(Model model,@RequestParam(defaultValue = "1")int page) throws Exception {		
+	public String AllFreeBrdList(Model model
+								,@RequestParam(defaultValue = "1")int page
+								,@RequestParam(required = false,defaultValue = "title")String searchType
+								,@RequestParam(required = false,defaultValue = "0")int cateGory
+								,@RequestParam(required = false)String keyword
+								,@ModelAttribute("search") Search search
+								) throws Exception {
 		
-		//총 게시물 수 
-		int totalListCnt = freeBrdService.allFreeBrdCount();
+		System.out.println("카테고리 번호"+cateGory);
+		System.out.println("검색타입"+searchType);
+		System.out.println("검색키워드"+keyword);
 		
-		//Pagination 객체 생성 
-		Pagination pagination = new Pagination(totalListCnt,page);
+		/*
+		//총 게시물수를 받아옴 
+		int totalListCnt;
+		//카테고리 별로 총게시물을 가져오는 숫자가 다름 
+		if(cateGory == 0) {
+			totalListCnt = freeBrdService.allFreeBrdCount();
+		}else if(cateGory == 1) {
+			totalListCnt = freeBrdService.getLibertyCnt(); //자유게시판 총 게시물 
+		}else if(cateGory == 2) {
+			totalListCnt = freeBrdService.getQuestionCnt(); //질문게시판 총 게시물 
+		}else if(cateGory == 3) {
+			totalListCnt = freeBrdService.getTipCnt(); //팁게시판 총 게시물 
+		}
+		*/
 		
+		//검색을 했을 경우 (검색한게 없어도 실행) 
+		model.addAttribute("search",search);
+		search.setSearchType(searchType);
+		search.setKeyword(keyword);
+		search.setCateGory(cateGory);
 		
-		int startIndex = pagination.getStartIndex();
-		//페이지당 보여지는 게시글 최대 개수 
-		int pageSize = pagination.getPageSize();
+		//해당 검색에 해당하는 총 게시글 수 (카테고리 별로 분류) 
+		int searchListCnt = 0;
+		//카테고리 별로 총게시물을 가져오는 숫자가 다름 
+		if(cateGory == 0) {
+			searchListCnt = freeBrdService.allFreeBrdCount(search); //전체 게시물
+		}else if(cateGory == 1) {
+			searchListCnt = freeBrdService.getLibertyCnt(search); //자유게시판 총 게시물 			
+		}else if(cateGory == 2) {
+			searchListCnt = freeBrdService.getQuestionCnt(search); //질문게시판 총 게시물 
+		}else if(cateGory == 3) {
+			searchListCnt = freeBrdService.getTipCnt(search); //팁게시판 총 게시물 
+		}
 
-		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd(startIndex,pageSize);
 		
-		model.addAttribute("pagination",pagination);
+		// ******************* 페이징 처리 ****************************************//
+		//Pagination 객체 생성 (파라미터 값으로 총게시물수 , 현재 페이지를 받는다)
+//		Pagination pagination = new Pagination();
+//		pagination.pageInfo(totalListCnt, page);
+//		
+//		int startIndex = pagination.getStartIndex();
+//		//페이지당 보여지는 게시글 최대 개수 
+//		int pageSize = pagination.getPageSize();
+		// ******************* 페이징 처리 ****************************************//
+		
+		//검색후 페이징 처리 계산 (검색한게 없어도 실행) 
+		search.pageInfo(searchListCnt, page);
+		
+		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd(search);
+		
+		model.addAttribute("cateGory",cateGory);
+		model.addAttribute("pagination",search);
 		model.addAttribute("freeBrdList",freeBrdList);
+		
+		// ******************* 페이징 처리 ****************************************//
+//		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd(startIndex,pageSize);
+//		
+//		model.addAttribute("pagination",pagination);
+//		model.addAttribute("freeBrdList",freeBrdList);
+		// ******************* 페이징 처리 ****************************************//
+		
 		
 		return "freeBrd/freeBrdList";
 	}
-	
+		
 	//해당 게시글 세부 목록 보기
 	@RequestMapping("freeBrdDetail")
 	public String FreeBrdDetail(String seq,Model model) {
@@ -161,6 +219,7 @@ public class FreeBrdController {
 	
 	
 }
+
 
 
 

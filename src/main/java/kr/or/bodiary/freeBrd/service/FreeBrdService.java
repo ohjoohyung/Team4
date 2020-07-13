@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 import kr.or.bodiary.freeBrd.dto.Pagination;
+import kr.or.bodiary.freeBrd.dto.Search;
 
 
 @Service
@@ -30,15 +31,74 @@ public class FreeBrdService {
 	}
 
 	//총 게시물수 얻어오는 함수
-	public int allFreeBrdCount() throws Exception {
+//	public int allFreeBrdCount() throws Exception {
+//		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+//		int result = FreeBrd.getFreeBoardListCnt();
+//		System.out.println("총 게시물수 "+result);
+//		
+//		return result;
+//	}
+	
+	//자유게시판 총 게시물수 얻어오는 함수 
+	public int getLibertyCnt(Search search) throws Exception {
 		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-		int result = FreeBrd.getFreeBoardListCnt();
-		System.out.println("총 게시물수 "+result);
+		int result = FreeBrd.getLibertyCnt(search);
+		System.out.println("자유게시판 총 게시물수 "+result);
 		
 		return result;
 	}
 	
-	// 전체 게시글(자유,팁,궁금) 목록보기
+	//질문게시판 총 게시물수 얻어오는 함수 
+	public int getQuestionCnt(Search search) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		int result = FreeBrd.getQuestionCnt(search);
+		System.out.println("질문게시판 총 게시물수 "+result);
+		
+		return result;
+	}
+	
+	//팁게시판 총 게시물수 얻어오는 함수 
+	public int getTipCnt(Search search) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		int result = FreeBrd.getTipCnt(search);
+		System.out.println("팁게시판 총 게시물수 "+result);
+		
+		return result;
+	}
+	
+	//검색에 해당하는 총 게시물수 얻어오는 함수
+	public int allFreeBrdCount(Search search) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		int result = FreeBrd.getFreeBoardListCnt(search);
+		System.out.println("검색에 해당되는 총 게시물수 "+result);
+		
+		return result;
+	}
+	
+	// 전체 게시글(자유,팁,궁금) 목록보기(가짜) 
+	public List<FreeBrdDto> allFreeBrd(Search search) {
+
+		List<FreeBrdDto> list = null;
+
+		try {
+			System.out.println("시작인덱스"+search.getStartIndex());
+			System.out.println("한페이지 사이즈"+search.getPageSize());
+			// mapper 를 통한 FreeBrdDao 인터페이스 연결
+			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			list = FreeBrd.allFreeBrd(search);
+			for(int i=0;i<list.size();i++) {
+				System.out.println(list.get(i).getFree_brd_seq()+"번호");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("allFreeBrd() 함수 실행중 오류발생" + e.getMessage());
+		}
+
+		return list;
+	}
+		
+	// 전체 게시글(자유,팁,궁금) 목록보기(원본)
+	/*
 	public List<FreeBrdDto> allFreeBrd(int startIndex,int pageSize) {
 
 		List<FreeBrdDto> list = null;
@@ -59,6 +119,7 @@ public class FreeBrdService {
 
 		return list;
 	}
+	*/
 
 	// 글 상세보기 서비스 함수
 	public FreeBrdDto freebrdDetail(String seq) {
@@ -236,6 +297,7 @@ public class FreeBrdService {
 }
 	
 	
+
 
 
 

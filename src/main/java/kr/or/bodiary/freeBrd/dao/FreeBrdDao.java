@@ -7,15 +7,19 @@ import org.apache.ibatis.annotations.Param;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDto;
 import kr.or.bodiary.freeBrd.dto.Pagination;
+import kr.or.bodiary.freeBrd.dto.Search;
 
 
 
 
 public interface FreeBrdDao {
 
-	//전체 게시글 가져오기(팁,자유,궁금)
-	public List<FreeBrdDto> allFreeBrd(@Param("startIndex")int startIndex,@Param("pageSize")int pageSize) throws ClassNotFoundException, SQLException;
+	//전체 게시글 가져오기(팁,자유,궁금) 원본
+	//public List<FreeBrdDto> allFreeBrd(@Param("startIndex")int startIndex,@Param("pageSize")int pageSize) throws ClassNotFoundException, SQLException;	
 
+	//전체 게시글 가져오기(팁,자유,궁금)
+	public List<FreeBrdDto> allFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
+	
 	//해당 게시글 세부 목록 가져오기 
 	public FreeBrdDto freebrdDetail(String seq) throws ClassNotFoundException, SQLException;
 	
@@ -39,4 +43,36 @@ public interface FreeBrdDao {
 	//게시글 총 개수 가져오기 
 	public int getFreeBoardListCnt() throws Exception;
 	
+	//게시글 총 개수 가져오기 
+    public int getFreeBoardListCnt(Search search) throws Exception;
+    
+    //자유 게시글 총 개수 가져오기 
+    public int getLibertyCnt(Search search) throws Exception;
+    
+    //질문 게시글 총 개수 가져오기 
+    public int getQuestionCnt(Search search) throws Exception;
+    
+    //팁 게시글 총 개수 가져오기 
+    public int getTipCnt(Search search) throws Exception;
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
