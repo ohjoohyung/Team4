@@ -1,4 +1,4 @@
-package kr.or.bodiary.routineBrd.dto;
+package kr.or.bodiary.exercise.dto;
 
 import lombok.Getter;
 import lombok.Setter;
