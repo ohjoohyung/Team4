@@ -238,21 +238,28 @@
 											//유산소에 달자
 											if(obj.excs_kind == "C"){
 												$('#exer_c_add').append(	
-												"<div  id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'><div class='col pt-2'><h9>"
-												+obj.excs_name+"</h9></div><div class='form-group col-5'>"
-												+"<select class='form-control form-control-sm input-rounded input-excs-cart' id='sel1'>"
-												+"<option selected>30분</option><option>1시간</option><option>1시간 30분</option><option>2시간</option><option>2시간 30분</option><option>3시간 이상</option>"
-												+"</select></div><div class='col-2 center pt-2'><a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
+													"<div  id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'>"
+													+"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
+													+"<div class='form-group col-5'>"
+														+"<select class='form-control form-control-sm input-rounded input-excs-cart' id='sel1' onchange='eselected1();'>"
+															+"<option selected >선택</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간 이상</option>"
+														+"</select></div>"
+														+"<div class='col-2 center pt-2'>"
+														+"<a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
 												);
+												
+												
 											//무산소에 달자
 											}else if(obj.excs_kind == "N"){
 												$('#exer_n_add').append(	
 														"<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'><div class='col pt-2'><h10>"
-														+obj.excs_name+"</h10></div><div class='form-group col-3'><select class='form-control form-control-sm input-rounded input-excs-cart' id='sel2'>"
-														+"<option selected='selected'>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>"
-														+"</div><div class='form-group col-2'><input type='text' class='form-control form-control-sm input-rounded input-excs-cart' placeholder='ex) 30회'>"
+														+obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2();'class='form-control form-control-sm input-rounded input-excs-cart'>"
+														+"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
+														+"</div><div class='form-group col-3'><select  id='sel2' onchange='eselected2();'class='form-control form-control-sm input-rounded input-excs-cart'>"
+														+"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
 														+"</div><div class='col-2 center pt-2'><a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div></div>"
 														);
+										
 											}
 									});
 								 }
@@ -263,6 +270,21 @@
 					var elem = document.getElementById(es);
 					console.log(elem);
 				    elem.parentNode.removeChild(elem);
+				}
+				function eselected1(){
+					var eselect = document.getElementById("sel1");
+					$("#sel1 option:selected").val();
+					alert($("#sel1 option:selected").val());
+				}
+				function eselected2(){
+					var eselect = document.getElementById("sel2");
+					$("#sel2 option:selected").val();
+					alert($("#sel2 option:selected").val());
+				}
+				function eselected3(){
+					var eselect = document.getElementById("sel3");
+					$("#sel3 option:selected").val();
+					alert($("#sel3 option:selected").val());
 				}
 
 		</script>
