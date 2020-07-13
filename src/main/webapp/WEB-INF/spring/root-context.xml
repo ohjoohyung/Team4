@@ -90,7 +90,7 @@ SqlSessionTemplate
   </bean>
   
    <!-- 비밀번호 암호화  -->
- <bean id="bCryptPasswordEncoder"   class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+ <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
 </bean>
 
 <!-- Gmail -->

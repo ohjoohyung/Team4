@@ -63,6 +63,12 @@ public class UserController {
 		
 		return userService.updateUserAssociate(user, request);
 	}
+	//---------- 탈퇴처리 -----------
+	@RequestMapping(value="/myPageEdit" , method=RequestMethod.POST)
+	public String updateWithdrawalUser(UserDto user ,HttpServletRequest request) {
+		return userService.updateWithdrawalUser(user, request);
+	}
+	
 	//---------- 계정정보 수정 -----------
 	@RequestMapping("/myPageEdit")
 	public String myPageEdit() {
