@@ -27,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="exerciseadd" parameterType="int" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
        select * from Exercise where excs_seq=#{excs_seq}
     </select>
+    <select id="getExercise" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+ 	select * FROM exercise
+ 	</select>
     <!--  
     <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
        INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 

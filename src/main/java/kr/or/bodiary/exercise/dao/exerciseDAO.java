@@ -15,4 +15,5 @@ public interface exerciseDAO {
 	public List<exerciseDTO> exerciseEquiSearch(String excs_body_part) throws ClassNotFoundException, SQLException;
 	public List<exerciseDTO> exercisepartequiSearch(Map<String, String> exerciseparteuqi);
 	public List<exerciseDTO> exerciseadd(int excs_seq) throws ClassNotFoundException, SQLException;
+	public List<exerciseDTO> getExercise() throws ClassNotFoundException, SQLException;
 }

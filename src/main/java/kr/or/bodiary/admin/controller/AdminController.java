@@ -1,11 +1,29 @@
 package kr.or.bodiary.admin.controller;
 
+import java.util.List;
+
+import javax.inject.Inject;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import kr.or.bodiary.admin.service.ExerciseService;
+import kr.or.bodiary.exercise.dto.exerciseDTO;
 
 @Controller
 public class AdminController {
 
+	private ExerciseService exerciseservice;
+	@Autowired
+	public void setExerciseService(ExerciseService exerciseservice) {
+		this.exerciseservice = exerciseservice;
+	}
+
+	
 	@RequestMapping("/admin")
 	public String adminDashBrd() {
 		return "admin/adminDashBrd";
@@ -43,9 +61,13 @@ public class AdminController {
 	}
 
 	@RequestMapping("/adminExcsList")
-	public String adminExcsList() {
+	public String adminExcsList( Model model) {
+		List<exerciseDTO> list = exerciseservice.exercises();
+		model.addAttribute("list", list);
 		return "admin/adminExcsList";
 	}
+	
+	    
 	@RequestMapping("/adminReportList")
 	public String adminReportList() {
 		return "admin/adminReportList";
