@@ -58,9 +58,12 @@
 														<div class="mt-3">
 															<label class="btn btn-outline-light btn-file"><i
 																class="icon-plus"></i> <input type="file" id="imgFile"
-																name="file" onchange="readURL(this)" accept="image/*"/></label> <img id="img"
+																name="file" onchange="readURL(this); fileCheck(this);" accept="image/*"/></label> <img id="img"
 																
-																alt="your image" />
+																alt="your image" style="width:300px; height:200px;"/>
+																<div class="tdimg">
+																
+																</div>
 
 														</div>
 													</div>
@@ -69,7 +72,7 @@
 											</div>
 
 											<div class="form-group col-md-4">
-												<label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="text"
+												<label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="number" min="20" max="300" step = '1' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'
 													id="diary_today_weight" name="diary_today_weight"
 													class="form-control input-default" placeholder="">
 													<div class="tdweight"></div>
@@ -191,17 +194,21 @@
 										</div>
 
 										<div class="form-group mt-5">
-											<label>오늘의 루틴&nbsp;&nbsp;*</label> <select id="routine_cart_seq"
+											<label>오늘의 루틴&nbsp;&nbsp;*</label>
+											<span>&nbsp;&nbsp;(루틴이 없다면 <a href="">루틴 추가하러 가기</a>)</span> 
+											<select id="routine_cart_seq"
 												name="routine_cart_seq" class="form-control input-default"
-												th:each="item : ${routineList}">
+												>
 
 
-												<option>선택없음</option>
+												<option value="0">선택없음</option>
+												<th:block th:each="item : ${routineList}">
 												<option th:text="${item.routine_cart_title}"
-													th:value="${item.routine_cart_seq}">routine_cart_title</option>
-
+													th:value="${item.routine_cart_seq}"></option>
+												 </th:block>
 
 											</select>
+											<div class="tdroutine"></div>
 										</div>
 
 										<!-- 	<div class="modal fade" id="basicModal">
@@ -281,7 +288,73 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<script type="text/javascript">
+	var validate = new Array;
+	
 			$(function(){
+				for(let i=0; i<3; i++) {
+        			validate[i]=false;
+        		}
+				//일지 유효성 검증
+				
+				
+				
+				$('#diary_today_weight').keyup(function() {
+					/*		
+					let weight = /^[0-9]*$/;
+							if (!weight.test($('#diary_today_weight').val())) {
+								$('.tdweight')
+										.html(
+												'<p style="color:red">몸무게는 숫자만 입력해주세요.</p>');
+								 validate[1] = false;
+							} else {
+								$('.tdweight').html('');
+								validate[1] = true;
+							}
+							*/
+							
+							if($('#diary_today_weight').val() >= 20 && $('#diary_today_weight').val() <= 300) {
+								validate[1] = true;
+								$('.tdweight').html('');
+							}else {
+								validate[1] = false;
+								$('.tdweight')
+								.html(
+										'<p style="color:red">몸무게는 30~300 사이의 수를 적어주세요.(kg 단위 제외)</p>');
+							}
+							console.log(validate[1]);
+						}); 
+				
+				$('button:submit').click(function() {
+					console.log($('#routine_cart_seq option:selected').val());
+					
+				
+					for (let i = 0; i < validate.length; i++) {
+						if (validate[i] == false) {
+							switch (i) {
+							case 0:
+								$('#imgFile').focus();
+								$('.tdimg').html(
+										'<p style="color:red">필수 항목입니다.</p>');
+								return false;
+							case 1:
+								$('#diary_today_weight').focus();
+								$('.tdweight').html(
+								'<p style="color:red">필수 항목입니다.</p>');
+								return false;
+							case 2:
+								$('#routine_cart_seq').focus();
+								$('.tdroutine').html(
+								'<p style="color:red">필수 항목입니다.</p>');
+								return false;
+							}
+						}
+					}
+				
+					
+				});
+				
+				
+				
 				
 				//음식 검색하기
 				$('#foodsearch').keyup(function(){
@@ -301,7 +374,8 @@
 										table += "<tr><td>"+obj.food_seq+"</td>" +
 											"<td>"+obj.food_name+"</td>" +
 											"<td>"+obj.food_cal+"</td>"+
-											"<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]' id='count"+obj.food_seq+"'></td>"+
+											"<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
+
 											"<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
 									});
 									table += "</table>";
@@ -314,8 +388,12 @@
 				//저장된 루틴 불러오기
 				$('#routine_cart_seq').change(function() {
 	                var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
-	          
-	                console.log(data);
+	          		if(data.routine_cart_seq == 0) {
+	          			$('#cardio').empty();
+	          			$('#weightTraining').empty();
+	          			validate[2] = false;
+	          			return;
+	          		}
 	                $.ajax(
 							 {
 								 type:"get",
@@ -351,46 +429,29 @@
 															'</div>'+
 														'</div>'	
 										)}
-									}); 	
+									}); 
+									$('.tdroutine')
+									.html(
+											'');
+									validate[2] = true;
 							 	}
 							 });
 	                });		
 				
 				
-				//일지 유효성 검증
-				$('#diary_today_weight').keyup(function() {
-							let weight = /^[0-9]*$/;
-							if (!weight.test($('#diary_today_weight').val())) {
-								$('.tdweight')
-										.html(
-												'<b style="color:red">몸무게는 숫자만 입력해주세요.</b>');
-								/* validate[0] = false; */
-							} else {
-								$('.tdweight').html('');
-								/* validate[0] = true; */
-							}
-							/* console.log(validate[0]); */
-						});
 				
-				$('button:submit').click(function() {
-					var imgFile = $('#imgFile').val();
-					var routineVal = $('#routine_cart_seq option:selected').val();
-					var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
-					console.log(imgFile);
-					console.log(routineVal);
-					if(imgFile == "") {
-						alert("ㅋㅋ");
-						$('#routine_cart_seq').focus();
-						return false;
-					}
-					
-				});
 			});
 			
 			//식단 인덱스
 			var number = 0;
 			//음식 추가하기 메소드
 			function addFood(food_seq, food_name) {
+				
+				
+				if($('#count'+food_seq).val() == "") {
+					alert("음식 수량을 적어주세요.");
+					return false;
+				}
 				
 				console.log($('#count'+food_seq).val());
 				console.log($('#meal option:selected').val());
@@ -408,7 +469,7 @@
 				}
 				
 				var div = '<div class="row cart-item-card mb-3 mealDiv'+number+'">'+
-									'<div class="col">'+
+									'<div class="col '+food_name+'">'+
 										'<h5>'+food_name+'</h5>'+
 									'</div>'+
 									'<div class="col-3">'+count+
@@ -425,22 +486,34 @@
 				
 				switch(meal) {
 				case 1 :
-				
+					if($('#morning > div.row > div.'+food_name+'').text() == food_name) {
+						alert("이미 음식이 추가되어 있습니다.");
+						return false;
+					}
 					$('#morning').append(div);
 					number++;
 					break;
 				case 2 :
-					
+					if($('#lunch > div.row > div.'+food_name+'').text() == food_name) {
+						alert("이미 음식이 추가되어 있습니다.");
+						return false;
+					}
 					$('#lunch').append(div);
 					number++;
 					break;
 				case 3 :
-					
+					if($('#dinner > div.row > div.'+food_name+'').text() == food_name) {
+						alert("이미 음식이 추가되어 있습니다.");
+						return false;
+					}
 					$('#dinner').append(div);
 					number++;
 					break;
 				default :
-					
+					if($('#dessert > div.row > div.'+food_name+'').text() == food_name) {
+						alert("이미 음식이 추가되어 있습니다.");
+						return false;
+					}
 					$('#dessert').append(div);
 					number++;
 				}	
@@ -455,14 +528,68 @@
 			//이미지 추가 했을 때 화면에 띄우기
 			function readURL(input) {
 				if (input.files && input.files[0]) {
-					var reader = new FileReader();
-					reader.onload = function(e) {
-						$('#img').attr('src', e.target.result);
+					console.log(input.files[0])
+					pathpoint = input.value.lastIndexOf('.');
+				    filepoint = input.value.substring(pathpoint+1,input.length);
+				    filetype = filepoint.toLowerCase();
+				    console.log(filetype);
+				    if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
+						var reader = new FileReader();
+						reader.onload = function(e) {
+							$('#img').attr('src', e.target.result);
+						}
+						reader.readAsDataURL(input.files[0]);
+					} else{
+						return false;	
 					}
-					reader.readAsDataURL(input.files[0]);
 				}
 				/* $('#imgFileName').html(input.files[0].name); */
 			};
+			
+			//업로드한 파일 검증
+			function fileCheck(obj) {
+		    pathpoint = obj.value.lastIndexOf('.');
+		    filepoint = obj.value.substring(pathpoint+1,obj.length);
+		    filetype = filepoint.toLowerCase();
+		    if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
+		    	validate[0] = true;
+		    	console.log("파일 검증 : " +validate[0]);
+		    	$('.tdimg').html(
+				'');
+		        return;
+		
+		    } else {
+		        alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
+		
+		        parentObj  = obj.parentNode
+		        node = parentObj.replaceChild(obj.cloneNode(true),obj);
+		        validate[0] = false;
+		        console.log("파일 검증 : " + validate[0]);
+		        return false;
+		    }
+			}
+		    
+			
+			function onlyNumber(event){
+			    event = event || window.event;
+			    var keyID = (event.which) ? event.which : event.keyCode;
+			    if ( (keyID >= 48 && keyID <= 57) || (keyID >= 96 && keyID <= 105) || keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+			        return;
+			    else
+			        return false;
+			}
+			function removeChar(event) {
+			    event = event || window.event;
+			    var keyID = (event.which) ? event.which : event.keyCode;
+			    if ( keyID == 8 || keyID == 46 || keyID == 37 || keyID == 39 ) 
+			        return;
+			    else
+			        event.target.value = event.target.value.replace(/[^0-9]/g, "");
+			}
+		    
+		    
+   
+
 </script>
 </body>
 </html>

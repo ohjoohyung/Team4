@@ -31,7 +31,7 @@ public interface BodiaryDao {
 	public List<RoutineJoinDto> getRoutine(String routine_cart_seq) throws ClassNotFoundException, SQLException;
 	
 	//루틴 리스트 불러오기 (나중에는 유저 이메일로 판별하고 불러와야함)
-	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException;
+	public List<RoutineJoinDto> getRoutineListById(String user_email) throws ClassNotFoundException, SQLException;
 	
 	//식단 불러오기
 	public List<DailyMealFoodJoinDto> getDailyMeal(String meal_cart_seq) throws ClassNotFoundException, SQLException;

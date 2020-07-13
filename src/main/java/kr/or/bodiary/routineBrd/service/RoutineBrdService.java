@@ -17,6 +17,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
+import kr.or.bodiary.user.dao.UserDao;
+import kr.or.bodiary.user.dto.UserDto;
 
 
 
@@ -60,7 +62,7 @@ public class RoutineBrdService {
 	}
 	
 	//입력(처리)
-	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request, Principal principal) throws IOException, ClassNotFoundException, SQLException {
+	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		List<CommonsMultipartFile> files = routinebrddto.getFiles();
 		List<String> filenames = new ArrayList<String>();
 		
@@ -79,19 +81,26 @@ public class RoutineBrdService {
 			}
 				
 		}
-		routinebrddto.setUser_email(principal.getName());
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		routinebrddto.setUser_email(user.getUser_email());
 		routinebrddto.setBrd_image1(filenames.get(0));
 		routinebrddto.setBrd_image2(filenames.get(1));
 		
 		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
-		
+		String url="";
 		try {
-			routinebrddao.routineBoardInsert(routinebrddto);
+			int result = routinebrddao.routineBoardInsert(routinebrddto);
 			System.out.println("insert 정상 처리");
+			
+			if(result > 0) { 
+				url = "redirect:routineBrdDetail?routine_brd_seq="+routinebrddto.getRoutine_brd_seq(); 
+			} else { 
+				url = "redirect:routineBrdInsert";
+			}
 		} catch (Exception e) {
 			System.out.println("Transaction 문제 발생" + e.getMessage());
 		}
-		return "redirect:routineBrdDetail";
+		return url;
 	}
 	
 	//수정(폼)

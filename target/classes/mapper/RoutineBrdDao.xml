@@ -11,9 +11,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from RoutineBoard
 	</select>
 	
+	<!-- 작성 -->
+	<insert id="routineBoardInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto" useGeneratedKeys="true" keyProperty="routine_brd_seq">
+		insert into RoutineBoard (user_email, routine_brd_title, routine_brd_content, routine_brd_regdate, routine_brd_hit, routine_cart_seq, brd_image1, brd_image2, brd_rec)
+		values (#{user_email}, #{routine_brd_title}, #{routine_brd_content}, now(), 0, #{routine_cart_seq}, #{brd_image1}, #{brd_image2}, 0)
+	</insert>
+	
+	
+	
 	<!-- 상세 -->
 	<select id="routineBoardSelect" parameterType="int" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
-		select routine_brd_seq, routine_brd_title, routine_brd_content, routine_cart_seq, brd_image1, brd_image2
+		select routine_brd_seq, routine_brd_title, routine_brd_content, routine_brd_regdate, routine_cart_seq, brd_image1, brd_image2
 		  from RoutineBoard
 		 where routine_brd_seq=#{routine_brd_seq}
 	</select>

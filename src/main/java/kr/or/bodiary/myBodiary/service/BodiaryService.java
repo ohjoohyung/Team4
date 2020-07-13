@@ -102,7 +102,8 @@ private SqlSession sqlsession;
 			bodiarydao.writeDailyMeal(list);
 			
 			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
-			
+			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+			bodiarydto.setUser_email(user.getUser_email());
 			int result = bodiarydao.writeBodiary(bodiarydto);
 			
 			 System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
@@ -182,9 +183,9 @@ private SqlSession sqlsession;
 	
 	
 	//루틴 리스트 아이디로 불러오기
-	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException {
+	public List<RoutineJoinDto> getRoutineListById(String user_email) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		return bodiarydao.getRoutineListById();
+		return bodiarydao.getRoutineListById(user_email);
 	}
 	
 	//일지 상세정보 

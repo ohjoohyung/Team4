@@ -13,7 +13,7 @@
 			<div class="row">
 				<div class="col-11">
 					<div class="card" style="height: 50px;">
-						<h3 class="text-primary ml-3 mb-3"><span th:text="${routineBoardSelect.routine_brd_title}"></span></h3>
+						<h3 class="text-primary ml-3 mb-3"><span th:text="${routineBoard.routine_brd_title}"></span></h3>
 					</div>
 				</div>
               	<div class="col-1">
@@ -40,7 +40,10 @@
 					<div class="card h-100 p-4">
 						<h5 class="card-title">BEFORE</h5>
 						<div class="card-body">
-							<img class="routine-img" src="assets/images/profile/1.jpg" alt="">
+							
+							<img class="routine-img"
+													th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image1}"
+													>
 						</div>
 					</div>
 				</div>
@@ -48,7 +51,9 @@
 					<div class="card h-100 p-4">
 					<h5 class="card-title">AFTER</h5>
 						<div class="card-body">
-							<img class="routine-img" src="assets/images/profile/2.jpg" alt="">
+							<img class="routine-img"
+													th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image2}"
+													>
 						</div>
 					</div>
 				</div>
@@ -64,24 +69,28 @@
 								<div class="col-6 pt-3">			                            	
 									<div class="text-center">
 										<div class="basic-list-group">
-											<ul class="list-group">
-												<li class="list-group-item active">루틴이름-유산소</li>
-												<li class="list-group-item">걷기</li>
-												<li class="list-group-item">달리기</li>
-											</ul>
+											 <table class="table table-hover">
+                                         <tr><td colspan="2" style="background-color:#7571f9; color:white;">유산소</td></tr>
+                                            	<tr  th:each="r : ${routine}">
+                                            	<th:block th:if="${r.excs_kind}=='C' ">
+                                            		<td th:text="${r.excs_name}"></td><td th:text="${r.routine_exercise_hour}+'  시간'"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            	</table>
 										</div>
 									</div>
 								</div>
 								<div class="col-6 pt-3">
 									<div class="text-center">
 										<div class="basic-list-group">
-											<ul class="list-group">
-												<li class="list-group-item active">루틴이름-무산소</li>
-												<li class="list-group-item">벤치프레스</li>
-												<li class="list-group-item">데드리프트</li>
-												<li class="list-group-item">오버헤드밀리터리프레스</li>
-												<li class="list-group-item">스쿼트</li>
-											</ul>
+											<table class="table table-hover">
+                                         <tr><td colspan="2" style="background-color:#7571f9; color:white;">무산소</td></tr>
+                                            	<tr  th:each="r : ${routine}">
+                                            	<th:block th:if="${r.excs_kind}=='N' ">
+                                            		<td th:text="${r.excs_name}"></td><td th:text="${r.routine_set}+'  세트    '+${r.routine_reps_per_set}+'   회'"></td>
+                                            	</th:block>
+                                            	</tr>
+                                            	</table>
 										</div>  
 									</div>
 								</div>
@@ -99,11 +108,18 @@
 						<div class="card-body">
 							<div class="media mb-4 mt-1">
 								<div class="media-body">
-									<span class="float-right">날짜</span>
+				
+									
+										<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${routineBoard.routine_brd_regdate}" class="card-text">
+								
+							</span>&nbsp;&nbsp;&nbsp;&nbsp;
+							<i class="icon-eye"></i>&nbsp;&nbsp;<span th:text="${routineBoard.routine_brd_hit}" class="card-text" >
+								
+							</span>
 								</div>
 							</div>
 							<p id="">
-								<span th:text="${routineBoardSelect.routine_brd_content}"></span>
+								<span th:text="${routineBoard.routine_brd_content}"></span>
 							</p>
 						</div>
 					</div>
@@ -123,7 +139,7 @@
 					<div class="col-6">
 						<a class="text-center d-block text-muted" href="javascript:void()">
 							<i class="fa fa-heart gradient-3-text"></i>
-							<p class="">00개</p>
+							<p th:text="${routineBoard.brd_rec}+'  개'"></p>
 						</a>
 					</div>
 				</div>

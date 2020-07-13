@@ -23,4 +23,6 @@ public class UserDto {
 	private int enabled;
 	//파일 업로드 지원---------
 	private CommonsMultipartFile file;
+	
+	
 }

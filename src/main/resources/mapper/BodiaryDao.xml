@@ -33,8 +33,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq
 		, diary_condition, diary_main_img, diary_date, diary_pubchk
 		, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
-		values (#{meal_cart_seq}, 'a@aa.a', 1, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(), 
-		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a'))
+		values (#{meal_cart_seq}, #{user_email}, 1, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(), 
+		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email}))
 		<!-- <choose>
 			<when test="gender == '남'.toString()">
 				66.47 + (13.75*#{diary_today_weight}) + (5*(select u
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				655.1 + (9.56*#{diary_today_weight})+(1.85*(select user_height from user where user_email = '1@1'))-(4.68*(select user_age from user where user_email = '1@1'))
 			</otherwise>
 		</choose> -->
-		,(((select user_height from user where user_email = 'a@aa.a')-100)*0.9)*35 , 
+		,(((select user_height from user where user_email = #{user_email})-100)*0.9)*35 , 
 		(select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 		from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 		ON d.food_seq = f.food_seq) a))
@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		join routine r
 		on b.routine_seq = r.routine_seq
 		join exercise e
-		on r.excs_seq = e.excs_seq where c.routine_cart_seq=1;
+		on r.excs_seq = e.excs_seq where c.routine_cart_seq=#{routine_cart_seq};
 	</select>
 	
 	<!-- 루틴 리스트 불러오기 (나중에 더 변경해야함) -->
@@ -66,7 +66,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select distinct c.routine_cart_seq, c.routine_cart_title from routinecart c
 		join routinebundle b
 		on c.routine_cart_seq = b.routine_cart_seq
-		where b.user_email = 'a@aa.a';
+		where b.user_email = #{user_email};
 	</select>
 	
 	<!-- 음식 검색하기 -->
@@ -113,7 +113,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    	diary_pubchk=#{diary_pubchk},
 	    	meal_cart_seq=#{meal_cart_seq},
 	    	routine_cart_seq=#{routine_cart_seq},
-	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a')),
+	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email})),
 	    	diary_nut = (select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 						from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 						ON d.food_seq = f.food_seq) a)

@@ -13,8 +13,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
+import kr.or.bodiary.myBodiary.service.BodiaryService;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.routineBrd.service.RoutineBrdService;
+import kr.or.bodiary.user.dto.UserDto;
 
 
 @Controller
@@ -25,6 +28,12 @@ public class RoutineBrdController {
 	
 	public void setRoutineBrdservice(RoutineBrdService routinebrdservice) {
 		this.routinebrdservice = routinebrdservice;
+	}
+	
+	@Autowired
+	private BodiaryService bodiaryservice;
+	public void setRoutineBrdservice(BodiaryService bodiaryservice) {
+		this.bodiaryservice = bodiaryservice;
 	}
 	
 	//리스트
@@ -39,27 +48,30 @@ public class RoutineBrdController {
 	@RequestMapping("/routineBrdDetail")
 	public String routineBrdDetail(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
+		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
 		System.out.println(routinebrddto);
-		model.addAttribute("routineBoardSelect", routinebrddto);
+		model.addAttribute("routineBoard", routinebrddto);
+		model.addAttribute("routine", routine);
 		return "routineBrd/routineBrdDetail";
 	}
 	
 	//입력(폼)
 	@RequestMapping(value = "routineBrdInsert", method = RequestMethod.GET)
-	public String routineBrdInsert() {
+	public String routineBrdInsert(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		String user_email = user.getUser_email();
+
+		System.out.println("유저 정보 : " +user_email);
+		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
+		model.addAttribute("routineList", list);
 		return "routineBrd/routineBrdForm";
 	}
 	
 	//입력(처리)
 	@RequestMapping(value = "routineBrdInsert", method = RequestMethod.POST)
-	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request, Principal principal) throws IOException, ClassNotFoundException, SQLException {
-		String url = "redirect:routineBrdList";
-		
-		try {
-			url = routinebrdservice.routineBrdInsert(routinebrddto, request, principal);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
+	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		String url = routinebrdservice.routineBrdInsert(routinebrddto, request);
 		return url;
 	}
 	
