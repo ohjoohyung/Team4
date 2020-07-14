@@ -101,25 +101,31 @@ public class RoutineBrdController {
 	
 	//수정(폼)
 	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.GET)		
-	public String routineBrdEdit(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+	public String routineBrdEdit(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
-		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		String user_email = user.getUser_email();
+
+		System.out.println("유저 정보 : " +user_email);
+		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
+		model.addAttribute("routineList", list);
 		model.addAttribute("routineBoard", routinebrddto);
-		model.addAttribute("routine", routine);
+		
 		return "routineBrd/routineBrdEdit";
 	}
 	
 	//수정(처리)
 	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.POST)
 	public String routineBrdEdit(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
-		return routinebrdservice.routineBrdEdit(routinebrddto, request);
+		String url = routinebrdservice.routineBrdEdit(routinebrddto, request);
+		return url;
 	}
 	
 	//삭제
-	@RequestMapping("routineBrdDelete")
+	@RequestMapping("/routineBrdDelete")
 	public String routineBrdDelete(int routine_brd_seq) throws ClassNotFoundException, SQLException {
-		routinebrdservice.routineBoardDelete(routine_brd_seq);
-		return "redirect:routineBrdList";
+		
+		return routinebrdservice.routineBoardDelete(routine_brd_seq);
 	}	
 	
 }

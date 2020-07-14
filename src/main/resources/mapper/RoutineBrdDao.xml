@@ -27,9 +27,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 수정 -->
-	<update id="routineBoardUpdate" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
+	<update id="routineBoardEdit" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
 		update RoutineBoard
-		   set routine_brd_seq=#{routine_brd_seq}, routine_brd_title=#{routine_brd_title}, routine_brd_content=#{routine_brd_content}
+		   set routine_brd_title=#{routine_brd_title}, 
+		   	   routine_brd_content=#{routine_brd_content}, 
+		   	   routine_cart_seq=#{routine_cart_seq},
+		   	   brd_image1=#{brd_image1},
+		   	   brd_image2=#{brd_image2}
 		 where routine_brd_seq=#{routine_brd_seq}
 	</update>
 	

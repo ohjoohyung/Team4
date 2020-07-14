@@ -24,8 +24,8 @@
                 <div class="basic-dropdown">
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">신고</a>
-                        <a class="dropdown-item" href="routineBrdEdit">수정</a>
-                        <a class="dropdown-item" href="noticeDel.do?seq=${notice.seq}">삭제</a>
+                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
+                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
                 	</div>
                 </div>
             </div>
@@ -173,7 +173,7 @@
 
 
                         <div class="dropdown-menu">
-                           <a class="dropdown-item" th:href="@{/oreder/details(id=${orderInfo.seq})}"></a>
+                           <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}"></a>
                            <a class="dropdown-item" href="routineBrdDelete">삭제</a>
 
                         </div>
@@ -297,7 +297,17 @@
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   
    <script type="text/javascript" th:inline="javascript">
+   /*<![CDATA[*/
+	function deleteCheck() {
+		 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+			location.href="routineBrdDelete?routine_brd_seq="+/*[[ ${routineBoard.routine_brd_seq} ]]*/;
+		 }else{   //취소
+		     return false;
+		 }
+	}	
+	/*]]>*/
    		$(function(){
    			//루틴 자랑 게시판 댓글 불러오기
    			getReplyList();

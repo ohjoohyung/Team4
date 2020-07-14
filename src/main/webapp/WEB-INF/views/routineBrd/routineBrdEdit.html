@@ -8,14 +8,14 @@
    <!-- 공통 sidenav -->
    <div class="bodiary-wrapper">
       <div class="content mt-4">
-      <form action="routineBrdInsert" method="post" enctype="multipart/form-data">
+      <form action="" method="post" enctype="multipart/form-data">
                         
             <div class="card">
                <div class="card-body">
                
                   <!-- 제목 start -->
                   <div class="col-12">
-                     <input type="text" id="routine_brd_title" name="routine_brd_title" class="form-control bg-transparent" placeholder="제목을 입력하세요">
+                     <input type="text" id="routine_brd_title" name="routine_brd_title" class="form-control bg-transparent" placeholder="제목을 입력하세요" th:value="${routineBoard.routine_brd_title}">
                   </div>
                   <!-- 제목 end -->
                   
@@ -65,7 +65,7 @@
                   <!-- 내용 start -->
                        <div class="col-12 mt-3">
                           
-                          <textarea class="form-control p-4" rows="15" placeholder="자신의 운동 루틴을 자랑하고, 주의할 점 혹은 루틴을 지속한 기간 등 여러 정보를 공유해보세요 :)" id="routine_brd_content" name="routine_brd_content"></textarea>
+                          <textarea class="form-control p-4" rows="15" placeholder="자신의 운동 루틴을 자랑하고, 주의할 점 혹은 루틴을 지속한 기간 등 여러 정보를 공유해보세요 :)" id="routine_brd_content" name="routine_brd_content" th:text="${routineBoard.routine_brd_content}"></textarea>
                        </div>
                   <!-- 내용 end -->
                        
@@ -80,7 +80,7 @@
                                     <th:block th:if="${routineList} != null">
                                     <th:block th:each="item : ${routineList}">
                                     <option th:text="${item.routine_cart_title}"
-                                       th:value="${item.routine_cart_seq}"></option>
+                                       th:value="${item.routine_cart_seq}" th:selected="${item.routine_cart_seq}== ${routineBoard.routine_cart_seq}" ></option>
                                      </th:block>
                                     </th:block>
                                  </select>
@@ -128,9 +128,78 @@
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    <script type="text/javascript">
    $(function() {
+	   
+	   loadRoutine();
+	   
     //저장된 루틴 불러오기
+    
+    
+    
+    function loadRoutine() {
+    	 var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+         if(data.routine_cart_seq == 0) {
+            $('#cardio').empty();
+            $('#weightTraining').empty();
+            validate[2] = false;
+            return;
+         }
+         $.ajax(
+              {
+                 type:"get",
+                 data: data,
+                 url:"getRoutine",
+                 dataType:"json",
+                 success:function(responsedata){ 
+                   $('#cardio').empty();
+                   $('#weightTraining').empty();
+                   console.log(responsedata);
+                   
+                   $.each(responsedata,function(index,obj){
+                      console.log(obj.excs_kind);
+                      var hour = "";
+                      if((obj.routine_exercise_hour % 60) == 0) {
+                         hour = (obj.routine_exercise_hour / 60) + "시간";
+                      } else {
+                         if(parseInt(obj.routine_exercise_hour / 60) == 0) {
+                            hour = obj.routine_exercise_hour + "분";
+                         }else {
+                            hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+                         }
+                      }
+                      if(obj.excs_kind == 'C') {
+                         $('#cardio').append(
+                               '<div class="row cart-item-card mb-3">'+                                       
+                                  '<div class="col pt-2">'+
+                                     '<h5>'+obj.excs_name+'</h5>'+
+                                  '</div>'+
+                                  '<div class="col-3 center pt-2">'+
+                                     '<h5>'+hour+'</h5>'+
+                                  '</div>'+
+                               '</div>'
+                         );
+                      }else {
+                            $('#weightTraining').append(
+                                  '<div class="row cart-item-card mb-3">'+                                          
+                                     '<div class="col pt-2">'+
+                                        '<h5>'+obj.excs_name+'</h5>'+
+                                     '</div>'+
+                                     '<div class="col-3 center pt-2">'+
+                                        '<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+                                     '</div>'+
+                                  '</div>'   
+                      )}
+                   }); 
+                   $('.tdroutine')
+                   .html(
+                         '');
+                   validate[2] = true;
+                 }
+              });
+              
+	}
       $('#routine_cart_seq').change(function() {
-           var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+    	  loadRoutine();
+           /* var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
            if(data.routine_cart_seq == 0) {
               $('#cardio').empty();
               $('#weightTraining').empty();
@@ -189,8 +258,9 @@
                      validate[2] = true;
                    }
                 });
-           });      
+           });       */
    });
+   }); 
     //이미지 추가 했을 때 화면에 띄우기
    function readURL(input) {
        

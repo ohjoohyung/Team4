@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
@@ -111,32 +112,46 @@ public class RoutineBrdService {
 	}
 	
 	//수정(처리)
+	@Transactional
 	public String routineBrdEdit(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		
 		List<CommonsMultipartFile> files = routinebrddto.getFiles();
 		List<String> filenames = new ArrayList<String>();
-
-		if(files != null && files.size() > 0) { 
+		
+		if(files != null && files.size() > 0) {
 			for(CommonsMultipartFile multifile : files) {
 				String filename = multifile.getOriginalFilename();
 				String path = request.getSession().getServletContext().getRealPath("/assets/upload/routineBrdUpload");
-				String fpath = path + "\\"+ filename; 
+				String fpath = path + "\\"+ filename;
 				
 				if(!filename.equals("")) {
 					FileOutputStream fs = new FileOutputStream(fpath);
 					fs.write(multifile.getBytes());
 					fs.close();
 				}
-				filenames.add(filename);
+				filenames.add(filename);			
 			}
-			
+				
 		}
+		
 		routinebrddto.setBrd_image1(filenames.get(0));
 		routinebrddto.setBrd_image2(filenames.get(1));
 		
 		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
-		routinebrddao.routineBoardUpdate(routinebrddto);
-		
-		return "redirect:routineBrdDetail?routine_brd_seq=" + routinebrddto.getRoutine_brd_seq();
+		String url="";
+		try {
+			int result = routinebrddao.routineBoardEdit(routinebrddto);
+			
+			
+			if(result > 0) { 
+				url = "redirect:routineBrdDetail?routine_brd_seq="+routinebrddto.getRoutine_brd_seq(); 
+			} else { 
+				url = "redirect:routineBrdEdit?routine_brd_seq="+routinebrddto.getRoutine_brd_seq(); 
+			}
+		} catch (Exception e) {
+			System.out.println("Transaction 문제 발생" + e.getMessage());
+		}
+		return url;
 	}
 	
 	//삭제

@@ -17,7 +17,7 @@ public interface RoutineBrdDao {
 	public int routineBoardInsert(RoutineBrdDto routineBrdDto) throws ClassNotFoundException, SQLException;
 	
 	//수정
-	public void routineBoardUpdate(RoutineBrdDto routineBrdDto) throws ClassNotFoundException, SQLException;
+	public int routineBoardEdit(RoutineBrdDto routineBrdDto) throws ClassNotFoundException, SQLException;
 	
 	//삭제
 	public int routineBoardDelete(int routine_brd_seq) throws ClassNotFoundException, SQLException;	
