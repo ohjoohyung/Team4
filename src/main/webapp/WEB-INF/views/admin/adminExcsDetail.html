@@ -20,40 +20,49 @@
 <!-- 여기에 목록보기 버튼이랑 수정, 삭제를 어떻게 할지 고민해야함 물론 부위랑 난이도도 추가 -->
 			<div class="card m-4">
 				<div class="card-body">
+				<form action="adminExcsEdit">
+				<input name="excs_seq" th:value="${exercise.excs_seq}" type="hidden">
 				<div class="row">
 						<div class="col-11">
-							
-							<h2 class="mt-2">벤치프레스</h2>
-							
+							<h2 class="mt-2"><span th:text="${exercise.excs_name}"></span></h2>
 							
 						</div>
-						<div class="col">
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-
-
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">수정</a> <a
-										class="dropdown-item" href="#">삭제</a>
-
-								</div>
-
-							</div>
-
-						</div>
+						
 					</div>
 					<hr>
 					<div class="contentFBD">
-						<img class="img-fluid" src="assets/images/imgs/1.png" alt="">
-						<p class="mt-3">이 운동은 어쩌고 저쩌고 쏼라쏼라</p>
+						<p class="mt-3">
+						<span th:text="'운동설명: '+${exercise.excs_description}"></span>
+						</p>
+						<p class="mt-3">
+						<span th:text="'운동종류: '+${exercise.excs_kind}"></span>
+						</p>
+						<p class="mt-3">
+						<span th:text="'칼로리: '+${exercise.excs_cal_per_minweight}"></span>
+						</p>
+						<p class="mt-3">
+						<span th:text="'운동부위: '+${exercise.excs_body_part}"></span>
+						</p>
+						<p class="mt-3">
+						<span th:text="'운동장비: '+${exercise.excs_equipment}"></span>
+						</p>
+						<p class="mt-3">
+						<span th:text="'운동레벨: '+${exercise.excs_level}"></span>
+						</p>
+						<iframe th:src="${exercise.excs_video_link}"></iframe>
+						<p class="mt-3">
+						<span th:text="'유튜브링크: '+${exercise.excs_video_link}"></span>
+						</p>
+						
 					</div>
-				
+					
+				<div class="mt-4 text-center">
+							<button type="button" onclick="location.href='adminExcsList'"
+								class="btn btn-outline-primary">취소</button>
+							<button type="submit" class="btn btn-primary">수정</button>
+
+						</div>
+						</form>
 				</div>
 				</div>
 				</div>

@@ -30,6 +30,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getExercise" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
  	select * FROM exercise
  	</select>
+ 	
+ 	<select id="getExerciseBySeq" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+  	SELECT *
+  	FROM exercise 
+  	WHERE excs_seq=#{excs_seq}
+  	</select>
+  	<delete id="exerciseDelete">
+  	delete
+  	from exercise
+  	where excs_seq=#{excs_seq}
+  	</delete>
+  	<update id="updateExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
+    	UPDATE exercise 
+    	SET excs_kind=#{excs_kind}, 
+    		excs_name=#{excs_name}, 
+    		excs_cal_per_minweight=#{excs_cal_per_minweight} , 
+    		excs_body_part=#{excs_body_part},
+    		excs_equipment=#{excs_equipment},
+    		excs_description=#{excs_description},
+    		excs_video_link=#{excs_video_link},
+    		excs_level=#{excs_level}
+    	WHERE excs_seq=#{excs_seq}
+    </update>
     <!--  
     <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
        INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 

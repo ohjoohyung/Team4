@@ -38,15 +38,15 @@
                                         <tr th:each="exer : ${list}">
 								         <td th:text="${exer.excs_seq}">excs_seq</td>    
 								         <td th:text="${exer.excs_kind}">excs_kind</td>
-								         <td th:text="${exer.excs_name}">excs_name</td>
+								         <td><a th:href="@{/adminExcsDetail(excs_seq=${exer.excs_seq})}"><span th:text="${exer.excs_name}">excs_name</span></a> </td>
 								         <td th:text="${exer.excs_cal_per_minweight}">excs_cal_per_minweight</td>
 								    	 <td th:text="${exer.excs_body_part}">excs_body_part</td>
 								    	 <td th:text="${exer.excs_equipment}">excs_equipment</td>
 								    	 <td th:text="${exer.excs_description}">excs_description</td>
 								    	 <td th:text="${exer.excs_video_link}">excs_video_link</td>
 								    	 <td th:text="${exer.excs_level}">excs_level</td>
-								      	 <td><i class="fa fa-pencil color-muted m-r-5"></i></td>
-								    	 <td><i class="ti-close m-r-5 f-s-12"></i></td>
+								      	 <td><a th:href="@{/adminExcsEdit(excs_seq=${exer.excs_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
+								    	 <td><a th:href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td>
 								    	 </tr>
                                     </table>
                                 </div>

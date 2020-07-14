@@ -16,4 +16,10 @@ public interface exerciseDAO {
 	public List<exerciseDTO> exercisepartequiSearch(Map<String, String> exerciseparteuqi);
 	public List<exerciseDTO> exerciseadd(int excs_seq) throws ClassNotFoundException, SQLException;
 	public List<exerciseDTO> getExercise() throws ClassNotFoundException, SQLException;
+	//운동상세보기
+	public exerciseDTO getExerciseBySeq(int excs_seq) throws ClassNotFoundException, SQLException;
+	//운동삭제
+	public int exerciseDelete(int excs_seq) throws ClassNotFoundException, SQLException;
+	//운동 수정
+	public int updateExercise(exerciseDTO exerciseDTO) throws ClassNotFoundException, SQLException;
 }

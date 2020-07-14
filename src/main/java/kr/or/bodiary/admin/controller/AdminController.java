@@ -1,8 +1,11 @@
 package kr.or.bodiary.admin.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mysql.cj.ParseInfo;
 
 import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.exerciseDTO;
@@ -45,14 +50,32 @@ public class AdminController {
 	}
 
 	// 어드민 운동 CRUD
-	@RequestMapping("/adminExcsDetail")
-	public String adminExcsDetail() {
+	@RequestMapping(value="/adminExcsDetail", method=RequestMethod.GET)
+	public String adminExcsDetail(String excs_seq, Model model) {
+		int seq = Integer.parseInt(excs_seq);
+		exerciseDTO exercise = exerciseservice.exerciseDetail(seq);
+		model.addAttribute("exercise", exercise);
+		System.out.println(exercise);
 		return "admin/adminExcsDetail";
 	}
 
-	@RequestMapping("/adminExcsEdit")
-	public String adminExcsEdit() {
+	@RequestMapping(value="/adminExcsEdit", method=RequestMethod.GET)
+	public String adminExcsEdit(String excs_seq, Model model) {
+		int seq = Integer.parseInt(excs_seq);
+		System.out.println("adminExcsEdit탐");
+		exerciseDTO exercise = exerciseservice.exerciseDetail(seq);
+		model.addAttribute("exercise", exercise);
+		System.out.println(exercise);
 		return "admin/adminExcsEdit";
+	}
+	@RequestMapping(value="/adminExcsEdit", method=RequestMethod.POST)
+	public String adminExcsEditOK(exerciseDTO exercisedto, HttpServletRequest request) throws ClassNotFoundException, IOException, SQLException {
+		return exerciseservice.exerciseEdit(exercisedto, request);
+	}
+	@RequestMapping(value="/adminExcsDelete", method=RequestMethod.GET)
+	public String adminExcsDelete(String excs_seq, Model model) throws ClassNotFoundException, SQLException {
+		int seq = Integer.parseInt(excs_seq);
+		return exerciseservice.exerciseDelete(seq);
 	}
 
 	@RequestMapping("/adminExcsForm")

@@ -1,7 +1,12 @@
 package kr.or.bodiary.admin.service;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,35 +24,52 @@ public class ExerciseService {
 		this.sqlsession = sqlsession;
 	}
 
-public List<exerciseDTO> exercises() {
-	/* public List<exerciseDTO> exercises(String pg , String f , String q) { */
-		//default
-		int page =1;
-		String field = "excs_name";
-		String query = "%%";
-				
+		//운동 리스트 서비스함수
+		public List<exerciseDTO> exercises() {
+		
+					List<exerciseDTO> list=null;
+					try {
+						//mapper 를 통한 인터페이스 연결
+					exerciseDAO exercisedao = sqlsession.getMapper(exerciseDAO.class);
+						//
+						list = exercisedao.getExercise();
+					} catch (ClassNotFoundException e) {
+						e.printStackTrace();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+			return list;
+		}
+	
+		//운동 상세보기 서비스 함수
+		public exerciseDTO exerciseDetail(int excs_seq) {
+			exerciseDTO exercisedto = null;
+			try {
+					exerciseDAO noticedao = sqlsession.getMapper(exerciseDAO.class);
+					exercisedto = noticedao.getExerciseBySeq(excs_seq);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 					
-		//조건처리
-		/*
-		 * if(pg != null && !pg.equals("")) { page = Integer.parseInt(pg); }
-		 * 
-		 * if(f != null && !f.equals("")) { field = f; }
-		 * 
-		 * if(q != null && !q.equals("")) { query = q; }
-		 */
+			return  exercisedto;
+		}
+		//운동 삭제
+		public String exerciseDelete(int excs_seq) throws ClassNotFoundException, SQLException {
+					
+		exerciseDAO exercisedao = sqlsession.getMapper(exerciseDAO.class);
+		exercisedao.exerciseDelete(excs_seq);	
+		return  "redirect:/adminExcsList";
+		}
+		
+		//운동 수정하기 서비스 함수 (update)
+		 public String exerciseEdit(exerciseDTO exercisedto , HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 				
-		//DAO 데이터 받아오기
-				List<exerciseDTO> list=null;
-				try {
-					//mapper 를 통한 인터페이스 연결
 				exerciseDAO exercisedao = sqlsession.getMapper(exerciseDAO.class);
-					//
-					list = exercisedao.getExercise();
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-		return list;
-	}
+				exercisedao.updateExercise(exercisedto);
+				return "redirect:adminExcsDetail?excs_seq="+exercisedto.getExcs_seq();
+			}
+		
+				
 }
