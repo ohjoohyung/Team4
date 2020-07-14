@@ -10,7 +10,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class mealDTO {
+public class MealDto {
 	private int meal_seq;
 	private String meal_name ;
 	

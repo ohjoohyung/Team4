@@ -21,6 +21,8 @@ public class UserDto {
 	private String user_img;
 	private int user_reportedcount; 
 	private int enabled;
+	private String user_grade;
+	private String user_deletedate;
 	//파일 업로드 지원---------
 	private CommonsMultipartFile file;
 	

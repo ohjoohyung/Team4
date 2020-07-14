@@ -1,5 +1,7 @@
 package kr.or.bodiary.myBodiary.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -21,9 +23,11 @@ public class RoutineJoinDto {
 	private String routine_cart_title;
 	private int routine_seq;
 	private int excs_seq;
-	private int routine_exercise_hour;
+	private String routine_exercise_hour;
 	private int routine_set;
 	private int routine_reps_per_set;
 	
 	private String routine_done_check;
+	
+	private List<RoutineJoinDto> routineJoinDtoList;
 }

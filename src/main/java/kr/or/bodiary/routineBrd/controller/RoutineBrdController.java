@@ -49,7 +49,31 @@ public class RoutineBrdController {
 	public String routineBrdDetail(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
 		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
+		
 		System.out.println(routinebrddto);
+		
+		
+		
+		//분을 시간으로 변환
+		  for(RoutineJoinDto r : routine) {
+			if(r.getExcs_kind().equals("C")) { 
+				String hour = ""; 
+				if((Integer.parseInt(r.getRoutine_exercise_hour()) % 60) == 0) { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간"; 
+				} else { 
+					if((Integer.parseInt(r.getRoutine_exercise_hour()) / 60) == 0) { 
+					hour = r.getRoutine_exercise_hour() + "분"; 
+				}else { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간 30분"; 
+					} 
+				} r.setRoutine_exercise_hour(hour); 
+			
+				} 
+			}
+			
+		
+		
+		
 		model.addAttribute("routineBoard", routinebrddto);
 		model.addAttribute("routine", routine);
 		return "routineBrd/routineBrdDetail";
@@ -78,8 +102,10 @@ public class RoutineBrdController {
 	//수정(폼)
 	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.GET)		
 	public String routineBrdEdit(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
-		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdEdit(routine_brd_seq);
-		model.addAttribute("routineBoardUpdate", routinebrddto);
+		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
+		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
+		model.addAttribute("routineBoard", routinebrddto);
+		model.addAttribute("routine", routine);
 		return "routineBrd/routineBrdEdit";
 	}
 	

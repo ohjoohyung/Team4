@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class goalControlDTO {
+public class GoalControlDto {
 	private int goal_seq   ;
 	private String user_email  ;
 	private int goal_ctrl_num ;

@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<!-- 식단 카트 번호 추가하기 -->
-	<insert id="insertMealCart" parameterType="kr.or.bodiary.myBodiary.dto.dailyMealDTO" useGeneratedKeys="true" keyProperty="meal_cart_seq">
+	<insert id="insertMealCart" parameterType="kr.or.bodiary.myBodiary.dto.DailyMealDto" useGeneratedKeys="true" keyProperty="meal_cart_seq">
 		insert into mealcart values()
 		
 	</insert>
@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 일지 쓰기 (나중에 email이랑 닉네임 등 입력받는거 넣어줘야함) 성별에 따라 바꾸는걸 성별을 파라미터로 받아서 그걸로 조건식을 만들어야할듯 트랜잭션도 확실한지 아직 모르겠음-->
-	<insert id="writeBodiary" parameterType="kr.or.bodiary.myBodiary.dto.bodiaryDTO" useGeneratedKeys="true" keyProperty="diary_seq">
+	<insert id="writeBodiary" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto" useGeneratedKeys="true" keyProperty="diary_seq">
 		<!-- <selectKey order="BEFORE" keyProperty="gender" resultType="String">
 			select user_gender from user where user_email = '1@1'
 		</selectKey> -->
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 일지 상세정보 -->
-	<select id="getBodiary" resultType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+	<select id="getBodiary" resultType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
 		select * from diary where diary_seq = #{diary_seq}
 	</select>
 	
@@ -91,7 +91,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 일지 리스트 불러오기 -->
-	<select id="getBodiaryList" resultType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+	<select id="getBodiaryList" resultType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
 		select * from diary where user_email=#{user_email}
 	</select>
 	
@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	그리고 권장섭취량 남 여 에 따라 다르게 해야함
 	 -->
-	<update id="updateBodiary" parameterType="kr.or.bodiary.myBodiary.dto.bodiaryDTO">
+	<update id="updateBodiary" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
 		update diary
     	set diary_content=#{diary_content}, 
 	    	diary_condition=#{diary_condition},

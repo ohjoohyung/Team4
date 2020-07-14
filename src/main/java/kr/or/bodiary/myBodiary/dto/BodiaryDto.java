@@ -11,7 +11,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Data
-public class bodiaryDTO {
+public class BodiaryDto {
 
 	private int diary_seq;
 	private String meal_cart_seq;
