@@ -53,6 +53,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     		excs_level=#{excs_level}
     	WHERE excs_seq=#{excs_seq}
     </update>
+    <insert id="insertExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO" useGeneratedKeys="true" keyProperty="excs_seq">
+     	
+     	INSERT INTO exercise(excs_seq, excs_kind, excs_name, excs_cal_per_minweight, excs_body_part, 
+     	excs_equipment, excs_description , excs_video_link, excs_level) 
+     	VALUES(#{excs_seq}, #{excs_kind}, #{excs_name}, #{excs_cal_per_minweight} , #{excs_body_part},#{excs_equipment},#{excs_description},#{excs_video_link},#{excs_level})
+     </insert>
     <!--  
     <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
        INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 

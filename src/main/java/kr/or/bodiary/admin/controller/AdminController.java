@@ -78,7 +78,12 @@ public class AdminController {
 		return exerciseservice.exerciseDelete(seq);
 	}
 
-	@RequestMapping("/adminExcsForm")
+	@RequestMapping(value="/adminExcsForm", method=RequestMethod.POST)
+	public String adminExcsFormOK(exerciseDTO exercisedto, HttpServletRequest request) throws Exception {
+		exerciseservice.exerciseInsert(exercisedto, request);
+		return "redirect:adminExcsList";
+	}
+	@RequestMapping(value="/adminExcsForm", method=RequestMethod.GET)
 	public String adminExcsForm() {
 		return "admin/adminExcsForm";
 	}

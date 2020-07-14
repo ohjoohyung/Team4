@@ -22,4 +22,6 @@ public interface exerciseDAO {
 	public int exerciseDelete(int excs_seq) throws ClassNotFoundException, SQLException;
 	//운동 수정
 	public int updateExercise(exerciseDTO exerciseDTO) throws ClassNotFoundException, SQLException;
+	//운동 추가
+	public int insertExercise(exerciseDTO exerciseDTO) throws ClassNotFoundException, SQLException;
 }

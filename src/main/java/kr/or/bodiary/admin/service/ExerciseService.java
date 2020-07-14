@@ -1,9 +1,7 @@
 package kr.or.bodiary.admin.service;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,6 +68,12 @@ public class ExerciseService {
 				exercisedao.updateExercise(exercisedto);
 				return "redirect:adminExcsDetail?excs_seq="+exercisedto.getExcs_seq();
 			}
-		
+		//운동 생성 서비스 함수
+			public String exerciseInsert(exerciseDTO exercisedto , HttpServletRequest request) throws Exception {
+				
+				exerciseDAO exercisedao = sqlsession.getMapper(exerciseDAO.class);
+				exercisedao.insertExercise(exercisedto);
+				return "redirect:/adminExcsList";
+			}
 				
 }
