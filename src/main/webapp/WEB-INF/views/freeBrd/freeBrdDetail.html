@@ -1,9 +1,12 @@
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
+
+
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<div class="bodiary-wrapper">
@@ -12,18 +15,29 @@
 		<!-- 글 상세정보 시작 -->
 		<div class="content mt-4">
 
-			<div class="card">
+			<div class="card" th:each="list : ${freeBrdDetail}">
 
 				<div class="card-body">
 					<div class="row">
 						<div class="col-11">
-							<span class="card-text text-primary">팁</span>
-							<h2 class="mt-2">개꿀팁임다</h2>
+							<!-- 카테고리 부분(자유-1,질문-2,팁-3) -->
+							<span class="card-text text-primary" th:if="${list.free_cat} == 1 ">자유</span>
+							<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
+							<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
+							
+							<!-- 프로필사진 이미지 뿌려주기 (등록한 프로필이 없으면 Default.jpg 프로필이미지 출력)-->
+							<div class="media align-items-center mb-4">
+								<img class="mr-3 circle-rounded" th:src="@{/assets/upload/userUpload/}+${list.user_img}" width="80" height="80" alt="">	
+							</div>
+							
+							<h2 class="mt-2" th:text="${list.free_brd_title}"></h2>
 							<p class="card-text">
-								<i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03 11:23
+								닉네임: <b th:text="${list.user_nickname}"></b> |
+								<i class="icon-clock" th:text="${list.free_brd_date}"></i>
 							</p>
 							<p class="card-text">
-								<i class="icon-eye"></i>&nbsp;&nbsp;5
+								<!-- 조회수  -->
+								<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 							</p>
 						</div>
 						<div class="col">
@@ -33,24 +47,27 @@
 									class="icon-options-vertical"></i>
 							</div>
 
-
-							<div class="basic-dropdown">
-
-
+							<!-- 해당글을 쓴사람의 이메일과 수정할라고 하는 현재접속자의 이메일이 똑같다면 수정과 삭제가 가능    -->		
+							<div class="basic-dropdown" th:if="${list.user_email == user}">							
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">수정</a> <a
-										class="dropdown-item" href="#">삭제</a>
-
+									
+										<a class="dropdown-item" th:href="@{/freeBrdEdit(seq=${list.free_brd_seq})}">수정</a>
+										<a	class="dropdown-item" th:href="@{/freeBrdDelete(seq=${list.free_brd_seq})}">삭제</a>
+									<!-- 글번호 -->
+									<button id="freeSeq" hidden="hidden" th:value="${list.free_brd_seq}"></button>
 								</div>
-
 							</div>
 
 						</div>
 					</div>
 					<hr>
 					<div class="contentFBD">
-						<img class="img-fluid" src="assets/images/imgs/1.png" alt="">
-						<p class="mt-3">밥은 맛있게 먹으면 0칼로리임ㅋㅋ 모르는 사람들 많을듯?</p>
+						<!-- 해당 글에 해당하는 이미지가 있을경우 뿌려주고 없으면 안뿌려줌 -->
+						<div th:if="${list.free_brd_image != null}">
+							 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" alt="" style="width:300px;height:200px;" />
+						</div>
+					
+						<p th:utext="${list.free_brd_content}"></p> 
 					</div>
 
 
@@ -82,29 +99,26 @@
 							<div class="col-11">
 								<b>익명 1</b> &nbsp;<span class="badge badge-pill badge-info">&nbsp;작성자&nbsp;</span>&nbsp;
 								<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span> <span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
+									11:23</span> 
+								<span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
 							</div>
 
-							<!-- 수정, 삭제, 신고 드롭다운 -->
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
+							
+							<div class="user-img c-pointer position-relative" data-toggle="dropdown">
+								<span class="activity active"></span>
+								<i class="icon-options-vertical"></i>
+							</div> 
+							
 							<div class="basic-dropdown">
-
-
 								<div class="dropdown-menu">
 									<a class="dropdown-item" href="#">수정</a> <a
 										class="dropdown-item" href="#">삭제</a>
 
 								</div>
-
 							</div>
 						</div>
+						<!-- 댓글 내용 -->
 						<div class="mt-3">꿀팁감사</div>
-
-
 					</div>
 
 					<div class="mt-4 pl-5 mb-4">
@@ -134,84 +148,8 @@
 
 					</div>
 
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 3</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">개소리ㅋㅋ</div>
-
-
-					</div>
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 4</b>&nbsp;&nbsp; <span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">꿀팁감사</div>
-					</div>
-
-					<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 5</b> &nbsp;&nbsp;<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">꿀팁감사</div>
-
-
-					</div>
-
+					<hr>				
+						<div id="listReply"></div>
 					<hr>
 
 					<!-- 댓글 쓰기 -->
@@ -223,13 +161,13 @@
 
 
 									<textarea class="textFB form-control h-50px" rows="3"
-										id="comment"></textarea>
+										id="replytext"></textarea>
 
 
 								</div>
 								<div class="row">
 									<div class="col-11"></div>
-									<button type="submit" class="btn mb-1 btn-outline-light">등록</button>
+									<button type="submit" id="btnReply" class="btn mb-1 btn-outline-light">등록</button>
 								</div>
 							</form>
 						</div>
@@ -242,4 +180,75 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
+<!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
+<!-- <th:block layout:fragment="script">
+	<script>
+		$(document).ready(function(){
+			console.log("안녕하세요");			
+			/* seq = $('#freeSeq').val();
+			console.log("글번호"+seq); */			
+			listReply();
+			
+			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리)
+			$("#btnReply").click(function(){
+				var replytext = $("#replytext").val();
+				var seq = $('#freeSeq').val();
+				var param ="replytext="+replytext+"&seq="+seq;
+				alert("글번호:"+seq);
+				//alert("param:"+param); //여기까지 잘넘어옴
+				//댓글 Insert는 되는데 success로 아예 못탐 
+				$.ajax({
+					type:"get",
+					url:"freeReply/insert",
+					async: false,
+					data : param,
+					success:function(){
+						alert("댓글 등록 완료");
+						alert("글번호"+seq);
+						
+						//listReply_1(seq); 이함수를 호출하면 에러가 발생함
+						listReply_1(seq);
+					},
+				 	error : function(error) {
+				        alert("Error!"+error);
+				    }
+				    /* complete : function() {
+				    	listReply();   
+				    }  */
+				});
+				
+			});
+			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리) END
+			
+		});
+						
+		
+		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
+		function listReply(){
+			seq = $('#freeSeq').val();
+			$.ajax({
+				type:"get",
+				url:"freeReply/list?seq="+seq,
+				success:function(result){
+					console.log(result);
+					$("#listReply").html(result); 
+				}
+			});
+		}
+		
+		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
+		function listReply_1(seq){
+			//var bno = seq;
+			$.ajax({
+				type:"get",
+				url:"freeReply/list?seq="+seq,
+				success:function(result){
+					console.log(result);
+					$("#listReply").html(result); 
+				}
+			});
+		}
+		
+	</script>
+</th:block> -->
 </html>
