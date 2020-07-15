@@ -313,68 +313,68 @@
    		/* ------------------------------------------------------------------------ */
    		/* 댓글 출력 함수 */
    		/*<![CDATA[*/
-//    		function printData(data){
-//    			console.log(data);
+   		function printData(data){
+   			console.log(data);
    			
-//    			let session_email = /*[[${session.currentUser.user_email}]]*/; 
-//    			let session_nickname = /*[[${session.currentUser.user_nickname}]]*/; 
-//    			let a= "";
+   			let session_email = /*[[${session.currentUser.user_email}]]*/; 
+   			let session_nickname = /*[[${session.currentUser.user_nickname}]]*/; 
+   			let a= "";
    			
-//    			console.log(session_email);
+   			//console.log(session_email);
    			
-//    			$.each(data, function(){
-//    				console.log(data);
-//    				/* 여기까진 확인했는데 왜 인서트한게 무한 each문을 타는지 모르겠다... 8개가 찍히는데 이 기준은? */
+   			$.each(data, function(){
+   				console.log(data);
+   				/* 여기까진 확인했는데 왜 인서트한게 무한 each문을 타는지 모르겠다... 8개가 찍히는데 이 기준은? */
    				
-//    				/* depth 체크 */
-//    				let depthCss = "";
-//    				let reCmt ="";
-//    				if(this.routine_cmt_depth == 1){
-//    					depthCss = "padding-left : 40px;";
-//    				}else if(this.routine_cmt_depth == 0){
-//    					reCmt = "답글 쓰기";
-//    				}
-//    				console.log(reCmt);
+   				/* depth 체크 */
+   				let depthCss = "";
+   				let reCmt ="";
+   				if(this.routine_cmt_depth == 1){
+   					depthCss = "padding-left : 40px;";
+   				}else if(this.routine_cmt_depth == 0){
+   					reCmt = "답글 쓰기";
+   				}
+   				console.log(reCmt);
    				
-//    				/* session_email == reply_email 케이스 */
-//    				let idCss = "";
-//    				let dropdown-item ="";
-//    				if(session_email == this.user_email) {
-//    					idCss="background-color : #ecf0f9;";
-//    					dropdown-item += "<a class='dropdown-item' href='#'>수정</a>"
-//                     		 	  += "<a class='dropdown-item' href='#'>삭제</a>"
-//    				}else{
-//    					dropdown-item += "<a class='dropdown-item' href='#'>신고</a>"
-//    				}
+   				/* session_email == reply_email 케이스 */
+   				let idCss = "";
+   				let dropdown-item ="";
+   				if(session_email == this.user_email) {
+   					idCss="background-color : #ecf0f9;";
+   					dropdown-item += "<a class='dropdown-item' href='#'>수정</a>"
+                    		 	  += "<a class='dropdown-item' href='#'>삭제</a>"
+   				}else{
+   					dropdown-item += "<a class='dropdown-item' href='#'>신고</a>"
+   				}
    				
-//    				/* session_email == 작성자 케이스 */
+   				/* session_email == 작성자 케이스 */
    				
-//    				a += "<div class='mt-5' style=''" + depthCss + idCss +"'>"
-//    				a += "<div class='row'>"
-//    				a += "   <div class='col-11'>"
-//    				a += "      <b>"+session_nickname+"</b>&nbsp;&nbsp; <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
-//    				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>"
-//    				a += "   </div>"
-//    				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>"
-//    				a += "      <span class='activity active'></span>"
-//    				a += "		<i class='icon-options-vertical'></i>"
-//    				a += "   </div>"
-//    				a += "   <div class='basic-dropdown'>"
-//    				a += "		<div class='dropdown-menu'>"
-//    				a += "         " + dropdown-item + ""
-//    				a += "      </div>"
-//    				a += "   </div>"
-//    				a += "</div>"
-//    				a += "<div>" + this.routine_cmt + "</div>"
-//    				a += "</div>"
+   				a += "<div class='mt-5' style=''" + depthCss + idCss +"'>"
+   				a += "<div class='row'>"
+   				a += "   <div class='col-11'>"
+   				a += "      <b>"+session_nickname+"</b>&nbsp;&nbsp; <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
+   				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>"
+   				a += "   </div>"
+   				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>"
+   				a += "      <span class='activity active'></span>"
+   				a += "		<i class='icon-options-vertical'></i>"
+   				a += "   </div>"
+   				a += "   <div class='basic-dropdown'>"
+   				a += "		<div class='dropdown-menu'>"
+   				a += "         " + dropdown-item + ""
+   				a += "      </div>"
+   				a += "   </div>"
+   				a += "</div>"
+   				a += "<div>" + this.routine_cmt + "</div>"
+   				a += "</div>"
 
-//    			console.log(this.depth);
-//    			});
+   			console.log(this.depth);
+   			});
    			
-//    			$('#replyList').html(a);
-// 		    $('#routineCmtTextarea').val("");
-   			
-//    		}
+   			$('#replyList').html(a);
+		    $('#routineCmtTextarea').val("");
+   			});
+   		}
    		/*]]>*/
    		
    		

@@ -593,7 +593,26 @@
 			
 			function delFood(num) {
 				$(".mealDiv"+num+"").remove();
-				number--;
+	            
+	            
+	            for(let i=1; i < number; i++) {
+	               
+	               $("div.mealDiv"+(num+i)+"").attr("class", "row cart-item-card mb-3 mealDiv"+(num+(i-1))+"");
+	               $("button.mealDiv"+(num+i)+"").attr({onclick : "delFood("+(num+(i-1))+")",
+	                                           class : "btn btn-sm btn-outline-light mealDiv"+(num+(i-1))+""
+	                                          });
+	               $(".fs"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].food_seq",
+	                                   class : "fs"+(num+(i-1))+""
+	                                 });
+	               $(".ms"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].meal_seq",
+	                                   class : "ms"+(num+(i-1))+""
+	                                 });
+	               $(".fc"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].food_count",
+	                                   class : "fc"+(num+(i-1))+""
+	                                 });
+	               
+	            }
+	            number--;
 			}
 			
 			//이미지 추가 했을 때 화면에 띄우기

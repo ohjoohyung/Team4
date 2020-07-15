@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.notice.dao.NoticeDao">
+
+	<!-- 리스트 -->
+    <select id="noticeList" resultType="kr.or.bodiary.notice.dto.NoticeDto">
+		select notice_brd_seq, notice_brd_title, notice_brd_regdate, notice_brd_hit
+		  from NoticeBoard
+	</select>
+	
+	<!-- 입력 -->
+	<insert id="noticeInsert" parameterType="kr.or.bodiary.notice.dto.NoticeDto">
+		insert into NoticeBoard (user_email, notice_brd_title, notice_brd_content, notice_brd_regdate)
+		values (#{user_email}, #{notice_brd_title}, #{notice_brd_content}, now())
+	</insert>
+	
+	<!-- 상세 -->
+	<select id="noticeSelect" parameterType="int" resultType="kr.or.bodiary.notice.dto.NoticeDto">
+		select notice_brd_seq, notice_brd_title, notice_brd_content, notice_brd_regdate, notice_brd_hit
+		  from NoticeBoard
+		 where notice_brd_seq=#{notice_brd_seq}
+	</select>
+	
+	<!-- 수정 -->
+	<update id="noticeUpdate" parameterType="kr.or.bodiary.notice.dto.NoticeDto">
+		update NoticeBoard
+		   set notice_brd_title=#{notice_brd_title}, notice_brd_content=#{notice_brd_content}
+		 where notice_brd_seq=#{notice_brd_seq}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="noticeDelete" parameterType="int">
+		delete
+		  from NoticeBoard
+		 where notice_brd_seq=#{notice_brd_seq}
+	</delete>
+	
+</mapper>

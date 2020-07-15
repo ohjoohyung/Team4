@@ -4,20 +4,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.mysql.cj.ParseInfo;
-
 import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
+import kr.or.bodiary.notice.dto.NoticeDto;
+import kr.or.bodiary.notice.service.NoticeService;
 
 @Controller
 public class AdminController {
@@ -27,6 +25,13 @@ public class AdminController {
 	public void setExerciseService(ExerciseService exerciseservice) {
 		this.exerciseservice = exerciseservice;
 	}
+	@Autowired
+	private NoticeService noticeservice;
+	
+	public void setNoticeService(NoticeService noticeservice) {
+		this.noticeservice = noticeservice;
+	}
+	
 
 	
 	@RequestMapping("/admin")
@@ -101,23 +106,57 @@ public class AdminController {
 		return "admin/adminReportList";
 	}
 
-	@RequestMapping("/noticeList")
-	public String getNoticeList() {
-		return "notice/noticeList";
-	}
-
-	@RequestMapping("/noticeDetail")
-	public String getNoticeDetail() {
-		return "notice/noticeDetail";
-	}
-
-	@RequestMapping("/noticeEdit")
-	public String getNoticeEdit() {
-		return "notice/noticeEdit";
-	}
-
-	@RequestMapping("/noticeForm")
-	public String getNoticeForm() {
-		return "notice/noticeForm";
-	}
+	//공지사항
+		//리스트
+		@RequestMapping("noticeList")
+		public String noticeList(Model model) throws ClassNotFoundException, SQLException {
+			List<NoticeDto> nlist = noticeservice.noticeList();
+			model.addAttribute("noticeList", nlist);
+			return "notice/noticeList";
+		}	
+		
+		//입력(폼)
+		@RequestMapping(value = "noticeForm", method = RequestMethod.GET)
+		public String noticeForm() {
+			return "notice/noticeForm";
+		}
+		
+		//입력(처리)
+		@RequestMapping(value = "noticeForm", method = RequestMethod.POST)
+		public String noticeForm(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+			System.out.println("noticeForm, POST방식");
+			String url = noticeservice.noticeForm(noticedto, request);
+			return url;
+		}
+		
+		//상세
+		@RequestMapping("noticeDetail")
+		public String noticeDetail(int notice_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+			NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
+			System.out.println(noticedto);
+			model.addAttribute("noticeDetail", noticedto);
+			return "notice/noticeDetail";
+		}
+		
+		//수정(폼)
+		@RequestMapping(value = "noticeEdit", method = RequestMethod.GET)
+		public String noticeEdit(int notice_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+			NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
+			model.addAttribute("noticeEdit", noticedto);
+			return "notice/noticeEdit";
+		}
+		
+		//수정(처리)
+		@RequestMapping(value = "noticeEdit", method = RequestMethod.POST)
+		public String noticeEdit(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+			return noticeservice.noticeEdit(noticedto, request);
+		}
+		
+		//삭제
+		@RequestMapping("noticeDelete")
+		public String noticeDelete(int notice_brd_seq) throws ClassNotFoundException, SQLException {
+			noticeservice.noticeDelete(notice_brd_seq);
+			return "redirect:noticeList";
+		}
+		
 }
