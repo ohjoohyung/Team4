@@ -17,68 +17,42 @@
 <!-- 뿌려줄 내용 수정하고 페이징 처리도 해야함 -->
 			<div class="card m-4">
 				<div class="card-body">
+					<button type="button" onclick="location.href='adminExcsForm'"
+                        class="btn btn-outline-primary">새운동 등록</button>
 					<h2>운동 목록</h2>
 					<div class="table-responsive mt-5">
-                                    <table class="table header-border">
+                                    <table class="table table-striped table-bordered zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th scope="col">#</th>
-                                                <th scope="col">First Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">User Name</th>
+                                                <th scope="col">excs_seq</th>
+                                                <th scope="col">excs_kind</th>
+                                                <th scope="col">excs_name</th>
+                                                <th scope="col">excs_cal_per_minweight</th>
+                                                <th scope="col">excs_body_part</th>
+                                                <th scope="col">excs_equipment</th>
+                                                <th scope="col">excs_description</th>
+                                                <th scope="col">excs_video_link</th>
+                                                <th scope="col">excs_level</th>
+                                                <th scope="col">수정</th>
+                                                <th scope="col">삭제</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>1</th>
-                                                <td>Jacklyn</td>
-                                                <td>G.Bearden</td>
-                                                <td>@jacklyn</td>
-                                            </tr>
-                                            <tr>
-                                                <th>2</th>
-                                                <td>Nancy</td>
-                                                <td>J. Daniels</td>
-                                                <td>@daniels</td>
-                                            </tr>
-                                            <tr>
-                                                <th>3</th>
-                                                <td>Betty</td>
-                                                <td>R. Christensen</td>
-                                                <td>@betty</td>
-                                            </tr>
-                                            <tr>
-                                                <th>4</th>
-                                                <td>Lucinda</td>
-                                                <td>D. Sears</td>
-                                                <td>@lucinda</td>
-                                            </tr>
-                                            <tr>
-                                                <th>5</th>
-                                                <td>William</td>
-                                                <td>T. Marks</td>
-                                                <td>@william.marks</td>
-                                            </tr>
-                                        </tbody>
+                                        <tr th:each="exer : ${list}">
+								         <td th:text="${exer.excs_seq}">excs_seq</td>    
+								         <td th:text="${exer.excs_kind}">excs_kind</td>
+								         <td><a th:href="@{/adminExcsDetail(excs_seq=${exer.excs_seq})}"><span th:text="${exer.excs_name}">excs_name</span></a> </td>
+								         <td th:text="${exer.excs_cal_per_minweight}">excs_cal_per_minweight</td>
+								    	 <td th:text="${exer.excs_body_part}">excs_body_part</td>
+								    	 <td th:text="${exer.excs_equipment}">excs_equipment</td>
+								    	 <td th:text="${exer.excs_description}">excs_description</td>
+								    	 <td th:text="${exer.excs_video_link}">excs_video_link</td>
+								    	 <td th:text="${exer.excs_level}">excs_level</td>
+								      	 <td><a th:href="@{/adminExcsEdit(excs_seq=${exer.excs_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
+								    	 <td><a th:href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td>
+								    	 </tr>
                                     </table>
                                 </div>
-                                
-                                <div class="bootstrap-pagination">
-									<nav>
-										<ul class="pagination justify-content-center">
-											<li class="page-item disabled"><a class="page-link"
-												href="#" tabindex="-1">Previous</a></li>
-											<li class="page-item"><a class="page-link" href="#">1</a>
-											</li>
-											<li class="page-item"><a class="page-link" href="#">2</a>
-											</li>
-											<li class="page-item"><a class="page-link" href="#">3</a>
-											</li>
-											<li class="page-item"><a class="page-link" href="#">Next</a>
-											</li>
-										</ul>
-									</nav>
-								</div>
+                               
 						</div>
 				</div>
 		</div>
@@ -93,5 +67,9 @@
 	</div>
 <!-- 공통 스크립트-->
 	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+	<!-- data table -->
+    <script src="assets/plugins/tables/js/jquery.dataTables.min.js"></script>
+    <script src="assets/plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+    <script src="assets/plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
 </body>
 </html>

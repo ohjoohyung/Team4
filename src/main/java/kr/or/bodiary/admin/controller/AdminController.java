@@ -1,11 +1,34 @@
 package kr.or.bodiary.admin.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.mysql.cj.ParseInfo;
+
+import kr.or.bodiary.admin.service.ExerciseService;
+import kr.or.bodiary.exercise.dto.ExerciseDto;
 
 @Controller
 public class AdminController {
 
+	private ExerciseService exerciseservice;
+	@Autowired
+	public void setExerciseService(ExerciseService exerciseservice) {
+		this.exerciseservice = exerciseservice;
+	}
+
+	
 	@RequestMapping("/admin")
 	public String adminDashBrd() {
 		return "admin/adminDashBrd";
@@ -27,25 +50,52 @@ public class AdminController {
 	}
 
 	// 어드민 운동 CRUD
-	@RequestMapping("/adminExcsDetail")
-	public String adminExcsDetail() {
+	@RequestMapping(value="/adminExcsDetail", method=RequestMethod.GET)
+	public String adminExcsDetail(String excs_seq, Model model) {
+		int seq = Integer.parseInt(excs_seq);
+		ExerciseDto exercise = exerciseservice.exerciseDetail(seq);
+		model.addAttribute("exercise", exercise);
+		System.out.println(exercise);
 		return "admin/adminExcsDetail";
 	}
 
-	@RequestMapping("/adminExcsEdit")
-	public String adminExcsEdit() {
+	@RequestMapping(value="/adminExcsEdit", method=RequestMethod.GET)
+	public String adminExcsEdit(String excs_seq, Model model) {
+		int seq = Integer.parseInt(excs_seq);
+		System.out.println("adminExcsEdit탐");
+		ExerciseDto exercise = exerciseservice.exerciseDetail(seq);
+		model.addAttribute("exercise", exercise);
+		System.out.println(exercise);
 		return "admin/adminExcsEdit";
 	}
+	@RequestMapping(value="/adminExcsEdit", method=RequestMethod.POST)
+	public String adminExcsEditOK(ExerciseDto ExerciseDto, HttpServletRequest request) throws ClassNotFoundException, IOException, SQLException {
+		return exerciseservice.exerciseEdit(ExerciseDto, request);
+	}
+	@RequestMapping(value="/adminExcsDelete", method=RequestMethod.GET)
+	public String adminExcsDelete(String excs_seq, Model model) throws ClassNotFoundException, SQLException {
+		int seq = Integer.parseInt(excs_seq);
+		return exerciseservice.exerciseDelete(seq);
+	}
 
-	@RequestMapping("/adminExcsForm")
+	@RequestMapping(value="/adminExcsForm", method=RequestMethod.POST)
+	public String adminExcsFormOK(ExerciseDto ExerciseDto, HttpServletRequest request) throws Exception {
+		exerciseservice.exerciseInsert(ExerciseDto, request);
+		return "redirect:adminExcsList";
+	}
+	@RequestMapping(value="/adminExcsForm", method=RequestMethod.GET)
 	public String adminExcsForm() {
 		return "admin/adminExcsForm";
 	}
 
 	@RequestMapping("/adminExcsList")
-	public String adminExcsList() {
+	public String adminExcsList( Model model) {
+		List<ExerciseDto> list = exerciseservice.exercises();
+		model.addAttribute("list", list);
 		return "admin/adminExcsList";
 	}
+	
+	    
 	@RequestMapping("/adminReportList")
 	public String adminReportList() {
 		return "admin/adminReportList";

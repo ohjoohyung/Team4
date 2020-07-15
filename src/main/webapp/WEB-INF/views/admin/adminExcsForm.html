@@ -4,35 +4,74 @@
 <!-- 공통 헤더-->
 <th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
 <body>
-	<!--**********************************
+    <!--**********************************
         Main wrapper start
     ***********************************-->
     <div id="main-wrapper">
 		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
 
+       
+
         <!--**********************************
             Content body start
         ***********************************-->
         <div class="content-body">
+
 <!-- 여기에 부위, 이미지 수정까지 들어가야함  (운동 난이도도 어떻게 할지)-->
+	
 			<div class="card m-4">
 				<div class="card-body">
-					<form action="adminExcsDetail">
+					<form action="adminExcsForm" method="post">
 
 						<div class="row">
 							<!-- 제목 -->
 							<div class="col-11">
 								<div class="mb-3 mt-2">
-
-									<input type="text" id="title" name="title" class="form-control"
-										placeholder="제목을 입력하세요">
+									
+										
+										<select name="excs_kind" class="form-control">
+									    <option value="">운동종류</option>
+									    <option value="C">유산소</option>
+									    <option value="N">무산소</option>
+										</select>
+										<label>운동이름<input type="text"   id="excs_name" name="excs_name" class="form-control"></label>
+										<label>분, 몸무게당 칼로리<input type="text"  class="form-control" id="excs_cal_per_minweight" name="excs_cal_per_minweight" 
+										></label>
+										
+										<select name="excs_body_part" class="form-control" >
+									    <option value="">운동부위</option>
+									    <option value="X">유산소</option>
+									    <option value="등">등</option>
+									    <option value="어깨">어깨</option>
+									    <option value="가슴">가슴</option>
+									    <option value="다리">다리</option>
+									    <option value="팔">팔</option>
+										</select>
+										
+										<select name="excs_equipment" class="form-control" >
+									    <option value="">기구여부</option>
+									    <option value="X">기구없음</option>
+									    <option value="O">기구사용</option>
+										</select>
+										
+										<label>운동설명<input type="text"   id="excs_description" name="excs_description" class="form-control"
+										></label>
+										<label>운동난이도<input type="text"   id="excs_level" name="excs_level" class="form-control"
+										></label>
+										<label>운동링크<input type="text"   id="excs_video_link" name="excs_video_link" class="form-control"
+										></label>
+										
+										
 								</div>
 							</div>
 							<div></div>
 						</div>
 
 
-						<textarea class="form-control h-150px" rows="6" id="comment"></textarea>
+						<!-- <textarea class="form-control h-150px" rows="6" id="comment" 
+						th:placeholder="${exercise.excs_name}" th:value="${exercise.excs_name}">
+							
+						</textarea> -->
 
 
 
@@ -41,7 +80,7 @@
 						<div class="mt-4 text-center">
 							<button type="button" onclick="location.href='adminExcsList'"
 								class="btn btn-outline-primary">취소</button>
-							<button type="submit" class="btn btn-primary">등록</button>
+							<button type="submit" class="btn btn-primary">수정</button>
 
 						</div>
 
@@ -49,7 +88,7 @@
 				</div>
 			</div>
 		</div>
-		<!--**********************************
+				        <!--**********************************
             Footer start
         ***********************************-->
 		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
