@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav"
+					th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+			<div class="col mr-5">
+				<div class="card p-3">
+					<div class="tab-content br-n pn">
+						<!-- 계정관리 start -->
+						<div id="navpills-1" class="tab-pane active">
+							<div class="row justify-content-md-center mt-5">
+								<div class="col-9 mt-5">
+								<form action="" method="post">
+									<h3 class="text-left mb-5">
+										<span class="mdi mdi-human-greeting"></span> 탈퇴 안내
+									</h3>
+									<div class="body-content mb-5">
+										<p class="text">개인정보는
+											ㅁㄴㅇ랴젇ㄹ냐어래ㅑㅈㄷㄹfbfbsdㄹ야ㅠㄴㄹ애ㅑ펌애ㅑ럼ㄴ야러맨야러맨야럼내야ㅓㅍㄴ야ㅓ팸냐어패먄어패ㅑㅁ넝패먀ㅓㅇㄿㅁ내야ㅓ팸ㄴ야ㅓ래냐어래ㅑㄴ어ㅐㅑㅓㅐㅑㅓㅐㅑㅇ리ㅏㅈ듧지더랮ㄷ벌지ㅏ륻지ㅏ릊디ㅏ르ㅑㅕ호먀ㅕㅗㄹ먊재ㅑ룸니아ㅜ피ㅏㅜㅍ미ㅏ푸매ㅑ로먀ㅕㄷ룸재다ㅣ룸니ㅏㅓ룬미ㅏ웊미아ㅜㅍㄴ;미으</p>
+									</div>
+									<div class="footer mb-5">
+										<div class="text-right text-muted">
+											<input type="hidden" name="user_email" class="form-check-input" th:value="${session.currentUser.user_email}">
+											<input type="checkbox" id="withdrawal_check" class="form-check-input" value="">안내
+											사항을 모두 확인하였으며, 이에 동의합니다.
+										</div>
+									</div>
+									<div class="text-center mb-5">
+										<button type="submit" id="withdrawal_check_btn" class="btn btn-lg btn-primary">탈퇴하기</button>
+									</div>
+								</form>
+								</div>
+							</div>
+						</div>
+						<!-- 계정관리 end -->
+						<!-- 회원탈퇴 start -->
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script>
+		$(document).ready(function(){
+			$('#withdrawal_check_btn').click(function(){
+				if($('#withdrawal_check').prop('checked') == false){
+			    	alert('필수 약관에 동의 하셔야 합니다.');
+				}else{
+					/* $(location).attr('href','https://www.naver.com/'); */
+				}
+			});
+		});
+	</script>
+</body>
+</html>

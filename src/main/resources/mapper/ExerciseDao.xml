@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.exercise.dao.ExerciseDao">
+    <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
+    </select> 
+    <select id="getExercisecListByName" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_kind='C'
+    </select>
+    <select id="getExercisenListByName" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_kind='N'
+    </select>
+    <select id="exercisepartSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_body_part=#{excs_body_part}
+    </select>
+    <select id="exerciseEquiSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_equipment=#{excs_equipment}
+    </select>
+    
+    <select id="exercisepartequiSearch" parameterType="hashmap" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_equipment=#{excs_equipment} and excs_body_part=#{excs_body_part}
+    </select>
+    
+    <select id="exerciseadd" parameterType="int" resultType="kr.or.bodiary.exercise.dto.ExerciseDto">
+       select * from Exercise where excs_seq=#{excs_seq}
+    </select>
+    <!--  
+    <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
+      VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
+    </insert>
+    -->
+    
+    <!-- 루틴 장바구니 추가 -->
+    <insert id="insertRoutineCart" parameterType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto" useGeneratedKeys="true" keyProperty="routine_cart_seq">
+    	insert into routinecart (routine_cart_title)
+    	values (#{routine_cart_title})
+    </insert>
+    
+    <!-- 루틴 만들기 (운동 몇시간, 운동 몇세트 몇회) -->
+    <insert id="insertRoutine" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="routine_seq">
+    	insert into routine (excs_seq, routine_exercise_hour, routine_set, routine_reps_per_set, routine_done_check)
+    	values
+    	<foreach collection="list" item="item" separator=",">
+    		(#{item.excs_seq}, #{item.routine_exercise_hour}, #{item.routine_set}, #{item.routine_reps_per_set}, 'N')
+    	</foreach> 
+    </insert>
+    
+    <!-- 루틴 묶음 만들기 -->
+    <insert id="insertRoutineBundle" parameterType="java.util.List">
+    	insert into routinebundle (routine_cart_seq, user_email, routine_seq)
+    	values
+    	<foreach collection="list" item="item" separator=",">
+    		(#{item.routine_cart_seq}, #{item.user_email}, #{item.routine_seq})
+    	</foreach>
+    </insert>
+    
+   
+</mapper>
+
+ 

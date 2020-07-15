@@ -22,10 +22,10 @@ import kr.or.bodiary.myBodiary.dao.BodiaryDao;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
-import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.user.dao.UserDao;
-import kr.or.bodiary.user.dto.userDTO;
+import kr.or.bodiary.user.dto.UserDto;
 
 
 @Service
@@ -53,13 +53,13 @@ private SqlSession sqlsession;
 	}
 	
 	//식단 카트 번호 추가
-	public int insertMealCart(dailyMealDTO dailymealdto) throws ClassNotFoundException, SQLException {
+	public int insertMealCart(DailyMealDto dailymealdto) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.insertMealCart(dailymealdto);
 	}
 	
 	//식단 작성하기
-	public int writeDailyMeal(List<dailyMealDTO> list) throws ClassNotFoundException, SQLException {
+	public int writeDailyMeal(List<DailyMealDto> list) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.writeDailyMeal(list);
 	}
@@ -69,7 +69,7 @@ private SqlSession sqlsession;
 	//일지 작성
 	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
 
-	public String writeBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
+	public String writeBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 	
 		
@@ -92,10 +92,10 @@ private SqlSession sqlsession;
 		bodiarydto.setDiary_main_img(filename);
 		try {
 			
-			List<dailyMealDTO> list = dailymealdto.getDailyMealList();
+			List<DailyMealDto> list = dailymealdto.getDailyMealList();
 			bodiarydao.insertMealCart(dailymealdto);
 			
-			for(dailyMealDTO d : list) {
+			for(DailyMealDto d : list) {
 				d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
 			}
 			
@@ -123,7 +123,7 @@ private SqlSession sqlsession;
 	
 	//일지 수정하기
 	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
-	public String updateBodiary(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
+	public String updateBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		
 		if(bodiarydto.getDiary_pubchk() == null) {
@@ -146,10 +146,10 @@ private SqlSession sqlsession;
 		System.out.println(bodiarydto.getDiary_main_img());
 		try {
 			
-			List<dailyMealDTO> list = dailymealdto.getDailyMealList();
+			List<DailyMealDto> list = dailymealdto.getDailyMealList();
 			bodiarydao.insertMealCart(dailymealdto);
 			
-			for(dailyMealDTO d : list) {
+			for(DailyMealDto d : list) {
 				d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
 			}
 			System.out.println(list.toString());
@@ -182,13 +182,13 @@ private SqlSession sqlsession;
 	
 	
 	//루틴 리스트 아이디로 불러오기
-	public List<RoutineJoinDto> getRoutineListById() throws ClassNotFoundException, SQLException {
+	public List<RoutineJoinDto> getRoutineListById(String user_email) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		return bodiarydao.getRoutineListById();
+		return bodiarydao.getRoutineListById(user_email);
 	}
 	
 	//일지 상세정보 
-	public bodiaryDTO getBodiary(String diary_seq) throws ClassNotFoundException, SQLException { 
+	public BodiaryDto getBodiary(String diary_seq) throws ClassNotFoundException, SQLException { 
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class); 
 		return bodiarydao.getBodiary(diary_seq); 
 		}
@@ -200,7 +200,7 @@ private SqlSession sqlsession;
 	}
 	
 	//일지 리스트 불러오기
-	public List<bodiaryDTO> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException {
+	public List<BodiaryDto> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.getBodiaryList(user_email);
 	}

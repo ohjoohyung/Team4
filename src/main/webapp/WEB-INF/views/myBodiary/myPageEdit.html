@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
@@ -9,48 +10,49 @@
 	<div class="bodiary-wrapper">
 		<div class="row mt-4">
 			<nav class="col-3 ml-3 mr-0 sidenav">
-				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+				<aside id="sidebar" class="js-custom-scroll side-nav"
+					th:replace="common/sidebar :: sidebarFragment"></aside>
 			</nav>
-			
+
 			<div class="col mr-5">
 				<div class="card p-3">
-					<ul class="nav nav-pills">
-	                    <li class="nav-item"><a href="#navpills-1" class="nav-link active" data-toggle="tab" aria-expanded="false">계정관리</a>
-	                    </li>
-	                    <li class="nav-item"><a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">회원탈퇴</a>
-	                    </li>
-	                </ul>
-                    <div class="tab-content br-n pn">
-                    	<!-- 계정관리 start -->
-                        <div id="navpills-1" class="tab-pane active">
-                        	<div class="row justify-content-md-center">
-                        		<div class="col-9 mt-4">
+
+					<div class="tab-content br-n pn">
+						<!-- 계정관리 start -->
+						<div id="navpills-1" class="tab-pane active">
+							<div class="row justify-content-md-center">
+								<div class="col-9 mt-4">
 									<div class="form-group row mt-5 mb-5">
 										<label class="col-sm-3 col-form-label text-primary">이메일</label>
-											<div class="col-sm-9">
-												<input type="text" readonly="readonly" class="form-control-plaintext" value="email@example.com">
-											</div>
+										<div class="col-sm-9">
+											<input type="text" readonly="readonly"
+												class="form-control-plaintext" value="email@example.com">
+										</div>
 									</div>
 									<hr>
 									<div class="form-group row mt-5 mb-5">
 										<label class="col-sm-3 col-form-label text-primary">비밀번호</label>
 										<div class="col-sm-9">
-											<input type="text" readonly="readonly" class="form-control-plaintext" value="********">
+											<input type="text" readonly="readonly"
+												class="form-control-plaintext" value="********">
 											<button type="button" class="btn btn-primary mt-3">변경하기</button>
-											<br><br>
+											<br>
+											<br>
 											<!-- 비밀번호 변경 폼 (나중에 비동기로 만들 예정) -->
 											<form>
 												<div>
 													<label class="col-form-label text-primary">현재 비밀번호</label>
 												</div>
 												<div>
-													<input type="password" class="form-control input-default" placeholder="비밀번호를 입력해주세요">
+													<input type="password" class="form-control input-default"
+														placeholder="비밀번호를 입력해주세요">
 												</div>
 												<div>
 													<label class="col-form-label text-primary">새 비밀번호</label>
 												</div>
 												<div>
-													<input type="password" class="form-control input-default" placeholder="비밀번호를 입력해주세요">
+													<input type="password" class="form-control input-default"
+														placeholder="비밀번호를 입력해주세요">
 												</div>
 												<div>
 													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button>
@@ -66,12 +68,14 @@
 											<input type="text" readonly="readonly"
 												class="form-control-plaintext" value="닉네임이지롱">
 											<button type="button" class="btn btn-primary mt-3">변경하기</button>
-											<br><br>
+											<br>
+											<br>
 											<!-- 닉네임 변경 폼 (나중에 비동기로 만들 예정) -->
-											<form>			
+											<form>
 												<div>
-													<input type="text" class="form-control input-default" value="닉네임이지롱">
-												</div>			
+													<input type="text" class="form-control input-default"
+														value="닉네임이지롱">
+												</div>
 												<div>
 													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button>
 													<button type="submit" class="btn btn-primary mt-3">변경하기</button>
@@ -79,40 +83,27 @@
 											</form>
 										</div>
 									</div>
+
+									<hr>
+									<div class="form-group row mt-5 mb-5">
+										<label class="col-sm-3 col-form-label text-primary">회원 탈퇴</label>
+										<div class="col-sm-9">
+											<button type="button" class="btn btn-primary mt-3"
+												onclick="location.href='myWithdraw'">탈퇴하기</button>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 						<!-- 계정관리 end -->
-						<!-- 회원탈퇴 start -->
-						<div id="navpills-2" class="tab-pane">
-							<div class="row justify-content-md-center">
-								<div class="col-9 mt-4">
-									<div class="form-group mt-5 mb-5">
-                                		<div class="container col-9">
-                                		<h3 class="text-left mb-5"><span class="mdi mdi-human-greeting"></span> 탈퇴 안내</h3>
-                                    		<div class="body-content mb-5">
-                                        		<p class="text">개인정보는 ㅁㄴㅇ랴젇ㄹ냐어래ㅑㅈㄷㄹfbfbsdㄹ야ㅠㄴㄹ애ㅑ펌애ㅑ럼ㄴ야러맨야러맨야럼내야ㅓㅍㄴ야ㅓ팸냐어패먄어패ㅑㅁ넝패먀ㅓㅇㄿㅁ내야ㅓ팸ㄴ야ㅓ래냐어래ㅑㄴ어ㅐㅑㅓㅐㅑㅓㅐㅑㅇ리ㅏㅈ듧지더랮ㄷ벌지ㅏ륻지ㅏ릊디ㅏ르ㅑㅕ호먀ㅕㅗㄹ먊재ㅑ룸니아ㅜ피ㅏㅜㅍ미ㅏ푸매ㅑ로먀ㅕㄷ룸재다ㅣ룸니ㅏㅓ룬미ㅏ웊미아ㅜㅍㄴ;미으</p>
-											</div>
-											<div class="footer mb-5">
-												<div class="text-right text-muted">
-													<input type="checkbox" class="form-check-input" value="">안내 사항을 모두 확인하였으며, 이에 동의합니다.
-												</div>
-                                			</div>
-                                			<div class="text-center">
-                                    			<button type="button" class="btn btn-primary">탈퇴하기</button>                                    		
-                                    		</div>
-                            			</div>
-                            		</div>
-								</div>
-							</div>
-      					</div>
-      					<!-- 회원탈퇴 end -->
+
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
+
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 </html>

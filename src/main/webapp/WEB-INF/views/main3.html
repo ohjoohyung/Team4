@@ -1,0 +1,425 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<head>
+
+
+<style>
+#pic1 {
+	margin-top: 51px;
+}
+
+#exercisesearch {
+	width: 100%;
+	border : 1px solid #7571f9;
+}
+
+.card-text2{
+	height:105px;
+}
+
+#exesrc{
+	margin-bottom: 30px;
+}
+
+/* #ct{
+	font-family: 'Black Han Sans', sans-serif;
+}*/
+
+
+
+svg{
+	float: left;
+	margin-right: 3px;
+}
+
+small{
+	margin-left: 135px;
+}
+
+li{
+	cursor:pointer;
+	margin-right: 25px;
+}
+
+a:hover{
+	color: 7571f9;
+	
+}
+
+#card-img{
+	margin-bottom: 10px;
+}
+
+.point{
+	color: black;
+	float: left;
+	margin-right: 5px;
+}
+
+.card-body2{
+	height: 233px;
+	padding: 30px;
+}
+
+.content2{
+	max-width: 1000px;
+	min-height: 50px;
+	margin: 0 auto;
+}
+
+.jumbotron{
+	height: 480px;
+		
+}
+
+#jumbo_main{
+	background-image:url('assets/images/big/banner.jpg');
+	background-attachment: fixed;
+	background-size: 100%;
+	
+}
+.bodiary-wrapper h4{
+font-weight:500;
+color: #7571f9;
+}
+.main-active a{
+color: #7571f9;
+}
+</style>
+</head>
+
+<body>
+
+
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div style="height: 56px;"></div>
+	<!--*******************
+        Preloader end
+    ********************-->
+	<div class="bodiary-wrapper">
+		<div class="content2">
+			<div style="height: 56px;">
+
+
+				<ul class="nav nav-pills mb-3 pt-4">
+					<li class="nav-item main-active"><h2><a href="#"> 메인</a></h2></li>
+					<li class="nav-item"><h2><a href="/bodiary/routineBrdList">루틴자랑</a></h2></li>
+					<li class="nav-item"><h2><a href="/bodiary/freeBrdList">자유게시판</a></h2></li>
+					<li class="nav-item"><h2><a href="/bodiary/chatList">채팅</a></h2></li>
+				</ul>
+
+			</div>
+		</div>
+
+			<div id="pic1" class="tab-content p-0">
+				<!-- 캐러셀 -->
+				<div class="tab-pane fade show active" id="tabs2-tab1"
+					role="tabpanel">
+					<div class="jumbotron" id="jumbo_main">	
+						
+					</div>
+
+					<!--  //////////////////////////////////////////////////////// 본문  ///////////////////////////////////////////////////////////////// -->
+
+
+					<!-- 오늘의 hit 일지 & 팁자유 -->
+					<div class="content ">
+					<div class="row mt-4">
+						
+						<div class="col-12" id="exesrc">
+							<h2>운동 정보가 궁금할 땐?</h2>
+						
+							<div class="col-12 mt-4">
+							<input type="text" id="exercisesearch" class="form-control form-control-lg input-rounded pl-4" onclick="location.href='/bodiary/search'"
+							placeholder="ex ) 걷기" >
+							
+							 
+	
+							<!-- <th:block th:replace="searchExcs/searchExcs :: headFragment"></th:block> -->
+							
+								<!-- <button type="button" class="form-control input-rounded pl-4" onclick="location.href='/bodiary/search'"></button> -->
+								<!-- <input type="search" id="search"
+									class="form-control input-rounded" onclick="href='/search'"> -->
+	
+							</div>
+							<!-- <i class="mdi mdi-magnify"></i> -->
+							
+						</div>
+						
+						<div class="col-12"style="margin-top: 20px;">
+							<h4>오늘의 루틴 자랑</h4>
+							<hr>
+							<div class="row">								
+									<div class="col-lg-6">
+										<div class="card">														
+											<div class="card-body">
+												<div class="row">
+													<div class="col-8">
+														<h5 class="card-title">ㄷㄷㄷ</h5>
+														<p class="card-text">This is a wider card with
+															supporting text and below as a natural lead-in to the
+															additional content. This content is a little bit longer.</p>
+														<div id="icon">
+															<div class="card-text"
+																style="float: left; margin-right: 20px;">
+																<i class="icon-eye"></i>&nbsp;&nbsp;10
+															</div>
+															<div class="card-text">
+																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+															</div>
+														</div>
+													</div>
+													<div class="col">
+															 <img id="card-img" class="d-block w-100" src="https://file.mk.co.kr/meet/neds/2019/05/image_readtop_2019_284928_15567734613733995.jpeg"
+																alt="Third slide">
+													</div>
+												</div>
+													
+												
+											</div>
+										</div>
+									</div>
+
+									<div class="col-lg-6">
+										<div class="card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-8">
+														<h5 class="card-title">ㄷㄷㄷ</h5>
+														<p class="card-text">This is a wider card with
+															supporting text and below as a natural lead-in to the
+															additional content. This content is a little bit longer.</p>
+														<div>
+															<div class="card-text"
+																style="float: left; margin-right: 20px;">
+																<i class="icon-eye"></i>&nbsp;&nbsp;10
+															</div>
+															<div class="card-text">
+																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+															</div>
+														</div>
+													</div>	
+																			
+													<div class="col">
+														<img id="card-img" class="d-block w-100"
+															src="https://post-phinf.pstatic.net/MjAxODEyMTBfMjA1/MDAxNTQ0NDI3OTY0ODUw.
+																pUQMt_qZo_RzqRYljtYJMSVzajTDYgR9WAy0UtDTjGog.
+																2sGWeLn3xlgBnbL3nVCi0E1n0v4gMJ2T-sf0XxeQZwcg.JPEG/99132_95627_3214.jpg?type=w1200"
+															alt="First slide">
+													</div>
+													
+													
+												</div>
+	
+	
+											</div>
+										</div>
+									</div>
+							</div>
+						</div>
+
+
+						<div class="col-12">
+							<h4>오늘의 팁</h4>
+							<hr>
+
+
+							<div class="row">
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img2.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">오동률</h5>
+											<p class="card-text2">만 23세 동탄에 산다.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Col -->
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img2.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- End Col -->
+
+
+
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img1.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Col -->
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img2.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img1.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Col -->
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img2.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- End Col -->
+
+
+
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img1.jpg" alt="">
+										<div class="card-body2">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End Col -->
+								<div class="col-md-6 col-lg-3">
+									<div class="card">
+										<img class="img-fluid" src="images/big/img2.jpg" alt="">
+										<div class="card-body">
+											<h5 class="card-title">Card title</h5>
+											<p class="card-text2">This is a wider card with supporting
+												text and below as a natural lead-in to the additional
+												content. This content is a little bit longer.</p>
+											<div id="icon2">
+														<div class="card-text" style="float:left; margin-right: 20px;">
+															<i class="icon-eye"></i>&nbsp;&nbsp;10
+														</div>
+														<div class="card-text" >
+															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+														</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- End Col -->
+					</div>
+
+					
+				</div>
+			</div>
+		</div>
+		
+		
+		<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
+
+		<!--  -->
+
+	</div>
+	
+	
+	<!-- footer -->
+	<th:block th:replace="common/footer :: footerFragment"></th:block>
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

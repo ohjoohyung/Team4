@@ -19,9 +19,5 @@ private SqlSession sqlsession;
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-	public NotYet getUser(String id) throws ClassNotFoundException, SQLException {
-		UserDao userdao = sqlsession.getMapper(UserDao.class);
-		System.out.println(userdao.getUser(id));
-		return userdao.getUser(id);
-	}
+	
 }

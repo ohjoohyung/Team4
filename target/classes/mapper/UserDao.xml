@@ -4,8 +4,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bodiary.user.dao.UserDao">
-	<select id="getUser" resultType="kr.or.bodiary.user.dto.userDTO">
-		select user_email, role_seq, user_pwd, user_nickname, user_gender, user_age, user_height, user_weight, user_img, user_reportedcount 
-		from user where user_email = #{user_email}
+	<select id="getUser" resultType="kr.or.bodiary.user.dto.UserDto">
+		select *
+		from User
+		where user_email= #{user_email}
 	</select>
+	<!-- 회원가입 -->
+	<insert id="insertUser">
+		INSERT INTO User(
+			user_email, user_pwd, user_nickname, user_gender, user_age , user_height, user_weight, user_img, user_reportedcount, enabled, user_grade
+			) 
+		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1, 'regular')
+	</insert>
+	<!-- 회원정보 수정 -->
+	<update id="updateUser">
+		update User
+		set user_age = #{user_age}, user_height=#{user_height}, user_weight=#{user_weight}, user_img=#{user_img}
+		where user_email = #{user_email}
+	</update>
+	<!-- 회원권한 업데이트 -->
+	<update id="updateRole">
+		update Role
+		set role_name='ROLE_REGULAR_USER'
+		where user_email = #{user_email}
+	</update>
+	<!-- 휴면계정 전환 -->
+	<update id="updateDormantAccount">
+		update User
+		set enabled=0
+		where user_email=#{user_email}
+	</update>
+	<!-- 회원 탈퇴처리 후 grade 부여 -->
+	<update id="updateWithdrawalUser">
+		update User
+		set user_grade = 'withdrawal', user_nickname = 'N', user_gender = 'N', 
+			user_age = 0, user_height = 0, user_weight = 0, user_img='N', user_deletedate = now()
+		where user_email= #{user_email}
+	</update>
+	<!-- 회원 삭제 -->
+	<delete id="deleteUser">
+		delete User where user_email#{user_email}
+	</delete>
+	
+	<!-- 회원가입시 이메일 체크 -->
+	<select id="emailCheck" resultType="int">
+		select count(*)
+		from User
+		where user_email=#{user_email}
+	</select>
+
 </mapper>

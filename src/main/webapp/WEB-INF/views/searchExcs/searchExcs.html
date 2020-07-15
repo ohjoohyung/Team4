@@ -8,7 +8,7 @@
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<div class="bodiary-wrapper excs">
-		<form action="">
+		<form action="insertRoutineBundle">
 		<div class="mt-5 ml-3 mr-5">
 			<div class="row">
 				<div class="col-2 ">
@@ -128,9 +128,14 @@
 					</div>
 				</div>
 				<!-- 운동 장바구니 -->
+<<<<<<< HEAD
 				<div class="col-5 sticky-top">
+=======
+				
+				<div class="col-4 sticky-top">
+				
+>>>>>>> da32414089600156f33d24f98ac26d321f6d372b
 					<div class="excs-cart ml-auto mr-0 sticky-top">
-						<div>
 							<div class="row">
 								<div class="col">
 									<h3>유산소 운동</h3>
@@ -210,7 +215,6 @@
 								class="submit btn btn-primary btn-flat btn-lg w-100 mt-3 "
 								data-toggle="modal" data-target=".bd-example-modal-lg">루틴
 								만들기</button>
-						</div>
 					</div>
 				</div>
 				<!-- 운동 장바구니 끝-->
@@ -226,21 +230,23 @@
 								</button>
 							</div>
 							<div class="modal-body">
-								<input type="text" class="form-control input-rounded" placeholder="루틴 제목을 작성해주세요.">
+								<input type="text" class="form-control input-rounded" id="routine_cart_title" name="routine_cart_title" placeholder="루틴 제목을 작성해주세요.">
 							</div>
 							<div class="center mb-4 mt-2">
 								<button type="button" class="btn btn-outline-light"
 									data-dismiss="modal">취소</button>
-								<button type="button" class="btn btn-primary">루틴 만들기</button>
+								<button type="submit" class="btn btn-primary">루틴 만들기</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- modal end -->
 			</div>
+			</div>
 			<!-- 기본 폼 완성 -->
 		</form>
 		</div>
+		
 		<!-- 공통 스크립트-->
 		
 		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
