@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class FreeBoardCommentDto {
+public class freeBoardCommentDTO {
 	private int free_cat;
 	private String brd_cmt_writer;
 	private String brd_cmt;

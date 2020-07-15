@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.bodiary.freeBrd.dao.FreeBrdDao">
+
+	
+	   <!-- 전체게시글 가져오는 쿼리문  원본 -->
+	  <!--  <select id="allFreeBrd"   parameterType="int" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   				SELECT *
+	   				FROM freeboard
+	   				ORDER BY free_brd_seq DESC
+	   				LIMIT #{startIndex},#{pageSize}		
+	   					
+	   </select> -->
+	   
+	    <!-- 전체게시글 가져오는 쿼리문  가짜 -->
+	   <select id="allFreeBrd"   parameterType="kr.or.bodiary.freeBrd.dto.Search" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   				SELECT *
+	   				FROM freeboard
+	   				INNER JOIN User
+	   				ON freeboard.user_email = User.user_email
+	   				<trim prefix="WHERE" prefixOverrides="AND|OR">
+						
+						<if test="cateGory != null and cateGory != '' ">
+							AND free_cat = #{cateGory}
+							<if test="searchType=='title' and keyword != null and keyword != '' ">
+				
+								AND free_brd_title like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='content' and keyword != null and keyword != '' ">
+				
+								AND free_brd_content like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='nickName' and keyword != null and keyword != '' ">
+				
+								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+				
+							</if>	
+						</if>
+					</trim>
+					ORDER BY free_brd_seq DESC
+	   				LIMIT #{startIndex},#{pageSize}		
+	   					
+	   </select>
+		
+	   <!-- 전체 게시글 총개수 가져오기 -->
+	   <select id="getFreeBoardListCnt" resultType="int" parameterType="kr.or.bodiary.freeBrd.dto.Search">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			INNER JOIN User
+	   		ON freeboard.user_email = User.user_email
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+
+				<if test="keyword != null and keyword != '' ">
+	
+					<if test="searchType=='title'">
+		
+						AND free_brd_title like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+		
+					<if test="searchType=='content'">
+		
+						AND free_brd_content like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+		
+					<if test="searchType=='nickName'">
+		
+						AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+	
+	     		 </if>
+
+			</trim>
+	   </select>
+	   
+	   <!-- 자유 게시글 총개수 가져오기 -->
+	   <select id="getLibertyCnt" resultType="int" parameterType="kr.or.bodiary.freeBrd.dto.Search">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			INNER JOIN User
+	   		ON freeboard.user_email = User.user_email
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+					<if test="cateGory == 1">
+					
+						AND free_cat = 1
+						
+						<if test="keyword != null and keyword != '' ">
+			
+							<if test="searchType=='title'">
+				
+								AND free_brd_title like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='content'">
+				
+								AND free_brd_content like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='nickName'">
+				
+								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+			
+			     		 </if>
+			     		 
+					</if>
+			</trim>
+	   </select>
+
+	  <!-- 질문 게시글 총개수 가져오기 -->
+	   <select id="getQuestionCnt" resultType="int" parameterType="kr.or.bodiary.freeBrd.dto.Search">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			INNER JOIN User
+	   		ON freeboard.user_email = User.user_email
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+					<if test="cateGory == 2">
+					
+						AND free_cat = 2
+						
+						<if test="keyword != null and keyword != '' ">
+			
+							<if test="searchType=='title'">
+				
+								AND free_brd_title like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='content'">
+				
+								AND free_brd_content like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='nickName'">
+				
+								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+			
+			     		 </if>
+			     		 
+					</if>
+			</trim>
+	   </select>
+	   
+	   <!-- 팁 게시글 총개수 가져오기 -->
+	   <select id="getTipCnt" resultType="int" parameterType="kr.or.bodiary.freeBrd.dto.Search">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			INNER JOIN User
+	   		ON freeboard.user_email = User.user_email
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+					<if test="cateGory == 3">
+					
+						AND free_cat = 3
+						
+						<if test="keyword != null and keyword != '' ">
+			
+							<if test="searchType=='title'">
+				
+								AND free_brd_title like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='content'">
+				
+								AND free_brd_content like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='nickName'">
+				
+								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+			
+			     		 </if>
+			     		 
+					</if>
+			</trim>
+	   </select>
+		<!-- 게시글 총개수 가져오기 -->
+	   <!-- <select id="getSearchFreeBoardListCnt" resultType="int"  parameterType="kr.or.bodiary.freeBrd.dto.Search">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			<trim prefix="WHERE" prefixOverrides="AND|OR">
+
+				<if test="keyword != null and keyword != '' ">
+	
+					<if test="searchType=='title'">
+		
+						AND free_brd_title like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+		
+					<if test="searchType=='content'">
+		
+						AND CONTENT like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+		
+					<if test="searchType=='reg_id'">
+		
+						AND reg_id like CONCAT('%', #{keyword}, '%')
+		
+					</if>
+	
+	     		 </if>
+
+			</trim>
+	   </select> -->
+	   
+	   <!-- 게시글 상세보기 쿼리문 -->
+	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+			    SELECT freeboard.free_brd_seq,freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_image,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img,freeboard.free_brd_hits
+				FROM freeboard
+				INNER JOIN User
+				ON freeboard.user_email = User.user_email
+				WHERE freeboard.free_brd_seq=#{free_brd_seq}						
+	   </select>
+	  
+	   <!-- 게시글 Insert 쿼리문 -->
+	   <select id="freeBrdInsert"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   			INSERT INTO freeboard(free_cat,user_email,free_brd_title,free_brd_image,free_brd_content,free_brd_date) 
+	     		VALUES(#{free_cat},#{user_email},#{free_brd_title},#{free_brd_image},#{free_brd_content},NOW())     									
+	   </select>
+
+	   <!-- 글쓰기후 생성된 글번호(가장큰) 가져오기 -->
+	   <select id="afterInsert_SelectDetail"  resultType="int">
+	   				select max(free_brd_seq)
+					from freeboard		
+	   </select>
+	   
+	   <!-- 게시글 Update 쿼리문 -->
+	   <select id="freeBrdUpdate"  parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   			UPDATE freeboard 
+	   			SET free_cat=#{free_cat},free_brd_title=#{free_brd_title},free_brd_image=#{free_brd_image},free_brd_content=#{free_brd_content}
+	   			WHERE free_brd_seq=#{free_brd_seq}    									
+	   </select>
+	   
+	   <!-- 게시글 Delete 쿼리문 -->
+	   <select id="freeBrdDelete">
+	   			DELETE 
+	   			FROM freeboard
+	   			WHERE free_brd_seq=#{seq}    									
+	   </select>
+	   
+	   <!-- 게시판 조회수  seq(글번호) 파라미터가 String으로 들어가는데 잘들어가짐()-->
+		<update id="freeBrdHit" >
+	   		update freeboard set
+			free_brd_hits = free_brd_hits + 1
+			where free_brd_seq = #{seq};
+	   </update>
+   
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
