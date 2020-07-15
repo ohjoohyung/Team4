@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
 import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.routineBrd.service.RoutineBrdService;
 import kr.or.bodiary.user.dto.UserDto;
@@ -37,13 +38,22 @@ public class RoutineBrdController {
 		this.bodiaryservice = bodiaryservice;
 	}
 	
-	//리스트
+	//리스트 비동기로 불러오기
+	@ResponseBody
+	@RequestMapping("/getRoutineBrdList")
+	public List<RoutineBoardUserJoinDto> getRoutineBrdList(Model model, String cp, String ps) throws ClassNotFoundException, SQLException {
+		List<RoutineBoardUserJoinDto> rlist = routinebrdservice.routineBoardList(cp, ps);
+		/* model.addAttribute("routineBoardList", rlist); */
+		return rlist;
+	}
+	
+	//리스트 페이지 들어가기
 	@RequestMapping("/routineBrdList")
-	public String routineBrdList(Model model) throws ClassNotFoundException, SQLException {
-		List<RoutineBrdDto> rlist = routinebrdservice.routineBoardList();
-		model.addAttribute("routineBoardList", rlist);
+	public String routineBrdList() {
 		return "routineBrd/routineBrdList";
 	}
+	
+	
 	
 	//상세
 	@RequestMapping("/routineBrdDetail")

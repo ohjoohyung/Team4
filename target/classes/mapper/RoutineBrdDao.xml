@@ -6,9 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bodiary.routineBrd.dao.RoutineBrdDao">
 
    <!-- 리스트 -->
-    <select id="routineBoardList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
-		select routine_brd_title, brd_rec
-		  from RoutineBoard
+    <select id="routineBoardList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">  
+		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, r.brd_rec, u.user_nickname 
+		FROM routineboard r JOIN user u on r.user_email = u.user_email  
+		ORDER BY routine_brd_seq desc limit ${param1}, ${param2}
 	</select>
 	
 	<!-- 작성 -->

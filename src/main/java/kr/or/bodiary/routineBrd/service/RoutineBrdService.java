@@ -17,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
 import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
 
@@ -33,12 +34,26 @@ private SqlSession sqlsession;
 
 		
 	//리스트
-	public List<RoutineBrdDto> routineBoardList() throws ClassNotFoundException, SQLException {
+	public List<RoutineBoardUserJoinDto> routineBoardList(String cp, String ps) throws ClassNotFoundException, SQLException {
 		
-		List<RoutineBrdDto> rlist = null;
+		List<RoutineBoardUserJoinDto> rlist = null;
+		int cpage = 1;
+		int pagesize = 8;
+		
+		if(cp != null && !cp.equals("")) {
+			cpage = Integer.parseInt(cp);
+		}
+		
+		if(ps != null && !ps.equals("")) {
+			pagesize = Integer.parseInt(ps);
+		}
+		
+		int start = (cpage -1)*pagesize;
+		
+		
 		try {
 			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
-			rlist = routinebrddao.routineBoardList();
+			rlist = routinebrddao.routineBoardList(start,pagesize);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
