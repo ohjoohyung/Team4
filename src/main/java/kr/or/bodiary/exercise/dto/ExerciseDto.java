@@ -7,7 +7,7 @@ import lombok.Data;
 
 
 @Data
-public class exerciseDTO {
+public class ExerciseDto {
 	private int excs_seq ;
 	private String excs_kind ;
 	private String excs_name ;

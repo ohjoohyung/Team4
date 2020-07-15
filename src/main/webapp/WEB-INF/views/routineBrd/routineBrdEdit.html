@@ -8,25 +8,36 @@
    <!-- 공통 sidenav -->
    <div class="bodiary-wrapper">
       <div class="content mt-4">
-         <form action="">
+      <form action="" method="post" enctype="multipart/form-data">
+                        
             <div class="card">
                <div class="card-body">
                
                   <!-- 제목 start -->
                   <div class="col-12">
-                     <input type="text" class="form-control bg-transparent" placeholder="제목을 입력하세요">
+                     <input type="text" id="routine_brd_title" name="routine_brd_title" class="form-control bg-transparent" placeholder="제목을 입력하세요" th:value="${routineBoard.routine_brd_title}">
                   </div>
                   <!-- 제목 end -->
                   
+         
                   <!-- 이미지 start -->
-                  <div class="row p-3">
+                  <p class="mt-5 pl-3">자신의 변화를 자랑하세요.</p>
+                  <div class="row p-3 m-3" style="border:1px solid #7571f9; border-radius: 10px;">
+                 
                      <div class="col-6">
                         <h5 class="card-title p-3">Before</h5>
-                        <img class="routine-img" src="assets/images/profile.jpg" alt="">
                         <div class="card-body">
                            <div class="form-group">
                               <div class="fallback">
-                                  <input class="btn btn-outline-primary" name="file" type="file" multiple="multiple">
+                              	<!-- 버튼 변경중 -->
+                                <label class="btn btn-outline-primary btn-file">
+									<i class="icon-picture"></i> 
+									<input id="imgFile1" name="files[0]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 비포 사진
+								</label>
+								
+<!--                                   <input class="btn btn-outline-primary" type="file" id="imgFile1" -->
+<!--                                                 name="files[0]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
+                                  <img id="img1" alt="your image" style="width:300px; height:300px;" th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image1}"/>
                               </div>
                            </div>
                         </div>
@@ -34,57 +45,80 @@
                      
                      <div class="col-6">
                         <h5 class="card-title p-3">After</h5>
-                          <img class="routine-img" src="assets/images/dkdk.gif" alt="">
                           <div class="card-body">
                            <div class="form-group">
                               <div class="fallback">
-                                 <input class="btn btn-outline-primary" name="file" type="file" multiple="multiple">
+                              	<label class="btn btn-outline-primary btn-file">
+									<i class="icon-picture"></i> 
+									<input id="imgFile2" name="files[1]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 애프터 사진
+								</label>
+<!--                                  <input class="btn btn-outline-primary" type="file" id="imgFile2" -->
+<!--                                                 name="files[1]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
+                                 <img id="img2" alt="your image" style="width:300px; height:300px;" th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image2}"/>
                               </div>
                            </div>
                          </div>
                      </div>
                   </div>
                   <!-- 이미지 end -->
+                  
+                  <!-- 내용 start -->
+                       <div class="col-12 mt-3">
+                          
+                          <textarea class="form-control p-4" rows="15" placeholder="자신의 운동 루틴을 자랑하고, 주의할 점 혹은 루틴을 지속한 기간 등 여러 정보를 공유해보세요 :)" id="routine_brd_content" name="routine_brd_content" th:text="${routineBoard.routine_brd_content}"></textarea>
+                       </div>
+                  <!-- 내용 end -->
                        
                   <!-- 루틴 선택하기 start -->
                   <div class="col-12">
+                  <p>자신의 루틴을 선택해주세요.</p>
                      <div class="form-group">
-                        <select class="form-control">
-                            <option>루틴 선택하기</option>
-                            <option>&nbsp;루틴 1</option>
-                            <option>&nbsp;루틴 2</option>
-                        </select>
+                       <select id="routine_cart_seq"
+                                    name="routine_cart_seq" class="form-control input-default"
+                                    >
+                                    <option value="0">선택없음</option>
+                                    <th:block th:if="${routineList} != null">
+                                    <th:block th:each="item : ${routineList}">
+                                    <option th:text="${item.routine_cart_title}"
+                                       th:value="${item.routine_cart_seq}" th:selected="${item.routine_cart_seq}== ${routineBoard.routine_cart_seq}" ></option>
+                                     </th:block>
+                                    </th:block>
+                                 </select>
                      </div>
                   </div>
                   <!-- 루틴 선택하기 end -->
+                  <div class="row mt-5 pl-3">
+                                 <div class="form-group col-md-6">
+                                    <label for="exampleFormControlTextarea1">유산소</label>
+                                    <div class="cardio-cart p-2">
+
+
+                                       <div class="exs-form w-100 outline-primary mt-1 p-1 "
+                                          id="cardio"></div>
+
+                                    </div>
+                                 </div>
+
+                                 <div class="form-group col-md-6">
+                                    <label for="exampleFormControlTextarea2">무산소</label>
+                                    <div class="cardio-cart p-2">
+
+
+                                       <div class="exs-form w-100 outline-primary mt-1 p-1"
+                                          id="weightTraining"></div>
+                                    </div>
+
+                                 </div>
+                              </div>
    
-                  <!-- 썸머노트 start -->
-                       <div class="col-12">
-                          <textarea rows="6"></textarea>
-                       </div>
-                  <!-- 썸머노트 end -->
-                  
-                  <div class="row">
-                     <div class="form-group mt-4 ml-4">
-                        <div class="form-check form-check-inline">
-                           <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value=""> 몸무게 비공개
-                           </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                           <label class="form-check-label">
-                              <input type="checkbox" class="form-check-input" value=""> 동성에게만 공개하기
-                           </label>
-                        </div>
-                     </div>
-                  </div>
                   
                   <div class="text-right mr-3">
-                     <button id="save" class="btn btn-outline-primary" onclick="" type="button">임시저장</button>
-                     <button id="submit" class="btn btn-primary" onclick="location.href='routineBrdList'" type="submit" value="submit">수정</button>
-                  </div>
+                     <button id="save" class="btn btn-outline-primary btn-sm" onclick="" type="button">임시저장</button>
+                     <button class="btn btn-primary btn-sm" type="submit" >등록</button>
                   
-               </div>
+                  
+                  </div>
+                  </div>
             </div>
          </form>
       </div>
@@ -92,5 +126,199 @@
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   <script type="text/javascript">
+   $(function() {
+	   
+	   loadRoutine();
+	   
+    //저장된 루틴 불러오기
+    
+    
+    
+    function loadRoutine() {
+    	 var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+         if(data.routine_cart_seq == 0) {
+            $('#cardio').empty();
+            $('#weightTraining').empty();
+            validate[2] = false;
+            return;
+         }
+         $.ajax(
+              {
+                 type:"get",
+                 data: data,
+                 url:"getRoutine",
+                 dataType:"json",
+                 success:function(responsedata){ 
+                   $('#cardio').empty();
+                   $('#weightTraining').empty();
+                   console.log(responsedata);
+                   
+                   $.each(responsedata,function(index,obj){
+                      console.log(obj.excs_kind);
+                      var hour = "";
+                      if((obj.routine_exercise_hour % 60) == 0) {
+                         hour = (obj.routine_exercise_hour / 60) + "시간";
+                      } else {
+                         if(parseInt(obj.routine_exercise_hour / 60) == 0) {
+                            hour = obj.routine_exercise_hour + "분";
+                         }else {
+                            hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+                         }
+                      }
+                      if(obj.excs_kind == 'C') {
+                         $('#cardio').append(
+                               '<div class="row cart-item-card mb-3">'+                                       
+                                  '<div class="col pt-2">'+
+                                     '<h5>'+obj.excs_name+'</h5>'+
+                                  '</div>'+
+                                  '<div class="col-3 center pt-2">'+
+                                     '<h5>'+hour+'</h5>'+
+                                  '</div>'+
+                               '</div>'
+                         );
+                      }else {
+                            $('#weightTraining').append(
+                                  '<div class="row cart-item-card mb-3">'+                                          
+                                     '<div class="col pt-2">'+
+                                        '<h5>'+obj.excs_name+'</h5>'+
+                                     '</div>'+
+                                     '<div class="col-3 center pt-2">'+
+                                        '<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+                                     '</div>'+
+                                  '</div>'   
+                      )}
+                   }); 
+                   $('.tdroutine')
+                   .html(
+                         '');
+                   validate[2] = true;
+                 }
+              });
+              
+	}
+      $('#routine_cart_seq').change(function() {
+    	  loadRoutine();
+           /* var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+           if(data.routine_cart_seq == 0) {
+              $('#cardio').empty();
+              $('#weightTraining').empty();
+              validate[2] = false;
+              return;
+           }
+           $.ajax(
+                {
+                   type:"get",
+                   data: data,
+                   url:"getRoutine",
+                   dataType:"json",
+                   success:function(responsedata){ 
+                     $('#cardio').empty();
+                     $('#weightTraining').empty();
+                     console.log(responsedata);
+                     
+                     $.each(responsedata,function(index,obj){
+                        console.log(obj.excs_kind);
+                        var hour = "";
+                        if((obj.routine_exercise_hour % 60) == 0) {
+                           hour = (obj.routine_exercise_hour / 60) + "시간";
+                        } else {
+                           if(parseInt(obj.routine_exercise_hour / 60) == 0) {
+                              hour = obj.routine_exercise_hour + "분";
+                           }else {
+                              hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+                           }
+                        }
+                        if(obj.excs_kind == 'C') {
+                           $('#cardio').append(
+                                 '<div class="row cart-item-card mb-3">'+                                       
+                                    '<div class="col pt-2">'+
+                                       '<h5>'+obj.excs_name+'</h5>'+
+                                    '</div>'+
+                                    '<div class="col-3 center pt-2">'+
+                                       '<h5>'+hour+'</h5>'+
+                                    '</div>'+
+                                 '</div>'
+                           );
+                        }else {
+                              $('#weightTraining').append(
+                                    '<div class="row cart-item-card mb-3">'+                                          
+                                       '<div class="col pt-2">'+
+                                          '<h5>'+obj.excs_name+'</h5>'+
+                                       '</div>'+
+                                       '<div class="col-3 center pt-2">'+
+                                          '<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+                                       '</div>'+
+                                    '</div>'   
+                        )}
+                     }); 
+                     $('.tdroutine')
+                     .html(
+                           '');
+                     validate[2] = true;
+                   }
+                });
+           });       */
+   });
+   }); 
+    //이미지 추가 했을 때 화면에 띄우기
+   function readURL(input) {
+       
+      if (input.name == 'files[0]') {
+         console.log(input.files[0]);
+         pathpoint = input.value.lastIndexOf('.');
+          filepoint = input.value.substring(pathpoint+1,input.length);
+          filetype = filepoint.toLowerCase();
+          console.log(filetype);
+          if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
+            var reader = new FileReader();
+            reader.onload = function(e) {
+               $('#img1').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+         } 
+      }else if(input.name == 'files[1]'){
+         console.log(input.files[0]);
+            pathpoint = input.value.lastIndexOf('.');
+             filepoint = input.value.substring(pathpoint+1,input.length);
+             filetype = filepoint.toLowerCase();
+             console.log(filetype);
+             if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
+               var reader = new FileReader();
+               reader.onload = function(e) {
+                  $('#img2').attr('src', e.target.result);
+               }
+               reader.readAsDataURL(input.files[0]);
+            
+         }
+      }else {
+          return false;
+      } 
+               
+      
+      /* $('#imgFileName').html(input.files[0].name); */
+   };
+   
+   //업로드한 파일 검증
+   function fileCheck(obj) {
+   pathpoint = obj.value.lastIndexOf('.');
+   filepoint = obj.value.substring(pathpoint+1,obj.length);
+   filetype = filepoint.toLowerCase();
+   if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
+  
+ 
+       return;
+
+   } else {
+       alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
+
+       parentObj  = obj.parentNode
+       node = parentObj.replaceChild(obj.cloneNode(true),obj);
+      
+       return false;
+   }
+   }
+   
+   </script>
 </body>
 </html>

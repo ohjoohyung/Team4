@@ -11,12 +11,12 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class dailyMealDTO {
+public class DailyMealDto {
 	private int food_seq;
 	private int meal_seq;
 	private String meal_cart_seq;
 	private int food_count;
 	
-	private List<dailyMealDTO> dailyMealList;
+	private List<DailyMealDto> dailyMealList;
 	
 }

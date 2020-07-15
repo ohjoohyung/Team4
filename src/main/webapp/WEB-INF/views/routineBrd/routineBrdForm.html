@@ -54,7 +54,7 @@
 								</label>
 <!--                                  <input class="btn btn-outline-primary" type="file" id="imgFile2" -->
 <!--                                                 name="files[1]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
-                                 <img id="img2" alt="your image" style="width:300px; height:200px;"/>
+                                 <img id="img2" alt="your image" style="width:300px; height:300px;"/>
                               </div>
                            </div>
                          </div>
@@ -150,14 +150,24 @@
                      
                      $.each(responsedata,function(index,obj){
                         console.log(obj.excs_kind);
-                        if(obj.excs_kind == '1') {
+                        var hour = "";
+                        if((obj.routine_exercise_hour % 60) == 0) {
+                           hour = (obj.routine_exercise_hour / 60) + "시간";
+                        } else {
+                           if(parseInt(obj.routine_exercise_hour / 60) == 0) {
+                              hour = obj.routine_exercise_hour + "분";
+                           }else {
+                              hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+                           }
+                        }
+                        if(obj.excs_kind == 'C') {
                            $('#cardio').append(
                                  '<div class="row cart-item-card mb-3">'+                                       
                                     '<div class="col pt-2">'+
                                        '<h5>'+obj.excs_name+'</h5>'+
                                     '</div>'+
                                     '<div class="col-3 center pt-2">'+
-                                       '<h5>'+obj.routine_exercise_hour+'시간</h5>'+
+                                       '<h5>'+hour+'</h5>'+
                                     '</div>'+
                                  '</div>'
                            );

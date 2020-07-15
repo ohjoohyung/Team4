@@ -14,7 +14,7 @@ import lombok.ToString;
 public class RoutineBoardCommentDto {
 	private int routine_cmt_seq ;
 	private int routine_brd_seq ;
-	private String routine_cmt_writer ;
+	private String user_email ;
 	
 	private String routine_cmt ;
 	private Date routine_cmt_date ;

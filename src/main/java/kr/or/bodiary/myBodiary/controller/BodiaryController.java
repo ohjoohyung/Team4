@@ -23,8 +23,8 @@ import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.myBodiary.dto.bodiaryDTO;
-import kr.or.bodiary.myBodiary.dto.dailyMealDTO;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
@@ -137,7 +137,7 @@ public class BodiaryController {
 	
 	//일지 작성하기
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.POST)
-	public String myBodiaryForm(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
+	public String myBodiaryForm(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
 		System.out.println("안녕");
 		System.out.println("컨트롤 : "+bodiarydto.toString());
 		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
@@ -152,7 +152,7 @@ public class BodiaryController {
 	//일지 상세보기
 	@RequestMapping("/myBodiaryDetail")
 	public String myBodiaryDetail(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
-		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		BodiaryDto bodiarydto = bodiaryservice.getBodiary(diary_seq);
 		List<DailyMealFoodJoinDto> dailymeal = bodiaryservice.getDailyMeal(bodiarydto.getMeal_cart_seq());
 		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(bodiarydto.getRoutine_cart_seq());
 		System.out.println(bodiarydto.getMeal_cart_seq());
@@ -167,7 +167,7 @@ public class BodiaryController {
 	//일지 수정 페이지 이동
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
 	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
-		bodiaryDTO bodiarydto = bodiaryservice.getBodiary(diary_seq);
+		BodiaryDto bodiarydto = bodiaryservice.getBodiary(diary_seq);
 		System.out.println("수정페이지 이동 전 : "+bodiarydto.toString());
 		String user_email = bodiarydto.getUser_email();
 		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
@@ -179,7 +179,7 @@ public class BodiaryController {
 	
 	//일지 수정
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.POST)
-	public String myBodiaryEdit(dailyMealDTO dailymealdto, bodiaryDTO bodiarydto, HttpServletRequest request) throws IOException {
+	public String myBodiaryEdit(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
 		System.out.println("안녕 수정");
 		System.out.println("컨트롤 : "+bodiarydto.toString());
 		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
@@ -211,8 +211,8 @@ public class BodiaryController {
 	//일지 리스트 불러오기
 	@ResponseBody
 	@RequestMapping("/getBodiaryList")
-	public List<bodiaryDTO> getBodiaryList(@RequestParam String user_email) throws ClassNotFoundException, SQLException {
-		List<bodiaryDTO> bodiarylist = bodiaryservice.getBodiaryList(user_email);
+	public List<BodiaryDto> getBodiaryList(@RequestParam String user_email) throws ClassNotFoundException, SQLException {
+		List<BodiaryDto> bodiarylist = bodiaryservice.getBodiaryList(user_email);
 		return bodiarylist;
 	
 	}

@@ -12,9 +12,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(
-			user_email, user_pwd, user_nickname, user_gender, user_age , user_height, user_weight, user_img, user_reportedcount, enabled
+			user_email, user_pwd, user_nickname, user_gender, user_age , user_height, user_weight, user_img, user_reportedcount, enabled, user_grade
 			) 
-		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1)
+		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1, 'regular')
 	</insert>
 	<!-- 회원정보 수정 -->
 	<update id="updateUser">

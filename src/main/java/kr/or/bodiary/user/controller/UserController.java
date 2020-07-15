@@ -64,7 +64,11 @@ public class UserController {
 		return userService.updateUserAssociate(user, request);
 	}
 	//---------- 탈퇴처리 -----------
-	@RequestMapping(value="/myPageEdit" , method=RequestMethod.POST)
+	@RequestMapping("/myWithdraw")
+	   public String getMyWithdraw() {
+	   return "myBodiary/myWithdraw";
+	}
+	@RequestMapping(value="/myWithdraw" , method=RequestMethod.POST)
 	public String updateWithdrawalUser(UserDto user ,HttpServletRequest request) {
 		return userService.updateWithdrawalUser(user, request);
 	}

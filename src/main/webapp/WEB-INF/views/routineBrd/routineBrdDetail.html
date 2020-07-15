@@ -24,8 +24,8 @@
                 <div class="basic-dropdown">
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="#">신고</a>
-                        <a class="dropdown-item" href="routineBrdEdit">수정</a>
-                        <a class="dropdown-item" href="noticeDel.do?seq=${notice.seq}">삭제</a>
+                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
+                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
                 	</div>
                 </div>
             </div>
@@ -96,7 +96,7 @@
                                          <tr><td colspan="2" style="border-bottom: 1px solid #7571f9; border-top:none; color:#7571f9; font-size :18px;">유산소</td></tr>
                                                <tr  th:each="r : ${routine}">
                                                <th:block th:if="${r.excs_kind}=='C' ">
-                                                  <td th:text="${r.excs_name}"></td><td th:text="${r.routine_exercise_hour}+'  시간'"></td>
+                                                  <td th:text="${r.excs_name}"></td><td th:text="${r.routine_exercise_hour}"></td>
                                                </th:block>
                                                </tr>
                                                </table>
@@ -146,37 +146,39 @@
          
          <!-- 댓글 start -->
          <div class="col card p-5">
-                  <!-- 오주시작 -->
-                  <p class="card-text ">
-                  <i class="icon-bubble"></i> 댓글 5
-               </p>
-
-               <div class="mt-5">
-                  <div class="row ">
-                     <div class="col-11">
-                        <b>익명 1</b> <span class="badge badge-pill badge-info">작성자</span> <span><i class="icon-clock"></i> 2020.07.03
-                           11:23</span>
-                           <span>&nbsp;&nbsp;답글쓰기</span>
-                     </div>
-                     <div class="user-img c-pointer position-relative"
-                        data-toggle="dropdown">
-                        <span class="activity active"></span>
-                        <i class="icon-options-vertical"></i>
-                     </div>
-                     <div class="basic-dropdown">
-
-
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">수정</a>
-                           <a class="dropdown-item" href="#">삭제</a>
-
-                        </div>
-
-                     </div>
-                  </div>
-                  <div>꿀팁감사</div>
-
-
+                <!-- 오주시작 -->
+                <div class="form-group pt-5">
+                  <form method="post">
+                     <textarea class="w-100 p-4 l-border-1 routineCmtTextarea" name="" id="routineCmtTextarea" 
+                     	cols="30" rows="4" placeholder="댓글을 입력해주세요" style="resize:none;"></textarea>
+                        <button id="routineCmtBtn" class="btn btn-outline-primary btn-lg routineCmtBtn" type="button" style="width:100%;">등록하기</button>
+                  </form>
+                </div>
+                <div class="mt-0">
+                  <span class="card-text "><i class="icon-bubble"></i> 댓글 5</span>
+				</div>
+			   <div id="replyList">
+	               <div class="mt-5">
+	                  <div class="row ">
+	                     <div class="col-11">
+	                        <b>익명 1</b> <span class="badge badge-pill badge-info">작성자</span> <span><i class="icon-clock"></i> 2020.07.03
+	                           11:23</span>
+	                           <span>&nbsp;&nbsp;답글쓰기</span>
+	                     </div>
+	                     <div class="user-img c-pointer position-relative"
+	                        data-toggle="dropdown">
+	                        <span class="activity active"></span>
+	                        <i class="icon-options-vertical"></i>
+	                     </div>
+	                     <div class="basic-dropdown">
+	                        <div class="dropdown-menu">
+	                           <a class="dropdown-item" href="#">수정</a>
+	                           <a class="dropdown-item" href="#">삭제</a>
+	                        </div>
+	                     </div>
+	                  </div>
+	                  <div>꿀팁감사</div>
+	               </div>
                </div>
                   <div class="mt-5 pl-5">
                   <div class="row">
@@ -203,7 +205,7 @@
 
 
                </div>
-                  <div class="mt-5">
+              <div class="mt-5">
                   <div class="row">
                      <div class="col-11">
                         <b>익명 3</b> <span><i class="icon-clock"></i> 2020.07.03
@@ -277,29 +279,172 @@
                   <div>꿀팁감사</div>
 
                </div>
-         <!-- 댓글 start -->
+         		<!-- 댓글 start -->
                   <!-- 오주끝 -->
                   <hr>
                   
-                  <div class="form-group p-t-15">
-                  <form>
-                     <textarea class="w-100 p-20 l-border-1" name="" id="" cols="30" rows="5" placeholder="댓글을 입력해주세요"></textarea>
-                        <button id="submit" class="btn btn-outline-primary btn-sm mb-3" type="submit" value="submit" style="float:right">등록하기</button>
-
-                  </form>
-                  
-                  </div>
                   </div>                  
                   <button id="" class="btn btn-primary mb-5" onclick="location.href='routineBrdList'" value="목록보기">목록보기</button>
                
                </div>
             </div>
-      </div>
-   </div>
-</div>
+     
    <!-- 기본 폼 완성 -->
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   
+   <script type="text/javascript" th:inline="javascript">
+	   /*<![CDATA[*/
+		function deleteCheck() {
+			 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+				location.href="routineBrdDelete?routine_brd_seq="+/*[[ ${routineBoard.routine_brd_seq} ]]*/;
+			 }else{   //취소
+			     return false;
+			 }
+		}	
+		/*]]>*/
+   		$(function(){
+   			//루틴 자랑 게시판 댓글 불러오기
+   			getReplyList();
+   			
+   		});
+   		
+   		/* ------------------------------------------------------------------------ */
+   		/* 댓글 출력 함수 */
+   		/*<![CDATA[*/
+//    		function printData(data){
+//    			console.log(data);
+   			
+//    			let session_email = /*[[${session.currentUser.user_email}]]*/; 
+//    			let session_nickname = /*[[${session.currentUser.user_nickname}]]*/; 
+//    			let a= "";
+   			
+//    			console.log(session_email);
+   			
+//    			$.each(data, function(){
+//    				console.log(data);
+//    				/* 여기까진 확인했는데 왜 인서트한게 무한 each문을 타는지 모르겠다... 8개가 찍히는데 이 기준은? */
+   				
+//    				/* depth 체크 */
+//    				let depthCss = "";
+//    				let reCmt ="";
+//    				if(this.routine_cmt_depth == 1){
+//    					depthCss = "padding-left : 40px;";
+//    				}else if(this.routine_cmt_depth == 0){
+//    					reCmt = "답글 쓰기";
+//    				}
+//    				console.log(reCmt);
+   				
+//    				/* session_email == reply_email 케이스 */
+//    				let idCss = "";
+//    				let dropdown-item ="";
+//    				if(session_email == this.user_email) {
+//    					idCss="background-color : #ecf0f9;";
+//    					dropdown-item += "<a class='dropdown-item' href='#'>수정</a>"
+//                     		 	  += "<a class='dropdown-item' href='#'>삭제</a>"
+//    				}else{
+//    					dropdown-item += "<a class='dropdown-item' href='#'>신고</a>"
+//    				}
+   				
+//    				/* session_email == 작성자 케이스 */
+   				
+//    				a += "<div class='mt-5' style=''" + depthCss + idCss +"'>"
+//    				a += "<div class='row'>"
+//    				a += "   <div class='col-11'>"
+//    				a += "      <b>"+session_nickname+"</b>&nbsp;&nbsp; <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
+//    				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>"
+//    				a += "   </div>"
+//    				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>"
+//    				a += "      <span class='activity active'></span>"
+//    				a += "		<i class='icon-options-vertical'></i>"
+//    				a += "   </div>"
+//    				a += "   <div class='basic-dropdown'>"
+//    				a += "		<div class='dropdown-menu'>"
+//    				a += "         " + dropdown-item + ""
+//    				a += "      </div>"
+//    				a += "   </div>"
+//    				a += "</div>"
+//    				a += "<div>" + this.routine_cmt + "</div>"
+//    				a += "</div>"
+
+//    			console.log(this.depth);
+//    			});
+   			
+//    			$('#replyList').html(a);
+// 		    $('#routineCmtTextarea').val("");
+   			
+//    		}
+   		/*]]>*/
+   		
+   		
+   		/* 댓글 리스트 불러오기 함수 */
+   		/* function getReplyList(){
+   			let data = {routine_brd_seq : "${param.routine_brd_seq}"};
+   			
+   			$.ajax(
+   				{
+   					url: "routineCmtList",
+   					dataType : "JSON",
+   					type : "POST",
+   					data : data,
+   					success :function(responsedata)
+   						{
+   							printData(responsedata);
+   						}
+   				}
+   			);
+   		};
+   		 */
+   		/* 댓글 작성하기 함수 */
+   		/*<![CDATA[*/
+   		$('#routineCmtBtn').on("click", function(){
+   			console.log('#routineCmtBtn 클릭');
+   			if($.trim($('#routineCmtTextarea').val())=="")
+   				{
+   					alert("댓글을 입력하세요.");
+   					$('#routineCmtTextarea').focus();
+   					return false;
+   				}
+   			
+   			let data = {
+   					routine_brd_seq : /*[[ ${param.routine_brd_seq[0]}]]*/,
+   					user_email : /*[[${session.currentUser.user_email}]]*/,
+   					routine_cmt : $.trim($('#routineCmtTextarea').val())
+   			};
+   			console.log(data);
+   			$.ajax(
+   				{
+   					url : "routineCmtInsert",
+   					dataType : "JSON" , 
+   					type : "POST", 
+   					data : data, 
+   					success : function(responsedata)
+   					{	
+   						console.log(responsedata);
+   						printData(responsedata);
+   					}
+   				}
+   			);
+   		});
+   		/*]]>*/
+   		 
+   		/* ----------------------------------------------------------------------- */
+   		/* 댓글 길어지면 늘어나는 자바 스크립트 */
+   		/* function resize(obj) {
+        obj.style.height = "1px";
+        obj.style.height = (obj.scrollHeight)+"px";
+	    }
+	    $(document).on('keydown','.routineCmtTextarea',function() {
+	        resize(this);
+	    });
+	    $(document).on('focus','.routineCmtTextarea',function() {
+	        resize(this);
+	    });
+	    $(document).on('keyup','.routineCmtTextarea',function() {
+	        resize(this);
+		}); */
+		
+   </script>
 </body>
 </html>

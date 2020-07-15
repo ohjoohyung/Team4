@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class foodDTO {
+public class FoodDto {
 	private String user_email;
 	private int role_seq;
 	private String user_pwd;
