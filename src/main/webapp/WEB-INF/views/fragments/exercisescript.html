@@ -1,5 +1,5 @@
 <th:block th:fragment="scriptFragment">
-  	<script type="text/javascript">
+	<script type="text/javascript">
 		//$("input:checkbox[id='exer_ab']").is(":checked")
 		$(function(){
 			$('#exercisesearch').keyup(function(){
@@ -275,71 +275,109 @@
 				
 				}
 			
-				var number = 0;
-				function rightdrow(es){
-				//rightdrow ajax
-				var data = {excs_seq : es};
-				$.ajax(
-							 {
-								 type:"post",
-								 data: data,
-								 url:"exerciseadd.exer",
-								 dataType:"json",
-								 success:function(responsedata){ 
-										 console.log(responsedata);
-										//$('#exer_add').empty();
-										$.each(responsedata,function(index,obj){
-											console.log($('#'+obj.excs_seq+'').text() != "");
-											if($('#'+obj.excs_seq+'').text() != "") {
-												alert("이미 운동이 추가되어 있습니다.");
-												return false;
-											}
-											//유산소에 달자
-											if(obj.excs_kind == "C"){
-												$('#exer_c_add').append(	
-													"<div  id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'>"
-													+"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
-													+"<div class='form-group col-5'>"
-														+"<select class='form-control form-control-sm input-rounded input-excs-cart hour-select"+number+"' id='sel1' onchange='eselected1("+number+");'>"
-															+"<option selected='selected'>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
-														+"</select></div>"
-														+"<div class='col-2 center pt-2'>"
-														+"<a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div>"
-														+"<input type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
-														+"<input type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-														+"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'>"
-														+"</div>"
-												);
-												
-												
-											//무산소에 달자
-											}else if(obj.excs_kind == "N"){
-												$('#exer_n_add').append(	
-														"<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3'style='height:40px;'><div class='col pt-2'><h10>"
-														+obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2("+number+");'class='set-select"+number+"' form-control form-control-sm input-rounded input-excs-cart'>"
-														+"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
-														+"</div><div class='form-group col-3'><select  id='sel3' onchange='eselected3("+number+");'class='perset-select"+number+"' form-control form-control-sm input-rounded input-excs-cart'>"
-														+"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
-														+"</div><div class='col-2 center pt-2'><a href='javascript:removeadd("+obj.excs_seq+");'><i class='mdi mdi-minus'></i></a></div>"
-														+"<input type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
-														+"<input type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-														+"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set'>"
-														+"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set'>"
-														+"</div>"
-														);
-										
-											}
-									});
-										number++;	
-								 }
-							 }
-					      ); 	
-				}
-				function removeadd(es){
-					var elem = document.getElementById(es);
-					console.log(elem);
-				    elem.parentNode.removeChild(elem);
-				   number--; 
+			var number = 0;
+            function rightdrow(es){
+            //rightdrow ajax
+            var data = {excs_seq : es};
+            $.ajax(
+                      {
+                         type:"post",
+                         data: data,
+                         url:"exerciseadd.exer",
+                         dataType:"json",
+                         success:function(responsedata){ 
+                               console.log(responsedata);
+                              //$('#exer_add').empty();
+                              $.each(responsedata,function(index,obj){
+                                 console.log($('#'+obj.excs_seq+'').text() != "");
+                                 if($('#'+obj.excs_seq+'').text() != "") {
+                                    alert("이미 운동이 추가되어 있습니다.");
+                                    return false;
+                                 }
+                                 //유산소에 달자
+                                 if(obj.excs_kind == "C"){
+                                    $('#exer_c_add').append(   
+                                       "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'>"
+                                       +"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
+                                       +"<div class='form-group col-5'>"
+                                          +"<select class='form-control form-control-sm input-rounded input-excs-cart hour-select"+number+"' id='sel1' onchange='eselected1("+number+");'>"
+                                             +"<option selected='selected'>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
+                                          +"</select></div>"
+                                          +"<div class='col-2 center pt-2'>"
+                                          +"<a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
+                                          +"<input class='kind"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
+                                          +"<input class='seq"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
+                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'>"
+                                          +"</div>"
+                                    );
+                                    
+                                    
+                                 //무산소에 달자
+                                 }else if(obj.excs_kind == "N"){
+                                    $('#exer_n_add').append(   
+                                          "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'><div class='col pt-2'><h10>"
+                                          +obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2("+number+");'class='set-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
+                                          +"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
+                                          +"</div><div class='form-group col-3'><select  id='sel3' onchange='eselected3("+number+");'class='perset-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
+                                          +"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
+                                          +"</div><div class='col-2 center pt-2'><a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
+                                          +"<input type='hidden' class='kind"+number+"' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
+                                          +"<input type='hidden' class='seq"+number+"' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
+                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set'>"
+                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set'>"
+                                          +"</div>"
+                                          );
+                              
+                                 }
+                                 number++;   
+                           });
+                              
+                         }
+                      }
+                     );    
+            }
+            function removeadd(num){
+               /* var elem = document.getElementById(es);
+               console.log(elem);
+                elem.parentNode.removeChild(elem);
+               number--;  */
+               $(".cn"+num+"").remove();
+               
+               for(let i=1; i < number; i++) {
+                  
+                  $("div.cn"+(num+i)+"").attr("class", "row cart-item-card mb-3 cn"+(num+(i-1))+"");
+                  $("select.hour-select"+(num+i)+"").attr({class: "form-control form-control-sm input-rounded input-excs-cart hour-select"+(num+(i-1))+"",
+                                                                                       onchange : "eselected1("+(num+(i-1))+")"
+                                                                                       });
+                  $("select.perset-select"+(num+i)+"").attr({class : "set-select"+(num+(i-1))+" form-control form-control-sm input-rounded input-excs-cart",
+                                                onchange : "eselected2("+(num+(i-1))+")"
+                                                })
+                  $("select.set-select"+(num+i)+"").attr({class : "perset-select"+(num+(i-1))+" form-control form-control-sm input-rounded input-excs-cart",
+                                                onchange : "eselected3("+(num+(i-1))+")"
+                                                })
+                  $("a.a"+(num+i)+"").attr({class : "a"+(num+(i-1))+"",
+                                      href : "javascript:removeadd("+(num+(i-1))+")"   
+                                                  
+                                       });
+      
+                  $(".kind"+(num+i)+"").attr({name : "routineJoinDtoList["+(num+(i-1))+"].excs_kind",
+                                      class : "kind"+(num+(i-1))+""
+                                       });
+                  $(".seq"+(num+i)+"").attr({name : "routineJoinDtoList["+(num+(i-1))+"].excs_seq",
+                                      class : "seq"+(num+(i-1))+""
+                                       });
+                  $(".hourinput"+(num+i)+"").attr({name : "routineJoinDtoList["+(num+(i-1))+"].routine_exercise_hour",
+                                      class : "hourinput"+(num+(i-1))+""
+                                       }); 
+                  $(".setinput"+(num+i)+"").attr({name : "routineJoinDtoList["+(num+(i-1))+"].routine_set",
+                                      class : "setinput"+(num+(i-1))+""
+                                       }); 
+                  $(".persetinput"+(num+i)+"").attr({name : "routineJoinDtoList["+(num+(i-1))+"].routine_reps_per_set",
+                                      class : "persetinput"+(num+(i-1))+""
+                                       }); 
+                  
+               }
+               number--;
 				}
 				function eselected1(number){
 					var eselect = $('select.hour-select'+number+' option:selected').val();
