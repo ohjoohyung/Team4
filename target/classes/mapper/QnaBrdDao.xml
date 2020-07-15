@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.qnaBrd.dao.QnaBrdDao">
+    
+    <!-- 회원이 쓴 문의사항 가져오기 -->
+    <select id="getQnaList" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+       select * from QnaBrd where user_email=#{user_email}
+    </select>
+    
+    <!-- <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
+    </select> 
+    <select id="getExercisecListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_kind='C'
+    </select>
+    <select id="getExercisenListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_kind='N'
+    </select>
+    <select id="exercisepartSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_body_part=#{excs_body_part}
+    </select>
+    <select id="exerciseEquiSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_equipment=#{excs_equipment}
+    </select>
+    
+    <select id="exercisepartequiSearch" parameterType="hashmap" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_equipment=#{excs_equipment} and excs_body_part=#{excs_body_part}
+    </select>
+    
+    <select id="exerciseadd" parameterType="int" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_seq=#{excs_seq}
+    </select>
+    <select id="getExercise" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+ 	select * FROM exercise
+ 	</select>
+ 	
+ 	<select id="getExerciseBySeq" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+  	SELECT *
+  	FROM exercise 
+  	WHERE excs_seq=#{excs_seq}
+  	</select>
+  	<delete id="exerciseDelete">
+  	delete
+  	from exercise
+  	where excs_seq=#{excs_seq}
+  	</delete>
+  	<update id="updateExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
+    	UPDATE exercise 
+    	SET excs_kind=#{excs_kind}, 
+    		excs_name=#{excs_name}, 
+    		excs_cal_per_minweight=#{excs_cal_per_minweight} , 
+    		excs_body_part=#{excs_body_part},
+    		excs_equipment=#{excs_equipment},
+    		excs_description=#{excs_description},
+    		excs_video_link=#{excs_video_link},
+    		excs_level=#{excs_level}
+    	WHERE excs_seq=#{excs_seq}
+    </update>
+    <insert id="insertExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO" useGeneratedKeys="true" keyProperty="excs_seq">
+     	
+     	INSERT INTO exercise(excs_seq, excs_kind, excs_name, excs_cal_per_minweight, excs_body_part, 
+     	excs_equipment, excs_description , excs_video_link, excs_level) 
+     	VALUES(#{excs_seq}, #{excs_kind}, #{excs_name}, #{excs_cal_per_minweight} , #{excs_body_part},#{excs_equipment},#{excs_description},#{excs_video_link},#{excs_level})
+     </insert> -->
+    <!--  
+    <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
+      VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
+    </insert>
+    -->
+</mapper>
+
+ 

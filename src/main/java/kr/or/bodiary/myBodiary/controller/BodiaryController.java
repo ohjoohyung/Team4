@@ -83,29 +83,13 @@ public class BodiaryController {
 	public String myHistoryFreeBoard() {
 		return "myHistory/myHistoryFreeBoard";
 	}
-
+	//qna들 빠짐
 	
 
 
-	@RequestMapping("/myQnaList")
-	public String getMyQnaList() {
-		return "myBodiary/myQnaList";
-	}
+	
 
-	@RequestMapping("/myQnaDetail")
-	public String getMyQnaDetail() {
-		return "myBodiary/myQnaDetail";
-	}
-
-	@RequestMapping("/myQnaEdit")
-	public String getMyQnaEdit() {
-		return "myBodiary/myQnaEdit";
-	}
-
-	@RequestMapping("/myQnaForm")
-	public String getMyQnaForm() {
-		return "myBodiary/myQnaForm";
-	}
+	
 	@RequestMapping("/myRoutineList")
 	public String getMyRoutineList() {
 		return "myBodiary/myRoutineList";
