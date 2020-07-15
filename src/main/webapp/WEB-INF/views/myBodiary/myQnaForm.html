@@ -48,41 +48,26 @@
 		
 			<div id="contain" class="side-nav-info card card-body border-primary pt-4 pb-4 pl-5 pr-5" > <!-- class="article col-sm-9" -->
 				
-			
+			<form action="myQnaFormAdd" method="post">
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 20px;">                       
                                 <p class="text-muted m-b-15 f-s-12"></p>
                                 <div class="basic-form">
-                                    <form>
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-default" placeholder="제목을 입력하세요">
+                                            <input type="text" id="qna_brd_title" name= "qna_brd_title"class="form-control input-default" placeholder="제목을 입력하세요">
                                         </div>
                                         
-                                    </form>
                                 </div>                  
-                    </div>
-                    
-                    <div class="col-lg-12">                       
-                                <div class="basic-form">
-                                    <form>
-                                        <div class="form-group">
-                                            <input type="file" class="form-control-file">
-                                        </div>
-                                    </form>
-                                </div>                          
-                       
                     </div>
                     
                     
                     
                     <div class="col-lg-12">                      
                                 <div class="basic-form">
-                                    <form>
                                         <div class="form-group">
                                             
-                                            <textarea class="form-control h-150px" rows="12" id="comment" placeholder="내용을 입력하세요"></textarea>
+                                            <textarea class="form-control h-150px" rows="12" id="qna_brd_content" name="qna_brd_content" placeholder="문의사항을 입력하세요"></textarea>
                                         </div>
-                                    </form>
                                 </div>
 
                     </div>
@@ -90,9 +75,9 @@
 			
 					<div class="button">
 						<button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myBodiary/myQnaList'">돌아가기</button>
-						<button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;" onclick="location.href='myBodiary/myQnaList'">등록하기</button>
+						<button type="submit" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;" >등록하기</button>
 					</div>	
-							
+				</form>			
 			</div>
 			
 			

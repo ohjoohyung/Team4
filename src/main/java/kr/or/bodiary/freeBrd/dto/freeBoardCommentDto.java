@@ -10,8 +10,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-
-public class freeBoardCommentDTO {
+public class freeBoardCommentDto {
 	private int free_cat;
 	private String brd_cmt_writer;
 	private String brd_cmt;
