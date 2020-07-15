@@ -12,7 +12,7 @@ import lombok.ToString;
 @Getter
 @Setter
 
-public class freeBoardDTO {
+public class FreeBoardDto {
 	private int free_board_seq;
 	private int free_cat;
 	private String user_email;
