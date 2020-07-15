@@ -249,44 +249,66 @@
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    <script type="text/javascript">
-		
+   
 		
 		var cpval = 1;
 	    
 	    var isEnd = false;
 	    
 	    
+	    
 		$(function(){
-			fetchList();
-			var msnry = new Masonry( '.grid', {
+			
+			
+			/* var msnry = new Masonry( '.grid', {
 				itemSelector: '.grid-item',
 				// columnWidth: 200
 				columnWidth: '.grid-sizer',
 				percentPosition: true,
-				gutter : 20,
+				gutter : 24,
 				});
 				imagesLoaded( '.grid' ).on( 'progress', function() {
 				msnry.layout();
-				});
+				}); */
+				
+				/* var $grid = $('.grid').imagesLoaded( function() {
+					  $grid.masonry({
+					      itemSelector: '.grid-item',
+					      columnWidth: '.grid-sizer',
+							percentPosition: true,
+							gutter : 24,
+					  });
+					}); */
+
+
+				
 		//무한스크롤 스크롤에 따라 동적인 변화 발생
 		$(window).scroll(function() {
 			
 				var maxHeight = $(document).height();
 				var currentScroll = window.scrollY + window.innerHeight;
+					console.log("max : "+maxHeight);
+					console.log("currentScroll : "+currentScroll);
 					
-			 	if (currentScroll == maxHeight) {
+			 	if (currentScroll +30 > maxHeight) {
 			 			
 			    	 	fetchList();
 			 	}
 			
 		 });
+			fetchList();
+		
+		
+		});
 		
 		//스크롤이 바닥에 닿았을 때 비동기로 리스트 불러오기
 		function fetchList() {
+			console.log("비동기 전 cp : "+cpval)
+			
 			if(isEnd == true){
 	            return;
 	        }
-		
+			isEnd = true;
 		    let data = {ps : 8,
 					    cp : cpval
 			           };	
@@ -296,8 +318,11 @@
 				data: data,
 				type:"POST",		
 				dataType: "json",
-				success:function(responsedata){ 
-					$.each(responsedata ,function(index,obj){		
+				success:function(responsedata){
+					console.log(responsedata.length);
+					isEnd = false;
+					$.each(responsedata ,function(index,obj){	
+						
 						console.log(obj);
 						$('.grid').append(		
 								'<div class="grid-item card">'+
@@ -307,6 +332,11 @@
 						                          '<h5 class="card-text mt-3 mb-3">'+obj.routine_brd_title+'</h5>'+
 						          
 						                        '<div class="card-footer">'+
+						                        '<i class="icon-clock"></i>&nbsp;&nbsp;'+
+						                    	'<span class="card-text">'+obj.routine_brd_regdate+'</span>'+
+						                        '&nbsp;&nbsp;&nbsp;&nbsp;'+
+						                        '<i class="icon-eye"></i>&nbsp;&nbsp;'+
+						                        '<span class="card-text" >'+obj.routine_brd_hit+'</span>'+
 						                           '<p class="card-text float-right">'+obj.user_nickname+'</p>'+
 						                        '</div>'+
 						                     '</div>'+
@@ -317,19 +347,28 @@
 						   
 						);
 					});
-				/* 	if(responsedata.boardArr.length < 6) {
+					if(responsedata.length < 8) {
 						isEnd = true;
-						cpval = 2;
+						
 					} else {
 						cpval++
-					} */
-					cpval++
+					} 
+					var msnry = new Masonry( '.grid', {
+						itemSelector: '.grid-item',
+						// columnWidth: 200
+						columnWidth: '.grid-sizer',
+						percentPosition: true,
+						gutter : 24,
+						});
+						imagesLoaded( '.grid' ).on( 'progress', function() {
+						msnry.layout();
+						});
+					
 				}
 				
 		      });
 				  
 		}
-		});
 	</script>
 
 </body>
