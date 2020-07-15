@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<!-- 공통 헤더-->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+   <!-- 공통 헤더-->
+   <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <style>
  #contain {
  background-color:white;
@@ -34,62 +34,77 @@
 
 
 <body>
-	<!-- 공통 nav -->
-	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<!-- 공통 sidenav -->
-	<div class="bodiary-wrapper">
-	<div class="row mt-4">
-		<nav class="col-3 ml-3 mr-0 sidenav">
-		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
-		</aside>
-	</nav>
-		
-		<nav class="col-8 ml-3 mr-0" >
-		
-			<div id="contain" class="side-nav-info card card-body border-primary pt-4 pb-4 pl-5 pr-5" > <!-- class="article col-sm-9" -->
-				
-			<form action="myQnaFormAdd" method="post">
+   <!-- 공통 nav -->
+   <th:block th:replace="common/nav :: navFragment"></th:block>
+   <!-- 공통 sidenav -->
+   <div class="bodiary-wrapper">
+   <div class="row mt-4">
+      <nav class="col-3 ml-3 mr-0 sidenav">
+      <aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+      </aside>
+   </nav>
+      
+      <nav class="col-8 ml-3 mr-0" >
+      	<form action="myQnaForm" method="post">
+         <div id="contain" class="side-nav-info card card-body border-primary pt-4 pb-4 pl-5 pr-5" > <!-- class="article col-sm-9" -->
+            
+         
                 <div class="row">
                     <div class="col-lg-12" style="padding-bottom: 20px;">                       
                                 <p class="text-muted m-b-15 f-s-12"></p>
                                 <div class="basic-form">
                                         <div class="form-group">
-                                            <input type="text" id="qna_brd_title" name= "qna_brd_title"class="form-control input-default" placeholder="제목을 입력하세요">
+                                            <input type="text" class="form-control input-default" placeholder="제목을 입력하세요" name="qna_brd_title">
                                         </div>
                                         
                                 </div>                  
                     </div>
                     
-                    
-                    
                     <div class="col-lg-12">                      
                                 <div class="basic-form">
                                         <div class="form-group">
                                             
-                                            <textarea class="form-control h-150px" rows="12" id="qna_brd_content" name="qna_brd_content" placeholder="문의사항을 입력하세요"></textarea>
+                                            <textarea  id="summernote" class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요"></textarea>
                                         </div>
                                 </div>
 
                     </div>
                  </div>      
-			
-					<div class="button">
-						<button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myBodiary/myQnaList'">돌아가기</button>
-						<button type="submit" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;" >등록하기</button>
-					</div>	
-				</form>			
-			</div>
-			
-			
-			
-			
-		</nav>		
-	</div>
-	</div>
+         
+               <div class="button">
+                  <button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myBodiary/myQnaList'">돌아가기</button>
+                  <button type="submit" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;">등록하기</button>
+               </div>   
+                     
+         </div>
+         </form>
+         
+         
+         
+         
+      </nav>      
+   </div>
+   </div>
 
-	<!-- 기본 폼 완성 -->
+   <!-- 기본 폼 완성 -->
 
-	<!-- 공통 스크립트-->
-	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   <!-- 공통 스크립트-->
+   <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   <script>
+   $(document).ready(function() {
+      $('#summernote').summernote({
+         minHeight: 400, //최소 높이
+         maxHeight: null, //최대 높이
+         focus: true, //에디터 로딩 후 포커스를 맞출지 여부
+         lang: 'ko-KR' //한글 설정
+      });
+   });
+	</script>
+	<!-- Summernote의 code를 가져와서 textarea 태그 중 name="qna_brd_content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다. -->
+	<script>
+	function postForm() {
+	    $('textarea[name="qna_brd_content"]').val($('#summernote').summernote('code'));
+	}
+</script>
 </body>
 </html>

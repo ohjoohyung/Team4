@@ -10,6 +10,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        select * from QnaBrd where user_email=#{user_email}
     </select>
     
+    <!-- 문의사항 작성하기 -->
+     <insert id="insertQnaBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto" useGeneratedKeys="true" keyProperty="qna_brd_seq">
+     	INSERT INTO qnabrd(qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, 
+     	qna_brd_ref, qna_brd_depth , qna_brd_step) 
+     	VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , #{qna_brd_regdate},#{qna_brd_ref},#{qna_brd_depth},#{qna_brd_step})
+     </insert>
+     
+     <!-- 문의사항 상세 -->
+     <select id="getQnaBrdBySeq" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+  	SELECT *
+  	FROM qnabrd 
+  	WHERE qna_brd_seq=#{qna_brd_seq}
+  	</select>
+    
     <!-- <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
        select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
     </select> 
@@ -65,12 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      	excs_equipment, excs_description , excs_video_link, excs_level) 
      	VALUES(#{excs_seq}, #{excs_kind}, #{excs_name}, #{excs_cal_per_minweight} , #{excs_body_part},#{excs_equipment},#{excs_description},#{excs_video_link},#{excs_level})
      </insert> -->
-    <!--  
-    <insert id="getExerciseListByFoodName" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
-       INSERT INTO RoutineBoard(user_email , routine_brd_title, routine_brd_content , routine_cart_seq , image_open , gender_open , brd_image1 , brd_image2 , brd_start , brd_end , brd_rec ) 
-      VALUES( #{user_email}, #{routine_brd_title}, #{routine_brd_content}, #{routine_cart_seq}, #{image_open}, #{gender_open}, #{brd_image1}, #{brd_image2}, #{brd_start}, #{brd_end},#{brd_rec} )
-    </insert>
-    -->
+     
+    
+    
 </mapper>
 
  
