@@ -9,7 +9,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="noticeList" resultType="kr.or.bodiary.notice.dto.NoticeDto">
 		select notice_brd_seq, notice_brd_title, notice_brd_regdate, notice_brd_hit
 		  from NoticeBoard
+	  order by notice_brd_seq desc
 	</select>
+	
+	<!-- 전체 게시글 수-->
+	<select id="totalCount" resultType="int">
+    	select count(*) from NoticeBoard
+    </select>
 	
 	<!-- 입력 -->
 	<insert id="noticeInsert" parameterType="kr.or.bodiary.notice.dto.NoticeDto">
@@ -23,6 +29,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from NoticeBoard
 		 where notice_brd_seq=#{notice_brd_seq}
 	</select>
+	
+	<!-- 조회수 -->
+	<update id="noticeHitCnt">
+		update NoticeBoard
+		   set notice_brd_hit=notice_brd_hit+1
+		 where notice_brd_seq=#{notice_brd_seq}
+	</update>
 	
 	<!-- 수정 -->
 	<update id="noticeUpdate" parameterType="kr.or.bodiary.notice.dto.NoticeDto">

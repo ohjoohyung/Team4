@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bodiary.notice.dao.NoticeDao;
 import kr.or.bodiary.notice.dto.NoticeDto;
+import kr.or.bodiary.user.dto.UserDto;
 
 
 @Service
@@ -23,11 +24,9 @@ public class NoticeService {
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-
-	//공지사항
+	
 	//리스트
 	public List<NoticeDto> noticeList() throws ClassNotFoundException, SQLException {
-		
 		List<NoticeDto> nlist = null;
 		try {
 			NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
@@ -43,6 +42,8 @@ public class NoticeService {
 	//입력(처리)
 	public String noticeForm(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		noticedto.setUser_email(user.getUser_email());
 		noticedao.noticeInsert(noticedto);
 		return "redirect:noticeList";
 	}
@@ -60,7 +61,13 @@ public class NoticeService {
 		}
 		return noticedto;
 	}
-		
+	
+	//조회수 증가
+	public int noticeHitCnt(int notice_brd_seq) throws ClassNotFoundException, SQLException {
+		NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
+		return noticedao.noticeHitCnt(notice_brd_seq);
+	}
+	
 	//수정(폼)
 	public NoticeDto noticeEdit(int notice_brd_seq) throws ClassNotFoundException, SQLException {
 		NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
