@@ -1,6 +1,7 @@
 package kr.or.bodiary.myBodiary.dao;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
@@ -37,11 +38,14 @@ public interface BodiaryDao {
 	public List<DailyMealFoodJoinDto> getDailyMeal(String meal_cart_seq) throws ClassNotFoundException, SQLException;
 	
 	//일지 리스트 불러오기
-	public List<BodiaryDto> getBodiaryList(String user_email) throws ClassNotFoundException, SQLException;
+	public List<BodiaryDto> getBodiaryList(HashMap<String, String> map) throws ClassNotFoundException, SQLException;
 	
 	//일지 수정하기
 	public int updateBodiary(BodiaryDto bodiarydto) throws ClassNotFoundException, SQLException;
 	
 	//일지 삭제하기
 	public int deleteBodiary(String diary_seq) throws ClassNotFoundException, SQLException;
+	
+	//오늘 일지 작성했는지 확인하기
+	public int todatBodiaryCount(String user_email) throws ClassNotFoundException, SQLException;
 }

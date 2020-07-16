@@ -85,8 +85,9 @@
 		src="assets/plugins/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
 	<script src="assets/js/plugins-init/form-pickers-init.js"></script>
 	
+	<!-- masonry -->
 	<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 
 
 	<script>
@@ -96,7 +97,7 @@
        var month = now.getMonth() + 1;
        var date = now.getDate();
       
-       var email = {'user_email' : 'a@aa.a'};
+       var email = {'user_email' : $('#user_email').val()};
 	   var data = [];
        
        $.ajax(
@@ -109,7 +110,11 @@
 						
 						$.each(responsedata,function(index,obj){
 							console.log(obj.diary_date+" / " +obj.diary_seq);
-							data.push({date : obj.diary_date,
+							
+							console.log("모멘트 : " +moment(obj.diary_date).format("YYYY-MM-DD"));
+							
+							
+							data.push({date : moment(obj.diary_date).format("YYYY-MM-DD"),
 										value : "myBodiaryDetail?diary_seq="+obj.diary_seq});
 							
 							
@@ -121,6 +126,7 @@
 				 },
 				 complete : function(responsedata) {
 					 $('#eventCalendar').calendar({
+						 
 		                  // view: 'month',
 		                
 		                  // startWeek: 0,
@@ -132,7 +138,12 @@
 		                      console.log('date:' + date)
 		                      console.log('data:' + (data))
 		                      if(data != null) {
-		                    	   location.href=data;
+		                    	  location.href=data; 
+		                    	  /*  console.log($(this).attr('data-calendar-day'));
+		                    	  console.log(moment(date).format("YYYY/M/DD"));
+		                    	   if(moment(date).format("YYYY/M/DD") == $(this).attr('data-calendar-day')) {
+		                    		   $(this).attr('class', 'selected');
+		                    	   } */
 		                      }
 		                   
 		                      

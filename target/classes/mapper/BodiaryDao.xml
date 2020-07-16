@@ -31,10 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			select user_gender from user where user_email = '1@1'
 		</selectKey> -->
 		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq
-		, diary_condition, diary_main_img, diary_date, diary_pubchk
+		, diary_condition, diary_main_img, diary_date
 		, diary_today_weight, diary_metabolism, diary_recom, diary_nut)
-		values (#{meal_cart_seq}, 'a@aa.a', 1, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(), 
-		#{diary_pubchk}, #{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a'))
+		values (#{meal_cart_seq}, #{user_email}, #{routine_cart_seq}, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(), 
+		#{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email}))
 		<!-- <choose>
 			<when test="gender == '남'.toString()">
 				66.47 + (13.75*#{diary_today_weight}) + (5*(select u
@@ -44,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				655.1 + (9.56*#{diary_today_weight})+(1.85*(select user_height from user where user_email = '1@1'))-(4.68*(select user_age from user where user_email = '1@1'))
 			</otherwise>
 		</choose> -->
-		,(((select user_height from user where user_email = 'a@aa.a')-100)*0.9)*35 , 
+		,(((select user_height from user where user_email = #{user_email})-100)*0.9)*35 , 
 		(select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 		from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 		ON d.food_seq = f.food_seq) a))
@@ -90,8 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 일지 리스트 불러오기 -->
-	<select id="getBodiaryList" resultType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
+	<select id="getBodiaryList" parameterType="hashMap" resultType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
 		select * from diary where user_email=#{user_email}
+		<if test="pagesize != null">
+			order by diary_date desc limit 0, ${pagesize}
+		</if>
 	</select>
 	
 	<!-- 일지 수정
@@ -109,18 +112,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	    	diary_condition=#{diary_condition},
 	    	diary_today_weight=#{diary_today_weight}, 
 	    	diary_main_img=#{diary_main_img} , 
-	    	diary_pubchk=#{diary_pubchk},
 	    	meal_cart_seq=#{meal_cart_seq},
 	    	routine_cart_seq=#{routine_cart_seq},
-	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = 'a@aa.a')) - (6.76*(select user_age from user where user_email = 'a@aa.a')),
+	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email})),
 	    	diary_nut = (select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
 						from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
 						ON d.food_seq = f.food_seq) a)
     	where diary_seq=#{diary_seq}
 	</update>
 	
+	<!-- 일지 삭제하기 -->
 	<delete id="deleteBodiary">
 		delete from diary where diary_seq = #{diary_seq}
 	</delete>
-
+	
+	<!-- 오늘 일지 개수 확인하기 -->
+	<select id="todatBodiaryCount" resultType="Integer">
+		SELECT COUNT(*) 
+		FROM diary where DATE_FORMAT(diary_date,"%Y-%m-%d") = CURDATE() and user_email = #{user_email}
+	</select>
+	
+	
 </mapper>

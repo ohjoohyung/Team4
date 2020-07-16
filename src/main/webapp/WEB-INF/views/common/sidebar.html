@@ -91,6 +91,8 @@
 					</li>
 					<!-- End Getting Started -->
 				</ul>
+				<!-- 세션에 저장된 유저 이메일 저장 -->
+				<input type="hidden" th:value="${session.currentUser.user_email}" id="user_email">
 		</main>    
 	</th:block>
 </html>

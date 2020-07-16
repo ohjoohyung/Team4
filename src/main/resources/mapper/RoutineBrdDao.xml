@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 상세 -->
 	<select id="routineBoardSelect" parameterType="int" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
-		select routine_brd_seq, routine_brd_title, routine_brd_content, routine_brd_regdate, routine_cart_seq, brd_image1, brd_image2
+		select user_email, routine_brd_seq, routine_brd_title, routine_brd_content, routine_brd_regdate, routine_cart_seq, brd_image1, brd_image2, routine_brd_hit, brd_rec
 		  from RoutineBoard
 		 where routine_brd_seq=#{routine_brd_seq}
 	</select>
@@ -44,6 +44,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from RoutineBoard
 		 where routine_brd_seq=#{routine_brd_seq}
 	</delete>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHit">
+		update routineboard
+	    set routine_brd_hit = routine_brd_hit+1
+	    where routine_brd_seq=#{routine_brd_seq}
+	</update>
+	
+	<!-- 조회수가 많은 오늘 게시물 4개 뽑기 -->
+	<select id="getTodayHit" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">
+		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, r.brd_rec, u.user_nickname 
+		FROM routineboard r JOIN user u on r.user_email = u.user_email 
+		where DATE_FORMAT(r.routine_brd_regdate,"%Y-%m-%d") = CURDATE() order by routine_brd_hit desc limit 0,4;
+	</select>
+	
+	
    <!-- ================================댓글================================-->
    <!-- 작성 -->
    <insert id="routineCmtInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto" useGeneratedKeys="true" keyProperty="routine_cmt_seq">

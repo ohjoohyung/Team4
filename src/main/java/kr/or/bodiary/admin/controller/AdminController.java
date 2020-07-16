@@ -39,21 +39,6 @@ public class AdminController {
 		return "admin/adminDashBrd";
 	}
 
-	@RequestMapping("/adminQnaList")
-	public String adminQnaList() {
-		return "admin/adminQnaList";
-	}
-
-	@RequestMapping("/adminQnaDetail")
-	public String adminQnaDetail() {
-		return "admin/adminQnaDetail";
-	}
-
-	@RequestMapping("/adminUserBrdList")
-	public String adminUserBrdList() {
-		return "admin/adminUserBrdList";
-	}
-
 	// 어드민 운동 CRUD
 	@RequestMapping(value="/adminExcsDetail", method=RequestMethod.GET)
 	public String adminExcsDetail(String excs_seq, Model model) {

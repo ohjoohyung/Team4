@@ -134,6 +134,9 @@
 						<div class="row">
 							<!-- 사진 start -->
 							<div class="bodiary-img-card col-lg-4 col-sm-12">
+							<div class="card card-body">
+								<h3 class="text-center" th:text="${bodiary.diary_date}"></h3>
+							</div>
 								<div class="card card-body">
 									<div class="img-fluid">
 										<div class="bodiary-img">
@@ -344,7 +347,7 @@
 													<span class="mdi mdi-run gradient-3-text"></span> 유산소
 												</h4>
 												<div class="basic-form"   th:each="r : ${routinelist}">
-													<th:block th:if="${r.excs_kind}==1">
+													<th:block th:if="${r.excs_kind}=='C'">
 														<div class="row">
 															<div class="col-6">
 																<p class="text" th:text="${r.excs_name}"></p>
@@ -372,7 +375,7 @@
 												</h4>
 												<div class="basic-form"   th:each="r : ${routinelist}">
 												
-														<th:block th:if="${r.excs_kind}==2">
+														<th:block th:if="${r.excs_kind}=='N'">
 														<div class="row">
 															<div class="col-6">
 																<p class="text" th:text="${r.excs_name}"></p>

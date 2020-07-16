@@ -12,7 +12,7 @@
          <div class="card card-body pt-0 pb-0 pl-4">
             <div class="row">
                <div class="col p-2">
-                  <h5 class="text">&nbsp;<span class="text-primary">ㅇㅇ</span>님의 루틴을 자랑해 보세요! <i class="icon-emotsmile"></i>
+                  <h5 class="text">&nbsp;<span class="text-primary" th:text="${session.currentUser.user_nickname}"></span>님의 루틴을 자랑해 보세요! <i class="icon-emotsmile"></i>
                      <a class="btn btn-outline-primary" href="routineBrdInsert" style="float:right">
                         <span>WRITE <span class="mdi mdi-pencil"></span></span>
                      </a>
@@ -31,7 +31,33 @@
          </div>
          
          <div class="row">
-            <div class="col-md-8 col-lg-4">
+           
+            <th:block th:each="today : ${todayHit}">
+             
+           	 <div class="grid-item card ml-3">
+					<a th:href="@{/routineBrdDetail(routine_brd_seq=${today.routine_brd_seq})}" class="card-link">
+						 
+							<img th:src="@{assets/upload/routineBrdUpload/}+${today.brd_image2}" />
+							<div class="card-body">
+		                        
+		                           <h5 class="card-text mt-3 mb-3" th:text="${today.routine_brd_title}"></h5>
+		                        
+		                        <div class="card-footer">
+		                        <i class="icon-clock"></i>&nbsp;&nbsp;
+						                    	<span class="card-text" th:text="${today.routine_brd_regdate}"></span>
+						                        &nbsp;&nbsp;&nbsp;&nbsp;
+						                        <i class="icon-eye"></i>&nbsp;&nbsp;
+						                        <span class="card-text" th:text="${today.routine_brd_hit}" ></span>
+		                           <p class="card-text float-right" th:text="${today.user_nickname}"></p>
+		                        </div>
+		                     </div>
+						
+						</a>
+					</div>
+					
+            </th:block>
+            
+            <!-- 
                <div class="card">
                   <img class="routine-img" src="assets/images/hand.jpg" alt="">
                      <div class="card-body">
@@ -74,7 +100,7 @@
                      <a href="#" class="card-link float-right"><small>루틴링크3</small></a>
                   </div>
                </div>
-            </div>
+            </div> -->
          </div>
          <!-- 인기 많은 루틴 end -->
          
@@ -82,7 +108,7 @@
          <div class="card card-body pt-0 pb-0 pl-4">
             <div class="row">
                <div class="col p-2">
-                  <h5 class="text"><span class="mb-1 text-danger"><span class="mdi mdi-calendar-check"></span></span>&nbsp;<span class="text-primary">7월 10일</span>의 루틴</h5>
+                  <h5 class="text"><span class="mb-1 text-danger"><span class="mdi mdi-calendar-check"></span></span>&nbsp;<span class="text-primary">전체목록</span></h5>
                </div>
             </div>
          </div>
@@ -90,121 +116,8 @@
          <!-- masonry layout start -->
          <div class="container mb-4 p-0">
             <div class="row">
-<!--                <div class="card-columns"> -->
-                  
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="assets/images/hand.jpg" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=1" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="assets/images/hand.jpg" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=2" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=3" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=3" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기 제목길게하면..로줄이기</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                   <div class="card p-3"> -->
-<!--                      <img class="routine-img" src="" alt=""> -->
-<!--                      <div class="card-body"> -->
-<!--                         <a href="routineBrdDetail?routine_brd_seq=4" class="card-link"> -->
-<!--                            <h5 class="card-text mt-3 mb-3">제목제목</h5> -->
-<!--                         </a> -->
-<!--                         <div class="card-footer"> -->
-<!--                            <p class="card-text float-right">닉네임닉네임</p> -->
-<!--                         </div> -->
-<!--                      </div> -->
-<!--                   </div> -->
-<!--                </div>                -->
-<!--             </div> -->
-            
+
+        
             <div class="grid">
 				<div class="grid-sizer"></div>
 				<!-- <th:block th:each="routineBoard : ${routineBoardList}">
@@ -224,17 +137,7 @@
 						</a>
 					</div>
 				</th:block> -->
-			<!-- 	<div class="grid-item"><img src="https://i.postimg.cc/zvyyDzqP/5.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/BZz3Jy9S/custom1.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/XYTgXByp/calendar1.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/T1jKdLr8/design2.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/Hs2pxzXv/button1.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/xTwC6ChB/part2.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/9Qc7S16s/canvas1.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/ncT3N5BM/extapp1.png" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/D0XZbr4D/scrolllock1.jpg" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/NFdy16gk/smsbackup3.jpg" /></div>
-				<div class="grid-item"><img src="https://i.postimg.cc/vHc0VhBL/cisco3.jpg" /></div> -->
+			
 			</div>
 
             

@@ -62,6 +62,12 @@ private SqlSession sqlsession;
 		return rlist;
 	}
 	
+	//오늘의 게시글 불러오기
+	public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException {
+		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		return routinebrddao.getTodayHit();
+	}
+	
 	//상세
 	public RoutineBrdDto routineBrdDetail(int routine_brd_seq) throws ClassNotFoundException, SQLException {		
 		RoutineBrdDto routinebrddto = null;
@@ -173,6 +179,12 @@ private SqlSession sqlsession;
 		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		routinebrddao.routineBoardDelete(routine_brd_seq);
 		return "redirect:routineBrdList";
+	}
+	
+	//조회수 증가
+	public int updateHit(int routine_brd_seq) throws ClassNotFoundException, SQLException {
+		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		return routinebrddao.updateHit(routine_brd_seq);	
 	}
    
    //------------------------------------------- 댓글 -------------------------------------------------

@@ -25,6 +25,12 @@ public interface RoutineBrdDao {
    //삭제
    public int routineBoardDelete(int routine_brd_seq) throws ClassNotFoundException, SQLException;   
    
+   //조회수 증가
+   public int updateHit(int routine_brd_seq) throws ClassNotFoundException, SQLException;
+   
+   //오늘의 Hit 게시글 가져오기
+   public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException;
+   
    // ---------------------- 댓글 -------------------------
    
    //입력

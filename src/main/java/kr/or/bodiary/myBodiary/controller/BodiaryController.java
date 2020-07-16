@@ -1,8 +1,13 @@
 package kr.or.bodiary.myBodiary.controller;
 
 import java.io.IOException;
+
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -115,11 +120,19 @@ public class BodiaryController {
 	
 	//일지 컨트롤러
 	@RequestMapping("/myBodiaryMain")
-	public String myBodiaryMain(String user_email, Model model) throws ClassNotFoundException, SQLException {
+	public String myBodiaryMain(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		/*
 		 * //나중에 이메일 바꿔야함 userDTO user = userservice.getUser("1@1");
 		 * model.addAttribute("user", user);
 		 */
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		int todayCount = bodiaryservice.todatBodiaryCount(user.getUser_email());
+		
+		String pagesize = "4";
+		List<BodiaryDto> list = bodiaryservice.getBodiaryList(user.getUser_email(), pagesize);
+		
+		model.addAttribute("todayCount", todayCount);
+		model.addAttribute("list", list);
 		return "myBodiary/myBodiaryMain";
 	}
 	
@@ -127,12 +140,12 @@ public class BodiaryController {
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.GET)
 	public String myBodiaryForm(Model model , HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-	      String user_email = user.getUser_email();
+	    String user_email = user.getUser_email();
 
-	      System.out.println("유저 정보 : " +user_email);
-	      List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
-	      model.addAttribute("routineList", list);
-	      return "myBodiary/myBodiaryForm";
+	    System.out.println("유저 정보 : " +user_email);
+	    List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
+	    model.addAttribute("routineList", list);
+	    return "myBodiary/myBodiaryForm";
 	}
 	
 	//일지 작성하기
@@ -151,13 +164,22 @@ public class BodiaryController {
 	
 	//일지 상세보기
 	@RequestMapping("/myBodiaryDetail")
-	public String myBodiaryDetail(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
+	public String myBodiaryDetail(String diary_seq, Model model) throws ClassNotFoundException, SQLException, ParseException {
 		BodiaryDto bodiarydto = bodiaryservice.getBodiary(diary_seq);
 		List<DailyMealFoodJoinDto> dailymeal = bodiaryservice.getDailyMeal(bodiarydto.getMeal_cart_seq());
 		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(bodiarydto.getRoutine_cart_seq());
 		System.out.println(bodiarydto.getMeal_cart_seq());
 		System.out.println(dailymeal.toString());
 		System.out.println(routinelist.toString());
+		
+		
+		Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(bodiarydto.getDiary_date()); //String to date
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); //new format
+		String dateNewFormat = sdf.format(date);
+
+		
+		bodiarydto.setDiary_date(dateNewFormat);
+		
 		model.addAttribute("bodiary", bodiarydto);
 		model.addAttribute("dailymeallist", dailymeal);
 		model.addAttribute("routinelist", routinelist);
@@ -212,7 +234,8 @@ public class BodiaryController {
 	@ResponseBody
 	@RequestMapping("/getBodiaryList")
 	public List<BodiaryDto> getBodiaryList(@RequestParam String user_email) throws ClassNotFoundException, SQLException {
-		List<BodiaryDto> bodiarylist = bodiaryservice.getBodiaryList(user_email);
+		String pagesize = null;
+		List<BodiaryDto> bodiarylist = bodiaryservice.getBodiaryList(user_email, pagesize);
 		return bodiarylist;
 	
 	}

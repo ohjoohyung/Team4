@@ -49,15 +49,18 @@ public class RoutineBrdController {
 	
 	//리스트 페이지 들어가기
 	@RequestMapping("/routineBrdList")
-	public String routineBrdList() {
+	public String routineBrdList(Model model) throws ClassNotFoundException, SQLException {
+		List<RoutineBoardUserJoinDto> todayHit = routinebrdservice.getTodayHit();
+		model.addAttribute("todayHit", todayHit);
 		return "routineBrd/routineBrdList";
 	}
+
 	
 	
 	
 	//상세
 	@RequestMapping("/routineBrdDetail")
-	public String routineBrdDetail(int routine_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+	public String routineBrdDetail(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
 		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
 		
@@ -81,8 +84,14 @@ public class RoutineBrdController {
 			
 				} 
 			}
-			
 		
+		//조회수 증가
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		System.out.println("유저의 이메일 : " + user.getUser_email());
+		System.out.println("지금 글의 작성자 이메일 : " + routinebrddto.getUser_email());
+		if(user != null && !(user.getUser_email().equals(routinebrddto.getUser_email()))) {
+			routinebrdservice.updateHit(routine_brd_seq);
+		}
 		
 		
 		model.addAttribute("routineBoard", routinebrddto);
