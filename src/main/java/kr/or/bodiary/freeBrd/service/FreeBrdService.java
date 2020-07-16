@@ -31,14 +31,25 @@ public void setSqlsession(SqlSession sqlsession) {
 	this.sqlsession = sqlsession;
 }
 
-//총 게시물수 얻어오는 함수
-//public int allFreeBrdCount() throws Exception {
-//	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-//	int result = FreeBrd.getFreeBoardListCnt();
-//	System.out.println("총 게시물수 "+result);
-//	
-//	return result;
-//}
+//자유게시판 상위 랭크를 뽑아옴
+public List<FreeBrdDTO> highLankFree() throws Exception{
+	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+	List<FreeBrdDTO> list = FreeBrd.highLankFree();
+	return list;
+}
+//질문게시판 상위 랭크를 뽑아옴
+public List<FreeBrdDTO> highLankQna() throws Exception{
+	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+	List<FreeBrdDTO> list = FreeBrd.highLankQna();
+	return list;
+}
+//팁게시판 상위 랭크를 뽑아옴
+public List<FreeBrdDTO> highLankTip() throws Exception{
+	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+	List<FreeBrdDTO> list = FreeBrd.highLankTip();
+	return list;
+}
+
 
 //게시판 제목클릭시 조회수 증가하는 함수
 public void freeBrdHit(String seq) throws Exception {

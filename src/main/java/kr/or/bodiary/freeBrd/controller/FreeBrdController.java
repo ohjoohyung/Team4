@@ -103,6 +103,18 @@ public class FreeBrdController {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		String user_email = user.getUser_email();
 		
+		//자유게시판 상위 랭크를 뽑아옴 
+		List<FreeBrdDTO> highLankFree = freeBrdService.highLankFree();
+		model.addAttribute("highLankFree",highLankFree);
+		
+		//질문게시판 상위 랭크를 뽑아옴 
+		List<FreeBrdDTO> highLankQna = freeBrdService.highLankQna();
+		model.addAttribute("highLankQna",highLankQna);
+				
+		//팁게시판 상위 랭크를 뽑아옴 
+		List<FreeBrdDTO> highLankTip = freeBrdService.highLankTip();
+		model.addAttribute("highLankTip",highLankTip);
+		
 		model.addAttribute("user",user_email);
 		model.addAttribute("cateGory",cateGory);
 		model.addAttribute("pagination",search);

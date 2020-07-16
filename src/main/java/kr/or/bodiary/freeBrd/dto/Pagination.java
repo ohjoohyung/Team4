@@ -37,6 +37,22 @@ public class Pagination {
 
 	/** 12. 다음 블럭의 시작 페이지 **/
 	private int nextBlock;
+	
+	//내가 쓴글 댓글 볼시 페이징 처리 할때 필요 
+	private String user_email;
+	
+	
+	public void setTotalPageCnt(int totalPageCnt) {
+		this.totalPageCnt = totalPageCnt;
+	}
+
+	public String getUser_email() {
+		return user_email;
+	}
+
+	public void setUser_email(String user_email) {
+		this.user_email = user_email;
+	}
 
 	public int getPageSize() {
 		return pageSize;

@@ -39,6 +39,7 @@ private SqlSession sqlsession;
 		this.sqlsession = sqlsession;
 	}
 	
+	
 	//음식 검색하기
 	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);

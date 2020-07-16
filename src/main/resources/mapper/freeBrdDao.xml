@@ -264,6 +264,50 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			where free_brd_seq = #{seq};
 	   </update>
    
+   		<!-- (내가쓴글댓글)해당유저의 전체게시글 가져오는 쿼리문(페이징) -->
+	   <select id="allFreeBrd_P"  parameterType="kr.or.bodiary.freeBrd.dto.Pagination" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   				SELECT *
+	   				FROM freeboard
+	   				INNER JOIN User
+	   				ON freeboard.user_email = User.user_email
+	   				WHERE User.user_email = #{user_email}
+					ORDER BY free_brd_seq DESC
+	   				LIMIT #{startIndex},#{pageSize}		 					
+	   </select>
+	   
+	   <!-- (내가쓴글댓글)전체 게시글 총개수 가져오기 -->
+	   <select id="getFreeBoardListCnt_M" resultType="int">
+			SELECT count(*) as totalcount		
+			FROM freeboard
+			INNER JOIN User
+	   		ON freeboard.user_email = User.user_email
+	   		WHERE User.user_email = #{user_email}
+	   </select>
+	   
+	   <!-- 자유게시판 상위 랭크를 뽑아옴  -->
+	   <select id="highLankFree"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   				select * 
+					from freeboard
+					where free_brd_seq = (select free_brd_seq from freeboard where free_cat=1 
+					AND free_brd_hits = (select max(free_brd_hits) from freeboard where free_cat =1 ) order by free_brd_seq desc limit 1 )	   					
+	   </select>
+	   
+	   <!-- 질문게시판 상위 랭크를 뽑아옴  -->
+	   <select id="highLankQna"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   				select * 
+					from freeboard
+					where free_brd_seq = (select free_brd_seq from freeboard where free_cat=2 
+					AND free_brd_hits = (select max(free_brd_hits) from freeboard where free_cat =2 ) order by free_brd_seq desc limit 1 )	   					
+	   </select>
+	   
+	   <!-- 팁게시판 상위 랭크를 뽑아옴  -->
+	   <select id="highLankTip"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+	   				select * 
+					from freeboard
+					where free_brd_seq = (select free_brd_seq from freeboard where free_cat=3 
+					AND free_brd_hits = (select max(free_brd_hits) from freeboard where free_cat =3 ) order by free_brd_seq desc limit 1 )	   					
+	   </select>
+	   
 </mapper>
 
 

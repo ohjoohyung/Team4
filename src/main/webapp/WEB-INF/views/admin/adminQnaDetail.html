@@ -41,42 +41,30 @@
 					<div class="card">
 						<div class="card-body"
 							style="padding-left: 45px; padding-top: 55px;">
-
+						
+							
+							<input name="qna_brd_seq" th:value="${qna.qna_brd_seq}" type="hidden">
 							<div class="content-tags" style="margin-bottom: 21px;">
 								<span class="list-group-item-text article-id"
-									style="margin-right: 530px">#734025</span> <span
-									class="list-group-item-text article-id">2020-07-02
-									11:47:20</span>
+									style="margin-right: 530px">
+									<span th:text="${qna.qna_brd_seq}"></span></span>
+									 <span	class="list-group-item-text article-id" th:text="${qna.qna_brd_regdate}"></span>
 							</div>
-							<h2 class="panel-title">팀장과의 가치관 차이 어떻게 할가요..</h2>
+							<h2 class="panel-title"  th:text="${qna.qna_brd_title}"></h2>
 							<hr style="margin-right: 45px;" />
 
-							<p>어떻게 보면 건방진 질문이 될 수도 있을것 같습니다.</p>
-							<p>대학 졸업 후 SM에서 일하다 개발이 하고싶어 웹 생초보로 이직하였습니다.</p>
-							<p>업체는 지방에 세워진지 일년정도 된 SI 회사구요</p>
-							<p>여기에는 10년차 사수와 1개월차 국비출신 2명이 있습니다.</p>
-							<p>저는 학부때부터 기능들에 대해 코드분석 후 사용을 하였습니다.</p>
-							<p>원리를 알아야 다른 곳에도 응용하고 어떤 식으로 코딩이 되었나를 보고 제 소스에도 적용할 거라는 생각을
-								가지고 있습니다.</p>
-							<p>회사에서 게시판 댓글 기능을 구현하면서 코드를 분석하고 있었는데</p>
-							<p>사수가 그런거 아무런 쓸모없으니 그냥 가져다 쓰라고 합니다.</p>
-							<p>코딩실력은 그런게 아니라 언제 어떻게 쓰느냐가 중요하다면서요..</p>
-							<p>백앤드 개발자로 들어왔는데 HTML CSS를 몰라서 공부하고 있으면</p>
-							<p>그런것도 아무 쓸모없다고 공부하지말라고 합니다 디자이너분께 조금 질문해도 자기 말 안듣는다면서</p>
-							<p>굉장히 언짢게 쳐다봅니다.</p>
-							<p>이런식이면 자료구조 알고리즘 같은 CS 지식은 아무런 쓸모도 없는거 아닌가하는 생각도 들고</p>
-							<p>제가 잘못 생각하고 공부하고 있는건가요..?</p>
-							<p>너무 신입이라 조심스럽게 여쭤봅니다.</p>
-							<p>
-								<br />
+							<p th:utext="${qna.qna_brd_content}"></p>
+							
 							<div class="button">
 								<button type="button" class="btn mb-1 btn-info"
-									style="margin-left: 0px; float: right; margin-right: 0px;"
-									onclick="location.href='admin/adminQna'">목록보기</button>
-
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									onclick="location.href='adminQnaList'">목록보기</button>
+								<!-- <button type="submit" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right;">답글달기</button> -->
 							</div>
 
 
+
 						</div>
 
 
@@ -84,27 +72,29 @@
 					</div>
 
 				</div>
-
+				
+				<form action="adminQnaDetailOK" method="post">
+				
+				<input name="qna_brd_ref" th:value="${qna.qna_brd_seq}" type="hidden">
+				<input type="hidden" class="form-control input-default" value="답변입니다" name="qna_brd_title">
+				
 				<div class="card" style=" height: 280px;">
-					<div class="col-lg-12"
+					<div class="card-body"
 						style="padding-right: 30px; padding-left: 30px;">
 						<div class="basic-form">
-							<form>
 								<div class="form-group">
 
-									<textarea class="form-control h-150px" rows="12" id="comment"
-										style="height: 164px; margin-top: 30px;"
-										placeholder="내용을 입력하세요"></textarea>
+										<textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요">
+                                            </textarea>
 								</div>
-							</form>
 						</div>
-						<button type="button" class="btn mb-1 btn-info"
-					style="margin-bottom: 10px; float: right;"
-					onclick="location.href='admin/adminQnaDetail'">답변하기</button>
+						<button type="submit" class="btn mb-1 btn-info"
+					style="margin-bottom: 10px; float: right;">댓글답변하기</button>
 					
 					</div>
 					
 				</div>
+				</form>
 
 				
 		</div>

@@ -158,7 +158,7 @@
                   <span class="card-text "><i class="icon-bubble"></i> 댓글 5</span>
 				</div>
 			   <div id="replyList">
-	               <div class="mt-5">
+	               <div class="mt-5 ">
 	                  <div class="row ">
 	                     <div class="col-11">
 	                        <b>익명 1</b> <span class="badge badge-pill badge-info">작성자</span> <span><i class="icon-clock"></i> 2020.07.03
@@ -180,107 +180,6 @@
 	                  <div>꿀팁감사</div>
 	               </div>
                </div>
-                  <div class="mt-5 pl-5">
-                  <div class="row">
-                     <div class="col-11">
-                        <b>익명 2</b> <span><i class="icon-clock"></i> 2020.07.03
-                           11:23</span>
-                     </div>
-                     <div class="user-img c-pointer position-relative"
-                        data-toggle="dropdown">
-                        <span class="activity active"></span> <i
-                           class="icon-options-vertical"></i>
-                     </div>
-                     <div class="basic-dropdown">
-
-
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">신고</a>
-                           
-                        </div>
-
-                     </div>
-                  </div>
-                  <div>ㅋㅋ뭐하냐?</div>
-
-
-               </div>
-              <div class="mt-5">
-                  <div class="row">
-                     <div class="col-11">
-                        <b>익명 3</b> <span><i class="icon-clock"></i> 2020.07.03
-                           11:23</span>
-                     </div>
-                     <div class="user-img c-pointer position-relative"
-                        data-toggle="dropdown">
-                        <span class="activity active"></span> <i
-                           class="icon-options-vertical"></i>
-                     </div>
-                     <div class="basic-dropdown">
-
-
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">신고</a>
-
-                        </div>
-
-                     </div>
-                  </div>
-                  <div>개소리ㅋㅋ</div>
-
-
-               </div>
-                  <div class="mt-5">
-                  <div class="row">
-                     <div class="col-11">
-                        <b>익명 4</b> <span><i class="icon-clock"></i> 2020.07.03
-                           11:23</span>
-                     </div>
-                     <div class="user-img c-pointer position-relative"
-                        data-toggle="dropdown">
-                        <span class="activity active"></span> <i
-                           class="icon-options-vertical"></i>
-                     </div>
-                     <div class="basic-dropdown">
-
-
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">신고</a>
-
-                        </div>
-
-                     </div>
-                  </div>
-                  <div>꿀팁감사</div>
-
-
-               </div>
-                  <div class="mt-5">
-                  <div class="row">
-                     <div class="col-11">
-                        <b>익명 5</b> <span><i class="icon-clock"></i> 2020.07.03
-                           11:23</span>
-                     </div>
-                     <div class="user-img c-pointer position-relative"
-                        data-toggle="dropdown">
-                        <span class="activity active"></span> <i
-                           class="icon-options-vertical"></i>
-                     </div>
-                     <div class="basic-dropdown">
-
-
-                        <div class="dropdown-menu">
-                           <a class="dropdown-item" href="#">신고</a>
-
-                        </div>
-
-                     </div>
-                  </div>
-                  <div>꿀팁감사</div>
-
-               </div>
-         		<!-- 댓글 start -->
-                  <!-- 오주끝 -->
                   <hr>
                   
                   </div>                  
@@ -311,6 +210,23 @@
    		});
    		
    		/* ------------------------------------------------------------------------ */
+   		/* 댓글 삭제 */
+	   /*<![CDATA[*/
+		function deleteCmtCheck() {
+			 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
+// 				location.href="routineBrdDelete?routine_brd_seq="+/*[[ ${routineBoard.routine_brd_seq} ]]*/;
+			 	return false;
+			 }else{   //취소
+			     return false;
+			 }
+		}	
+		/*]]>*/
+   		$(function(){
+   			//루틴 자랑 게시판 댓글 불러오기
+   			getReplyList();
+   			
+   		});
+		
    		/* 댓글 출력 함수 */
    		/*<![CDATA[*/
    		function printData(data){
@@ -320,39 +236,43 @@
    			let session_nickname = /*[[${session.currentUser.user_nickname}]]*/; 
    			let a= "";
    			
-   			//console.log(session_email);
+   			console.log(session_email);
    			
    			$.each(data, function(){
-   				console.log(data);
-   				/* 여기까진 확인했는데 왜 인서트한게 무한 each문을 타는지 모르겠다... 8개가 찍히는데 이 기준은? */
+   				//console.log(data);
    				
    				/* depth 체크 */
    				let depthCss = "";
    				let reCmt ="";
    				if(this.routine_cmt_depth == 1){
-   					depthCss = "padding-left : 40px;";
+   					depthCss += "ml-5";
    				}else if(this.routine_cmt_depth == 0){
-   					reCmt = "답글 쓰기";
+   					/* 답글쓰기 버튼 */
+   					reCmt += "<span class='text-primary reCmtBtn reCmtBtn_"+this.routine_cmt_seq+"' id='reCmtBtn' style='cursor:pointer' routine_cmt_seq ='"+ this.routine_cmt_seq +"' user_nickname='"+ this.user_nickname +"' routine_cmt='"+ this.routine_cmt +"'>답글 쓰기</span>";
    				}
-   				console.log(reCmt);
+//    				console.log(reCmt);
+//    				console.log(this.user_email);
+//    				console.log(session_email == this.user_email);
    				
    				/* session_email == reply_email 케이스 */
    				let idCss = "";
-   				let dropdown-item ="";
-   				if(session_email == this.user_email) {
-   					idCss="background-color : #ecf0f9;";
-   					dropdown-item += "<a class='dropdown-item' href='#'>수정</a>"
-                    		 	  += "<a class='dropdown-item' href='#'>삭제</a>"
-   				}else{
-   					dropdown-item += "<a class='dropdown-item' href='#'>신고</a>"
-   				}
+   				let dropdownItem ="";
    				
+   				if(session_email == this.user_email) {
+   					idCss +="<span class='badge badge-primary'>나</span>";
+   					dropdownItem += "<span class='dropdown-item' id='cmtModifyBtn'"
+   								  + " routine_cmt_seq='" + this.routine_cmt_seq + "' user_nickname='"+this.user_nickname+"' routine_cmt='"+ this.routine_cmt +"'  >수정</span>"
+                    		 	  + "<span class='dropdown-item' id='cmtDeleteBtn' onclick='deleteCmtCheck()'>삭제</span>";
+   				}else{
+   					dropdownItem += "<a class='dropdown-item' id='cmtReportBtn'>신고</a>";
+   				}
+//     				console.log(dropdownItem);
    				/* session_email == 작성자 케이스 */
    				
-   				a += "<div class='mt-5' style=''" + depthCss + idCss +"'>"
+   				a += "<div class='cmt "+ depthCss +"' style='padding-top:20px; padding-bottom: 30px; border-top : 1px solid #ecf0f9;'>"
    				a += "<div class='row'>"
    				a += "   <div class='col-11'>"
-   				a += "      <b>"+session_nickname+"</b>&nbsp;&nbsp; <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
+   				a += "      <b>"+ this.user_nickname +"</b>&nbsp;&nbsp;" + idCss +" <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
    				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>"
    				a += "   </div>"
    				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>"
@@ -361,26 +281,24 @@
    				a += "   </div>"
    				a += "   <div class='basic-dropdown'>"
    				a += "		<div class='dropdown-menu'>"
-   				a += "         " + dropdown-item + ""
+   				a += "         " + dropdownItem + ""
    				a += "      </div>"
    				a += "   </div>"
    				a += "</div>"
    				a += "<div>" + this.routine_cmt + "</div>"
    				a += "</div>"
 
-   			console.log(this.depth);
    			});
    			
    			$('#replyList').html(a);
 		    $('#routineCmtTextarea').val("");
-   			});
    		}
    		/*]]>*/
    		
    		
    		/* 댓글 리스트 불러오기 함수 */
-   		/* function getReplyList(){
-   			let data = {routine_brd_seq : "${param.routine_brd_seq}"};
+   		function getReplyList(){
+   			let data = {routine_brd_seq : /*[[ ${param.routine_brd_seq[0]}]]*/};
    			
    			$.ajax(
    				{
@@ -395,7 +313,6 @@
    				}
    			);
    		};
-   		 */
    		/* 댓글 작성하기 함수 */
    		/*<![CDATA[*/
    		$('#routineCmtBtn').on("click", function(){
@@ -410,9 +327,10 @@
    			let data = {
    					routine_brd_seq : /*[[ ${param.routine_brd_seq[0]}]]*/,
    					user_email : /*[[${session.currentUser.user_email}]]*/,
+   					user_nickname : /*[[${session.currentUser.user_nickname}]]*/,
    					routine_cmt : $.trim($('#routineCmtTextarea').val())
    			};
-   			console.log(data);
+//    			console.log(data);
    			$.ajax(
    				{
    					url : "routineCmtInsert",
@@ -421,12 +339,88 @@
    					data : data, 
    					success : function(responsedata)
    					{	
-   						console.log(responsedata);
+//    						console.log(responsedata);
    						printData(responsedata);
    					}
    				}
    			);
    		});
+   		/*]]>*/
+   		
+   		//대댓글 창 불러오기
+   		/*<![CDATA[*/
+   		$(document).on('click', '#reCmtBtn', function(){
+   			
+   			
+//    			console.log('reCmtBtn클릭' + $(this).attr('routine_cmt'));
+   			
+//    			console.log($(this).parent().parent().parent().parent().next().attr('class'));
+   			var reCmtForm = $(this).parent().parent().parent().parent().next()
+   			if(reCmtForm.attr('class') == 'reCmt_form_'+ $(this).attr("routine_cmt_seq")+' form-group reCmtBox mt-5 mb-2 pl-5 pr-4 pt-4 pb-4'){
+   				reCmtForm.remove();
+   				$(this).text('답글 쓰기');
+   			}else{
+   				let a='';
+   				
+//    				console.log($(this).attr("routine_cmt_seq"));
+   				
+   				a +='<div class="reCmt_form_'+ $(this).attr("routine_cmt_seq")
+   				a += ' form-group reCmtBox mt-5 mb-2 pl-5 pr-4 pt-4 pb-4" style="border-top: 1px solid #e2e1f5;border-bottom: 1px solid #e2e1f5; background-color:#f8f8fe;">';
+           		a += '<textarea id="reCmtTextarea" class="w-100 p-4 l-border-1 mb-2 ';
+           		a += 'reCmtTextarea_'+$(this).attr("routine_cmt_seq")+'"';
+           		a += 'cols="30" rows="3" placeholder="댓글을 입력해주세요" style="resize:none;" routine_cmt_seq="'+ $(this).attr("routine_cmt_seq") +'">';
+           		a += '</textarea>';
+       			a += '<button id="reCmtInsertBtn" class="btn btn-outline-primary btn-lg reCmtInsertBtn" type="button" style="width:100%;"';
+       			a += ' routine_cmt_seq="'+$(this).attr("routine_cmt_seq")+'">등록하기</button>';
+       			a += '</div>';
+       			
+       			
+   				$(this).closest('.cmt').after(a);
+   				$(this).text('답글 취소');
+   			}
+   		});
+   		/*]]>*/
+   		
+   		//대댓글 등록
+   		/*<![CDATA[*/
+   		$(document).on('click', '#reCmtInsertBtn', function(){
+   			let session_email = /*[[${session.currentUser.user_email}]]*/; 
+   			let session_nickname = /*[[${session.currentUser.user_nickname}]]*/; 
+   			console.log("클릭한 대댓등록버튼 시퀀스 : "+$('#reCmtInsertBtn').attr("routine_cmt_seq"));
+   			
+   			
+   			if($.trim($('.reCmtTextarea_'+$(this).attr("routine_cmt_seq")).val()) == "") {
+   				alert("댓글을 입력하세요.");
+   				$('reCmtTextarea_'+$(this).attr("routine_cmt_seq")).focus();
+   				return false;
+   			}else{
+   				console.log("댓글 입력은 했음 "+$('.reCmtTextarea_'+$(this).attr("routine_cmt_seq")).val());
+   			}
+   			let data = {
+   					routine_brd_seq : /*[[ ${param.routine_brd_seq[0]}]]*/,
+   					routine_cmt_ref : $(this).attr("routine_cmt_seq"),
+   					user_email : session_email,
+   					user_nickname : session_nickname,
+   					routine_cmt : $('.reCmtTextarea_'+$(this).attr("routine_cmt_seq")).val()
+   			}
+			console.log(data);
+   			
+   			$.ajax(
+   				{
+   					url : "routineReCmtInsert",
+   					dataType : "JSON" , 
+   					type : "POST", 
+   					data : data, 
+   					success : function(responsedata)
+   						{	
+   							printData(responsedata);
+   						}
+   				}
+   			
+   			);
+   			
+   		});
+   		
    		/*]]>*/
    		 
    		/* ----------------------------------------------------------------------- */

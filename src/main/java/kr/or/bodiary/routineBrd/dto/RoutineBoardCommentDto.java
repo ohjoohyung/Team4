@@ -15,9 +15,10 @@ public class RoutineBoardCommentDto {
 	private int routine_cmt_seq ;
 	private int routine_brd_seq ;
 	private String user_email ;
+	private String user_nickname ;
 	
 	private String routine_cmt ;
-	private Date routine_cmt_date ;
+	private String routine_cmt_date ;
 	private int routine_cmt_ref ;
 	private int routine_cmt_depth ;
 	private int routine_cmt_step ;

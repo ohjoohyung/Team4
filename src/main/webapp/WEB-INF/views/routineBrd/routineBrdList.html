@@ -1,157 +1,109 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- 공통 헤더 -->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
-   <!-- 공통 nav -->
-   <th:block th:replace="common/nav :: navFragment"></th:block>
-   <!-- 공통 sidenav -->
-   <div class="bodiary-wrapper">
-      <div class="content mt-4">
-      
-         <div class="card card-body pt-0 pb-0 pl-4">
-            <div class="row">
-               <div class="col p-2">
-                  <h5 class="text">&nbsp;<span class="text-primary" th:text="${session.currentUser.user_nickname}"></span>님의 루틴을 자랑해 보세요! <i class="icon-emotsmile"></i>
-                     <a class="btn btn-outline-primary" href="routineBrdInsert" style="float:right">
-                        <span>WRITE <span class="mdi mdi-pencil"></span></span>
-                     </a>
-                  </h5>
-               </div>
-            </div>
-         </div>
-         
-         <!-- 인기 많은 루틴 start (전날 추천 많이 받은 루틴) -->
-         <div class="card card-body pt-0 pb-0 pl-4">
-            <div class="row">
-               <div class="col p-3">
-                  <h5 class="text"><span class="mb-1 text-danger"><i class="icon-fire"></i></span>&nbsp;HOT!</h5>
-               </div>
-            </div>
-         </div>
-         
-         <div class="row">
-           
-            <th:block th:each="today : ${todayHit}">
-             
-           	 <div class="grid-item card ml-3">
-					<a th:href="@{/routineBrdDetail(routine_brd_seq=${today.routine_brd_seq})}" class="card-link">
-						 
-							<img th:src="@{assets/upload/routineBrdUpload/}+${today.brd_image2}" />
-							<div class="card-body">
-		                        
-		                           <h5 class="card-text mt-3 mb-3" th:text="${today.routine_brd_title}"></h5>
-		                        
-		                        <div class="card-footer">
-		                        <i class="icon-clock"></i>&nbsp;&nbsp;
-						                    	<span class="card-text" th:text="${today.routine_brd_regdate}"></span>
-						                        &nbsp;&nbsp;&nbsp;&nbsp;
-						                        <i class="icon-eye"></i>&nbsp;&nbsp;
-						                        <span class="card-text" th:text="${today.routine_brd_hit}" ></span>
-		                           <p class="card-text float-right" th:text="${today.user_nickname}"></p>
-		                        </div>
-		                     </div>
-						
-						</a>
-					</div>
-					
-            </th:block>
-            
-            <!-- 
-               <div class="card">
-                  <img class="routine-img" src="assets/images/hand.jpg" alt="">
-                     <div class="card-body">
-                     <a href="routineBrdDetail?routine_brd_seq=1" class="card-link">
-                        <h5 class="card-text mt-3 mb-5">
-                           <span class="d-inline-block text-truncate" style="max-width: 250px;">제목줄이기제목줄이기제목줄이기제목줄이기제목줄이기제목줄이기제목줄이기</span>
-                        </h5>
-                     </a>
-                     <div class="card-footer">
-                        <p class="card-text float-right d-inline-block text-truncate mb-1" style="max-width: 150px;">
-                           <small class="text-muted">닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임닉네임</small>
-                        </p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-8 col-lg-4">
-               <div class="card">
-                  <img class="routine-img" src="assets/images/hand.jpg" alt="">
-                  <div class="card-body">
-                     <a href="" class="card-link">
-                        <h5 class="card-text mt-3">제목</h5>
-                     </a>
-                  </div>
-                  <div class="card-footer">
-                     <p class="card-text d-inline"></p>
-                     <a class="card-link float-right"><small>닉네임</small></a>
-                  </div>
-               </div>
-            </div>
-            <div class="col-md-8 col-lg-4">
-               <div class="card">
-                  <img class="routine-img" src="assets/images/l-white.png" alt="">
-                  <div class="card-body">
-                     <h5 class="card-title">루틴이름3</h5>
-                     <p class="card-text">루틴컨텐츠3</p>
-                  </div>
-                  <div class="card-footer">
-                     <p class="card-text d-inline"></p>
-                     <a href="#" class="card-link float-right"><small>루틴링크3</small></a>
-                  </div>
-               </div>
-            </div> -->
-         </div>
-         <!-- 인기 많은 루틴 end -->
-         
-         <!-- 오늘의 루틴 start -->
-         <div class="card card-body pt-0 pb-0 pl-4">
-            <div class="row">
-               <div class="col p-2">
-                  <h5 class="text"><span class="mb-1 text-danger"><span class="mdi mdi-calendar-check"></span></span>&nbsp;<span class="text-primary">전체목록</span></h5>
-               </div>
-            </div>
-         </div>
-         
-         <!-- masonry layout start -->
-         <div class="container mb-4 p-0">
-            <div class="row">
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="content mt-4">
 
-        
-            <div class="grid">
-				<div class="grid-sizer"></div>
-				<!-- <th:block th:each="routineBoard : ${routineBoardList}">
-					<div class="grid-item card">
-					<a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBoard.routine_brd_seq})}" class="card-link">
-						 
-							<img th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image2}" />
-							<div class="card-body">
-		                        
-		                           <h5 class="card-text mt-3 mb-3" th:text="${routineBoard.routine_brd_title}"></h5>
-		                        
-		                        <div class="card-footer">
-		                           <p class="card-text float-right" th:text="${routineBoard.user_nickname}"></p>
-		                        </div>
-		                     </div>
-						
-						</a>
+			<div class="card card-body pt-0 pb-0 pl-4">
+				<div class="row">
+					<div class="col p-2">
+						<h5 class="text">
+							&nbsp;<span class="text-primary"
+								th:text="${session.currentUser.user_nickname}"></span>님의 루틴을 자랑해
+							보세요! <i class="icon-emotsmile"></i> <a
+								class="btn btn-outline-primary" href="routineBrdInsert"
+								style="float: right"> <span>WRITE <span
+									class="mdi mdi-pencil"></span></span>
+							</a>
+						</h5>
 					</div>
-				</th:block> -->
-			
+				</div>
 			</div>
 
-            
-            
-         </div>
-         <!-- masonry layout end -->
-         <!-- 오늘의 루틴 end -->
-      </div>
-   </div>
-   <!-- 기본 폼 완성 -->
+			<!-- 인기 많은 루틴 start (전날 추천 많이 받은 루틴) -->
+			<div class="card card-body pt-0 pb-0 pl-4">
+				<div class="row">
+					<div class="col p-3">
+						<h5 class="text">
+							<span class="mb-1 text-danger"><i class="icon-fire"></i></span>&nbsp;HOT!
+						</h5>
+					</div>
+				</div>
+			</div>
 
-   <!-- 공통 스크립트-->
-   <th:block th:replace="fragments/script :: scriptFragment"></th:block>
-   <script type="text/javascript">
+			<div class="row">
+
+				<th:block th:each="today : ${todayHit}">
+
+					<div class="grid-item card ml-3">
+						<a
+							th:href="@{/routineBrdDetail(routine_brd_seq=${today.routine_brd_seq})}"
+							class="card-link"> <img
+							th:src="@{assets/upload/routineBrdUpload/}+${today.brd_image2}" />
+							<div class="card-body">
+
+								<h5 class="card-text mt-3 mb-3"
+									th:text="${today.routine_brd_title}"></h5>
+
+								<div class="card-footer">
+									<i class="icon-clock"></i>&nbsp;&nbsp; <span class="card-text"
+										th:text="${today.routine_brd_regdate}"></span>
+									&nbsp;&nbsp;&nbsp;&nbsp; <i class="icon-eye"></i>&nbsp;&nbsp; <span
+										class="card-text" th:text="${today.routine_brd_hit}"></span>
+									<p class="card-text float-right"
+										th:text="${today.user_nickname}"></p>
+								</div>
+							</div>
+
+						</a>
+					</div>
+
+				</th:block>
+
+			</div>
+			<!-- 인기 많은 루틴 end -->
+
+			<!-- 오늘의 루틴 start -->
+			<div class="card card-body pt-0 pb-0 pl-4">
+				<div class="row">
+					<div class="col p-2">
+						<h5 class="text">
+							<span class="mb-1 text-danger"><span
+								class="mdi mdi-calendar-check"></span></span>&nbsp;<span
+								class="text-primary">전체목록</span>
+						</h5>
+					</div>
+				</div>
+			</div>
+
+			<!-- masonry layout start -->
+			<div class="container mb-4 p-0">
+				<div class="row">
+
+
+					<div class="grid">
+						<div class="grid-sizer"></div>
+	
+					</div>
+
+
+
+				</div>
+				<!-- masonry layout end -->
+				<!-- 오늘의 루틴 end -->
+			</div>
+		</div>
+		<!-- 기본 폼 완성 -->
+
+		<!-- 공통 스크립트-->
+		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+		<script type="text/javascript">
    
 		
 		var cpval = 1;
@@ -162,28 +114,7 @@
 	    
 		$(function(){
 			
-			
-			/* var msnry = new Masonry( '.grid', {
-				itemSelector: '.grid-item',
-				// columnWidth: 200
-				columnWidth: '.grid-sizer',
-				percentPosition: true,
-				gutter : 24,
-				});
-				imagesLoaded( '.grid' ).on( 'progress', function() {
-				msnry.layout();
-				}); */
-				
-				/* var $grid = $('.grid').imagesLoaded( function() {
-					  $grid.masonry({
-					      itemSelector: '.grid-item',
-					      columnWidth: '.grid-sizer',
-							percentPosition: true,
-							gutter : 24,
-					  });
-					}); */
-
-
+	
 				
 		//무한스크롤 스크롤에 따라 동적인 변화 발생
 		$(window).scroll(function() {
@@ -273,6 +204,5 @@
 				  
 		}
 	</script>
-
 </body>
 </html>

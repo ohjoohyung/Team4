@@ -187,32 +187,65 @@ private SqlSession sqlsession;
 		return routinebrddao.updateHit(routine_brd_seq);	
 	}
    
-   //------------------------------------------- 댓글 -------------------------------------------------
-   
-   //인서트 
-   public RoutineBoardCommentDto routineCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
-	   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
-//	   int returnselect = 0;
-	   System.out.println("댓글 인서트 서비스 try문 직전");
-	   
-	   routineCmtDto.setRoutine_brd_seq(Integer.parseInt(request.getParameter("routine_brd_seq")));
-	   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
-	   routineCmtDto.setUser_email(request.getParameter("user_email"));
-	   
-	   try {
-		   int cmtinsert = routinebrddao.routineCmtInsert(routineCmtDto);
-		   System.out.println("cmt 인서트 했나요? : "+cmtinsert);
-		   //인서트 후 refer 번호 update 처리
-		   
-		   int cmtupdate=routinebrddao.routineCmtReferUpdate(routineCmtDto.getRoutine_cmt_seq());
-		   System.out.println("cmt 업데이트 했나요? : "+cmtupdate);
-		   
-		
-		} catch (Exception e) {
-			e.getMessage();
+	  
+	   //------------------------------------------- 댓글 -------------------------------------------------
+	   //리스트 불러오기 
+		public List<RoutineBoardCommentDto> routineCmtList (int routine_brd_seq) throws IOException, ClassNotFoundException, SQLException{
+			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+			List<RoutineBoardCommentDto> rCmtList = null; 
+			try {
+				rCmtList = routinebrddao.routineCmtList(routine_brd_seq);
+			} catch (Exception e) {
+				e.getMessage();
+			}
+			
+			return rCmtList;
 		}
-	   return routinebrddao.routineCmtSelect(routineCmtDto.getRoutine_cmt_seq());
-   }
-  
+
+	   //인서트 
+	   public List<RoutineBoardCommentDto> routineCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+//		   int returnselect = 0;
+		   System.out.println("댓글 인서트 서비스 try문 직전");
+		   
+		   routineCmtDto.setRoutine_brd_seq(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
+		   routineCmtDto.setUser_email(request.getParameter("user_email"));
+		   routineCmtDto.setUser_nickname(request.getParameter("user_nickname"));
+		   
+		   try {
+			   int cmtinsert = routinebrddao.routineCmtInsert(routineCmtDto);
+			   System.out.println("cmt 인서트 했나요? : "+cmtinsert);
+			   //인서트 후 refer 번호 update 처리
+			   
+			   int cmtupdate=routinebrddao.routineCmtReferUpdate(routineCmtDto.getRoutine_cmt_seq());
+			   System.out.println("cmt 업데이트 했나요? : "+cmtupdate);
+			   
+			
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		   
+		   System.out.println(routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq"))));
+		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+	   }
+	   //대댓 인서트 
+	   public List<RoutineBoardCommentDto> routineReCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		   routineCmtDto.setRoutine_cmt_ref(Integer.parseInt(request.getParameter("routine_cmt_ref")));
+		   try {
+			   int recmtinsert = routinebrddao.routineReCmtInsert(routineCmtDto);
+			   System.out.println("reCmt 인서트 했나요? : " + recmtinsert);
+//			   int cmtRefUpdate =  routinebrddao.routineCmtReferUpdate(routineCmtDto.getRoutine_cmt_seq());
+//			   System.out.println("cmt 업데이트 했나요? : "+cmtRefUpdate);
+//			   int cmtStepUpdate = routinebrddao.routineCmtStepUpdate(routineCmtDto);
+//			   System.out.println("cmt step 업데이트 했나요? : " + cmtStepUpdate);
+			} catch (Exception e) {
+				e.getMessage();
+			}
+		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+	   }
+	  
+
 
 }

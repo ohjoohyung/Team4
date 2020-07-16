@@ -64,8 +64,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 작성 -->
    <insert id="routineCmtInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto" useGeneratedKeys="true" keyProperty="routine_cmt_seq">
    		insert into RoutineBoardComment
-   			(routine_brd_seq, user_email, routine_cmt,routine_cmt_date,routine_cmt_depth,routine_cmt_step)
-   		values (#{routine_brd_seq},#{user_email},#{routine_cmt},now(),0,0)
+   			(routine_brd_seq, user_email, user_nickname, routine_cmt,routine_cmt_date,routine_cmt_ref,routine_cmt_depth,routine_cmt_step)
+   		values (#{routine_brd_seq},#{user_email},#{user_nickname},#{routine_cmt},now(),0,0,0)
+   </insert>
+   <!-- 대댓글 작성 -->
+   <insert id="routineReCmtInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto" useGeneratedKeys="true" keyProperty="routine_cmt_seq">
+   		<selectKey order ="BEFORE" keyProperty="routine_cmt_step" resultType="int">
+   			Select MAX(routine_cmt_step)+1
+   				from RoutineBoardComment rbc_sub
+   				where routine_cmt_ref = #{routine_cmt_ref} and routine_brd_seq = #{routine_brd_seq}
+   		</selectKey>
+   		insert into RoutineBoardComment
+   			(routine_brd_seq, user_email, user_nickname, routine_cmt,routine_cmt_date,routine_cmt_ref,routine_cmt_depth,routine_cmt_step)
+   		values (#{routine_brd_seq},#{user_email},#{user_nickname},#{routine_cmt},now(),#{routine_cmt_ref},1,#{routine_cmt_step})
    </insert>
    <!-- 업데이트 -->
    <update id="routineCmtReferUpdate">
@@ -73,13 +84,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		set routine_cmt_ref = #{routine_cmt_seq}
    		where routine_cmt_seq = #{routine_cmt_seq}
    </update>
-
-   <select id="routineCmtSelect" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto">
+	<!-- step update -->
+   <update id="routineCmtStepUpdate">
+   		update RoutineBoardComment
+   		set routine_cmt_step = 
+   			(
+   				Select MAX(routine_cmt_step)+1
+   				from RoutineBoardComment rbc_sub
+   				where routine_cmt_ref = #{routine_cmt_ref} and routine_brd_seq = #{routine_brd_seq}
+<!--    				order by routine_cmt_step desc limit 1 -->
+   			)
+   		where routine_cmt_seq = #{routine_cmt_seq}
+   </update>
+	
+   <select id="routineCmtList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto">
    		select *
    		from RoutineBoardComment
-   		where routine_cmt_seq = #{routine_cmt_seq}
+   		where routine_brd_seq = #{routine_brd_seq}
+   		ORDER BY routine_cmt_ref DESC , routine_cmt_step ASC
    </select>
-   
-   
    
 </mapper>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.qnaBrd.dao.QnaBrdDao">
+    
+    <!-- 회원이 쓴 문의사항 가져오기 -->
+    <select id="getQnaList" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+       select * from QnaBrd where user_email=#{user_email}
+    </select>
+    
+    <!-- 문의사항 작성하기 -->
+     <insert id="insertQnaBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto" useGeneratedKeys="true" keyProperty="qna_brd_seq">
+     	
+     	INSERT INTO qnabrd(qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, 
+     	qna_brd_ref, qna_brd_depth , qna_brd_step) 
+     	VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , now(),#{qna_brd_seq},0,0)
+     
+     </insert>
+     
+     <!-- 문의사항 상세 -->
+     <select id="getQnaBrdBySeq" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+  	SELECT *
+  	FROM qnabrd 
+  	WHERE qna_brd_seq=#{qna_brd_seq}
+  	</select>
+  	
+  	<!-- 문의사항 업데이트 -->
+  	<update id="updateQnaBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+    	UPDATE qnabrd 
+    	SET qna_brd_seq=#{qna_brd_seq}, 
+    		user_email=#{user_email}, 
+    		qna_brd_title=#{qna_brd_title} , 
+    		qna_brd_content=#{qna_brd_content},
+    		qna_brd_regdate=now(),
+    		qna_brd_ref=#{qna_brd_ref},
+    		qna_brd_depth=#{qna_brd_depth},
+    		qna_brd_step=#{qna_brd_step}
+    	WHERE qna_brd_seq=#{qna_brd_seq}
+    </update>
+   	
+   	<!-- 문의사항 삭제 -->
+   	<delete id="qndBrdDelete">
+  	delete
+  	from qnabrd
+  	where qna_brd_seq=#{qna_brd_seq}
+  	</delete>
+  	
+  	<!-- 관리자 문의사항 가져오기 -->
+    <select id="getAdminQnaList" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+       select * from QnaBrd where user_email != #{user_email}
+    </select>
+    
+    <!-- 관리자 답변 -->
+    <insert id="insertQnaAnsBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto" useGeneratedKeys="true" keyProperty="qna_brd_seq">
+     	
+     	<!-- INSERT INTO qnabrd(qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, 
+     	qna_brd_ref, qna_brd_depth , qna_brd_step) 
+     	VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , now(),#{qna_brd_ref},#{qna_brd_depth},0) -->
+     	insert into qnabrd (qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, qna_brd_ref, qna_brd_depth, qna_brd_step)
+					VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , now(),#{qna_brd_ref},(select ifnull(max(qna_brd_depth)+1,1)from qnabrd where qna_brd_ref=#{qna_brd_ref}),0)
+     
+     </insert>
+    
+    <!-- <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
+    </select> 
+    <select id="getExercisecListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_kind='C'
+    </select>
+    <select id="getExercisenListByName" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_kind='N'
+    </select>
+    <select id="exercisepartSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_body_part=#{excs_body_part}
+    </select>
+    <select id="exerciseEquiSearch" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_equipment=#{excs_equipment}
+    </select>
+    
+    <select id="exercisepartequiSearch" parameterType="hashmap" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_equipment=#{excs_equipment} and excs_body_part=#{excs_body_part}
+    </select>
+    
+    <select id="exerciseadd" parameterType="int" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+       select * from Exercise where excs_seq=#{excs_seq}
+    </select>
+    <select id="getExercise" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+ 	select * FROM exercise
+ 	</select>
+ 	
+ 	<select id="getExerciseBySeq" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
+  	SELECT *
+  	FROM exercise 
+  	WHERE excs_seq=#{excs_seq}
+  	</select>
+  	<delete id="exerciseDelete">
+  	delete
+  	from exercise
+  	where excs_seq=#{excs_seq}
+  	</delete>
+  	<update id="updateExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO">
+    	UPDATE exercise 
+    	SET excs_kind=#{excs_kind}, 
+    		excs_name=#{excs_name}, 
+    		excs_cal_per_minweight=#{excs_cal_per_minweight} , 
+    		excs_body_part=#{excs_body_part},
+    		excs_equipment=#{excs_equipment},
+    		excs_description=#{excs_description},
+    		excs_video_link=#{excs_video_link},
+    		excs_level=#{excs_level}
+    	WHERE excs_seq=#{excs_seq}
+    </update>
+    <insert id="insertExercise" parameterType="kr.or.bodiary.exercise.dto.exerciseDTO" useGeneratedKeys="true" keyProperty="excs_seq">
+     	
+     	INSERT INTO exercise(excs_seq, excs_kind, excs_name, excs_cal_per_minweight, excs_body_part, 
+     	excs_equipment, excs_description , excs_video_link, excs_level) 
+     	VALUES(#{excs_seq}, #{excs_kind}, #{excs_name}, #{excs_cal_per_minweight} , #{excs_body_part},#{excs_equipment},#{excs_description},#{excs_video_link},#{excs_level})
+     </insert> -->
+     
+    
+    
+</mapper>
+
+ 

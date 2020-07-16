@@ -93,7 +93,7 @@
 
 
 					<!-- 댓글 시작 -->
-					<hr>
+				<!-- 	<hr>
 					<div class="mt-4 mb-4">
 						<div class="row">
 							<div class="col-11">
@@ -117,7 +117,7 @@
 								</div>
 							</div>
 						</div>
-						<!-- 댓글 내용 -->
+						댓글 내용
 						<div class="mt-3">꿀팁감사</div>
 					</div>
 
@@ -146,7 +146,7 @@
 						<div class="mt-3">ㅋㅋ뭐하냐?</div>
 
 
-					</div>
+					</div> -->
 
 					<hr>				
 						<div id="listReply"></div>
@@ -156,7 +156,7 @@
 
 					<div class="commentFB basic-form mt-5 p-2">
 						<div>
-							<form>
+							
 								<div class="form-group">
 
 
@@ -169,7 +169,7 @@
 									<div class="col-11"></div>
 									<button type="submit" id="btnReply" class="btn mb-1 btn-outline-light">등록</button>
 								</div>
-							</form>
+							
 						</div>
 					</div>
 
@@ -181,8 +181,10 @@
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 <!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
-<!-- <th:block layout:fragment="script">
+<th:block layout:fragment="script">
 	<script>
+		var seq = $('#freeSeq').val(); 	
+	
 		$(document).ready(function(){
 			console.log("안녕하세요");			
 			/* seq = $('#freeSeq').val();
@@ -204,10 +206,9 @@
 					data : param,
 					success:function(){
 						alert("댓글 등록 완료");
-						alert("글번호"+seq);
 						
 						//listReply_1(seq); 이함수를 호출하면 에러가 발생함
-						listReply_1(seq);
+						listReply();
 					},
 				 	error : function(error) {
 				        alert("Error!"+error);
@@ -225,7 +226,6 @@
 		
 		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
 		function listReply(){
-			seq = $('#freeSeq').val();
 			$.ajax({
 				type:"get",
 				url:"freeReply/list?seq="+seq,
@@ -236,19 +236,45 @@
 			});
 		}
 		
-		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
-		function listReply_1(seq){
-			//var bno = seq;
+		/* 해당 글번호에 해당하는 댓글을 삭제하는 함수 */
+		function replyDelete(cmt){
+			d_param = "seq="+seq+"&cmt="+cmt;
+			alert("삭제할려고 하는 댓글번호"+cmt);
+			alert("d_param"+d_param);
 			$.ajax({
-				type:"get",
-				url:"freeReply/list?seq="+seq,
+				type:"post",
+				url:"freeReply/delete",
+				data : d_param,
 				success:function(result){
-					console.log(result);
-					$("#listReply").html(result); 
+					console.log("댓글 삭제 완료");
+					listReply(); 
 				}
 			});
 		}
+		
 		
 	</script>
-</th:block> -->
+</th:block> 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

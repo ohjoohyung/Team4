@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.freeBrd.dto.Search;
 
 
@@ -14,6 +15,9 @@ public interface FreeBrdDao {
 		//전체 게시글 가져오기(팁,자유,궁금)
 		public List<FreeBrdDTO> allFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
 		
+		//전체 게시글 가져오기(팁,자유,궁금)
+		public List<FreeBrdDTO> allFreeBrd_P(Pagination pagination) throws ClassNotFoundException, SQLException;	
+				
 		//해당 게시글 세부 목록 가져오기 
 		public FreeBrdDTO freebrdDetail(String seq) throws ClassNotFoundException, SQLException;
 		
@@ -37,6 +41,9 @@ public interface FreeBrdDao {
 		//게시글 총 개수 가져오기 
 		public int getFreeBoardListCnt() throws Exception;
 		
+		//(내가쓴글댓글)게시글 총 개수 가져오기 
+		public int getFreeBoardListCnt_M(String user_email) throws Exception;
+		
 		//게시글 총 개수 가져오기 
 	    public int getFreeBoardListCnt(Search search) throws Exception;
 	    
@@ -51,5 +58,35 @@ public interface FreeBrdDao {
 	    
 	    //게시판 조회수 증가
 	    public void freeBrdHit(String seq) throws Exception;
+	    
+	    //자유게시판 상위 랭크를 뽑아옴 
+	    public List<FreeBrdDTO> highLankFree() throws Exception;
+	    
+	    //질문게시판 상위 랭크를 뽑아옴 
+	    public List<FreeBrdDTO> highLankQna() throws Exception;
+	    
+	    //팁게시판 상위 랭크를 뽑아옴 
+	    public List<FreeBrdDTO> highLankTip() throws Exception;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
