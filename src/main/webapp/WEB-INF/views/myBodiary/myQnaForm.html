@@ -64,7 +64,8 @@
                                 <div class="basic-form">
                                         <div class="form-group">
                                             
-                                            <textarea  id="summernote" class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요"></textarea>
+                                            <textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요">
+                                            </textarea>
                                         </div>
                                 </div>
 
@@ -72,7 +73,7 @@
                  </div>      
          
                <div class="button">
-                  <button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myBodiary/myQnaList'">돌아가기</button>
+                  <button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myQnaList'">돌아가기</button>
                   <button type="submit" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;">등록하기</button>
                </div>   
                      
@@ -90,21 +91,7 @@
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
-   <script>
-   $(document).ready(function() {
-      $('#summernote').summernote({
-         minHeight: 400, //최소 높이
-         maxHeight: null, //최대 높이
-         focus: true, //에디터 로딩 후 포커스를 맞출지 여부
-         lang: 'ko-KR' //한글 설정
-      });
-   });
-	</script>
-	<!-- Summernote의 code를 가져와서 textarea 태그 중 name="qna_brd_content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다. -->
-	<script>
-	function postForm() {
-	    $('textarea[name="qna_brd_content"]').val($('#summernote').summernote('code'));
-	}
-</script>
+   
+
 </body>
 </html>

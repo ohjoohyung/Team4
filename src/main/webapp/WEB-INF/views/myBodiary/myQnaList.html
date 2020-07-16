@@ -90,10 +90,11 @@
 								         <!-- <td th:text="${qna.qna_brd_title}"></td> -->
 								         <td><a th:href="@{/myQnaDetail(qna_brd_seq=${qna.qna_brd_seq})}"><span th:text="${qna.qna_brd_title}"></span></a> </td>
 								         <td th:text="${qna.user_email}"></td>
-								         <td th:text="${qna.qna_brd_ref}"></td>
+								         <td th:text="${qna.qna_brd_depth}"></td>
 								    	 <td th:text="${qna.qna_brd_regdate}"></td>
-								      	 <td><i class="fa fa-pencil color-muted m-r-5"></i></td>
-								    	 <td><i class="ti-close m-r-5 f-s-12"></i></td>
+								      	 <td><a th:href="@{/myQnaEdit(qna_brd_seq=${qna.qna_brd_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
+								    	 <td><a th:href="@{/myQnaFormDelete(qna_brd_seq=${qna.qna_brd_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td>
+								    	 
 								    	 <!-- <td><a th:href="@{/adminExcsEdit(excs_seq=${exer.excs_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
 								    	 <td><a th:href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td> -->
 								    	 </tr>

@@ -45,15 +45,27 @@
 								<span class="list-group-item-text article-id"
 									style="margin-right: 530px">
 									<span th:text="${qna.qna_brd_seq}"></span>
-									<input type="text" id="qna_brd_seq" name="qna_brd_seq" class="form-control"
+									<!-- hidden inputs -->
+									<input type="hidden" id="qna_brd_seq" name="qna_brd_seq" class="form-control"
 										th:value="${qna.qna_brd_seq}" readonly >
+									<input type="hidden" id="qna_brd_regdate" name="qna_brd_regdate" class="form-control"
+										th:value="${qna.qna_brd_regdate}" readonly >
+									<input type="hidden" id="user_email" name="user_email" class="form-control"
+										th:value="${qna.user_email}" readonly >
+										<input type="hidden" id="qna_brd_ref" name="qna_brd_ref" class="form-control"
+										th:value="${qna.qna_brd_ref}" readonly >
+										<input type="hidden" id="qna_brd_depth" name="qna_brd_depth" class="form-control"
+										th:value="${qna.qna_brd_depth}" readonly >
+										<input type="hidden" id="qna_brd_step" name="qna_brd_step" class="form-control"
+										th:value="${qna.qna_brd_step}" readonly >	
 									</span>
 									 <span	class="list-group-item-text article-id" th:text="${qna.qna_brd_regdate}"></span>
 							</div>
-							<h2 class="panel-title"  th:text="${qna.qna_brd_title}"></h2>
+							<input type="text" class="panel-title" th:value="${qna.qna_brd_title}" name="qna_brd_title" id="qna_brd_title"></input>
+							<!-- <h2 class="panel-title"  th:text="${qna.qna_brd_title}"></h2> -->
 							<hr style="margin-right: 45px;" />
-
-							<p th:text="${qna.qna_brd_content}"></p>
+							<textarea id="summernote" name="qna_brd_content" class="form-control"
+										th:value="${qna.qna_brd_content}" th:placeholder="${qna.qna_brd_content}" ></textarea>
 							
 							<div class="button">
 								<button type="button" class="btn mb-1 btn-info"
@@ -85,5 +97,22 @@
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script>
+$(document).ready(function() {
+	  $('#summernote').summernote({
+	        minHeight: 500,
+	        maxHeight: null,
+	        focus: true, 
+	        lang : 'ko-KR'
+	  });
+	});
+</script>
+<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
+출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
+<script>
+function postForm() {
+    $('textarea[name="qna_brd_content"]').val($('#summernote').summernote('code'));
+}
+</script>
 </body>
 </html>

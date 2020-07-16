@@ -28,6 +28,8 @@ public class QnaBrdController {
 	public void setQnabrdservice(QnaBrdService qnabrdservice) {
 		this.qnabrdservice = qnabrdservice;
 	}
+	//유저 문의게시판//
+	//리스트
 	@RequestMapping("/myQnaList")
 	public String getMyQnaList(Model model, HttpServletRequest request) {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
@@ -67,10 +69,55 @@ public class QnaBrdController {
 		return "myBodiary/myQnaForm";
 	}
 	@RequestMapping(value="/myQnaForm", method=RequestMethod.POST)
-	public String adminExcsFormOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception {
+	public String myQnaFormOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception {
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+	    String user_email = user.getUser_email();
+	    QnaBrdDto.setUser_email(user_email);
 		qnabrdservice.qnaInsert(QnaBrdDto, request);
-		return "redirect:adminExcsList";
+		return "redirect:myQnaList";
 	}
+	
+	//삭제
+	@RequestMapping(value="/myQnaFormDelete", method=RequestMethod.GET)
+	public String myQnaFormDelete(String qna_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+		int seq = Integer.parseInt(qna_brd_seq);
+		return qnabrdservice.qndBrdDelete(seq);
+	}
+	
+		//어드민 Qna시작
+		@RequestMapping("/adminQnaList")
+		public String adminQnaList(Model model, HttpServletRequest request) {
+			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		    String user_email = user.getUser_email();
+		    List<QnaBrdDto> list = qnabrdservice.adminQnalists(user_email);
+		    System.out.println(list);
+			model.addAttribute("list", list);
+			return "admin/adminQnaList";
+		}
+		//어드민 detail
+		@RequestMapping(value="/adminQnaDetail", method=RequestMethod.GET)
+		public String adminQnaDetail(String qna_brd_seq, Model model) {
+			int seq = Integer.parseInt(qna_brd_seq);
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			model.addAttribute("qna", qna);
+			System.out.println(qna);
+			return "admin/adminQnaDetail";
+		}
+		
+		//어드민 답변완료
+		@RequestMapping(value="/adminQnaDetailOK", method=RequestMethod.POST)
+		public String adminQnaAnsOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception {
+			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		    String user_email = user.getUser_email();
+		    QnaBrdDto.setUser_email(user_email);
+			return qnabrdservice.qnaAnsInsert(QnaBrdDto);
+		}
+
+		@RequestMapping("/adminUserBrdList")
+		public String adminUserBrdList() {
+			return "admin/adminUserBrdList";
+		}
+		//어드민 Qna끝
 	/*
 	 * @RequestMapping("/myQnaForm")
 	 * 

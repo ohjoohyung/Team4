@@ -40,7 +40,9 @@
 
 					<div class="card">
 						<div class="card-body" style="padding-left: 45px; padding-top: 55px;">
+							
 							<form action="myQnaEdit">
+							
 							<input name="qna_brd_seq" th:value="${qna.qna_brd_seq}" type="hidden">
 							<div class="content-tags" style="margin-bottom: 21px;">
 								<span class="list-group-item-text article-id"
@@ -51,7 +53,7 @@
 							<h2 class="panel-title"  th:text="${qna.qna_brd_title}"></h2>
 							<hr style="margin-right: 45px;" />
 
-							<p th:text="${qna.qna_brd_content}"></p>
+							<p th:utext="${qna.qna_brd_content}"></p>
 							
 							<div class="button">
 								<button type="button" class="btn mb-1 btn-info"
