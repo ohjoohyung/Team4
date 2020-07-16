@@ -16,4 +16,7 @@ public interface QnaBrdDao {
 	
 	//문의상세보기
 	public QnaBrdDto getQnaBrdBySeq(int qna_brd_seq) throws ClassNotFoundException, SQLException;
+	
+	//문의수정
+	public int updateQnaBrd(QnaBrdDto QnaBrdDto) throws ClassNotFoundException, SQLException;
 }

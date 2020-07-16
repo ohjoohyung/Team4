@@ -1,5 +1,6 @@
 package kr.or.bodiary.qnaBrd.service;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -65,5 +66,13 @@ private SqlSession sqlsession;
 						
 				return  QnaBrdDto;
 			}
+			
+	//운동 수정하기 서비스 함수 (update)
+	 public String qnaBrdEdit(QnaBrdDto QnaBrdDto , HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+				
+			QnaBrdDao QnaBrdDao = sqlsession.getMapper(QnaBrdDao.class);
+			QnaBrdDao.updateQnaBrd(QnaBrdDto);
+			return "redirect:myQnaDetail?qna_brd_seq="+QnaBrdDto.getQna_brd_seq();
+				}
 
 }

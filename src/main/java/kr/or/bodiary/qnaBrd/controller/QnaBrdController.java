@@ -1,5 +1,6 @@
 package kr.or.bodiary.qnaBrd.controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -54,6 +55,10 @@ public class QnaBrdController {
 		model.addAttribute("qna", qna);
 		System.out.println(qna);
 		return "myBodiary/myQnaEdit";
+	}
+	@RequestMapping(value="/myQnaEdit", method=RequestMethod.POST)
+	public String qnaBrdEditOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws ClassNotFoundException, IOException, SQLException {
+		return qnabrdservice.qnaBrdEdit(QnaBrdDto, request);
 	}
 		
 	@RequestMapping(value="/myQnaForm", method=RequestMethod.GET)

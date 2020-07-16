@@ -23,6 +23,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	FROM qnabrd 
   	WHERE qna_brd_seq=#{qna_brd_seq}
   	</select>
+  	
+  	<!-- 문의사항 업데이트 -->
+  	<update id="updateQnaBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+    	UPDATE qnabrd 
+    	SET qna_brd_seq=#{qna_brd_seq}, 
+    		user_email=#{user_email}, 
+    		qna_brd_title=#{qna_brd_title} , 
+    		qna_brd_content=#{qna_brd_content},
+    		qna_brd_regdate=#{qna_brd_regdate},
+    		qna_brd_ref=#{qna_brd_ref},
+    		qna_brd_depth=#{qna_brd_depth},
+    		qna_brd_step=#{qna_brd_step}
+    	WHERE qna_brd_seq=#{qna_brd_seq}
+    </update>
     
     <!-- <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
        select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')
