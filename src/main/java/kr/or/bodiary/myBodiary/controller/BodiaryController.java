@@ -135,7 +135,7 @@ public class BodiaryController {
 	public String myBodiaryForm(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
 		System.out.println("안녕");
 		System.out.println("컨트롤 : "+bodiarydto.toString());
-		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
+		/* System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString()); */
 		
 		
 		
