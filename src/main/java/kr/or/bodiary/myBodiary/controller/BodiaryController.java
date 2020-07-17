@@ -63,34 +63,9 @@ public class BodiaryController {
 	public String myGoalList() {
 		return "myBodiary/myGoalList";
 	}
-
-	@RequestMapping("/myHistory")
-	public String myHistory() {
-		return "myBodiary/myHistory";
-	}
-
-	@RequestMapping("/myHistoryDetail")
-	public String myHistoryDetail() {
-		return "myBodiary/myHistoryDetail";
-	}
-
-	@RequestMapping("/myHistoryEditForm")
-	public String myHistoryEditForm() {
-		return "myBodiary/myHistoryEditForm";
-	}
-
-	@RequestMapping("/myHistoryRoutine")
-	public String myHistoryRoutine() {
-		return "myHistory/myHistoryRoutine";
-	}
-
-	@RequestMapping("/myHistoryFreeBoard")
-	public String myHistoryFreeBoard() {
-		return "myHistory/myHistoryFreeBoard";
-	}
-
 	
-
+	    
+	
 
 	
 	@RequestMapping("/myRoutineList")
