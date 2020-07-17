@@ -28,8 +28,20 @@ public interface RoutineBrdDao {
    
    //입력
    public int routineCmtInsert(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   public int routineCmtModifyUpdate(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   public int routineCmtDelete(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   
+   //대댓 입력
+   public int routineReCmtInsert(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   
    //레퍼...
    public int routineCmtReferUpdate(int routine_cmt_ref) throws ClassNotFoundException, SQLException;
+   //스탭 
+   public int routineCmtStepUpdate(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   
    //상세
    public RoutineBoardCommentDto routineCmtSelect(int routine_cmt_seq) throws ClassNotFoundException, SQLException;
+   
+   //리스트
+   public List<RoutineBoardCommentDto> routineCmtList(int routine_brd_seq) throws ClassNotFoundException, SQLException;
 }
