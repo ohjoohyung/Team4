@@ -41,11 +41,12 @@ public class QnaBrdController {
 	}
 
 	@RequestMapping(value="/myQnaDetail", method=RequestMethod.GET)
-	public String adminExcsDetail(String qna_brd_seq, Model model) {
+	public String myQnaDetail(String qna_brd_seq, Model model) {
 		int seq = Integer.parseInt(qna_brd_seq);
 		QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
 		model.addAttribute("qna", qna);
-		System.out.println(qna);
+		List<QnaBrdDto> list = qnabrdservice.qnaBrdDetailAns(seq);
+		model.addAttribute("list", list);
 		return "myBodiary/myQnaDetail";
 	}
 
@@ -101,7 +102,10 @@ public class QnaBrdController {
 			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
 			model.addAttribute("qna", qna);
 			System.out.println(qna);
+			List<QnaBrdDto> list = qnabrdservice.qnaBrdDetailAns(seq);
+			model.addAttribute("list", list);
 			return "admin/adminQnaDetail";
+			
 		}
 		
 		//어드민 답변완료
@@ -111,12 +115,40 @@ public class QnaBrdController {
 		    String user_email = user.getUser_email();
 		    QnaBrdDto.setUser_email(user_email);
 			return qnabrdservice.qnaAnsInsert(QnaBrdDto);
+			
 		}
-
-		@RequestMapping("/adminUserBrdList")
-		public String adminUserBrdList() {
-			return "admin/adminUserBrdList";
+		
+		@RequestMapping(value="/adminQnaModify", method=RequestMethod.POST)
+		public String adminQnaModify(QnaBrdDto QnaBrdDto, Model model) {
+			int seq = QnaBrdDto.getQna_brd_ref();
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			model.addAttribute("qna", qna);
+			System.out.println(qna);
+			
+			QnaBrdDto list = qnabrdservice.qnaBrdDetailAnsModify(QnaBrdDto);
+			model.addAttribute("list", list);
+			 
+			return "admin/adminQnaModify";
 		}
+		@RequestMapping(value="/adminQnaModifyOK", method=RequestMethod.POST)
+		public String adminQnaModifyOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws ClassNotFoundException, IOException, SQLException {
+			return qnabrdservice.adminQnaModifyOK(QnaBrdDto, request);
+		}
+		
+		@RequestMapping(value="/adminQnaDelete", method=RequestMethod.POST)
+		public String adminQnaDelete(QnaBrdDto QnaBrdDto, Model model) {
+			int seq = QnaBrdDto.getQna_brd_ref();
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			model.addAttribute("qna", qna);
+			System.out.println(qna);
+			
+			QnaBrdDto list = qnabrdservice.qnaBrdDetailAnsModify(QnaBrdDto);
+			model.addAttribute("list", list);
+			 
+			return "admin/adminQnaModify";
+		}
+		
+		
 		//어드민 Qna끝
 	/*
 	 * @RequestMapping("/myQnaForm")

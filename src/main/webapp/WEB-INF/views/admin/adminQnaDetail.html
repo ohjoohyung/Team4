@@ -72,6 +72,45 @@
 					</div>
 
 				</div>
+				<div class="container" th:each="qna : ${list}">
+					
+					<div class="card" >
+						<div class="card-body">
+							<h3 style="color: black; margin-bottom: 15px;" th:text="${qna.qna_brd_title}"></h3>
+							<hr style="margin-right: 45px;" />
+							<div>
+							
+							<form action="adminQnaModify" method="post">
+							
+							<input name="qna_brd_seq" th:value="${qna.qna_brd_seq}" type="hidden">
+							<input type="hidden"  th:value="${qna.user_email}" name="user_email">	
+							<input type="hidden"  value="답변입니다" name="qna_brd_title">
+							<input type="hidden"  th:value="${qna.qna_brd_content}" name="qna_brd_content">
+							<input name="qna_brd_step" th:value="${qna.qna_brd_step}" type="hidden">
+							<input name="qna_brd_regdate" th:value="${qna.qna_brd_regdate}" type="hidden">
+							<input name="qna_brd_depth" th:value="${qna.qna_brd_depth}" type="hidden">
+							<input name="qna_brd_ref" th:value="${qna.qna_brd_ref}" type="hidden">
+							<input type="hidden"  th:value="${qna.qna_brd_answer}" name="qna_brd_answer">		
+								<span id="adminok" class="badge badge-success px-2"
+									style="margin-bottom: 10px;">admin</span>
+									<button type="submit" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									>수정하기</button>
+							
+									
+									<button type="button" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									th:onclick="#">삭제하기</button>
+									<!-- <a th:href="@{/oreder/details(id=${orderInfo.seq})}">></a> -->
+
+									</form>
+							</div>
+							<article class="answer" itemprop="articleBody"
+								style="color: black;"  th:text="${qna.qna_brd_content}">
+							</article>
+						</div>
+					</div>
+				</div>
 				
 				<form action="adminQnaDetailOK" method="post">
 				

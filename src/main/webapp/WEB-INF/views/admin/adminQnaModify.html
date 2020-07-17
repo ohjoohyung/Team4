@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+	
+<style>
+.container {
+	padding: 0px;
+}
+
+#content-body2 {
+	background-color: white;
+	margin-left: 29px;
+	margin-top: 29px;
+	height: 15%;
+}
+
+.button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 30px;
+	margin-bottom: 35px;
+	margin-right: 45px;
+}
+</style>
+
+
+
+<body>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+	
+			
+			<div class="content-body p-4">
+
+				<div class="container">
+
+					<div class="card">
+						<div class="card-body"
+							style="padding-left: 45px; padding-top: 55px;">
+						
+							
+							<input name="qna_brd_seq" th:value="${qna.qna_brd_seq}" type="hidden">
+							<div class="content-tags" style="margin-bottom: 21px;">
+								<span class="list-group-item-text article-id"
+									style="margin-right: 530px">
+									<span th:text="${qna.qna_brd_seq}"></span></span>
+									 <span	class="list-group-item-text article-id" th:text="${qna.qna_brd_regdate}"></span>
+							</div>
+							<h2 class="panel-title"  th:text="${qna.qna_brd_title}"></h2>
+							<hr style="margin-right: 45px;" />
+
+							<p th:utext="${qna.qna_brd_content}"></p>
+							
+							<div class="button">
+								<button type="button" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									onclick="location.href='adminQnaList'">목록보기</button>
+								<!-- <button type="submit" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right;">답글달기</button> -->
+							</div>
+
+
+
+						</div>
+
+
+
+					</div>
+
+				</div>
+				<div class="container">
+					
+					<div class="card" >
+						<div class="card-body">
+							<h3 style="color: black; margin-bottom: 15px;" th:text="${qna.qna_brd_title}"></h3>
+							<hr style="margin-right: 45px;" />
+							<div>
+							<form action="adminQnaModifyOK" method="post">
+							
+							
+							<input name="qna_brd_seq" th:value="${list.qna_brd_seq}" type="hidden">
+							<input type="hidden"  th:value="${list.user_email}" name="user_email">	
+							<input type="hidden"  value="답변입니다" name="qna_brd_title">
+							<input name="qna_brd_step" th:value="${list.qna_brd_step}" type="hidden">
+							<input name="qna_brd_regdate" th:value="${list.qna_brd_regdate}" type="hidden">
+							<input name="qna_brd_depth" th:value="${list.qna_brd_depth}" type="hidden">
+							<input name="qna_brd_ref" th:value="${list.qna_brd_ref}" type="hidden">
+							<input type="hidden"  th:value="${list.qna_brd_answer}" name="qna_brd_answer">		
+								
+							<div class="card" style=" height: 280px;">
+							<div class="card-body"
+								style="padding-right: 30px; padding-left: 30px;">
+							<div class="basic-form">
+								<div class="form-group">
+
+										<textarea class="form-control h-150px" name="qna_brd_content" 
+										rows="12" id="comment" th:text="${list.qna_brd_content}">
+                                            </textarea>
+                                            <button type="submit" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									>수정하기</button>
+							
+									
+									<button type="button" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									th:onclick="#">삭제하기</button>
+								</div>
+									</div>
+								</div>
+							</div>
+							
+									
+									</form>
+							</div>
+						</div>
+					</div>
+				</div>
+		</div>
+				 <!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+	</div>
+
+	<!-- 기본 폼 완성 -->
+<!-- 공통 스크립트-->
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+	
+</body>
+</html>
