@@ -6,6 +6,10 @@ import kr.or.bodiary.chat.dto.NotYet;
 
 
 public interface ChatDao {
-	public NotYet getUser(String id) throws ClassNotFoundException, SQLException;
+	
+	//답변이 안된 문의 개수 가져오기
+	public int getNotAnswerCount() throws ClassNotFoundException, SQLException;
+	
+	//답변 
 
 }

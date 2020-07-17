@@ -14,6 +14,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import kr.or.bodiary.user.dto.UserDto;
+
 
 
 
@@ -42,20 +44,20 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		System.out.println("하이");
-		String userid = (String)session.getAttributes().get("userid");
-		log(userid + " 접속");
+		UserDto user = (UserDto)session.getAttributes().get("currentUser");
+		log(user.getUser_email() + " 접속");
 		log(session.toString());
-		users.put(userid, session); //userid 와 session 저장
+		users.put(user.getUser_email(), session); //userid 와 session 저장
 	}	
 	
 	//연결해제
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		String userid = (String)session.getAttributes().get("userid");
+		UserDto user = (UserDto)session.getAttributes().get("currentUser");
 		if(session.getId() != null) {
-			if(users.containsKey(userid)) {
-				users.remove(userid); //연결해제된 id 삭제
-				log(userid + " 해제");
+			if(users.containsKey(user.getUser_email())) {
+				users.remove(user.getUser_email()); //연결해제된 id 삭제
+				log(user.getUser_email() + " 해제");
 			}
 		}
 	}
