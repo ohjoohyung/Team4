@@ -15,4 +15,8 @@ public interface FreeBrdReplyDao {
 	
 	//댓글 Delete
 	public void delete(Map map) throws Exception;
+	
+	//현재 접속한 유저가쓴 댓글목록 가져오기 
+	public List<FreeBrdReplyDTO> c_replyList(String user_email) throws Exception;
+	
 }

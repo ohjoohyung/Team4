@@ -151,5 +151,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM diary where DATE_FORMAT(diary_date,"%Y-%m-%d") = CURDATE() and user_email = #{user_email}
 	</select>
 	
+	 <!-- 루틴 자랑게시판 리스트  불러오기-->
+    <select id="MyroutineBoardList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">  
+		SELECT routine_brd_seq,routine_brd_title,routine_brd_regdate,routine_brd_hit,brd_image1,brd_image2,brd_rec
+		FROM routineboard 
+		WHERE user_email = #{user_email}
+		ORDER BY routine_brd_seq desc 
+	</select>
 	
 </mapper>

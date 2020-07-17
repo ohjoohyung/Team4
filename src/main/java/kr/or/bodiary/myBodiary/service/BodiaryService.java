@@ -1,10 +1,8 @@
 package kr.or.bodiary.myBodiary.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,19 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import kr.or.bodiary.chat.dto.NotYet;
+import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
+import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.myBodiary.dto.BodiaryDto;
-import kr.or.bodiary.myBodiary.dto.DailyMealDto;
-import kr.or.bodiary.user.dao.UserDao;
+import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.user.dto.UserDto;
 
 
@@ -39,7 +39,47 @@ private SqlSession sqlsession;
 		this.sqlsession = sqlsession;
 	}
 	
+	//카테고리(자유) 게시판 전체 게시물 총개수 불러오기 
+	public int allFreeBrdCount_M(String user_email) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		return FreeBrd.getFreeBoardListCnt_M(user_email);
+	}
 	
+	//카테고리(자유) 게시판 전체 게시물 List 형태로 불러오기 
+	public List<FreeBrdDTO> allFreeBrd_P(Pagination pagination) throws Exception {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		return FreeBrd.allFreeBrd_P(pagination);
+	}
+	
+	 //내가쓴글(자유)게시판 글삭제하기 서비스 함수
+	 public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
+		 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			FreeBrd.freeBrdDelete(seq);
+			return "redirect:myHistory";
+	}
+	 
+	 //내가쓴 댓글(자유게시판) 전체 가져오기 
+	 public List<FreeBrdReplyDTO> replyList(String user_email) throws Exception {
+		 	FreeBrdReplyDao FreeBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
+			return FreeBrdReply.c_replyList(user_email);
+	}
+	 
+	//루틴 자랑 게시판 리스트 가져오기 
+	public List<RoutineBoardUserJoinDto> routineBoardList(String user_email) throws ClassNotFoundException, SQLException {
+		
+		List<RoutineBoardUserJoinDto> rlist = null;
+		
+		try {
+			BodiaryDao routinebrddao = sqlsession.getMapper(BodiaryDao.class);
+			rlist = routinebrddao.MyroutineBoardList(user_email);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rlist;
+	} 
+	 
 	//음식 검색하기
 	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);

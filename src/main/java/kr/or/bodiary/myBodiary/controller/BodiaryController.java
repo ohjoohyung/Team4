@@ -1,14 +1,10 @@
 package kr.or.bodiary.myBodiary.controller;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,23 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-
-import kr.or.bodiary.chat.dto.NotYet;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
+import kr.or.bodiary.freeBrd.dto.Pagination;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.myBodiary.dto.BodiaryDto;
-import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
-import kr.or.bodiary.user.service.UserService;
 
 
 @Controller
@@ -64,9 +60,77 @@ public class BodiaryController {
 		return "myBodiary/myGoalList";
 	}
 	
-	    
-	
+	 //내가 쓴글,댓글 보기(자유게시판) 
+	@RequestMapping("/myHistory")
+	public String myHistory(HttpServletRequest request
+							,Model model
+							,@RequestParam(defaultValue = "1")int page
+							,@RequestParam(required = false,defaultValue = "title")String searchType
+							,@RequestParam(required = false,defaultValue = "0")int cateGory
+							) throws Exception {
+		
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		String user_email = user.getUser_email();
+		System.out.println("유저 이메일"+user_email);
+		
+		int totalListCnt = bodiaryservice.allFreeBrdCount_M(user_email); //카테고리 게시판 전체 게시물
+		
+		
+		// ******************* 페이징 처리 ****************************************//
+		//Pagination 객체 생성 (파라미터 값으로 총게시물수 , 현재 페이지를 받는다)
+		Pagination pagination = new Pagination();
+		pagination.pageInfo(totalListCnt, page);
+		pagination.setUser_email(user_email);
 
+		// ******************* 페이징 처리 ****************************************//
+	
+	
+		List<FreeBrdDTO> freeBrdList = bodiaryservice.allFreeBrd_P(pagination);
+		
+		//내가쓴 댓글 가져오기(페이징 처리 안됨)  
+		List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.replyList(user_email);
+		
+		model.addAttribute("pagination",pagination);
+		model.addAttribute("freeBrdReplyList",freeBrdReplyList);
+		model.addAttribute("freeBrdList",freeBrdList);
+		
+		
+		return "myBodiary/myHistory";
+	}
+		
+	//내가 쓴글 삭제(자유게시판)
+	@RequestMapping("/myHistoryDelete")
+	public String myHistoryDelete(String seq) {
+		String url="redirect:myBodiary/myHistory";
+		
+		//트랜잭션 처리 .... 코드 수정...... 글 삭제 서비스 호출
+		try {
+					url = bodiaryservice.freeBrdDelete(seq);
+		}catch (Exception e) {
+					System.out.println("에러발생...");
+				    System.out.println(e.getMessage());
+		}
+		
+		//예외 발생에 상관없이 목록 페이지 새로고침 처리
+		return url;
+	}
+
+	//내가 쓴글 리스트 보기(루틴자랑 게시판)
+	@RequestMapping("/myHistoryRoutine")
+	public String myHistoryRoutine(Model model,HttpServletRequest request) throws Exception{
+		
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		String user_email = user.getUser_email();
+		
+		List<RoutineBoardUserJoinDto> routineBrdList = bodiaryservice.routineBoardList(user_email);
+
+		
+		model.addAttribute("routineBrdList",routineBrdList);
+		
+		return "myBodiary/myHistoryRoutine";
+	}    
+	
+	
 	
 	@RequestMapping("/myRoutineList")
 	public String getMyRoutineList() {

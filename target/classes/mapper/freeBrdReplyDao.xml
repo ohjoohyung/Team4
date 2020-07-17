@@ -25,6 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	 		from freeboardcomment 
    	 		where free_brd_seq=#{seq} AND brd_cmt_seq=#{cmt};
    	 </delete>
+   	 
+   	 <!-- 현재 접속한 유저가쓴 댓글목록 가져오기 -->
+	 <select id="c_replyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
+		 	select * 
+			from FreeBoardComment 
+			where user_email=#{user_email} 
+			order by brd_cmt_seq desc;
+	 </select>
+	 
 </mapper>
 
 

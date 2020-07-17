@@ -7,6 +7,7 @@ import java.util.List;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.myBodiary.dto.BodiaryDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 
@@ -48,4 +49,14 @@ public interface BodiaryDao {
 	
 	//오늘 일지 작성했는지 확인하기
 	public int todatBodiaryCount(String user_email) throws ClassNotFoundException, SQLException;
+	
+	//내 루틴자랑 게시판 리스트 가져오기
+	public List<RoutineBoardUserJoinDto> MyroutineBoardList(String user_email) throws ClassNotFoundException, SQLException;
 }
+
+
+
+
+
+
+
