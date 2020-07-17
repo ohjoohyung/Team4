@@ -48,7 +48,7 @@ private SqlSession sqlsession;
 	}
 	
 	//루틴 정보 불러오기
-	public List<RoutineJoinDto> getRoutine(String routine_cart_seq) throws ClassNotFoundException, SQLException {
+	public List<RoutineJoinDto> getRoutine(int routine_cart_seq) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		System.out.println("루틴");
 		return bodiarydao.getRoutine(routine_cart_seq);
@@ -75,11 +75,6 @@ private SqlSession sqlsession;
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 	
 		
-		if(bodiarydto.getDiary_pubchk() == null) {
-			bodiarydto.setDiary_pubchk("N");
-		} else {
-			bodiarydto.setDiary_pubchk("Y");
-		}
 		String filename = bodiarydto.getFile().getOriginalFilename();
 		
 		System.out.println(filename);
@@ -105,17 +100,20 @@ private SqlSession sqlsession;
 			bodiarydao.writeDailyMeal(list);
 			
 			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+			
 			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 			bodiarydto.setUser_email(user.getUser_email());
-			int result = bodiarydao.writeBodiary(bodiarydto);
-			
-			 System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
-			 System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
-			if(result > 0) { 
-				url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
-			} else { 
-				url = "redirect:myBodiaryForm";
-			}
+			int diary_seq = bodiarydao.writeBodiary(bodiarydto);
+			System.out.println(diary_seq);
+			user.setUser_weight(bodiarydto.getDiary_today_weight());
+			url = "redirect:myBodiaryDetail?diary_seq="+diary_seq;
+			/*
+			 * System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
+			 * System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
+			 * if(result > 0) { url =
+			 * "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); } else { url
+			 * = "redirect:myBodiaryForm"; }
+			 */
 
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -182,7 +180,7 @@ private SqlSession sqlsession;
 	//일지 삭제하기
 	public String myBodiaryDelete(String diary_seq) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		bodiarydao.deleteBodiary(diary_seq);
+		bodiarydao.deleteBodiary(Integer.parseInt(diary_seq));
 		return "redirect:myBodiaryMain";
 	}
 	
@@ -195,12 +193,12 @@ private SqlSession sqlsession;
 	
 	//일지 상세정보 
 	public BodiaryDto getBodiary(String diary_seq) throws ClassNotFoundException, SQLException { 
-		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class); 
-		return bodiarydao.getBodiary(diary_seq); 
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);		
+		return bodiarydao.getBodiary(Integer.parseInt(diary_seq)); 
 		}
 	
 	//식단 불러오기
-	public List<DailyMealFoodJoinDto> getDailyMeal(String meal_cart_seq) throws ClassNotFoundException, SQLException {
+	public List<DailyMealFoodJoinDto> getDailyMeal(int meal_cart_seq) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.getDailyMeal(meal_cart_seq);
 	}

@@ -1,6 +1,7 @@
 package kr.or.bodiary.myBodiary.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -14,10 +15,10 @@ import lombok.ToString;
 public class BodiaryDto {
 
 	private int diary_seq;
-	private String meal_cart_seq;
-	private String diary_today_weight;
+	private int meal_cart_seq;
+	private int diary_today_weight;
 	private String diary_content;
-	private String routine_cart_seq;
+	private int routine_cart_seq;
 	private String diary_pubchk;
 	private String diary_condition;
 	

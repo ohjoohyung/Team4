@@ -78,7 +78,6 @@
                                             <tr>
                                                 <th scope="col">순번</th>
                                                 <th scope="col">제목</th>
-                                                <th scope="col">닉네임</th>
                                                 <th scope="col">답변여부</th>
                                                 <th scope="col">작성일</th>
                                                 <th scope="col">수정</th>
@@ -89,8 +88,18 @@
 								         <td th:text="${qna.qna_brd_seq}"></td>    
 								         <!-- <td th:text="${qna.qna_brd_title}"></td> -->
 								         <td><a th:href="@{/myQnaDetail(qna_brd_seq=${qna.qna_brd_seq})}"><span th:text="${qna.qna_brd_title}"></span></a> </td>
-								         <td th:text="${qna.user_email}"></td>
-								         <td th:text="${qna.qna_brd_ref}"></td>
+								         
+								         
+								         <!-- <td th:text="${qna.qna_brd_answer}"></td> -->
+								    	 
+								    	 <th:block th:if="${qna.qna_brd_answer == 'Y'}">
+										    <td><span class="badge badge-info px-2">답변완료</span></td>
+										</th:block>
+										<th:block th:if="${qna.qna_brd_answer == 'N'}">
+										    <td><span class="badge badge-danger px-2">미확인</span></td>
+										</th:block>
+								    	 
+								    	 
 								    	 <td th:text="${qna.qna_brd_regdate}"></td>
 								      	 <td><a th:href="@{/myQnaEdit(qna_brd_seq=${qna.qna_brd_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
 								    	 <td><a th:href="@{/myQnaFormDelete(qna_brd_seq=${qna.qna_brd_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td>

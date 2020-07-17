@@ -16,5 +16,6 @@ public class QnaBrdDto {
 	private int qna_brd_ref;
 	private int qna_brd_depth;
 	private int qna_brd_step;
+	private String qna_brd_answer;
 	
 }

@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 public class FoodDto {
-	private String food_seq;
+	private int food_seq;
 	private String food_name;
 	private String food_cal;
 }

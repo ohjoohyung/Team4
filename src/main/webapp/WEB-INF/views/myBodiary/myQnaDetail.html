@@ -72,20 +72,18 @@
 
 				</div>
 
-				<div class="container">
-
-					<div class="card">
+				<div class="container" th:each="qna : ${list}">
+					
+					<div class="card" >
 						<div class="card-body">
-							<h3 style="color: black; margin-bottom: 15px;">답변</h3>
+							<h3 style="color: black; margin-bottom: 15px;" th:text="${qna.qna_brd_title}"></h3>
 							<hr style="margin-right: 45px;" />
 							<div>
 								<span id="adminok" class="badge badge-success px-2"
 									style="margin-bottom: 10px;">admin</span>
 							</div>
 							<article class="answer" itemprop="articleBody"
-								style="color: black;">
-								<p>SI가 원래 그렇습니다.. 구현해서 돌아가게 하는게 목표지 뭐 기초분석 이런건 중히 여기질 않음..</p>
-								<p>그런걸 원한다면 이직하셔야죠..</p>
+								style="color: black;"  th:text="${qna.qna_brd_content}">
 							</article>
 						</div>
 					</div>

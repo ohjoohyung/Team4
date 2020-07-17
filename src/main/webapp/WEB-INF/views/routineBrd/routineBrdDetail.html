@@ -209,24 +209,12 @@
    			
    		});
    		
-   		/* ------------------------------------------------------------------------ */
-   		/* 댓글 삭제 */
-	   /*<![CDATA[*/
-		function deleteCmtCheck() {
-			 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
-// 				location.href="routineBrdDelete?routine_brd_seq="+/*[[ ${routineBoard.routine_brd_seq} ]]*/;
-			 	return false;
-			 }else{   //취소
-			     return false;
-			 }
-		}	
-		/*]]>*/
+   		/* ------------------------------------------------------------------------ */		
    		$(function(){
    			//루틴 자랑 게시판 댓글 불러오기
    			getReplyList();
    			
    		});
-		
    		/* 댓글 출력 함수 */
    		/*<![CDATA[*/
    		function printData(data){
@@ -243,9 +231,11 @@
    				
    				/* depth 체크 */
    				let depthCss = "";
+   				let depthStyle="";
    				let reCmt ="";
    				if(this.routine_cmt_depth == 1){
-   					depthCss += "ml-5";
+   					depthCss += " ml-4 pl-5";
+   					depthStyle=" background-color : #f9f9ff;";
    				}else if(this.routine_cmt_depth == 0){
    					/* 답글쓰기 버튼 */
    					reCmt += "<span class='text-primary reCmtBtn reCmtBtn_"+this.routine_cmt_seq+"' id='reCmtBtn' style='cursor:pointer' routine_cmt_seq ='"+ this.routine_cmt_seq +"' user_nickname='"+ this.user_nickname +"' routine_cmt='"+ this.routine_cmt +"'>답글 쓰기</span>";
@@ -260,33 +250,33 @@
    				
    				if(session_email == this.user_email) {
    					idCss +="<span class='badge badge-primary'>나</span>";
-   					dropdownItem += "<span class='dropdown-item' id='cmtModifyBtn'"
-   								  + " routine_cmt_seq='" + this.routine_cmt_seq + "' user_nickname='"+this.user_nickname+"' routine_cmt='"+ this.routine_cmt +"'  >수정</span>"
-                    		 	  + "<span class='dropdown-item' id='cmtDeleteBtn' onclick='deleteCmtCheck()'>삭제</span>";
+   					dropdownItem += "<span class='dropdown-item modify_seq_"+this.routine_cmt_seq+"' id='cmtModifyBtn'";
+   					dropdownItem += " routine_cmt_seq='" + this.routine_cmt_seq + "' user_email='"+this.user_email+"' routine_cmt='"+ this.routine_cmt +"' routine_brd_seq='"+this.routine_brd_seq+"' onclick='modifyCmt(this)'>수정</span>";
+   					dropdownItem += "<span class='dropdown-item delete_seq_"+this.routine_cmt_seq+"' routine_cmt_seq='"+this.routine_cmt_seq+"' routine_brd_seq='"+this.routine_brd_seq+"'id='cmtDeleteBtn' onclick='deleteCmtCheck(this)'>삭제</span>";
    				}else{
    					dropdownItem += "<a class='dropdown-item' id='cmtReportBtn'>신고</a>";
    				}
 //     				console.log(dropdownItem);
    				/* session_email == 작성자 케이스 */
    				
-   				a += "<div class='cmt "+ depthCss +"' style='padding-top:20px; padding-bottom: 30px; border-top : 1px solid #ecf0f9;'>"
-   				a += "<div class='row'>"
-   				a += "   <div class='col-11'>"
-   				a += "      <b>"+ this.user_nickname +"</b>&nbsp;&nbsp;" + idCss +" <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>"
-   				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>"
-   				a += "   </div>"
-   				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>"
-   				a += "      <span class='activity active'></span>"
-   				a += "		<i class='icon-options-vertical'></i>"
-   				a += "   </div>"
-   				a += "   <div class='basic-dropdown'>"
-   				a += "		<div class='dropdown-menu'>"
-   				a += "         " + dropdownItem + ""
-   				a += "      </div>"
-   				a += "   </div>"
-   				a += "</div>"
-   				a += "<div>" + this.routine_cmt + "</div>"
-   				a += "</div>"
+   				a += "<div class='cmt"+ depthCss +"' style='padding-top:20px; padding-bottom: 30px; border-top : 1px solid #ecf0f9;"+depthStyle+"'>";
+   				a += "<div class='row'>";
+   				a += "   <div class='col-11'>";
+   				a += "      <b>"+ this.user_nickname +"</b>&nbsp;&nbsp;" + idCss +" <span><i class='icon-clock'></i> "+ this.routine_cmt_date +"</span>";
+   				a += "   	<span>&nbsp;&nbsp;"+reCmt+"</span>";
+   				a += "   </div>";
+   				a += "   <div class='user-img c-pointer position-relative' data-toggle='dropdown'>";
+   				a += "      <span class='activity active'></span>";
+   				a += "		<i class='icon-options-vertical'></i>";
+   				a += "   </div>";
+   				a += "   <div class='basic-dropdown'>";
+   				a += "		<div class='dropdown-menu'>";
+   				a += "         " + dropdownItem + "";
+   				a += "      </div>";
+   				a += "   </div>";
+   				a += "</div>";
+   				a += "<div class='mt-3 routin_cmt_"+this.routine_cmt_seq+"'>" + this.routine_cmt + "</div>";
+   				a += "</div>";
 
    			});
    			
@@ -347,6 +337,93 @@
    		});
    		/*]]>*/
    		
+   		/* 댓글 수정 폼 불러오기 */
+		/*<![CDATA[*/
+		function modifyCmt(data){
+			console.log('나와라예~'+$(data).attr('user_email'));
+			
+// 			 
+			
+			let a = "";
+			let session_email = /*[[${session.currentUser.user_email}]]*/; 
+			
+			var textModifyContent = $(data).parent().parent().parent().next();
+			
+// 			console.log(textModifyContent.children('.routineCmtTextarea').length);
+			if(textModifyContent.children('.routineCmtModifyTextarea').length == 0){
+				console.log("textarea 없음")
+				a += "<textarea class='w-100 p-4 l-border-1 mb-2 routineCmtModifyTextarea cmt_modify_"+$(data).attr('routine_cmt_seq')+"'>";
+				a += $(data).attr('routine_cmt');
+				a += "</textarea>";
+				a += "<button class='btn btn-outline-dark w-10 mr-2' id='cmtModifyCancel' routine_cmt='"+$(data).attr('routine_cmt')+"'>취소</button>";
+				a += "<button class='btn btn-primary w-90' id='cmtModifyUdateBtn'";
+				a += "routine_cmt_seq='"+$(data).attr('routine_cmt_seq')+"' routine_brd_seq='"+$(data).attr('routine_brd_seq')+"' ";
+				a += "user_email='"+$(data).attr('user_email')+"'>수정하기</button>";
+				$(data).parent().parent().parent().next().html(a);
+			}
+		};
+		/*]]>*/
+		
+		/* 댓글 수정하기 */
+		/*<![CDATA[*/
+		$(document).on('click', '#cmtModifyUdateBtn', function(){
+			console.log('수정버튼눌렸음');
+			var data = 
+				{
+					routine_cmt_seq	: $(this).attr('routine_cmt_seq'),
+					routine_brd_seq : $(this).attr('routine_brd_seq'),
+					routine_cmt : $('.cmt_modify_'+$(this).attr('routine_cmt_seq')).val(),
+					user_email : /*[[${session.currentUser.user_email}]]*/,
+					
+				};
+			console.log(data);
+			$.ajax(
+				{
+					url : "routineCmtModifyUpdate",
+					dataType : "JSON",
+					type : "POST",
+					data : data,
+					success : function (responsedata)
+						{
+							printData(responsedata);
+						}
+				}	
+			);
+		});
+		/*]]>*/
+		/* 댓글 수정 취소하기 */
+		$(document).on('click', '#cmtModifyCancel', function(){
+			var a = $(this).attr('routine_cmt');
+			$(this).parent().html(a);	
+		});
+		/* 댓글 삭제 */
+		function deleteCmtCheck(data) {
+			 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
+				deleteCmt(data);
+			 }else{   //취소
+			     return false;
+			 }
+		}	
+		function deleteCmt(data){
+			var data2 = {
+					routine_cmt_seq : $(data).attr('routine_cmt_seq'),
+					routine_brd_seq : $(data).attr('routine_brd_seq')
+			}
+			$.ajax(
+					{
+						url : "routineCmtDelete",
+						dataType : "JSON",
+						type : "POST",
+						data : data2,
+						success : function(responsedata)
+							{
+								printData(responsedata);
+							}
+					}
+				);
+		}
+		
+		
    		//대댓글 창 불러오기
    		/*<![CDATA[*/
    		$(document).on('click', '#reCmtBtn', function(){

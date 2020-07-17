@@ -192,7 +192,7 @@
 												th:each="item : ${routineList}">
 
 											
-												<option>선택없음</option>
+												<option value="0">선택없음</option>
 												<option th:text="${item.routine_cart_title}"
 													th:value="${item.routine_cart_seq}"
 													th:selected="${item.routine_cart_seq}== ${bodiary.routine_cart_seq}" 

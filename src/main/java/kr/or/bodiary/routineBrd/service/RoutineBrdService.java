@@ -188,7 +188,7 @@ private SqlSession sqlsession;
 	}
    
 	  
-	   //------------------------------------------- 댓글 -------------------------------------------------
+	//------------------------------------------- 댓글 -------------------------------------------------
 	   //리스트 불러오기 
 		public List<RoutineBoardCommentDto> routineCmtList (int routine_brd_seq) throws IOException, ClassNotFoundException, SQLException{
 			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
@@ -229,6 +229,37 @@ private SqlSession sqlsession;
 		   System.out.println(routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq"))));
 		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
 	   }
+	   //업데이트
+	   public List<RoutineBoardCommentDto> routineCmtModifyUpdate (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
+		   try {
+			int cmtUpdate = routinebrddao.routineCmtModifyUpdate(routineCmtDto);
+			System.out.println("업데이트 수정 여부 : " + cmtUpdate);
+			
+		   } catch (Exception e) {
+			   e.getMessage();
+		   }
+		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+	   }
+	   //삭제
+	   public List<RoutineBoardCommentDto> routineCmtDelete (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
+		   try {
+			   int cmtDelete = routinebrddao.routineCmtDelete(routineCmtDto);
+			   System.out.println("삭제 여부 : " + cmtDelete);
+			   
+		   } catch (Exception e) {
+			   e.getMessage();
+		   }
+		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+	   }
+	   
+	   
+	   
+	   
+	   
 	   //대댓 인서트 
 	   public List<RoutineBoardCommentDto> routineReCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
@@ -245,7 +276,6 @@ private SqlSession sqlsession;
 			}
 		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
 	   }
-	  
 
 
 }

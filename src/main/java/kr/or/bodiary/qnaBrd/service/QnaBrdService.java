@@ -69,6 +69,20 @@ private SqlSession sqlsession;
 						
 				return  QnaBrdDto;
 			}
+			//문의 상세보기 서비스 함수
+			public List<QnaBrdDto> qnaBrdDetailAns(int qna_brd_seq) {
+				List<QnaBrdDto> list=null;
+				try {
+						QnaBrdDao QnaBrdDao = sqlsession.getMapper(QnaBrdDao.class);
+						list = QnaBrdDao.getQnaBrdBySeqAns(qna_brd_seq);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+						
+				return  list;
+			}
 			
 	//문의 수정하기 서비스 함수 (update)
 	 public String qnaBrdEdit(QnaBrdDto QnaBrdDto , HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
@@ -109,7 +123,7 @@ private SqlSession sqlsession;
 		public String qnaAnsInsert(QnaBrdDto QnaBrdDto) throws Exception {
 		QnaBrdDao QnaBrdDao = sqlsession.getMapper(QnaBrdDao.class);
 		QnaBrdDao.insertQnaAnsBrd(QnaBrdDto);
-		System.out.println(QnaBrdDto);
+		QnaBrdDao.QnaRepYN(QnaBrdDto.getQna_brd_ref());
 		return "redirect:adminQnaList";
 		}
 

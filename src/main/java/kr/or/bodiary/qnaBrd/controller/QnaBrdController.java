@@ -45,7 +45,8 @@ public class QnaBrdController {
 		int seq = Integer.parseInt(qna_brd_seq);
 		QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
 		model.addAttribute("qna", qna);
-		System.out.println(qna);
+		List<QnaBrdDto> list = qnabrdservice.qnaBrdDetailAns(seq);
+		model.addAttribute("list", list);
 		return "myBodiary/myQnaDetail";
 	}
 

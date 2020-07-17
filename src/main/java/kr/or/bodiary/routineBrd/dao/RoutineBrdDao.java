@@ -31,10 +31,13 @@ public interface RoutineBrdDao {
    //오늘의 Hit 게시글 가져오기
    public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException;
    
- // ---------------------- 댓글 -------------------------
+// ---------------------- 댓글 -------------------------
    
    //입력
    public int routineCmtInsert(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   public int routineCmtModifyUpdate(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   public int routineCmtDelete(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
+   
    //대댓 입력
    public int routineReCmtInsert(RoutineBoardCommentDto routineCmtDto) throws ClassNotFoundException, SQLException;
    

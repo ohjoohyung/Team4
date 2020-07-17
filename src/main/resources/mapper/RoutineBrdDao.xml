@@ -60,13 +60,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	
-   <!-- ================================댓글================================-->
+  <!-- ================================댓글================================-->
    <!-- 작성 -->
    <insert id="routineCmtInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto" useGeneratedKeys="true" keyProperty="routine_cmt_seq">
    		insert into RoutineBoardComment
    			(routine_brd_seq, user_email, user_nickname, routine_cmt,routine_cmt_date,routine_cmt_ref,routine_cmt_depth,routine_cmt_step)
    		values (#{routine_brd_seq},#{user_email},#{user_nickname},#{routine_cmt},now(),0,0,0)
    </insert>
+   <!-- 댓글 수정 -->
+   <update id="routineCmtModifyUpdate">
+   	update RoutineBoardComment
+   	set routine_cmt = #{routine_cmt}
+   	where routine_cmt_seq = #{routine_cmt_seq}
+   </update>
+   <delete id="routineCmtDelete">
+   	delete from RoutineBoardComment
+   	where routine_cmt_ref=#{routine_cmt_seq}
+   </delete>
+   
    <!-- 대댓글 작성 -->
    <insert id="routineReCmtInsert" parameterType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto" useGeneratedKeys="true" keyProperty="routine_cmt_seq">
    		<selectKey order ="BEFORE" keyProperty="routine_cmt_step" resultType="int">
@@ -103,5 +114,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		where routine_brd_seq = #{routine_brd_seq}
    		ORDER BY routine_cmt_ref DESC , routine_cmt_step ASC
    </select>
-   
 </mapper>

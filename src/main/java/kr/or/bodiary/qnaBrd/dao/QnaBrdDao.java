@@ -19,6 +19,9 @@ public interface QnaBrdDao {
 	//문의상세보기
 	public QnaBrdDto getQnaBrdBySeq(int qna_brd_seq) throws ClassNotFoundException, SQLException;
 	
+	//문의상세보기 답변
+	public  List<QnaBrdDto> getQnaBrdBySeqAns(int qna_brd_seq) throws ClassNotFoundException, SQLException;
+	
 	//문의수정
 	public int updateQnaBrd(QnaBrdDto QnaBrdDto) throws ClassNotFoundException, SQLException;
 	
@@ -30,5 +33,9 @@ public interface QnaBrdDao {
 
 	//답변 작성
 	public int insertQnaAnsBrd(QnaBrdDto QnaBrdDto) throws ClassNotFoundException, SQLException;
+	
+	//답변 작성시 YN업데이트
+	public int QnaRepYN(int qna_brd_ref) throws ClassNotFoundException, SQLException;
+	
 		
 }

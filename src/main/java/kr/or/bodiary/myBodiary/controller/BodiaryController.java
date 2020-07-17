@@ -158,6 +158,26 @@ public class BodiaryController {
 		Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(bodiarydto.getDiary_date()); //String to date
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); //new format
 		String dateNewFormat = sdf.format(date);
+		
+		
+		
+		//분을 시간으로 변환
+		  for(RoutineJoinDto r : routinelist) {
+			if(r.getExcs_kind().equals("C")) { 
+				String hour = ""; 
+				if((Integer.parseInt(r.getRoutine_exercise_hour()) % 60) == 0) { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간"; 
+				} else { 
+					if((Integer.parseInt(r.getRoutine_exercise_hour()) / 60) == 0) { 
+					hour = r.getRoutine_exercise_hour() + "분"; 
+				}else { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간 30분"; 
+					} 
+				} r.setRoutine_exercise_hour(hour); 
+			
+				} 
+			}
+		
 
 		
 		bodiarydto.setDiary_date(dateNewFormat);
@@ -207,7 +227,7 @@ public class BodiaryController {
 	@RequestMapping("/getRoutine")
 	public List<RoutineJoinDto> getRoutine(@RequestParam String routine_cart_seq) throws ClassNotFoundException, SQLException {
 		System.out.println("routine_cart_seq:"+routine_cart_seq);
-		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(routine_cart_seq);
+		List<RoutineJoinDto> routinelist = bodiaryservice.getRoutine(Integer.parseInt(routine_cart_seq));
 		System.out.println(routinelist.toString());
 		return routinelist;
 	}
@@ -226,7 +246,7 @@ public class BodiaryController {
 	@ResponseBody
 	@RequestMapping("/getDailyMeal")
 	public List<DailyMealFoodJoinDto> getDailyMeal(@RequestParam String meal_cart_seq) throws ClassNotFoundException, SQLException {
-		List<DailyMealFoodJoinDto> dailyMealList = bodiaryservice.getDailyMeal(meal_cart_seq);
+		List<DailyMealFoodJoinDto> dailyMealList = bodiaryservice.getDailyMeal(Integer.parseInt(meal_cart_seq));
 		return dailyMealList;
 		
 	}

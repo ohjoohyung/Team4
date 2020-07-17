@@ -9,11 +9,11 @@ import lombok.Data;
 
 @Data
 public class RoutineBrdDto {
-   private String routine_brd_seq;
+   private int routine_brd_seq;
    private String user_email;
    private String routine_brd_title;
    private String routine_brd_content;
-   private String routine_cart_seq;
+   private int routine_cart_seq;
    private String routine_brd_regdate;
    private String brd_image1;
    private String brd_image2;
