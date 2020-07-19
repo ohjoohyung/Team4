@@ -123,10 +123,11 @@ public class BodiaryController {
 	public String myBodiaryForm(Model model , HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 	    String user_email = user.getUser_email();
-
+	    
 	    System.out.println("유저 정보 : " +user_email);
 	    List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
 	    model.addAttribute("routineList", list);
+	    model.addAttribute("user", user);//추가
 	    return "myBodiary/myBodiaryForm";
 	}
 	

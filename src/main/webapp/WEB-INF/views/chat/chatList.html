@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="content pt-4">
+			<div class="row ">
+				<div class="col-12 mb-4">
+					<button type="button" class="btn btn-primary btn-lg w-100"
+						data-toggle="modal" data-target=".bd-example-modal-lg">방만들기</button>
+					<!-- Large modal -->
+					<div class="modal fade bd-example-modal-lg" tabindex="-1"
+						role="dialog" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span>&times;</span>
+									</button>
+								</div>
+								<div class="modal-body p-4">
+									<form method="POST">
+										<label for="chat_title">채팅방 타이틀</label> <input id="chat_title"
+											type="text" class="form-control input-lg w-100"
+											placeholder="몇 자 내로 작성하세요"> <label for="chat_people"
+											class="mt-3">채팅 인원수</label> <input id="chat_people"
+											class="form-control" type="number" min="2" max="10">
+										<div class="row mt-3">
+											<div class="col-4">
+												<label for="toggle-secret">비공개 여부</label><br> <label
+													class="switch"> <input id="toggle-secret"
+													type="checkbox"> <span class="slider round"></span>
+												</label>
+											</div>
+											<div class="col secret-input-box"></div>
+										</div>
+									</form>
+
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-outline-light">취소</button>
+									<button type="button" class="btn btn-primary">방만들기</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col">
+					<div class="card border-primary" style="height: 280px;">
+						<div class="card-header">카테고리 줄거?</div>
+						<div class="card-body">
+							<h3 class="">채팅방 제목제목</h3>
+							<div class="mt-3">
+								<a href="#" class="btn btn-outline-primary">입장하기</a>
+							</div>
+						</div>
+						<div class="card-footer pl-4">
+							<i class="icon-people mt-2"></i>&nbsp;&nbsp;&nbsp;<small>0
+								/ 12</small>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card border-primary" style="height: 280px;">
+						<!-- 						<div class="card-header">카테고리 줄거?</div> -->
+						<div class="card-body">
+							<div class="chat-title" style="height: 75%;">
+								<h3 class="">
+									채팅방 제목제목 <br>이게 최종본<br>카드입니다
+								</h3>
+							</div>
+							<div class="">
+								<a href="chatRoom" class="btn btn-outline-primary btn-lg">입장하기</a>
+							</div>
+						</div>
+						<div class="card-footer pl-4">
+							<i class="icon-people mt-2"></i>&nbsp;&nbsp;<small>0 / 12</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small>비밀 방</small>
+						</div>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card border-primary">
+						<div class="card-header">Header</div>
+						<div class="card-body">
+							<h3 class="">Primary card title</h3>
+							<p class="card-text">Some quick example text to build on the
+								card title and make up the bulk of the card's content.</p>
+							<a href="#" class="btn btn-primary">Go somewhere</a>
+						</div>
+						<div class="card-footer">
+							<small>Last updateed 3 min ago</small>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script>
+		$('#toggle-secret')
+				.change(
+						function() {
+							a = "";
+							if ($('#toggle-secret').is(':checked')) {
+								a += "<label for='secret-input'>비밀번호</label><input class='form-control'type='text' id='secret-input' placeholder='네 자리의 숫자를 입력하세요'>"
+								$('.secret-input-box').html(a);
+							} else {
+								$('.secret-input-box').html(a);
+							}
+
+						})
+	</script>
+</body>
+</html>

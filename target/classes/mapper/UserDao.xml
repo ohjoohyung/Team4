@@ -16,6 +16,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) 
 		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1, 'regular')
 	</insert>
+	<!-- 비밀번호 확인  -->
+	<select id="selectPwd" resultType="String">
+		select user_pwd
+		from User
+		where user_email= #{user_email}
+	</select>
+	<!-- 회원비번 수정 -->
+	<update id="updatePwd">
+		update User
+		set user_pwd = #{user_pwd}
+		where user_email = #{user_email}
+	</update>
+	<!-- 회원닉네임 수정 -->
+	<update id="updateNick">
+		update User
+		set user_nickname = #{user_nickname}
+		where user_email = #{user_email}
+	</update>
 	<!-- 회원정보 수정 -->
 	<update id="updateUser">
 		update User

@@ -159,7 +159,7 @@ public class RoutineBrdController {
 			return routinebrdservice.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
 		}
 
-		// 댓글 인서트 나중에 리턴값 리팩토링해야함 댓글 불러오기 함수 넣어서...
+		// 댓글 인서트
 		@ResponseBody
 	   @RequestMapping(value = "routineCmtInsert", method = RequestMethod.POST)
 	   public List<RoutineBoardCommentDto> routineCmtInsert(RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {

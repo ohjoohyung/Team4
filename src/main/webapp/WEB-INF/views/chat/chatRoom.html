@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="content pt-4">
+			<div class="row ">
+				<div class="col-lg-3">
+					<div>
+						<div class="p-3">
+							<div class="chat-title mt-3">
+								<h3>채팅방 제목 타이틀 dd</h3>
+							</div>
+							<hr>
+							<div class="mt-2">
+								<i class="icon-people mt-2"></i>&nbsp;&nbsp;<small>0 /
+									12</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <i
+									class="icon-lock mt-2"></i>&nbsp;&nbsp;<small>비밀 방</small>
+							</div>
+							<div class="mt-3 mb-4">
+								<button class="btn btn-outline-primary w-100" type="button">나가기</button>
+							</div>
+						</div>
+					</div>
+					<div class="card">
+						<div class="card-header">
+							채팅 리스트나 접속 유저이름
+						</div>
+						<div class="card-body">
+							뭐<br>
+							적당히<br>
+							개설된<br>
+							채팅 리스트들
+						</div>
+					</div>
+				</div>
+				<div class="col chat-content-box m-3" style=";">
+					<div class="chat-content">
+						<div class="chatting your-chat">
+							asdfad
+						</div><small>12 : 10</small>
+						<div class="chatting your-chat">
+							asdfasdfasdfasdfasdfasdfaaaaadasdfasdfa<br>
+							asdfasdfasdfasdfasdfasdfasd
+						</div><small>12 : 10</small>
+						<div class="chatting my-chat">
+							asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasd
+						</div>
+						<hr>
+						<div class="center">
+							<span class="small">누구 님이 입장하셨습니다.</span>
+						</div>
+					</div>
+					<div class="chat-input-box row">
+						<div class="col-10 pr-0">
+						<input type="text" class="form-control chat-input input-lg pl-4 pr-4" placeholder="매너채팅 ㅇㅇ">
+						</div>
+						<div class="col pl-1">
+							<button type="button" class="btn btn-lg btn-dark chat-input-btn w-100">전송</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 기본 폼 완성 -->
+
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script>
+		$('#toggle-secret')
+				.change(
+						function() {
+							a = "";
+							if ($('#toggle-secret').is(':checked')) {
+								a += "<label for='secret-input'>비밀번호</label><input class='form-control'type='text' id='secret-input' placeholder='네 자리의 숫자를 입력하세요'>"
+								$('.secret-input-box').html(a);
+							} else {
+								$('.secret-input-box').html(a);
+							}
+
+						})
+	</script>
+</body>
+</html>

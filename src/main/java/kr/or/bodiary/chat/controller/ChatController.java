@@ -31,6 +31,14 @@ public class ChatController {
 	public String getSearchExcs() {
 		return "searchExcs/searchExcs";
 	}
+	@RequestMapping("/chatList")
+	public String chatList() {
+		return "chat/chatList";
+	}
+	@RequestMapping("/chatRoom")
+	public String chatRoom() {
+		return "chat/chatRoom";
+	}
 
 
 	

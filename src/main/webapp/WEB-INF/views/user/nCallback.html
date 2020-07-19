@@ -5,6 +5,8 @@
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
+
+
 <script type="text/javascript">
   var naver_id_login = new naver_id_login("AYWBY1dmBWBJwgS4UqNE", "http://localhost:8090/bodiary/nCallback");
   // 접근 토큰 값 출력
@@ -17,6 +19,13 @@
     alert(naver_id_login.getProfileData('nickname'));
     alert(naver_id_login.getProfileData('gender'));
     
+    var data = {
+    	user_email : naver_id_login.getProfileData('email'),
+    	user_nickname : naver_id_login.getProfileData('nickname'),
+    	user_gender : naver_id_login.getProfileData('gender')
+    }
+    
+    console.log(data);
     window.location.replace("http://" + window.location.hostname + 
             ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/bodiary/main");
   }

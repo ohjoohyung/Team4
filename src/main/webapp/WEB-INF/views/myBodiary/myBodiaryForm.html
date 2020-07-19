@@ -13,32 +13,16 @@
    <div class="bodiary-wrapper">
       <!-- 공통 sidenav -->
       <div class="row mt-4">
-         <nav class="col-3 ml-3 mr-0 sidenav">
+         <nav class="col-lg-3 ml-3 mr-0 sidenav">
             <aside id="sidebar" class="js-custom-scroll side-nav"
                th:replace="common/sidebar :: sidebarFragment"></aside>
          </nav>
          <!-- myBodiary 내 공통 목표 띠  -->
-         <div class="col mr-5">
+         <div class="col-lg-8">
             <!-- 목표 인원수 + 목표 설정하기  -->
-            <div class="card card-body pt-0 pb-0 pl-4">
-               <div class="row">
-                  <div class="col pl-3 mt-3 mb-2">
-                     현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이
-                     목표를 달성하고 있어요!
-                  </div>
-                  <!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
-                  <div class="col-1 mt-2 mb-2">
-                     <button class="btn btn-primary btn-flat">
-                        <i class="mdi mdi-plus"></i>
-                     </button>
-                  </div>
-               </div>
-            </div>
-            <!--  -->
-
             <div class="col-lg-12">
             
-               <div class="card">
+               <div class="card bodiary-form p-4">
                
                   <div class="d-flex justify-content-center">
 
@@ -47,103 +31,79 @@
                         <div class="basic-form mt-5">
                            <form action="myBodiaryForm" method="post" id="diaryForm"
                               enctype="multipart/form-data">
-                              <div class="form-row">
+                              <div class="form-row mb-3">
                               
-                                 <div class="form-group col-md-4">
-                                    <div class="card">
-                                       
-                                          
-                                       
+                                 <div class="form-group col-md-5 mr-3">
+                                      이미지 선택&nbsp;&nbsp;*<br>
+                                             <label class="btn btn-outline-dark btn-file w-100 pt-2 mt-2"><i class="icon-plus"></i> 
+                                                <input type="file" id="imgFile" name="file" onchange="readURL(this); fileCheck(this);" accept="image/*"/>
+                                             </label>
                                        <div class="form-group">
-                                          이미지 선택&nbsp;&nbsp;*
-                                          <div class="mt-3">
-                                             <label class="btn btn-outline-light btn-file"><i
-                                                class="icon-plus"></i> <input type="file" id="imgFile"
-                                                name="file" onchange="readURL(this); fileCheck(this);" accept="image/*"/></label> <img id="img"
-                                                
-                                                alt="your image" style="width:300px; height:200px;"/>
-                                                <div class="tdimg">
-                                                
-                                                </div>
-
+                                          <div class="mt-3 card" style="border-radius:16px; overflow : hidden; min-height : 200px;">
+                                                <img id="img" alt="your image" style="width:100%;"/>
+                                                <div class="tdimg"></div>
                                           </div>
                                        </div>
-
-                                    </div>
                                  </div>
-
-                                 <div class="form-group col-md-4">
-                                    <label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="number" min="20" max="300" step = '1' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'
-                                       id="diary_today_weight" name="diary_today_weight"
-                                       class="form-control input-default" placeholder="">
-                                       <div class="tdweight"></div>
-                                 </div>
-
-                                 <div class="form-group col-md-4">
-                                    <label>오늘의 컨디션</label> <select
-                                       class="form-control input-default" id="diary_condition"
-                                       name="diary_condition">
-                                       <option>좋아요</option>
-                                       <option>평범해요</option>
-                                       <option>나빠요</option>
-                                    </select>
-                                 </div>
-
-                              </div>
-                              <div class="form-group mt-5">
+								<div class="col">
+									<div class="row">
+	                                 <div class="form-group col">
+	                                    <label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="number" min="20" max="300" step = '1' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'
+	                                       id="diary_today_weight" name="diary_today_weight"
+	                                       class="form-control input-default" placeholder="">
+	                                       <div class="tdweight"></div>
+	                                       <div class="before-weight">
+	                                       		<div class="weight-text">
+	                                       		</div>
+	                                       </div>
+	                                 </div>
+	
+	                                 <div class="form-group col">
+	                                    <label>오늘의 컨디션</label> <select
+	                                       class="form-control input-default" id="diary_condition"
+	                                       name="diary_condition">
+	                                       <option>좋아요</option>
+	                                       <option>평범해요</option>
+	                                       <option>나빠요</option>
+	                                    </select>
+	                                 </div>
+								 	</div>
+							 	<div class="form-group col-12 p-0">
                                  <label>오늘의 한마디</label>
                                  <textarea class="form-control input-default"
                                     placeholder="최대 150자" id="diary_content"
-                                    name="diary_content" rows="5"></textarea>
+                                    name="diary_content" rows="7"></textarea>
+                              	</div>
+							 	</div>
                               </div>
-
-
+                              <hr>
                               <div class="row mt-5">
-                                 <div class="col-6">
-                                    <div class="form-group">
-
-
-                                       <label>오늘 먹은 음식</label>
-                                       <div class="row">
-                                          <div class="col-3">
-                                             <select class="form-control input-default" id="meal"
-                                                name="meal">
-                                                <option selected="selected">아침</option>
-                                                <option>점심</option>
-                                                <option>저녁</option>
-                                                <option>간식</option>
-                                             </select>
-                                          </div>
-                                       </div>
-                                       <div class="mt-3">
-                                          <input type="search" class="form-control input-default"
-                                             placeholder="Search" id="foodsearch" name="foodsearch">
-                                          <div class="table-responsive" id="foodBox"></div>
-                                       </div>
-                                    </div>
-
-
-                                 </div>
-                                 <div class="col-6 pt-4">
-                                    <div class="row mt-3">
+                              	<div class="col-lg-4 col-md-6">
+                              	<h2><span th:if="${session.currentUser != null}" th:text="${session.currentUser.user_nickname}"></span>님 !<br>오늘의 식단을<br> 기록해보세요 :)</h2>
+                              	</div>
+                              	<div class="col ">
+                              	<!-- 그래프 뿌릴 곳 -->
+                              		
+                              	</div>
+                              </div>
+                              <div class="row mt-5">
+                                 <div class="col">
+                                    <div class="row mt-4">
                                        <div class="col">
-                                          <h3>아침</h3>
-                                          
-
+                                          <h4>아침</h4>
                                        </div>
-
                                     </div>
                                     <hr>
                                     <div class="p-2">
-
-
                                        <div class="food-form outline-primary mt-1 p-1"
                                           id="morning"></div>
 
                                     </div>
+                                   </div>
+                                   <div class="col">
                                     <div class="row mt-4">
                                        <div class="col">
-                                          <h3>점심</h3>
+                                          <h4>점심</h4>
 
                                        </div>
 
@@ -157,10 +117,11 @@
                                        </div>
 
                                     </div>
-
+									</div>
+									<div class="col">
                                     <div class="row mt-4">
                                        <div class="col">
-                                          <h3>저녁</h3>
+                                          <h4>저녁</h4>
 
                                        </div>
 
@@ -175,28 +136,60 @@
                                        </div>
 
                                     </div>
-
-                                    <div class="row mt-4">
-                                       <div class="col">
-                                          <h3>간식</h3>
-
-                                       </div>
-
-                                    </div>
-                                    <hr>
-                                    <div class="p-2">
-
-
-                                       <div class="food-form outline-primary mt-1 p-1"
-                                          id="dessert"></div>
-
-                                    </div>
-                                 </div>
+									</div>
+									<div class="col">
+	                                    <div class="row mt-4">
+	                                       <div class="col">
+	                                          <h4>간식</h4>
+	                                       </div>
+	                                    </div>
+	                                    <hr>
+	                                    <div class="p-2">
+	                                       <div class="food-form outline-primary mt-1 p-1" id="dessert"></div>
+	                                    </div>
+                                 	</div>
                               </div>
+								 <div class="">
+								 <div class="k-progress ">
+                              		<div class="col-12" id="idealcal">
+		                              <label>당신의 권장 칼로리</label>
+		                              
+		                              <p th:if="${user.user_height}<=100">""키를 다시 입력하셔야겠어요""</p>
+		                              <p id="totalcal" th:if="${user.user_height}>100" th:text="(${user.user_height}-100)*0.9*35" >kcal</p>
+                              		</div>
+                             		<div class="col-12" id="foodprogress">	
+                                 		<div class="progress" style="height: 9px;">
+                                          <div id="progress-bar bg-danger" class="progress-bar bg-danger" style="width: 0%;" role="progressbar"><span class="sr-only"></span>
+                                          </div>
+                                        </div>
+                              		</div>
+                              	</div>
+                                    <div class="form-group">
+	                                  <label>오늘 먹은 음식</label>
+                                       <div class="row">
+                                          <div class="col-lg-2">
+                                             <select class="form-control input-default" id="meal"
+                                                name="meal">
+                                                <option selected="selected">아침</option>
+                                                <option>점심</option>
+                                                <option>저녁</option>
+                                                <option>간식</option>
+                                             </select>
+                                          </div>
+                                       
+                                       <div class="col">
+                                          <input type="search" class="form-control input-default"
+                                             placeholder="Search" id="foodsearch" name="foodsearch">
+                                          <div class="table-responsive" id="foodBox"></div>
+                                       </div>
+                                       </div>
+                                    </div>
 
+
+                                 </div>
                               <div class="form-group mt-5">
                                  <label>오늘의 루틴&nbsp;&nbsp;*</label>
-                                 <span>&nbsp;&nbsp;(루틴이 없다면 <a href="search">루틴 추가하러 가기</a>)</span> 
+                                 <span>&nbsp;&nbsp;루틴이 없다면 <a href="search">여기</a>를 눌러 루틴 추가하기</span> 
                                  <select id="routine_cart_seq"
                                     name="routine_cart_seq" class="form-control input-default"
                                     >
@@ -232,9 +225,11 @@
                                  </div>
                               </div> -->
 
-                              <div class="row mt-5">
+                              <div class="row mt-3 ">
                                  <div class="form-group col-md-6">
-                                    <label for="exampleFormControlTextarea1">유산소</label>
+                                 	<div class="routine-title">
+                                    <label for="exampleFormControlTextarea1"><h3>유산소</h3></label>
+                                    </div>
                                     <div class="cardio-cart p-2">
 
 
@@ -245,7 +240,9 @@
                                  </div>
 
                                  <div class="form-group col-md-6">
-                                    <label for="exampleFormControlTextarea2">무산소</label>
+                                    <div class="routine-title">
+                                    <label for="exampleFormControlTextarea1"><h3>무산소</h3></label>
+                                    </div>
                                     <div class="cardio-cart p-2">
 
 
@@ -280,7 +277,42 @@
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
-   <script type="text/javascript">
+<script type="text/javascript">
+   //덕추가 추가할때 progress바 추가
+   function drawProgress(food_seq,food_cal){
+      var totalcal = $('#totalcal').text();
+      //alert('제발요'+totalcal);나온다
+      var count = $('#count'+food_seq).val();
+      //alert('개수'+count) 나온다
+      var presentcal = count*food_cal;
+      //alert(presentcal); 나온다
+      var bar = document.getElementById("progress-bar bg-danger");
+      //alert(bar.style.width); 0%로 나옴
+      var origin = bar.style.width.slice(0,-1);
+      //alert(origin);
+      var after = Number(origin)+Number(presentcal*100/totalcal);
+      //alert(after);
+       if (Number(after>=100)){
+         after=100;
+         alert('과식하셨군요!!');
+      } 
+      bar.style.width = after+"%";
+      //alert(origin.slice(-3,-1));
+      //bar.style.width = presentcal*100/totalcal="%";
+      //alert(presentcal*100/totalcal+"%"); 나옴
+      //bar.style.width = presentcal*100/totalcal+"%";
+/*                var origin = bar.styale.width;
+      if(origin.slice(-3,-1)=100){
+         var originnum = 100;
+      }else{
+         var originnum = origin.slice(-3,-1);
+      };
+      alert(originnum); */
+      
+   }
+   
+   
+   //덕끝
    var validate = new Array;
    
          $(function(){
@@ -304,15 +336,16 @@
                         validate[1] = true;
                      }
                      */
-                     
                      if($('#diary_today_weight').val() >= 20 && $('#diary_today_weight').val() <= 300) {
                         validate[1] = true;
                         $('.tdweight').html('');
+                        $('.weight-text').html($('#diary_today_weight').val()+' kg');
                      }else {
                         validate[1] = false;
                         $('.tdweight')
                         .html(
-                              '<p style="color:red">몸무게는 30~300 사이의 수를 적어주세요.(kg 단위 제외)</p>');
+                              '<p style="color:red">30~300 사이의 수를 적어주세요.</p>');
+                        $('.weight-text').html('');
                      }
                      console.log(validate[1]);
                   }); 
@@ -369,7 +402,7 @@
                                  "<td>"+obj.food_cal+"</td>"+
                                  "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
 
-                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
+                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+"\""+obj.food_name+"\""+");drawProgress("+obj.food_seq+","+obj.food_cal+");'>추가</button>"+"</td><tr>";
                            });
                            table += "</table>";
                            $('#foodBox').append(table);
@@ -488,39 +521,39 @@
                         
                
                switch(meal) {
-				case 1 :
-					if($('#morning > div.row > div.'+food_name+'').text() == food_name) {
-						alert("이미 음식이 추가되어 있습니다.");
-						return false;
-					}
-					$('#morning').append(div);
-					number++;
-					break;
-				case 2 :
-					if($('#lunch > div.row > div.'+food_name+'').text() == food_name) {
-						alert("이미 음식이 추가되어 있습니다.");
-						return false;
-					}
-					$('#lunch').append(div);
-					number++;
-					break;
-				case 3 :
-					if($('#dinner > div.row > div.'+food_name+'').text() == food_name) {
-						alert("이미 음식이 추가되어 있습니다.");
-						return false;
-					}
-					$('#dinner').append(div);
-					number++;
-					break;
-				default :
-					if($('#dessert > div.row > div.'+food_name+'').text() == food_name) {
-						alert("이미 음식이 추가되어 있습니다.");
-						return false;
-					}
-					$('#dessert').append(div);
-					number++;
-					
-			}
+            case 1 :
+               if($('#morning > div.row > div.'+food_name+'').text() == food_name) {
+                  alert("이미 음식이 추가되어 있습니다.");
+                  return false;
+               }
+               $('#morning').append(div);
+               number++;
+               break;
+            case 2 :
+               if($('#lunch > div.row > div.'+food_name+'').text() == food_name) {
+                  alert("이미 음식이 추가되어 있습니다.");
+                  return false;
+               }
+               $('#lunch').append(div);
+               number++;
+               break;
+            case 3 :
+               if($('#dinner > div.row > div.'+food_name+'').text() == food_name) {
+                  alert("이미 음식이 추가되어 있습니다.");
+                  return false;
+               }
+               $('#dinner').append(div);
+               number++;
+               break;
+            default :
+               if($('#dessert > div.row > div.'+food_name+'').text() == food_name) {
+                  alert("이미 음식이 추가되어 있습니다.");
+                  return false;
+               }
+               $('#dessert').append(div);
+               number++;
+               
+         }
          }
             
             function delFood(num) {

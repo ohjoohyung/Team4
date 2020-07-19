@@ -13,6 +13,15 @@ public interface UserDao {
 	//----------- 회원 가입 ------------
 	public int insertUser(UserDto user) throws ClassNotFoundException, SQLException;
 
+	//----------- 유저 비번 수정전 비번 체크 -----------
+	public String selectPwd(String user_email) throws ClassNotFoundException, SQLException;
+	
+	//----------- 유저 비번 수정 -----------
+	public int updatePwd(UserDto user) throws ClassNotFoundException, SQLException;
+	
+	//----------- 유저 닉네임 수정 -----------
+	public int updateNick(UserDto user) throws ClassNotFoundException, SQLException;
+	
 	//----------- 유저 정보 수정 -----------
 	public int updateUser(UserDto user) throws ClassNotFoundException, SQLException;
 	

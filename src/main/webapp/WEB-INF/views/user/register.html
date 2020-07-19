@@ -65,7 +65,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                         <input type="email" class="form-control col-9 ml-3"  placeholder="사용할 이메일을 입력하세요" id="user_email" name="user_email" email_chk="fail">
                                     	<button type="button" class="btn btn-primary" id="emailCheck">이메일 확인</button>
                                     	<div class="tdemail"></div>
-                                    	<div id="emailChecking">
+                                    	<div id="emailChecking" class="col-12">
 	                                    	
                                     	</div>
                                     </div>
@@ -241,12 +241,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                            		return false;
                            } else {
                                alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
-                             $('#emailChecking').append(
-                           		"<input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'>"
-                            	+ "<button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button>"
-                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
-                               
-                               );
+                              	console.log($('#emailChecking').children().length);
+                               if($('#emailChecking').children().length == 0){
+	                             $('#emailChecking').append(
+	                           		"<div class='row mb-4'><div class='col'><input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'></div>"
+	                            	+ "<div class='col-3'><button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button></div></div>"
+	                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
+	                               
+	                               );
+                             };
 								/* $('#confirmNum').attr(type,'text');
 								$('#confirm').removeAttr('hidden'); */
                                $.ajax({

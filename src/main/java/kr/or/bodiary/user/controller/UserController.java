@@ -37,7 +37,10 @@ public class UserController {
 	}
 	
 	@RequestMapping("/nCallback")
-	public String naverCallback() {
+	public String naverCallback(UserDto user ,HttpServletRequest request) {
+		System.out.println("gd");
+		System.out.println();
+		
 		return "user/nCallback";
 	}
 	//------------- 회원가입 --------------
@@ -77,6 +80,19 @@ public class UserController {
 	@RequestMapping("/myPageEdit")
 	public String myPageEdit() {
 		return "myBodiary/myPageEdit";
+	}
+	@ResponseBody
+	@RequestMapping(value="updatePwd" , method=RequestMethod.POST)
+	public String pwdUpdate(UserDto user,HttpServletRequest request) {
+		System.out.println("유저 패스워드 수정하러 왔슴다~");
+		
+		return userService.updatePwd(user,request);
+	}
+	@ResponseBody
+	@RequestMapping(value="updateNick" , method=RequestMethod.POST)
+	public String updateNick(UserDto user,HttpServletRequest request) {
+		System.out.println("유저 닉네임 정보 수정하러 왔슴다~");
+		return userService.updateNick(user, request);
 	}
 	
 	//---------- 계정정보 외 프로필정보 수정 -----------

@@ -64,7 +64,61 @@ public class UserService {
 		}
 		return "redirect:/login";
 	}
-
+	
+	// ----------- 유저 비밀번호 수정 서비스 -----------
+	public String updatePwd(UserDto user, HttpServletRequest request) {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		String beforePwd = "";
+		String returnUrl = "";
+		String newPwd = request.getParameter("user_new_pwd");
+		try {
+			beforePwd = userdao.selectPwd(request.getParameter("user_email"));
+			//String으로 반환됨
+			if(bCryptPasswordEncoder.matches(request.getParameter("user_pwd"), beforePwd))  {
+				System.out.println("비밀번호 일치");
+//				if(request.getParameter("user_new_pwd")) {
+				user.setUser_pwd(bCryptPasswordEncoder.encode(newPwd));
+				userdao.updatePwd(user);
+				returnUrl = "redirect:/myBodiaryMain";
+//				}else{
+//					returnUrl ="8~20자에 특수문자가 반드시 포함된 영어 대소문자,숫자를 사용하세요";
+//				}
+				
+			}else {
+				System.out.println("비밀번호 불일치");
+				returnUrl = "redirect:/myPageEdit";
+			}
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return returnUrl;
+	}
+	
+	// ----------- 유저 닉네임 수정 서비스 -----------
+	public String updateNick(UserDto user, HttpServletRequest request) {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		int resultInt = 0;
+		String returnUrl = "";
+ 		try {
+			
+			user.setUser_email(request.getParameter("user_email"));
+			user.setUser_nickname(request.getParameter("user_nickname"));
+			resultInt = userdao.updateNick(user);
+			
+			if(resultInt > 0) {
+				returnUrl = "redirect:/myPageEdit";
+			}else {
+				returnUrl = "redirect:/myPageEdit";
+			}
+			
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return returnUrl;
+	}
 	// ----------- 준회원 유저정보 수정 서비스 -----------
 	@Transactional
 	public String updateUserAssociate(UserDto user, HttpServletRequest request) {
