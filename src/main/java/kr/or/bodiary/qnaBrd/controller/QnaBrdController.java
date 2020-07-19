@@ -41,7 +41,7 @@ public class QnaBrdController {
 	}
 
 	@RequestMapping(value="/myQnaDetail", method=RequestMethod.GET)
-	public String adminExcsDetail(String qna_brd_seq, Model model) {
+	public String myQnaDetail(String qna_brd_seq, Model model) {
 		int seq = Integer.parseInt(qna_brd_seq);
 		QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
 		model.addAttribute("qna", qna);
@@ -69,14 +69,15 @@ public class QnaBrdController {
 		System.out.println("myQnaForm 컨트롤러탐");
 		return "myBodiary/myQnaForm";
 	}
-	@RequestMapping(value="/myQnaForm", method=RequestMethod.POST)
-	public String myQnaFormOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception {
-		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-	    String user_email = user.getUser_email();
-	    QnaBrdDto.setUser_email(user_email);
-		qnabrdservice.qnaInsert(QnaBrdDto, request);
-		return "redirect:myQnaList";
-	}
+
+	/* 질문 insert 웹소켓으로 옮김
+	 * @RequestMapping(value="/myQnaForm", method=RequestMethod.POST) public String
+	 * myQnaFormOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception
+	 * { UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+	 * String user_email = user.getUser_email();
+	 * QnaBrdDto.setUser_email(user_email); qnabrdservice.qnaInsert(QnaBrdDto,
+	 * request); return "redirect:myQnaList"; }
+	 */
 	
 	//삭제
 	@RequestMapping(value="/myQnaFormDelete", method=RequestMethod.GET)
@@ -102,22 +103,59 @@ public class QnaBrdController {
 			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
 			model.addAttribute("qna", qna);
 			System.out.println(qna);
+			List<QnaBrdDto> list = qnabrdservice.qnaBrdDetailAns(seq);
+			model.addAttribute("list", list);
 			return "admin/adminQnaDetail";
+			
 		}
 		
-		//어드민 답변완료
-		@RequestMapping(value="/adminQnaDetailOK", method=RequestMethod.POST)
-		public String adminQnaAnsOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception {
-			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-		    String user_email = user.getUser_email();
-		    QnaBrdDto.setUser_email(user_email);
-			return qnabrdservice.qnaAnsInsert(QnaBrdDto);
+		/*
+		 * //어드민 답변완료 답변 insert 웹소켓으로 옮김
+		 * 
+		 * @RequestMapping(value="/adminQnaDetailOK", method=RequestMethod.POST) public
+		 * String adminQnaAnsOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws
+		 * Exception { UserDto user =
+		 * (UserDto)request.getSession().getAttribute("currentUser"); String user_email
+		 * = user.getUser_email(); QnaBrdDto.setUser_email(user_email); return
+		 * qnabrdservice.qnaAnsInsert(QnaBrdDto);
+		 * 
+		 * }
+		 */
+		
+		@RequestMapping(value="/adminQnaModify", method=RequestMethod.POST)
+		public String adminQnaModify(QnaBrdDto QnaBrdDto, Model model) {
+			int seq = QnaBrdDto.getQna_brd_ref();
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			model.addAttribute("qna", qna);
+			System.out.println(qna);
+			
+			QnaBrdDto list = qnabrdservice.qnaBrdDetailAnsModify(QnaBrdDto);
+			model.addAttribute("list", list);
+			 
+			return "admin/adminQnaModify";
 		}
-
-		@RequestMapping("/adminUserBrdList")
-		public String adminUserBrdList() {
-			return "admin/adminUserBrdList";
+		@RequestMapping(value="/adminQnaModifyOK", method=RequestMethod.POST)
+		public String adminQnaModifyOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws ClassNotFoundException, IOException, SQLException {
+			return qnabrdservice.adminQnaModifyOK(QnaBrdDto, request);
 		}
+		
+		@RequestMapping(value="/adminQnaDelete", method=RequestMethod.GET)
+		public String adminQnaDelete(String qna_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+			int seq = Integer.parseInt(qna_brd_seq);
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			int qnago = qna.getQna_brd_ref();
+			return qnabrdservice.qndBrdAnsDelete(seq,qnago);
+		}
+		
+		@RequestMapping(value="/adminQnaModDelete", method=RequestMethod.GET)
+		public String adminQnaModDelete(String qna_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+			int seq = Integer.parseInt(qna_brd_seq);
+			System.out.println(seq);
+			QnaBrdDto qna = qnabrdservice.qnaBrdDetail(seq);
+			int qnago = qna.getQna_brd_ref();
+			return qnabrdservice.qndBrdAnsDelete(seq,qnago);
+		}
+		
 		//어드민 Qna끝
 	/*
 	 * @RequestMapping("/myQnaForm")

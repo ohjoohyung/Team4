@@ -67,12 +67,14 @@
 				<!-- 시큐리티로 구분 반영 -->
 				
 				<div class="header-right mt-2 mr-3" >
+				
                     <ul class="clearfix">
                         
                         <li sec:authorize="hasRole('ROLE_REGULAR_USER')" class="icons dropdown"><a href="javascript:void(0)" data-toggle="dropdown">
                                 <i class="mdi mdi-bell-outline"></i>
                                 <span class="badge badge-pill gradient-2">3</span>
                             </a>
+                            <div id="alertArea"></div>
                             <div class="drop-down animated fadeIn dropdown-menu dropdown-notfication">
                                 <div class="dropdown-content-heading d-flex justify-content-between">
                                     <span class="">2 New Notifications</span>  
@@ -168,7 +170,61 @@
                 </div>
 			</div>
 		</div>
+		<!-- 세션에 저장된 유저 이메일 저장 -->
+				<th:block th:if="${session.currentUser != null}">
+				<input type="hidden" th:value="${session.currentUser.user_email}" id="user_email">
+				</th:block>
 	</nav>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if($('#user_email').val() != null) {
+				connect();	
+			}
+			
+		})
+		
+		var wsocket;
+		
+		function connect() {
+			wsocket = new WebSocket(
+					"ws://" + location.host + "/bodiary/alarm");
+			wsocket.onopen = onOpen;
+			wsocket.onmessage = onMessage;
+			wsocket.onclose = onClose;
+		}
+		function disconnect() {
+			wsocket.close();
+		}
+		
+		function onOpen(evt) {
+			send();
+		}
+		
+		function onMessage(evt) {
+			var data = evt.data;
+			appendMessage(data);
+		}
+		
+		function onClose(evt) {
+		}
+		
+		function send() {
+			wsocket.send("login");
+		}
+	
+		function appendMessage(msg) {
+			$("#alertArea").empty();
+			/* $("#alertArea").append(msg.substring(0,8) +"<a href='${pageContext.request.contextPath}/messageView.emp' style='color:white;'>"+ msg.substring(9,11) +"</a>"); */
+			$("#alertArea").append(msg);
+		
+		}
+
+	
+
+		
+</script>
 </th:block>
+
+
 
 </html>

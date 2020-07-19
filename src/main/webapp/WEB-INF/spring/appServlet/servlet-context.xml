@@ -5,21 +5,48 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/task
                            http://www.springframework.org/schema/task/spring-task-3.0.xsd
 		http://www.springframework.org/schema/tx
- 						   http://www.springframework.org/schema/tx/spring-tx.xsd">
+ 						   http://www.springframework.org/schema/tx/spring-tx.xsd
+ http://www.springframework.org/schema/websocket
+						   http://www.springframework.org/schema/websocket/spring-websocket.xsd 						   
+ 						   ">
 	
 <task:annotation-driven />
 	<mvc:annotation-driven/>
 	<context:annotation-config />
-	<!-- <context:component-scan base-package="ncontroller" />
-	<context:component-scan base-package="service"/> -->
+	
+	<context:component-scan base-package="kr.or.bodiary.websocket" />
+ 	
+ 	<!-- 웹소켓 -->
+ 	<!-- <websocket:handlers>
+ 	
+        <websocket:mapping handler="echoHandler" path="/echo"/>
+        
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+        <websocket:handshake-interceptors>
+       		<bean class="kr.or.bodiary.interceptor.HandShakeInterceptor"/>
+		</websocket:handshake-interceptors> 
+		
+    </websocket:handlers>
+     -->
+    <websocket:handlers>
+    	<websocket:mapping handler="alarmHandler" path="/alarm"/>
+    	<websocket:handshake-interceptors>
+       		<bean class="kr.or.bodiary.interceptor.AlarmHandShakeInterceptor"/>
+		</websocket:handshake-interceptors> 
+    </websocket:handlers>
+    
+    <!-- <bean id="echoHandler" class="kr.or.bodiary.websocket.EchoHandler" /> -->
+	<bean id="alarmHandler" class="kr.or.bodiary.websocket.WebSocketAlarmHandler" />
+	
+	
 	
 	<!-- thymeleaf 사용을 위한 필수 추가 사항 -->
    <bean id="templateEngine"

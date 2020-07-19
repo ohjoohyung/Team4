@@ -72,30 +72,68 @@
 					</div>
 
 				</div>
+				<div class="container" th:each="qna : ${list}">
+					
+					<div class="card" >
+						<div class="card-body">
+							<h3 style="color: black; margin-bottom: 15px;" th:text="${qna.qna_brd_title}"></h3>
+							<hr style="margin-right: 45px;" />
+							<div>
+							
+							<form action="adminQnaModify" method="post">
+							
+							<input name="qna_brd_seq" th:value="${qna.qna_brd_seq}" type="hidden">
+							<input type="hidden"  th:value="${qna.user_email}" name="user_email">	
+							<input type="hidden"  value="답변입니다" name="qna_brd_title">
+							<input type="hidden"  th:value="${qna.qna_brd_content}" name="qna_brd_content">
+							<input name="qna_brd_step" th:value="${qna.qna_brd_step}" type="hidden">
+							<input name="qna_brd_regdate" th:value="${qna.qna_brd_regdate}" type="hidden">
+							<input name="qna_brd_depth" th:value="${qna.qna_brd_depth}" type="hidden">
+							<input name="qna_brd_ref" th:value="${qna.qna_brd_ref}" type="hidden">
+							<input type="hidden"  th:value="${qna.qna_brd_answer}" name="qna_brd_answer">		
+								<span id="adminok" class="badge badge-success px-2"
+									style="margin-bottom: 10px;">admin</span>
+									<button type="submit" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									>수정하기</button>
+							
+									<a th:href="@{adminQnaDelete(qna_brd_seq=${qna.qna_brd_seq})}">
+									<button type="button" class="btn mb-1 btn-info"
+									style="margin-left: 0px; float: right; margin-right: 50px;"
+									>삭제하기</button></a>
+									<!-- <a th:href="@{/oreder/details(id=${orderInfo.seq})}">></a> -->
+													<!-- :href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}" -->
+									</form>
+							</div>
+							<article class="answer" itemprop="articleBody"
+								style="color: black;"  th:text="${qna.qna_brd_content}">
+							</article>
+						</div>
+					</div>
+				</div>
 				
-				<form action="adminQnaDetailOK" method="post">
 				
-				<input name="qna_brd_ref" th:value="${qna.qna_brd_seq}" type="hidden">
-				<input type="hidden" class="form-control input-default" value="답변입니다" name="qna_brd_title">
-				
+				<!-- email hidden 추가 각각 hidden에 id 추가 form 태그 제거 스크립트 추가 -->
+				<input id="qna_brd_ref" name="qna_brd_ref" th:value="${qna.qna_brd_seq}" type="hidden">
+				<input type="hidden" class="form-control input-default" value="답변입니다" id="qna_brd_title" name="qna_brd_title">
+				<input type="hidden"  id="user_email" th:value="${qna.user_email}" name="user_email">
 				<div class="card" style=" height: 280px;">
 					<div class="card-body"
 						style="padding-right: 30px; padding-left: 30px;">
 						<div class="basic-form">
 								<div class="form-group">
 
-										<textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요">
+										<textarea class="form-control h-150px" id="qna_brd_content" name="qna_brd_content" rows="12"  placeholder="내용을 입력하세요">
                                             </textarea>
 								</div>
 						</div>
-						<button type="submit" class="btn mb-1 btn-info"
+						<button type="button" id="sendAns" class="btn mb-1 btn-info"
 					style="margin-bottom: 10px; float: right;">댓글답변하기</button>
 					
 					</div>
 					
 				</div>
-				</form>
-
+				
 				
 		</div>
 				 <!--**********************************
@@ -110,6 +148,63 @@
 	<!-- 기본 폼 완성 -->
 <!-- 공통 스크립트-->
 	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+	<script type="text/javascript">
+ $(function() {
+	connect();
+	$('#sendAns').click(function() { 
+		send(); 
+		});
+ })
+
+var wsocket;
+
+function connect() {
+	wsocket = new WebSocket("ws://" + location.host + "/bodiary/alarm");
+	wsocket.onopen = onOpen;
+	wsocket.onmessage = onMessage;
+	wsocket.onclose = onClose;
+}
+function disconnect() {
+	wsocket.close();
+}
+
+function onOpen(evt) {
+	console.log("onOpen(evt)");
+}
+
+function onMessage(evt) {
+	console.log("evt :" + evt);
+	var data = evt.data;
+	appendMessage(data);
+}
+
+function onClose(evt) {
+}
+
+function send() {
+	
+	let qna_brd_title = $('#qna_brd_title').val();
+	let qna_brd_content = $('#qna_brd_content').val();
+	let qna_brd_ref = $('#qna_brd_ref').val();
+	let user_email = $('#user_email').val();
+	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email);
+	
+	$('#qna_brd_content').val('');
+
+	swal("성공!", "등록 되었습니다.", "success");
+	setTimeout(function() {
+		  location.href="adminQnaList";
+		}, 1000);
+	
+}
+
+function appendMessage(msg) {
+	console.log(msg);
+	alert("msg : " + msg);
+}
+
+
+</script>
 	
 </body>
 </html>

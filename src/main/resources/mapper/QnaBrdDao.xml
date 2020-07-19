@@ -78,11 +78,66 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      
      </insert>
      
-     <update id="QnaRepYN">
+    
+    
+    <select id="getQnaBrdBySeqAnsModify" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
+	  	SELECT *
+	  	FROM qnabrd 
+	  	WHERE qna_brd_ref=#{qna_brd_ref} and qna_brd_depth=#{qna_brd_depth}
+  	</select>
+  	
+  	<!-- 문의사항 답변 업데이트 -->
+  	<update id="updateQnaAns" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
     	UPDATE qnabrd 
-    	SET qna_brd_answer='Y'
-    	WHERE qna_brd_ref=#{qna_brd_ref}
+    	SET qna_brd_seq=#{qna_brd_seq}, 
+    		user_email=#{user_email}, 
+    		qna_brd_title=#{qna_brd_title} , 
+    		qna_brd_content=#{qna_brd_content},
+    		qna_brd_regdate=now(),
+    		qna_brd_ref=#{qna_brd_ref},
+    		qna_brd_depth=#{qna_brd_depth},
+    		qna_brd_step=#{qna_brd_step}
+    	WHERE qna_brd_seq=#{qna_brd_seq}
     </update>
+    
+    
+    
+    
+    <!-- 웹소켓 알림 관련 Qna 쿼리문 -->
+    
+	<!-- 사용자가 어드민한테 문의했으나 아직 읽지 않은 모든 글 카운트 -->
+	<select id="getCountAdminNotRead" resultType="Integer">
+    	select count(*) from qnabrd where qna_brd_answer = '1'
+	</select>
+	
+	<!-- 어드민이 알림을 읽으면 개수 줄어들게 하기 위해 업데이트  -->
+	<update id="updateAdminRead">
+		update qnabrd set qna_brd_answer = '2' where qna_brd_answer = '1' and qna_brd_seq = #{qna_brd_seq}
+	</update>
+	
+	
+	 <!-- 어드민이 답변을 했을 경우 사용자에게 알림이 가기 위해 상태 업데이트 -->
+	 <update id="updateQnaRep">
+    	UPDATE qnabrd 
+    	SET qna_brd_answer='3'
+    	WHERE qna_brd_ref=#{qna_brd_ref} and (qna_brd_answer='2' or qna_brd_answer='1')
+    </update>
+	
+
+	<!-- 사용자 입장에서 답변이 왔지만 읽지 않은 문의글 개수 카운트 -->
+	<select id="getCountUserNotRead" resultType="Integer">
+		select count(*) from qnabrd where qna_brd_answer = '3' and user_email = #{user_email}
+	</select>
+	
+	<!-- 사용자가 답변을 읽었을 경우 상태 업데이트 -->
+	<update id="updateQnaUserRead">
+		update qnabrd set
+		qna_brd_answer = '4'
+		where qna_brd_ref = #{qna_brd_seq} and qna_brd_answer='3'
+    </update>
+    
+    <!-- 권한 찾기 -->
+    
     
     <!-- <select id="getExerciseListByName" parameterType="String" resultType="kr.or.bodiary.exercise.dto.exerciseDTO">
        select * from Exercise where excs_name  like concat('%', #{excs_name} , '%')

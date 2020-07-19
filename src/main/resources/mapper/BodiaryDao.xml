@@ -89,7 +89,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 음식 검색하기 -->
 	<select id="foodNameSearch" parameterType="String" resultType="kr.or.bodiary.myBodiary.dto.FoodDto">
-		select food_seq, food_name, food_cal from food where food_name like concat('%', #{food_name}, '%')
+		select food_seq, food_name, food_cal from food where food_name like concat('%', #{food_name}, '%') limit 5
 	</select>
 	
 	<!-- 일지 상세정보 -->

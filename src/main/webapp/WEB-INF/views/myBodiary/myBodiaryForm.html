@@ -99,6 +99,22 @@
 
 
                               <div class="row mt-5">
+                                                            <!-- 덕수정 시작 -->
+                              <div class="col-12" id="idealcal">
+                              <label>당신의 권장 칼로리</label>
+                              
+                              <p th:if="${user.user_height}<=100">""키를 다시 입력하셔야겠어요""</p>
+                              <p id="totalcal" th:if="${user.user_height}>100" th:text="(${user.user_height}-100)*0.9*35" >kcal</p>
+                              </div>
+                              <div class="col-12" id="foodprogress">
+                                 <div class="progress" style="height: 9px;">
+                                          <div id="progress-bar bg-danger" class="progress-bar bg-danger" style="width: 0%;" role="progressbar"><span class="sr-only"></span>
+                                          </div>
+                                         </div>
+                              </div>
+                              
+                              
+                              <!-- 덕수정 끝-->
                                  <div class="col-6">
                                     <div class="form-group">
 
@@ -281,6 +297,41 @@
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    <script type="text/javascript">
+   //덕추가 추가할때 progress바 추가
+   function drawProgress(food_seq,food_cal){
+      var totalcal = $('#totalcal').text();
+      //alert('제발요'+totalcal);나온다
+      var count = $('#count'+food_seq).val();
+      //alert('개수'+count) 나온다
+      var presentcal = count*food_cal;
+      //alert(presentcal); 나온다
+      var bar = document.getElementById("progress-bar bg-danger");
+      //alert(bar.style.width); 0%로 나옴
+      var origin = bar.style.width.slice(0,-1);
+      //alert(origin);
+      var after = Number(origin)+Number(presentcal*100/totalcal);
+      //alert(after);
+       if (Number(after>=100)){
+         after=100;
+         alert('과식하셨군요!!');
+      } 
+      bar.style.width = after+"%";
+      //alert(origin.slice(-3,-1));
+      //bar.style.width = presentcal*100/totalcal="%";
+      //alert(presentcal*100/totalcal+"%"); 나옴
+      //bar.style.width = presentcal*100/totalcal+"%";
+/*                var origin = bar.styale.width;
+      if(origin.slice(-3,-1)=100){
+         var originnum = 100;
+      }else{
+         var originnum = origin.slice(-3,-1);
+      };
+      alert(originnum); */
+      
+   }
+   
+   
+   //덕끝
    var validate = new Array;
    
          $(function(){
@@ -369,7 +420,7 @@
                                  "<td>"+obj.food_cal+"</td>"+
                                  "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
 
-                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
+                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+"\""+obj.food_name+"\""+");drawProgress("+obj.food_seq+","+obj.food_cal+");'>추가</button>"+"</td><tr>";
                            });
                            table += "</table>";
                            $('#foodBox').append(table);

@@ -27,6 +27,77 @@
 }
 </style>
 <script type="text/javascript">
+/* $(document).ready(function() {
+	connect();
+	/* $('#sendQna').click(function() { send(); }); */
+/* })
+
+var wsocket;
+
+function connect() {
+	wsocket = new WebSocket("ws://" + location.host + "/bodiary/alarm");
+	wsocket.onopen = onOpen;
+	wsocket.onmessage = onMessage;
+	wsocket.onclose = onClose;
+}
+function disconnect() {
+	wsocket.close();
+}
+
+function onOpen(evt) {
+	console.log("onOpen(evt)");
+}
+
+function onMessage(evt) {
+	console.log("evt :" + evt);
+	var data = evt.data;
+	appendMessage(data);
+}
+
+function onClose(evt) {
+}
+
+function send() {
+	
+	
+	wsocket.send("login");
+	
+}
+
+function appendMessage(msg) {
+	console.log(msg);
+	alert("msg : " + msg);
+}
+ */
+ $(function() {
+	 console.log(wsocket);
+	 $('#sendQna').click(function() { 
+		 
+		 sendQna(); });
+	/*  function send() {
+		
+		alert("갑니다")
+		wsocket.send("Qna"); 
+		form.submit();
+	} */
+})
+
+function sendQna() {
+	let qna_brd_title = $('#qna_brd_title').val();
+	let qna_brd_content = $('#qna_brd_content').val();
+	
+	wsocket.send(qna_brd_title + "," + qna_brd_content);
+	$('#qna_brd_title').val('');
+	$('#qna_brd_content').val('');
+
+	swal("성공!", "등록 되었습니다.", "success");
+	setTimeout(function() {
+		  location.href="myQnaList";
+		}, 1000);
+
+	
+	
+}
 
 
 </script>
@@ -45,7 +116,7 @@
    </nav>
       
       <nav class="col-8 ml-3 mr-0" >
-      	<form action="myQnaForm" method="post">
+      	<!-- 문의 폼 태그 제거 스크립트 추가 -->
          <div id="contain" class="side-nav-info card card-body border-primary pt-4 pb-4 pl-5 pr-5" > <!-- class="article col-sm-9" -->
             
          
@@ -54,7 +125,7 @@
                                 <p class="text-muted m-b-15 f-s-12"></p>
                                 <div class="basic-form">
                                         <div class="form-group">
-                                            <input type="text" class="form-control input-default" placeholder="제목을 입력하세요" name="qna_brd_title">
+                                            <input type="text" class="form-control input-default" placeholder="제목을 입력하세요" name="qna_brd_title" id="qna_brd_title">
                                         </div>
                                         
                                 </div>                  
@@ -64,7 +135,7 @@
                                 <div class="basic-form">
                                         <div class="form-group">
                                             
-                                            <textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="comment" placeholder="내용을 입력하세요">
+                                            <textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="qna_brd_content" placeholder="내용을 입력하세요">
                                             </textarea>
                                         </div>
                                 </div>
@@ -74,11 +145,11 @@
          
                <div class="button">
                   <button type="button" class="btn mb-1 btn-info" style="margin-left: 0px; float: right; margin-right:50px;" onclick="location.href='myQnaList'">돌아가기</button>
-                  <button type="submit" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;">등록하기</button>
+                  <button type="button" id="sendQna" class="btn mb-1 btn-info" style="margin-left: 0px; float: right;">등록하기</button>
                </div>   
                      
          </div>
-         </form>
+        
          
          
          

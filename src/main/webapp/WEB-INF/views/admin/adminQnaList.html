@@ -92,10 +92,10 @@
 								         
 								         
 								         <!-- <td th:text="${qna.qna_brd_answer}"></td> -->
-								    	 <th:block th:if="${qna.qna_brd_answer == 'Y'}">
+								    	 <th:block th:if="${qna.qna_brd_answer == '4'}">
 										    <td><span class="badge badge-info px-2">답변완료</span></td>
 										</th:block>
-										<th:block th:if="${qna.qna_brd_answer == 'N'}">
+										<th:block th:if="${qna.qna_brd_answer == '1'}">
 										    <td><span class="badge badge-danger px-2">미확인</span></td>
 										</th:block>
 								    	 
