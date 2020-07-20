@@ -76,8 +76,8 @@
 
 
 						<div class="col mt-2">
-							<span class="card-text"> <i class="icon-bubble"></i>&nbsp;&nbsp;댓글
-								5
+							<span class="card-text"> 
+								<i class="icon-bubble" th:text="${list.brd_cmt_count}"></i>
 							</span>
 						</div>
 						<div class="col-9"></div>
@@ -91,86 +91,24 @@
 
 					</div>
 
-
-					<!-- 댓글 시작 -->
-				<!-- 	<hr>
-					<div class="mt-4 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<b>익명 1</b> &nbsp;<span class="badge badge-pill badge-info">&nbsp;작성자&nbsp;</span>&nbsp;
-								<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span> 
-								<span class="text-primary">&nbsp;&nbsp;답글쓰기</span>
-							</div>
-
-							
-							<div class="user-img c-pointer position-relative" data-toggle="dropdown">
-								<span class="activity active"></span>
-								<i class="icon-options-vertical"></i>
-							</div> 
-							
-							<div class="basic-dropdown">
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">수정</a> <a
-										class="dropdown-item" href="#">삭제</a>
-
-								</div>
-							</div>
-						</div>
-						댓글 내용
-						<div class="mt-3">꿀팁감사</div>
-					</div>
-
-					<div class="mt-4 pl-5 mb-4">
-						<div class="row">
-							<div class="col-11">
-								<i class="mdi mdi-subdirectory-arrow-right"></i>&nbsp;&nbsp;<b>익명
-									2</b> &nbsp;&nbsp;<span><i class="icon-clock"></i>&nbsp;&nbsp;2020.07.03
-									11:23</span>
-							</div>
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-
-
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">신고</a>
-
-								</div>
-
-							</div>
-						</div>
-						<div class="mt-3">ㅋㅋ뭐하냐?</div>
-
-
-					</div> -->
-
+					<!-- 댓글 목록 보이는 부분 -->
 					<hr>				
-						<div id="listReply"></div>
+						<div class="commentList"></div>
 					<hr>
 
 					<!-- 댓글 쓰기 -->
 
-					<div class="commentFB basic-form mt-5 p-2">
-						<div>
-							
-								<div class="form-group">
-
-
-									<textarea class="textFB form-control h-50px" rows="3"
-										id="replytext"></textarea>
-
-
-								</div>
-								<div class="row">
-									<div class="col-11"></div>
-									<button type="submit" id="btnReply" class="btn mb-1 btn-outline-light">등록</button>
-								</div>
-							
-						</div>
+					<div>
+						<label for="content">comment</label>
+					        <form name="commentInsertForm">
+					            <div class="input-group">
+					               <input type="hidden" name="boardSeq" id="boardSeq" th:value="${list.free_brd_seq}"/>
+					               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+					               <button type="button" id="btnComment" name="btnComment"  class="btn mb-1 btn-outline-light">등록</button>
+					               <!-- button type을 submit으로 해버리면 동기방식이 되버려서 페이지 이동이 일어남 즉.Ajax 비동기 방식 통신을 경우 submit을 사용하면 안됨-->
+					               <!-- 참고링크 : https://milkye.tistory.com/266 -->
+					           </div>
+					        </form>
 					</div>
 
 				</div>
@@ -180,8 +118,153 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
+<script type="text/javascript">
+//https://devbox.tistory.com/entry/jQuery-%EB%AC%B8%EC%84%9C-%EC%A4%80%EB%B9%84-%EC%9D%B4%EB%B2%A4%ED%8A%B8 (AJAX 개념)
+	var boardSeq = $('#boardSeq').val();
+
+$('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시 
+    var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴(객체 타입으로 가져옴)
+    //alert("내용"+insertData);
+    commentInsert(insertData); //Insert 함수호출(아래)
+});
+
+
+//댓글 목록 
+function commentList(){
+	// alert('게시글번호'+boardSeq); 게시글 번호 잘가져옴
+    $.ajax({
+        url : 'comment/list',
+        type : 'get',
+        data : {'boardSeq':boardSeq},
+        success : function(data){
+        	console.log("댓글목록"+data);
+        	var a =''; 
+
+             $.each(data, function(key, value){ 
+                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+                 a += '<div class="commentInfo'+value.brd_cmt_seq+'">'+'작성자 : '+value.user_nickname;
+                 a += '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
+                 a += '<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
+                 a += '<div> <p> '+value.brd_cmt_date +'</p></div>'
+                 a += '<div class="commentContent'+value.brd_cmt_seq+'"> <p> 내용 : '+value.brd_cmt +'</p>';
+                 a += '</div></div>';
+             });
+            
+            $(".commentList").html(a); 
+        },
+        error : function(error) {
+        	console.log(error);
+	        alert("Error!"+error);
+	    }
+    });
+}
+
+//댓글 수정폼 - 댓글 내용 출력을 input 폼으로 변경 
+function commentUpdate(cno, content){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="content_'+cno+'" value="'+content+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+cno+');">수정</button> </span>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentList();">취소</button> </span>';
+    a += '</div>';
+    
+    $('.commentContent'+cno).html(a);
+    
+}
+
+//댓글 수정확인 
+function commentUpdateProc(cno){
+    var updateContent = $('[name=content_'+cno+']').val();
+    
+    $.ajax({
+        url : 'comment/update',
+        type : 'post',
+        data : {'content' : updateContent, 'cno' : cno},
+        success : function(data){
+            if(data == 1) commentList(); //댓글 수정후 목록 출력 
+        }
+    });
+}
+
+//댓글 등록
+function commentInsert(insertData){
+	
+	//댓글창에 아무것도 입력을 안하고 등록을 누를시 입력하라고 알람창을 띄우기
+	if($.trim($('#content').val())=="")
+	{
+		alert("댓글을 입력하세요.");
+		$('#content').focus();
+		return false;
+	}
+	
+    $.ajax({
+        url : 'comment/insert',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+            if(data == 1) {
+            	alert("댓글 작성 성공");
+            	commentList(); //댓글 작성 후 댓글 목록 reload 과정에서 에러발생?? 왜지??
+                $('[name=content]').val('');
+            }else{
+            	//insert 실패시 
+            	alert("댓글 작성 실패");
+            	commentList();
+            }
+        },
+   		error : function(error) {
+	        alert("댓글작성실패!"+error);
+	    }
+    });
+}
+
+//댓글 삭제 (GET방식)
+/* function commentDelete(cno){
+	alert("삭제할 댓글번호"+cno);
+	//ajax type을 get방식으로 쓰고 파라미터를 넘기면 컨트롤러를 잘타고 들어가는데 ... 
+	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
+		$.ajax({
+	        url : 'comment/delete?cno='+cno,
+	        type : 'get',
+	        success : function(data){
+	            if(data == 0) commentList(); //댓글 삭제후 목록 출력 
+	        }
+	    });
+	 }else{   //취소
+	     return false;
+	 }
+			
+}  */
+
+//댓글 삭제 (POST방식)
+function commentDelete(cno){
+	alert("삭제할 댓글번호"+cno);
+	//ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 
+	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
+		$.ajax({
+	        url : 'comment/delete',
+	        type : 'post',
+	        data : {"cno":cno}, // data : cno 이런방식으로 넘기면 안넘어감 무조건 객체로 넘겨야됨?? {"cno":cno} 이런식으로 
+	        success : function(data){
+	            if(data == 1) commentList(); //댓글 삭제후 목록 출력
+	        }
+	    });
+	 }else{   //취소
+	     return false;
+	 }
+			
+} 
+
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력 
+});
+ 
+</script>
+
+
 <!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
-<th:block layout:fragment="script">
+<!-- <th:block layout:fragment="script">
 	<script>
 		var seq = $('#freeSeq').val(); 	
 	
@@ -254,7 +337,7 @@
 		
 		
 	</script>
-</th:block> 
+</th:block>  -->
 </html>
 
 

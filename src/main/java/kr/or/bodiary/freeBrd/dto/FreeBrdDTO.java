@@ -28,4 +28,8 @@ public class FreeBrdDTO {
 	
 	//User 테이블에서 조인해서 얻어온 프로필 사진 
 	private String user_img;
+	
+	//해당 게시글의 댓글 개수
+	private int brd_cmt_count;
+	
 }

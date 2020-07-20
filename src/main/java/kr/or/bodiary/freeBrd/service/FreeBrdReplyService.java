@@ -28,16 +28,27 @@ public class FreeBrdReplyService {
 	public List<FreeBrdReplyDTO> list(String seq) throws Exception{
 		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
 		List<FreeBrdReplyDTO> rList = list.replyList(Integer.parseInt(seq));
-		
+	
 		for(int i=0;i<rList.size();i++) {
-			System.out.println("댓글내용"+rList.get(i).getBrd_cmt());
+			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+			rList.get(i).setBrd_cmt_count(list.commentCount(rList.get(i).getFree_brd_seq()));
 		}
 		
 		return rList;
 	}
 	
+	//댓글 수정(Update)
+	public int commentUpdateService(FreeBrdReplyDTO freeBrdReplyDTO) throws Exception {
+		
+		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
+		
+		return list.update(freeBrdReplyDTO);
+	}
+	
+	
+	
 	//댓글 작성(insert)
-	public void create(String seq,String replytext,HttpServletRequest request) throws Exception {
+	public int create(String seq,String replytext,HttpServletRequest request) throws Exception {
 		FreeBrdReplyDTO dto = new FreeBrdReplyDTO();
 		
 		//로그인한 해당 유저의 정보를 뽑아올수 있음  
@@ -52,18 +63,19 @@ public class FreeBrdReplyService {
 		dto.setUser_email(user_email);
 		
 		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
-		list.create(dto);
+		
+		return list.create(dto);
 	}
 	
 	//해당 댓글 삭제(delete) 
-	public void delete(String seq,String cmt,HttpServletRequest request) throws NumberFormatException, Exception {
+	public int delete(int cno) throws NumberFormatException, Exception {
 		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
 		
-		Map map = new HashMap();
-		map.put("seq",seq);
-		map.put("cmt",cmt);
+//		Map map = new HashMap();
+//		map.put("seq",seq);
+//		map.put("cmt",cmt);
 		
-		list.delete(map);
+		return list.delete(cno);
 	}
 	
 }

@@ -148,6 +148,7 @@ public class FreeBrdController {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		String user_email = user.getUser_email();
 		
+		
 		model.addAttribute("user",user_email);
 		model.addAttribute("freeBrdDetail",freeBrdDetail);
 		

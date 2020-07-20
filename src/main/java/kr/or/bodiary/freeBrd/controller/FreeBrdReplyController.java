@@ -5,16 +5,18 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
 import kr.or.bodiary.freeBrd.service.FreeBrdReplyService;
 
-@RestController
-@RequestMapping("/freeReply/*")
+@Controller
+@RequestMapping("/comment/*")
 public class FreeBrdReplyController {
 	
 	private FreeBrdReplyService freeBrdCmtService;
@@ -26,10 +28,11 @@ public class FreeBrdReplyController {
 	
 	//댓글 목록 
 	@RequestMapping("list")
-	public ModelAndView list(@RequestParam("seq") String seq,ModelAndView mav) throws Exception {
-		System.out.println("댓글목록글번호"+seq);
+	@ResponseBody // @ResponseBody 란? VO(List<FreeBrdReplyDTO>)객체를 JSON으로 바꿔서 HTTP body에 담는 스프링 어노테이션.
+	public List<FreeBrdReplyDTO> list(@RequestParam("boardSeq") String boardSeq,ModelAndView mav) throws Exception {
+		System.out.println("댓글목록글번호"+boardSeq);
 		
-		List<FreeBrdReplyDTO> list = freeBrdCmtService.list(seq);
+		//List<FreeBrdReplyDTO> list = freeBrdCmtService.list(boardSeq);
 		
 		//System.out.println("자유게시판 목록페이지로 이동");	
 
@@ -38,31 +41,48 @@ public class FreeBrdReplyController {
 		
 		//return "freeBrd/freeReplyList";
 		
-		mav.setViewName("freeBrd/freeReplyList");
-		mav.addObject("list",list);
+		//mav.setViewName("freeBrd/freeReplyList");
+		//mav.addObject("list",list);
 		
-		return mav;
+		return freeBrdCmtService.list(boardSeq);
 	}
 	
 	//댓글 INSERT 
 	@RequestMapping("insert")
-	public void insert(@RequestParam("seq") String seq,@RequestParam("replytext") String replytext,HttpServletRequest request) throws Exception {
+	@ResponseBody
+	public int insert(@RequestParam("boardSeq") String boardSeq,@RequestParam("content") String content,HttpServletRequest request) throws Exception {
 		
-		System.out.println("댓글 입력시 글번호 출력+"+seq);
-		System.out.println("댓글내용+"+replytext);
+		System.out.println("댓글 입력시 글번호 출력+"+boardSeq);
+		System.out.println("댓글내용+"+content);
 		
-		freeBrdCmtService.create(seq,replytext,request);
-
+		int result = freeBrdCmtService.create(boardSeq,content,request);
+		System.out.println("insert 결과값(1이면 성공적)"+result);
+		
+		return result;
 	}
 	
+	@RequestMapping("update") //댓글 수정  
+    @ResponseBody
+    private int mCommentServiceUpdateProc(@RequestParam int cno, @RequestParam String content) throws Exception{
+		
+		System.out.println("수정할 댓글번호"+cno);
+		System.out.println("수정할 댓글내용"+content);
+		
+		FreeBrdReplyDTO comment = new FreeBrdReplyDTO();
+		comment.setBrd_cmt(content);
+		comment.setBrd_cmt_seq(cno);
+		
+        return freeBrdCmtService.commentUpdateService(comment);
+    }
+
 	//댓글 Delete 
 	@RequestMapping("delete")
-	public void delete(@RequestParam("seq") String seq,@RequestParam("cmt") String cmt,HttpServletRequest request) throws Exception {
+	@ResponseBody
+	public int delete(@RequestParam("cno") int cno,HttpServletRequest request) throws Exception {
+
+		System.out.println("---------------------------------삭제할 댓글 번호-----------------------------------"+cno);
 		
-		System.out.println("댓글 원 게시글 번호"+seq);
-		System.out.println("댓글 번호"+cmt);
-		
-		freeBrdCmtService.delete(seq,cmt,request);
+		return freeBrdCmtService.delete(cno);
 
 	}
 }

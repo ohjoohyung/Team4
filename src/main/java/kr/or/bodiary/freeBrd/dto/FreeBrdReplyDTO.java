@@ -22,4 +22,7 @@ public class FreeBrdReplyDTO {
 	private String brd_cmt_depth; 
 	private String brd_cmt_step;
 	
+	private String user_nickname; //유저 닉네임
+	
+	private int brd_cmt_count; //해당 게시글의 댓글 개수
 }

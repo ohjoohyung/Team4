@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
+import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.freeBrd.dto.Search;
 import kr.or.bodiary.user.dto.UserDto;
@@ -104,9 +105,15 @@ public int allFreeBrdCount(Search search) throws Exception {
 			// mapper 를 통한 FreeBrdDao 인터페이스 연결
 			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
 			list = FreeBrd.allFreeBrd(search);
+			
+			//해당 게시글의 총댓글 개수 얻어옴 
+			FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+
 			for(int i=0;i<list.size();i++) {
-				System.out.println(list.get(i).getFree_brd_seq()+"번호");
+				//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+				list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("allFreeBrd() 함수 실행중 오류발생" + e.getMessage());
@@ -146,6 +153,11 @@ public List<FreeBrdDto> allFreeBrd(int startIndex,int pageSize) {
 			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);			
 			
 			freeBrdDto = FreeBrd.freebrdDetail(seq);
+			
+			FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
+			
+			//해당게시글의 총댓글 개수를 얻어와 setter로 주입함 
+			freeBrdDto.setBrd_cmt_count(list.commentCount(Integer.parseInt(seq)));
 			
 		} catch (Exception e) {
 			// TODO: handle exception

@@ -4,12 +4,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao">
 
-	
+
+	<!-- 해당 게시글 댓글 개수 -->
+	<select id="commentCount" resultType="int">
+	        select count(*)
+			from freeboardcomment
+			where free_brd_seq =#{free_brd_seq}
+    </select>
+
 	 <!-- 댓글목록 -->
 	 <select id="replyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
-		 	select * from FreeBoardComment c,freeboard m
-			where c.user_email = m.user_email AND m.free_brd_seq = #{seq}
-			order by c.brd_cmt_seq desc;
+	 		SELECT f.free_brd_seq,f.brd_cmt_seq,f.user_email,f.brd_cmt,f.brd_cmt_date,user_nickname
+			FROM freeboardcomment f
+			INNER JOIN User 
+			WHERE free_brd_seq = #{seq}
+			order by f.brd_cmt_seq desc
 	 </select>
    
    
@@ -19,12 +28,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{free_brd_seq},1,#{user_email},#{brd_cmt},now(),0,0,0);
    	 </insert>
    	 
+   	 <!-- 	
+   	 	update freeboardcomment 
+		set brd_cmt = #{brd_cmt}  => 수정할 댓글 내용 
+		where brd_cmt_seq = #{brd_cmt_seq} => 수정할 댓글번호 
+		=> freeboardcomment 테이블에서 수정할 댓글번호가 #{brd_cmt_seq}인 댓글내용을 #{brd_cmt} 값으로 수정함 
+	-->
+		
+   	 <update id="update" parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
+		update freeboardcomment
+		set brd_cmt = #{brd_cmt}
+		where brd_cmt_seq = #{brd_cmt_seq}
+   	 </update>
+   	 
    	 <!--댓글 삭제 -->
-   	 <delete id="delete" parameterType="hashMap">
+   	 <delete id="delete" >
    	 		delete 
    	 		from freeboardcomment 
-   	 		where free_brd_seq=#{seq} AND brd_cmt_seq=#{cmt};
+   	 		where brd_cmt_seq=#{cno};
    	 </delete>
+   	 
+   	 <!--댓글 삭제 -->
+   	<!--  <delete id="delete" parameterType="hashMap">
+   	 		delete 
+   	 		from freeboardcomment 
+   	 		where brd_cmt_seq=#{cmt};
+   	 </delete> -->
    	 
    	 <!-- 현재 접속한 유저가쓴 댓글목록 가져오기 -->
 	 <select id="c_replyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
