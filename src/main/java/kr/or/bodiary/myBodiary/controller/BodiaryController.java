@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import kr.or.bodiary.chat.dto.NotYet;
+
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;

@@ -27,4 +27,9 @@ public class RoutineController {
 		String url = routineservice.insertRoutineBundle(routinejoindto, request);
 		return url;
 	}
+	
+	@RequestMapping("/search")
+	public String getSearchExcs() {
+		return "searchExcs/searchExcs";
+	}
 }

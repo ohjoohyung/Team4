@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.user.dao.UserDao;
 
 

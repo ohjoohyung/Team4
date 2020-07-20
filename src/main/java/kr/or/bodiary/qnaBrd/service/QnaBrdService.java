@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import kr.or.bodiary.chat.dto.NotYet;
 import kr.or.bodiary.exercise.dao.ExerciseDao;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
 import kr.or.bodiary.qnaBrd.dao.QnaBrdDao;

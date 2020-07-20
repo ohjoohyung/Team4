@@ -25,17 +25,13 @@
 	<context:component-scan base-package="kr.or.bodiary.websocket" />
  	
  	<!-- 웹소켓 -->
- 	<!-- <websocket:handlers>
- 	
-        <websocket:mapping handler="echoHandler" path="/echo"/>
-        
-
+ 	<websocket:handlers>
+        <websocket:mapping handler="chatHandler" path="/chat"/>
         <websocket:handshake-interceptors>
-       		<bean class="kr.or.bodiary.interceptor.HandShakeInterceptor"/>
-		</websocket:handshake-interceptors> 
-		
+       		<bean class="kr.or.bodiary.interceptor.ChatHandShakeInterceptor"/>
+		</websocket:handshake-interceptors> 	
     </websocket:handlers>
-     -->
+    
     <websocket:handlers>
     	<websocket:mapping handler="alarmHandler" path="/alarm"/>
     	<websocket:handshake-interceptors>
@@ -43,7 +39,7 @@
 		</websocket:handshake-interceptors> 
     </websocket:handlers>
     
-    <!-- <bean id="echoHandler" class="kr.or.bodiary.websocket.EchoHandler" /> -->
+    <bean id="chatHandler" class="kr.or.bodiary.websocket.WebSocketChatHandler" />
 	<bean id="alarmHandler" class="kr.or.bodiary.websocket.WebSocketAlarmHandler" />
 	
 	

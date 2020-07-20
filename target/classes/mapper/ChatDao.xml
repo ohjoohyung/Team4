@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.chat.dao.ChatDao">
+<!-- 채팅방 만들기 -->
+  <insert id="createChatRoom" parameterType="kr.or.bodiary.chat.dto.ChatRoomDto">
+  	insert into chatroom (room_title, room_count, user_email, room_secret, room_pwd)
+  	values (#{room_title}, #{room_count}, #{user_email}, #{room_secret} , #{room_pwd}) 
+  </insert>
+    
+    
+    <!-- 채팅방 리스트 가져오기 -->
+   <select id="getChatList" resultType="kr.or.bodiary.chat.dto.ChatRoomDto">
+   	select c.room_number, c.room_title, c.user_email, c.room_secret, c.room_pwd, c.room_count, u.user_img, u.user_nickname from chatroom c 
+   	JOIN user u 
+   	ON c.user_email = u.user_email
+   </select>
+   
+   <!-- 채팅방 들어가기 -->
+   <select id="selectChatRoomByRn" resultType="kr.or.bodiary.chat.dto.ChatRoomDto" parameterType="Integer">
+   	select c.room_number, c.room_title, c.user_email, c.room_secret, c.room_pwd, c.room_count, u.user_nickname from chatroom c 
+   	JOIN user u 
+   	ON c.user_email = u.user_email where c.room_number=#{room_number}
+   </select>
+   
+   <!-- 채팅방 멤버 추가하기 -->
+   <insert id="addMember">
+   	insert into chatmember (mem_number, room_number, user_email)
+	values ((select ifnull(max(mem_number),0) from chatmember c)+1 ,#{param1}, #{param2});
+   </insert>
+   
+   <!-- 채팅방 멤버 카운트 -->
+   <select id="getMemberCount" resultType="int" parameterType="Integer">
+		SELECT count(user_email) FROM chatmember WHERE room_number = #{room_number}
+	</select>
+	
+	<!-- 채팅방 멤버 리스트 불러오기 -->
+	<select id="getMemberList" resultType="kr.or.bodiary.chat.dto.ChatMemberDto">
+		SELECT u.user_nickname from user u Join chatmember c 
+		ON u.user_email = c.user_email where c.room_number = #{room_number}
+	</select>
+	
+   
+   
+</mapper>
+
+ 

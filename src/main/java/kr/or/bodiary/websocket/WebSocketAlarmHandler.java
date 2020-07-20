@@ -2,8 +2,10 @@ package kr.or.bodiary.websocket;
 
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -32,7 +34,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 		this.sqlsession = sqlsession;
 		
 	}
-	 
+
 	
 	private static Map<String, WebSocketSession> users = new HashMap<String, WebSocketSession>();
 
@@ -90,7 +92,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			}
 			
 		
-		} else {
+		} else{
 			System.out.println("문의 및 보내기");
 			QnaBrdDao qnabrddao = sqlsession.getMapper(QnaBrdDao.class);
 			String user_email = (String)session.getAttributes().get("user_email");

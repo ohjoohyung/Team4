@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import kr.or.bodiary.chat.dto.NotYet;
+
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
