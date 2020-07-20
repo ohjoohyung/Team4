@@ -25,6 +25,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	ON c.user_email = u.user_email where c.room_number=#{room_number}
    </select>
    
+   	<!-- 채팅방 삭제하기 -->
+   <delete id="deleteChatRoom">
+   		delete from chatroom where room_number = #{room_number}
+   </delete>
+   
+   
+   
+   
    <!-- 채팅방 멤버 추가하기 -->
    <insert id="addMember">
    	insert into chatmember (mem_number, room_number, user_email)
@@ -42,7 +50,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON u.user_email = c.user_email where c.room_number = #{room_number}
 	</select>
 	
-   
+	<!-- 채팅방 멤버 나가기 (방 나가면 무조건 삭제니까 방 번호가 필요가 없음) -->
+	<delete id="removeMember">
+		delete from chatmember where user_email = #{user_email}
+	</delete>
+	
+
    
 </mapper>
 

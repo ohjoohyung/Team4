@@ -10,7 +10,7 @@
 	<!-- 공통 sidenav -->
 	<div class="bodiary-wrapper">
 		<div class="content pt-4">
-			<div class="row ">
+			<div class="row" id="chatList">
 				<div class="col-12 mb-4">
 					<button type="button" class="btn btn-primary btn-lg w-100"
 						data-toggle="modal" data-target=".bd-example-modal-lg">방만들기</button>
@@ -94,7 +94,7 @@
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-	<script>
+	<script type="text/javascript">
 		$('#room_secret')
 				.change(
 						function() {
@@ -107,6 +107,52 @@
 							}
 
 						})
+						
+		$(function () {
+			getChatList();
+		})
+		
+		function getChatList() {
+			$.ajax({
+	    		type:'POST',
+	    		url: 'getChatList',
+	    		success:function(data) {
+	    			/* $('#endNum').val(data.length); */
+	    			
+	    			$.each(data, function(index, obj) {
+	    				var secret = "";
+	    				if(obj.room_secret == 'Y') {
+	    					secret = '비밀방'
+	    				}
+	    				
+	    				
+	    				$('#chatList').append(
+	    				'<div class="col-lg-4">'+
+						'<div class="card border-primary" style="height: 280px;">'+
+							
+							'<div class="card-body">'+
+								'<div class="chat-title" style="height: 75%;">'+
+									'<h3>'+obj.room_title+'</h3>'+
+								'</div>'+
+								'<span>'+obj.user_nickname+'</span>'+
+								'<div>'+
+									'<button type="button" class="btn btn-outline-primary btn-lg">입장하기</button>'+
+								'</div>'+
+							'</div>'+
+							'<div class="card-footer pl-4">'+
+								'<i class="icon-people mt-2"></i>&nbsp;&nbsp;<small>'++obj.room_count'</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+
+								'<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small>'+secret+'</small>'+
+							'</div>'+
+						'</div>'+
+						'</div>'+
+    						
+    					);
+    				});
+	    		}
+	        });
+		}
+		
+		
 	</script>
 </body>
 </html>

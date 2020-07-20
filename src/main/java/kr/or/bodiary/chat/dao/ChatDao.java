@@ -27,5 +27,10 @@ public interface ChatDao {
 	
 	//채팅방 멤버리스트 닉네임 불러오기
 	public List<ChatMemberDto> getMemberList(int room_number) throws ClassNotFoundException, SQLException;
-
+	
+	//채팅방 멤버 나가기
+	public int removeMember(String user_email) throws ClassNotFoundException, SQLException;
+	
+	//채팅방 삭제하기
+	public int deleteChatRoom(int room_number) throws ClassNotFoundException, SQLException;
 }

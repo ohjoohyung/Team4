@@ -35,14 +35,6 @@ private ChatService chatservice;
 	}
 	
 	
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	@RequestMapping("/main")
-	public String getMain() {
-		return "main";
-	}
 	
 	//채팅방 리스트 들어가기
 	@RequestMapping("/chatList")
@@ -72,6 +64,13 @@ private ChatService chatservice;
 	}
 	
 	
+	//채팅방 나가기
+	@RequestMapping("/exitChatRoom")
+	public String exitChatRoom(String user_email) throws ClassNotFoundException, SQLException {
+		return chatservice.exitChatRoom(user_email);
+	}
+	
+	//채팅방 삭제하기
 
 
 	

@@ -24,7 +24,10 @@
 							<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small th:if="${chat.room_secret.equals('N')}"></small><small th:if="${chat.room_secret.equals('Y')}">비밀방</small>
 							</div>
 							<div class="mt-3 mb-4">
-								<button class="btn btn-outline-primary w-100" type="button" onclick="location.href='chatList'">나가기</button>
+								<button class="btn btn-outline-primary w-100" type="button" th:onclick="'chatRoomExit(\'' +${chat.room_number} +'\',\''+${session.currentUser.user_email}+'\')'">나가기</button>
+							</div>
+							<div class="mt-3 mb-4">
+								<button class="btn btn-outline-primary w-100" type="button" th:onclick="'chatRoomDelete(\'' +${chat.room_number} +'\',\''+${session.currentUser.user_email}+'\')'">방 삭제</button>
 							</div>
 						</div>
 					</div>
@@ -73,13 +76,13 @@
 	<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
 	
-	var room_number = /*[[ ${chat.room_number} ]]*/
-	var room_count = /*[[ ${chat.room_count} ]]*/
-	var user_nickname = /*[[ ${session.currentUser.user_nickname} ]]*/
-	var user_img = /*[[${session.currentUser.user_img} ]]*/
-	var user_email = /*[[ ${session.currentUser.user_email} ]]*/
-	
-	console.log(user_email);
+		var room_number = /*[[ ${chat.room_number} ]]*/
+		var room_count = /*[[ ${chat.room_count} ]]*/
+		var user_nickname = /*[[ ${session.currentUser.user_nickname} ]]*/
+		var user_img = /*[[${session.currentUser.user_img} ]]*/
+		var user_email = /*[[ ${session.currentUser.user_email} ]]*/
+		var master_email = /*[[ ${chat.user_email} ]]*/
+		console.log(user_email);
 		/*]]>*/
 	/* var chId= ${chatRoomSelect.chId};
 	var chatMasterId = ${chatRoomSelect.user_id};
@@ -94,10 +97,10 @@
 	$(document).ready(function() {
 		connect();
 		
-		/* if(chatMasterId != chatMemberId){	// 해당 채팅방에서 방장이 아니면 방삭제 버튼을 안보이게함
+		if(master_email != user_email){	// 해당 채팅방에서 방장이 아니면 방삭제 버튼을 안보이게함
 			$('#deleteBtn').remove();
 		}
-		*/
+		
 		setInterval('getMemberList(room_number)', 1000); // 1초간격으로 채팅방 인원변경 확인, Ajax통신
 		
 		
@@ -165,7 +168,7 @@
 	function onMessage(evt) {
 		console.log(evt.data);
 		
-		/* var userlist = ""; */
+		/* var userlist = "";  */
 		var tag = "";
 		
 		
@@ -185,7 +188,7 @@
 		
 		if(msg.type == "notice") {
 			
-		/* 	userlist += '<div>' + msg.user_nickname+ '</div>'; */
+		    /* userlist += '<div>' + msg.user_nickname+ '</div>';  */
 			
 			tag += '<div class="center">';
 			tag += '<span class="small">'+msg.user_nickname + msg.text + ' ['+timeStr +']</span>';
@@ -294,16 +297,16 @@
 	}
 	
 	// 채팅방 삭제 메서드 : 방개설자만 가능
-	function chatRoomDelete(chId, user_id) {
-		if(confirm("EE Chat을 정말 삭제하시겠습니까? 삭제하면 다시 참여가 불가합니다.") == true) {
+	function chatRoomDelete(room_number, user_email) {
+		if(confirm("채팅방을 정말 삭제하시겠습니까? 나가면 다시 참여가 불가합니다.") == true) {
 			$.ajax({
 				type:'POST',
-				url: getContextPath() + '/chat/chatRoomDelete',
-				data:{'chId' : chId, 'user_id' : user_id},
+				url: 'deleteChatRoom',
+				data:{'room_number' : room_number, 'user_email' : user_email},
 				success:function(data){
-					alert("EE Chat이 삭제되었습니다.");
+					alert("채팅방이 삭제되었습니다.");
 	
-					var text = '[알  림] 모임장이 해당 EE Chat을 삭제했습니다. 나가면 다시 참여가 불가합니다.';
+					var text = '[알  림] 방장이 해당 채팅방을 삭제했습니다. 나가면 다시 참여가 불가합니다.';
 					var msg = 
 						{
 							"type" : "delete",
@@ -312,7 +315,8 @@
 						};
 					
 					webSocket.send(JSON.stringify(msg));
-					window.close();
+					location.href = "chatList";
+// 					window.close();
 				}
 	        });	
 		} else {
@@ -321,25 +325,26 @@
 	}
 	
 	// 채팅방 나가는 메서드 
-	function chatRoomExit(chId, user_id) {
-		if(confirm("EE Chat에서 나가시겠습니까?") == true) {					
+	function chatRoomExit(room_number, user_email) {
+		if(confirm("채팅방에서 나가시겠습니까?") == true) {					
 			$.ajax({
 				type:'POST',
-				url: getContextPath() + '/chat/chatRoomExit',
-				data:{'chId' : chId, 'user_id' : user_id},
+				url: 'exitChatRoom',
+				data:{'room_number' : room_number, 'user_email' : user_email},
 				success:function(data){
-					var a = currentUserNickname;
+					
 					var text = '님이 나가셨습니다.';
 					var msg = 
 						{
 							"type" : "notice",
 			            	"text": text,
-							"uNickname" : a,
+							"user_nickname" : user_nickname,
 							"date" : Date.now()
 						};
 					
 					webSocket.send(JSON.stringify(msg));
-					window.close();
+					location.href = "chatList";
+					/* window.close(); */
 				}
 	        });
 		} else {

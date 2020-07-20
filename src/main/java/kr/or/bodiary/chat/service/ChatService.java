@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import kr.or.bodiary.chat.dao.ChatDao;
 import kr.or.bodiary.chat.dto.ChatMemberDto;
@@ -87,11 +88,22 @@ public class ChatService {
 			return "redirect:chatList";
 		}
 	
-	//채팅방 멤버리스트 닉네임 불러오기
-	public List<ChatMemberDto> getMemberList(int room_number) throws ClassNotFoundException, SQLException {
-		ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
-		return chatdao.getMemberList(room_number);
-	}
+		//채팅방 멤버리스트 닉네임 불러오기
+		public List<ChatMemberDto> getMemberList(int room_number) throws ClassNotFoundException, SQLException {
+			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
+			return chatdao.getMemberList(room_number);
+		}
+	
+	
+	
+		//채팅방 나가기
+	
+		public String exitChatRoom(String user_email) throws ClassNotFoundException, SQLException {
+			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
+			chatdao.removeMember(user_email);
+			return "redirect:chatList";
+		}
+	
 
 	}
 	
