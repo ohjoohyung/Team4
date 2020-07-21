@@ -19,7 +19,7 @@ public class BodiaryDto {
 	private int diary_today_weight;
 	private String diary_content;
 	private int routine_cart_seq;
-	private String diary_pubchk;
+	
 	private String diary_condition;
 	
 	//String으로 바꾸기

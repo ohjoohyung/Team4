@@ -140,8 +140,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 							console.log(validate[0]);
 						});
         	 
-        	 $('#user_nickname')
-				.keyup(
+        	 $('#user_nickname').keyup(
 							function () {
 								let nickname = /^[가-힣a-zA-Z0-9]{2,10}$/;
 								if (!nickname.test($('#user_nickname').val())) {

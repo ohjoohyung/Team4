@@ -3,15 +3,12 @@ package kr.or.bodiary.user.service;
 import java.io.FileOutputStream;
 import java.util.Random;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -228,28 +225,38 @@ public class UserService {
 	}
 
 	// ------------이메일 발송 서비스------------
-	public int sendConfirmEmail(EmailDto emaildto) throws Exception {
-		MimeMessage messagedto = mailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
+	public String sendConfirmEmail(String user_email) throws Exception {
+		
+//		MimeMessage messagedto = mailSender.createMimeMessage();
+//		MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
 
-		Random random = new Random(System.currentTimeMillis());
-		int confirmation = 0;
+//		Random random = new Random(System.currentTimeMillis());
+//		int confirmation = 0;
+//
+//		while (true) {
+//			confirmation = (random.nextInt(10000));
+//			if (confirmation < 10000 && confirmation > 1000) {
+//				break;
+//			}
+//		}
 
-		while (true) {
-			confirmation = (random.nextInt(10000));
-			if (confirmation < 10000 && confirmation > 1000) {
-				break;
-			}
-		}
-
-		messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.
-		messageHelper.setTo(emaildto.getReceiveMail());
-		messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
-		messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
-
-		mailSender.send(messagedto);
-
-		return confirmation;
+//		messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.
+//		messageHelper.setTo(emaildto.getReceiveMail());
+//		messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
+//		messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
+//
+//		mailSender.send(messagedto);
+		
+		String key = new Tempkey().getKey(10, false);
+		
+		Mailer mailer = new Mailer();
+		EmailDto emaildto = new EmailDto();
+		emaildto.setMailFrom("bitcamp155@gmail.com");
+		emaildto.setMailTo(user_email);
+		
+		mailer.sendMail(emaildto, key);
+		
+		return key;
 	}
 
 }

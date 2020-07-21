@@ -9,6 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from User
 		where user_email= #{user_email}
 	</select>
+	<select id="selectUserByGender" resultType="int">
+		select count(user_gender)
+		from User
+		where user_gender = #{user_gender}
+	</select>
+	<select id="selectUserCount" resultType="int">
+		select count(user_email)
+		from User
+	</select>
 	<!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(

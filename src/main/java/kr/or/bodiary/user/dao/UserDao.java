@@ -9,6 +9,10 @@ public interface UserDao {
 	
 	//----------- 회원정보 얻기 ------------
 	public UserDto getUser(String user_email) throws ClassNotFoundException, SQLException;
+	
+	public int selectUserByGender(String user_gender) throws ClassNotFoundException, SQLException;
+	
+	public int selectUserCount() throws ClassNotFoundException, SQLException;
 
 	//----------- 회원 가입 ------------
 	public int insertUser(UserDto user) throws ClassNotFoundException, SQLException;

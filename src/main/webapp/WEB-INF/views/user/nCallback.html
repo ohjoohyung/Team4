@@ -25,10 +25,35 @@
     	user_gender : naver_id_login.getProfileData('gender')
     }
     
-    console.log(data);
+//     alert(data);
+    
+//     var url = findEmail(data);
+//    	alert(url);
+    
     window.location.replace("http://" + window.location.hostname + 
             ( (location.port==""||location.port==undefined)?"":":" + location.port) + "/bodiary/main");
   }
+  /* 주석처리 망한코드임 */
+//   function findEmail(data){
+// 	 $.ajax(
+// 		{
+// 			url : : "findEmail",
+// 			type : "POST",
+// 			dataType : "html",
+// 			data : data,
+// 			async: false,
+// 			success : function(responsedata){
+// 				var url ="";
+// 				if(responsedata){
+// 				    url = "/bodiary/main";
+// 				    }else{
+// 				    	url = "/bodiary/register";
+// 				    }
+				    
+// 			}
+// 		}
+// 	); 
+//   }
 </script>
 </body>
 </html>

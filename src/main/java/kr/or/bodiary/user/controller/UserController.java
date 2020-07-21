@@ -3,15 +3,24 @@ package kr.or.bodiary.user.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import kr.or.bodiary.user.dto.EmailDto;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.user.service.NaverLoginBO;
 import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.user.service.VerifyRecaptcha;
 
@@ -26,7 +35,14 @@ public class UserController {
 	
 //	@Autowired
 //	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	/* NaverLoginBO */
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 	
 	//------------- 로그인 --------------
 	//로그인 페이지 
@@ -35,14 +51,51 @@ public class UserController {
 		
 		return "user/login";
 	}
+
 	
+//	실험해보기전 주석으로 남겨둔 코드
 	@RequestMapping("/nCallback")
 	public String naverCallback(UserDto user ,HttpServletRequest request) {
-		System.out.println("gd");
-		System.out.println();
+		System.out.println("네이버 콜백 함수 컨트롤러 탐");
+		
+		
 		
 		return "user/nCallback";
 	}
+//	
+//	@RequestMapping(value = "/nCallback", method = { RequestMethod.GET, RequestMethod.POST })
+//	public String naverCallback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session) throws IOException, ParseException {
+//		System.out.println("네이버 콜백 함수 컨트롤러 탐");
+//		OAuth2AccessToken oauthToken;
+//		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+//		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
+//		// String형식인 apiResult를 json형태로 바꿈
+//		JSONParser parser = new JSONParser();
+//		Object obj = parser.parse(apiResult);
+//		JSONObject jsonObj = (JSONObject) obj;
+//		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+//		//response의 nickname값 파싱
+//		String user_nickname = (String) response_obj.get("nickname");
+//		System.out.println(user_nickname);
+//		
+//		String user_email = (String) response_obj.get("email");
+//		String user_gender ="";
+//		
+//		session.setAttribute("user_nickname", user_nickname); // 세션 생성
+//		session.setAttribute("user_nickname", user_email); // 세션 생성
+//		if(((String) response_obj.get("gender"))=="F"){
+//			user_gender = "여";
+//			session.setAttribute("user_gender", user_gender); // 세션 생성
+//			System.out.println("둘중 뭐라도 나오냐고");
+//		}else {
+//			System.out.println("둘중 뭐라도 나오냐고");
+//			user_gender = "남";
+//			session.setAttribute("user_gender", user_gender); // 세션 생성
+//		}
+//		
+//		model.addAttribute("result", apiResult);
+//		return "main";
+//	}
 	//------------- 회원가입 --------------
 	//회원가입 페이지
 	@RequestMapping("/register")
@@ -123,11 +176,9 @@ public class UserController {
 	//------------- 이메일 인증번호 전송 -------------
 	@ResponseBody
 	@RequestMapping("/confirmEmail")
-	public int sendConfirmEmail(EmailDto emaildto) throws Exception {
-        return userService.sendConfirmEmail(emaildto);
+	public String sendConfirmEmail(HttpServletRequest request) throws Exception {
+        return userService.sendConfirmEmail(request.getParameter("user_email"));
     }
-	
-	
 	//------------- 리캡차 --------------
 	
 	@ResponseBody

@@ -11,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.bodiary.admin.service.ChartService;
 import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.notice.service.NoticeService;
+import kr.or.bodiary.user.dto.UserDto;
 
 @Controller
 public class AdminController {
@@ -32,8 +35,13 @@ public class AdminController {
 		this.noticeservice = noticeservice;
 	}
 	
-
+	@Autowired
+	private ChartService chartService;
 	
+	public void setChartService(ChartService chartService) {
+		this.chartService = chartService;
+	}
+
 	@RequestMapping("/admin")
 	public String adminDashBrd() {
 		return "admin/adminDashBrd";
@@ -190,5 +198,31 @@ public class AdminController {
 			noticeservice.noticeDelete(notice_brd_seq);
 			return "redirect:noticeList";
 		}
+		//오늘 가입자수
+		@ResponseBody
+		@RequestMapping("todayUserCount")
+		public int newUserCount(UserDto user, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+			System.out.println("차트 컨트롤러");
+			
+			return chartService.todayUserCount(user, request);
+		}
+		
+		@ResponseBody
+		@RequestMapping("selectUserCount")
+		public int selectUserCount() throws ClassNotFoundException, SQLException {
+			System.out.println("회원수 알려주세요");
+			
+			return chartService.selectUserCount();
+		}
+		//남녀 성비
+		@ResponseBody
+		@RequestMapping("genderPer")
+		public String genderPer(UserDto user, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+			System.out.println("남녀 성비 알려주세요");
+			
+			return chartService.genderPer();
+		}
+		
+		
 		
 	}
