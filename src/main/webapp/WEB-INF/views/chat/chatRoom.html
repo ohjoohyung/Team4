@@ -24,10 +24,10 @@
 							<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small th:if="${chat.room_secret.equals('N')}"></small><small th:if="${chat.room_secret.equals('Y')}">비밀방</small>
 							</div>
 							<div class="mt-3 mb-4">
-								<button class="btn btn-outline-primary w-100" type="button" th:onclick="'chatRoomExit(\'' +${chat.room_number} +'\',\''+${session.currentUser.user_email}+'\')'">나가기</button>
+								<button id="exitBtn" class="btn btn-outline-primary w-100" type="button">나가기</button>
 							</div>
 							<div class="mt-3 mb-4">
-								<button class="btn btn-outline-primary w-100" type="button" th:onclick="'chatRoomDelete(\'' +${chat.room_number} +'\',\''+${session.currentUser.user_email}+'\')'">방 삭제</button>
+								<button id="deleteBtn" style="display:none;" class="btn btn-outline-primary w-100" type="button" >방 삭제</button>
 							</div>
 						</div>
 					</div>
@@ -35,10 +35,11 @@
 						<div class="card-header count">
 							
 						</div>
-						<div class="card-body userlist">
+						
+					</div>
+					<div class="userlist">
 							
 						</div>
-					</div>
 				</div>
 				<div class="col chat-content-box m-3">
 					<div class="chat-content">
@@ -73,7 +74,10 @@
 
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-	<script type="text/javascript" th:inline="javascript">
+	
+</body>
+
+<script type="text/javascript" th:inline="javascript">
 	/*<![CDATA[*/
 	
 		var room_number = /*[[ ${chat.room_number} ]]*/
@@ -82,6 +86,7 @@
 		var user_img = /*[[${session.currentUser.user_img} ]]*/
 		var user_email = /*[[ ${session.currentUser.user_email} ]]*/
 		var master_email = /*[[ ${chat.user_email} ]]*/
+			
 		console.log(user_email);
 		/*]]>*/
 	/* var chId= ${chatRoomSelect.chId};
@@ -94,14 +99,68 @@
 		return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
 	}; */
 	
+	$('#exitBtn').click(function() {
+		
+		if(confirm("채팅방에서 나가시겠습니까?") == true) {
+			var text = '님이 나가셨습니다.';
+			var msg = 
+				{
+					"type" : "notice",
+	            	"text": text,
+					"user_nickname" : user_nickname,
+					"date" : Date.now()
+				};
+			
+			webSocket.send(JSON.stringify(msg));
+		
+			
+			
+			location.href = "exitChatRoom?user_email="+user_email+"&room_number="+room_number;
+				
+			
+			
+		} else {
+			return false;
+		}
+	
+
+	});
+	
+	$('#deleteBtn').click(function() {
+		if(confirm("채팅방을 정말 삭제하시겠습니까? 나가면 다시 참여가 불가합니다.") == true) {
+			swal("성공", "채팅방이 삭제되었습니다.", "success");
+			var text = '[알  림] 방장이 해당 채팅방을 삭제했습니다. 나가면 다시 참여가 불가합니다.';
+			var msg = 
+				{
+					"type" : "delete",
+	            	"text": text,
+					"date" : Date.now()
+				};
+			webSocket.send(JSON.stringify(msg));
+		
+			
+			setTimeout(function() {
+				location.href = "deleteChatRoom?room_number="+room_number+"&user_email="+user_email;
+				}, 1000);
+			
+			
+		} else {
+			return false;
+		}
+	})
+	
+	
+	
+	
+	
 	$(document).ready(function() {
 		connect();
 		
-		if(master_email != user_email){	// 해당 채팅방에서 방장이 아니면 방삭제 버튼을 안보이게함
-			$('#deleteBtn').remove();
+		if(master_email == user_email){	// 해당 채팅방에서 방장이 아니면 방삭제 버튼을 안보이게함
+			$('#deleteBtn').show();
 		}
 		
-		setInterval('getMemberList(room_number)', 1000); // 1초간격으로 채팅방 인원변경 확인, Ajax통신
+		 setInterval('getMemberList(room_number)', 1000);  // 1초간격으로 채팅방 인원변경 확인, Ajax통신
 		
 		
 		$('#message').keypress(function(event) {	// 채팅메세지를 엔터를 쳐서 보낼수 있게해주는 것
@@ -127,6 +186,8 @@
 		webSocket.onmessage = onMessage;
 	
 	}
+	
+
 	
 	// 채팅방 접속할때 실행되는 메세지
 	function onOpen(evt) {
@@ -166,15 +227,18 @@
 	
 	// 채팅메세지를 받는 메세지
 	function onMessage(evt) {
-		console.log(evt.data);
+	/* 	console.log(evt.data.split("/")[0]);
+		console.log(evt.data.split("/")[1]);
+		var memberCount = ""; */
 		
-		/* var userlist = "";  */
 		var tag = "";
-		
-		
-		
 		var text = "";
+		
+		
+		
+		/* var currentCount = evt.data.split("/")[0]; */
 		var msg = JSON.parse(evt.data);
+		/* var userlist = evt.data.split("/")[2]; */
 		var time = new Date(msg.date);
 		var ampm = (time.getHours() > 12 ?  "PM" : "AM");
 		var h = (time.getHours() > 12 ? time.getHours() - 12 : time.getHours());
@@ -185,16 +249,18 @@
 		}
 		
 		var timeStr = ampm +" " +h + ":" +m;
-		
+	/* 	appendUserList(userlist); */
 		if(msg.type == "notice") {
 			
-		    /* userlist += '<div>' + msg.user_nickname+ '</div>';  */
+			/* memberCount += '<div>'+currentCount + " / " + room_count + '</div>';  */
+		   
 			
 			tag += '<div class="center">';
 			tag += '<span class="small">'+msg.user_nickname + msg.text + ' ['+timeStr +']</span>';
 			tag += '</div>';
 			appendMessage(tag); 
-			appendUserList(userlist);
+			
+			/* appendCount(memberCount); */
 		} else if(msg.type == "delete") {
 			tag += '<div class="notice">';
 			tag += '<div class="notice-message">';
@@ -212,16 +278,7 @@
 				
 				
 				
-	    		/* tag += '<li class="out">';
-	    		tag += '<div class="chat-body">';
-	    		tag += '<div class="chat-message">';
-	    		tag += '<h6 class="mySendMessage messageText">' +msg.text +'</h6>';
-	    		tag += '<div class="chat-message-info">'
-	    		tag += '<p class="myMsgTime">' +timeStr +'</p>' ;
-	    		tag += '</div>';
-	    		tag += '</div>';
-	    		tag += '</div>';
-	    		tag += '</li>'; */
+	    	
 	    		appendMessage(tag);    		
 	    	} else {
 	    		
@@ -234,24 +291,10 @@
 	    		
 	    		
 	    		
-	    		/* tag += '<li class="in">';
-	    		tag += '<div class="chat-body">';
-	    		tag += '<div class="chat-img">';
-	    		tag += '<img alt="Avtar" src="'+msg.uProfile +'">';
-	    		tag += '</div>';
-	    		tag += '<div class="chat-message">';
-	    		tag += '<div class="chat-message-info"><p>'+msg.uNickname+'</p></div>';
-	    		tag += '<h6 class="myReceiveMessage messageText">' +msg.text +'</h6>';
-	    		tag += '<div class="chat-message-info"><p>'+timeStr+'</p></div>';
-	    		tag += '</div>';
-	    		tag += '</div>';
-	    		tag += '</li>'; */
+	    
 	    		appendMessage(tag);
-	    		
-	    		var a = '<i class="fas fa-comment-alt fa-2x" style="color:#e7438b;"></i>';
-	    		var b = '<i class="fas fa-comment-alt fa-2x"></i>';
-	    		$('.noticeMsg').html(a);
-	    		setTimeout(function(){$('.noticeMsg').html(b);}, 700);
+	    	
+	   
 	    	}
 		}
 	}
@@ -262,9 +305,16 @@
 		/* $(".chatMessageArea").scrollTop($(".chatMessageArea")[0].scrollHeight);	 */
 	}
 	
-	/* //채팅방 유저 목록 나타내기
-	function appendUserList(userlist) {
+	//채팅방 유저 목록 나타내기
+/* 	function appendUserList(userlist) {
+		$(".userlist").empty();
 		$(".userlist").append(userlist);
+	} */
+	
+	//채팅방 멤버 수 나타내기
+/* 	function appendCount(memberCount) {
+		$(".count").empty();
+		$(".count").append(memberCount);
 	} */
 	
 	
@@ -272,7 +322,7 @@
 	
 	
 	// 현재 채팅방에 접속한 유저를 파악하는 메서드
-	function getMemberList(room_number) {
+	 function getMemberList(room_number) {
 		$('.userlist').children().remove();
 		
 		$.ajax({
@@ -280,6 +330,7 @@
 			url: 'getMemberList',
 			data:{'room_number' : room_number},
 			success:function(data){
+				var memberList = "";
 				$.each(data, function(key, value) {
 					var currentMemberCount = data.length;
 					var memberCount = '';
@@ -287,16 +338,18 @@
 						
 					$('.count').html(memberCount);
 					
-					var memberList = "";
-						memberList += "<span>" +value.user_nickname +" / " +"</span>";
+					/*  
+						memberList += "<span>" +value.user_nickname; */
 						
-					$('.userlist').append(memberList);	
+						
 				});
+				/* memberList+="</span>";
+				$('.userlist').html(memberList); */
 			}
 	    });
-	}
+	} 
 	
-	// 채팅방 삭제 메서드 : 방개설자만 가능
+	/* // 채팅방 삭제 메서드 : 방개설자만 가능
 	function chatRoomDelete(room_number, user_email) {
 		if(confirm("채팅방을 정말 삭제하시겠습니까? 나가면 다시 참여가 불가합니다.") == true) {
 			$.ajax({
@@ -343,14 +396,14 @@
 						};
 					
 					webSocket.send(JSON.stringify(msg));
-					location.href = "chatList";
+					location.href = "chatList"; */
 					/* window.close(); */
-				}
+	/* 			}
 	        });
 		} else {
 			return false;
 		}
-	}
+	} */ 
 	
 	//새로고침 방지
 	function noEvent() { // 새로 고침 방지
@@ -364,9 +417,22 @@
 	
 	document.onkeydown = noEvent;
 	
+
+
+
+
+	
+	/* function closeIt() {
 		
+		/* 
+		alert("닫습니다"); 
+		{
+			location.href = "exitChatRoom?user_email="+user_email+"&room_number="+room_number;
+		    event.returnValue = "창을 닫겠는가?";
+		}
+		
+	} */
 	
 		
 	</script>
-</body>
 </html>

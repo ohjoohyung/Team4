@@ -52,7 +52,7 @@ public class ChatService {
 		chatroomdto.setUser_email(user_email);
 		chatroomdto.setUser_nickname(user_nickname);
 		chatdao.createChatRoom(chatroomdto);
-		return "redirect:chatList";
+		return "redirect:selectChatRoomByRn?room_number="+chatroomdto.getRoom_number();
 	}
 	
 	//채팅방 들어가기
@@ -73,10 +73,19 @@ public class ChatService {
 				 * session.setAttribute("chatRoomId", chatRoomId);
 				 */
 			 String user_email = user.getUser_email();
+			 
+			 int userCount = chatdao.countUserInRoom(room_number, user_email);
+			 
+			 if(userCount > 0) {
+				 chatdao.removeMember(user_email, room_number);
+			 }
+			 
+			 
 			chatdao.addMember(room_number, user_email);
 			
 			model.addAttribute("user_email", user_email);
 			 model.addAttribute("chat", chatroomdto);
+			
 			
 			/*
 			 * model.addAttribute("user_id", chattingVO.getUser_id());
@@ -93,16 +102,30 @@ public class ChatService {
 			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
 			return chatdao.getMemberList(room_number);
 		}
-	
-	
-	
-		//채팅방 나가기
-	
-		public String exitChatRoom(String user_email) throws ClassNotFoundException, SQLException {
+		
+		//채팅방 비밀번호 불러오기
+		public int getRoomPwd(int room_number) throws ClassNotFoundException, SQLException {
 			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
-			chatdao.removeMember(user_email);
+			return chatdao.getRoomPwd(room_number);
+		}
+	
+	
+	
+		//채팅방 나가기	
+		public String exitChatRoom(String user_email, int room_number) throws ClassNotFoundException, SQLException {
+			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
+			chatdao.removeMember(user_email, room_number);
 			return "redirect:chatList";
 		}
+		
+		//채팅방 삭제하기
+		public String deleteChatRoom(int room_number, String user_email) throws ClassNotFoundException, SQLException {
+			ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
+			chatdao.removeMember(user_email, room_number);
+			chatdao.deleteChatRoom(room_number);
+			return "redirect:chatList";
+		}
+		
 	
 
 	}

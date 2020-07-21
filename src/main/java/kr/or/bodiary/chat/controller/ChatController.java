@@ -36,13 +36,23 @@ private ChatService chatservice;
 	
 	
 	
-	//채팅방 리스트 들어가기
-	@RequestMapping("/chatList")
-	public String chatList(Model model) throws ClassNotFoundException, SQLException {
+	
+	  //채팅방 리스트 들어가기
+	  
+	  @RequestMapping("/chatList") 
+	  public String chatList(Model model) throws ClassNotFoundException, SQLException { 
+		  return "chat/chatList"; 
+	  }
+	 
+	
+	@ResponseBody
+	@RequestMapping("/getChatList")
+	public List<ChatRoomDto> getChatList() throws ClassNotFoundException, SQLException {
 		List<ChatRoomDto> chatlist = chatservice.getChatList();
-		model.addAttribute("chatlist", chatlist);
-		return "chat/chatList";
+		return chatlist;
 	}
+	
+	
 	
 	//채팅방 만들기
 	@RequestMapping("/createChatRoom")
@@ -56,6 +66,13 @@ private ChatService chatservice;
 		return chatservice.selectChatRoomByRn(room_number, request, model);
 	}
 	
+	//채팅방 비밀번호 불러오기
+	@ResponseBody
+	@RequestMapping("/getRoomPwd")
+	public int getRoomPwd(int room_number) throws ClassNotFoundException, SQLException {
+		return chatservice.getRoomPwd(room_number);
+	}
+	
 	//채팅방 멤버리스트 닉네임 불러오기
 	@ResponseBody
 	@RequestMapping("/getMemberList")
@@ -66,12 +83,15 @@ private ChatService chatservice;
 	
 	//채팅방 나가기
 	@RequestMapping("/exitChatRoom")
-	public String exitChatRoom(String user_email) throws ClassNotFoundException, SQLException {
-		return chatservice.exitChatRoom(user_email);
+	public String exitChatRoom(String user_email, int room_number) throws ClassNotFoundException, SQLException {
+		return chatservice.exitChatRoom(user_email, room_number);
 	}
 	
 	//채팅방 삭제하기
-
+	@RequestMapping("/deleteChatRoom")
+	public String deleteChatRoom(int room_number, String user_email) throws ClassNotFoundException, SQLException {
+		return chatservice.deleteChatRoom(room_number, user_email);
+	}
 
 	
 	

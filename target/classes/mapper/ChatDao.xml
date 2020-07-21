@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="kr.or.bodiary.chat.dao.ChatDao">
 <!-- 채팅방 만들기 -->
-  <insert id="createChatRoom" parameterType="kr.or.bodiary.chat.dto.ChatRoomDto">
+  <insert id="createChatRoom" parameterType="kr.or.bodiary.chat.dto.ChatRoomDto" useGeneratedKeys="true" keyProperty="room_number">
   	insert into chatroom (room_title, room_count, user_email, room_secret, room_pwd)
   	values (#{room_title}, #{room_count}, #{user_email}, #{room_secret} , #{room_pwd}) 
   </insert>
@@ -13,9 +13,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 채팅방 리스트 가져오기 -->
    <select id="getChatList" resultType="kr.or.bodiary.chat.dto.ChatRoomDto">
-   	select c.room_number, c.room_title, c.user_email, c.room_secret, c.room_pwd, c.room_count, u.user_img, u.user_nickname from chatroom c 
+   	select c.room_number, c.room_title, c.user_email, c.room_secret, c.room_pwd, c.room_count, u.user_img, u.user_nickname,  (SELECT COUNT(user_email) FROM chatmember WHERE room_number = c.room_number) AS current_count from chatroom c 
    	JOIN user u 
-   	ON c.user_email = u.user_email
+   	ON c.user_email = u.user_email;
    </select>
    
    <!-- 채팅방 들어가기 -->
@@ -30,6 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    		delete from chatroom where room_number = #{room_number}
    </delete>
    
+   <!-- 채팅방 비밀번호 불러오기 -->
+   <select id="getRoomPwd" resultType="Integer" parameterType="Integer">
+   	select room_pwd from chatroom where room_number=#{room_number}
+   </select>
    
    
    
@@ -52,9 +56,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 채팅방 멤버 나가기 (방 나가면 무조건 삭제니까 방 번호가 필요가 없음) -->
 	<delete id="removeMember">
-		delete from chatmember where user_email = #{user_email}
+		delete from chatmember where user_email = #{param1} and room_number = #{param2}
 	</delete>
 	
+	<!-- 채팅방에 현재 접속할 유저가 존재하는지 판별 -->
+	<select id="countUserInRoom" resultType="Integer">
+		select count(*) from chatmember where room_number = #{param1} and user_email = #{param2}
+	</select>
 
    
 </mapper>
