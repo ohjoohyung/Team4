@@ -255,14 +255,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                $.ajax({
                                      type : "post",
                                      url : "confirmEmail",
-                                     data : {"receiveMail" : $('#user_email').val()},
+                                     data : {"user_email" : $('#user_email').val()},
                                      success : function(data) {
                                          alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
                                          $('#confirm').click(function() {
 					        		 		console.log("confirm버튼 눌림")
                                              console.log(data);
 					        		 		console.log($('#confirmNum').val());
-                                             if($('#confirmNum').val() != data) {
+                                             if($('#confirmNum').val().trim() != data) {
                                                  alert("인증정보가 정확하지 않습니다!")
                                              } else {
                                                  alert("인증정보가 확인되었습니다!")

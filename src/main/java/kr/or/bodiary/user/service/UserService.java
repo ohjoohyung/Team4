@@ -1,17 +1,13 @@
 package kr.or.bodiary.user.service;
 
 import java.io.FileOutputStream;
-import java.util.Random;
 
-import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.catalina.User;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.EmailDto;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.utils.Mailer;
+import kr.or.bodiary.utils.Tempkey;
 
 @Service
 public class UserService {
@@ -28,12 +26,15 @@ public class UserService {
 	private JavaMailSender mailSender;
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	@Autowired
+	private Mailer mailer;
 
 	@Autowired
 	public void setSqlsession(SqlSession sqlsession) {
 		this.sqlsession = sqlsession;
 	}
-
+	
+	
 	// -----------유저찾기 서비스-----------
 
 	public UserDto getUser(String user_email) {
@@ -228,28 +229,44 @@ public class UserService {
 	}
 
 	// ------------이메일 발송 서비스------------
-	public int sendConfirmEmail(EmailDto emaildto) throws Exception {
-		MimeMessage messagedto = mailSender.createMimeMessage();
-		MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
+	public String sendConfirmEmail(String user_email) throws Exception {
+//		MimeMessage messagedto = mailSender.createMimeMessage();
+//		MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
 
-		Random random = new Random(System.currentTimeMillis());
-		int confirmation = 0;
+//		Random random = new Random(System.currentTimeMillis());
+//		int confirmation = 0;
+//
+//		while (true) {
+//			confirmation = (random.nextInt(10000));
+//			if (confirmation < 10000 && confirmation > 1000) {
+//				break;
+//			}
+//		}
 
-		while (true) {
-			confirmation = (random.nextInt(10000));
-			if (confirmation < 10000 && confirmation > 1000) {
-				break;
-			}
+//		messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.
+//		messageHelper.setTo(emaildto.getReceiveMail());
+//		messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
+//		messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
+//
+//		mailSender.send(messagedto);
+		
+		String key = new Tempkey().getKey(10,false);
+		EmailDto mail = new EmailDto();
+		try {
+			mail.setMailFrom("bitcamp155@gmail.com");
+			mail.setMailTo(user_email);
+			System.out.println(user_email);
+			mail.setMailSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
+			mail.setTemplateName("sendEmail.vm");
+			
+			System.out.println(key);
+			mailer.sendMail(mail, key);
+			
+		} catch (Exception e) {
+			e.getMessage();
 		}
-
-		messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.
-		messageHelper.setTo(emaildto.getReceiveMail());
-		messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
-		messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
-
-		mailSender.send(messagedto);
-
-		return confirmation;
+		
+		return key;
 	}
 
 }

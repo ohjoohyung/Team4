@@ -106,4 +106,27 @@ SqlSessionTemplate
     </props>
     </property>
   </bean>
+  <!-- Root Context: defines shared resources visible to all other web components -->
+   <bean id="velocityConfig"
+      class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+      <property name="resourceLoaderPath" value="/WEB-INF/views/user/vm/" />
+      <property name="velocityProperties">
+         <value>
+            input.encoding=UTF-8
+            output.encoding=UTF-8
+         </value>
+      </property>
+   </bean>
+
+   <bean id="velocityEngine"
+      class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+      <property name="resourceLoaderPath"
+         value="/WEB-INF/views/user/" />
+   </bean>
+
+   <bean id="mailer" class="kr.or.bodiary.utils.Mailer">
+      <property name="mailSender" ref="mailSender" />
+      <property name="velocityEngine" ref="velocityEngine" />
+   </bean>
+   
 </beans>

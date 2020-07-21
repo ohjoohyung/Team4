@@ -43,6 +43,15 @@
       <property name="characterEncoding" value="UTF-8" />
       <property name="order" value="2" />
    </bean>
+   <!-- 뷰리조버3 -->
+   <bean id="velocityViewResolver"
+      class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+      <property name="contentType" value="text/html; charset=UTF-8" />
+      <property name="cache" value="true" />
+      <property name="prefix" value="/" />
+      <property name="suffix" value=".vm" />
+      <property name="order" value="4" />
+   </bean>
 
 <!--     bean네임추가  -->
    <bean id="viewResolver"

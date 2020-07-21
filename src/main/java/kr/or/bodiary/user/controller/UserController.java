@@ -3,6 +3,7 @@ package kr.or.bodiary.user.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import kr.or.bodiary.user.dto.EmailDto;
+import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.user.service.VerifyRecaptcha;
@@ -27,7 +28,7 @@ public class UserController {
 //	@Autowired
 //	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	
+
 	//------------- 로그인 --------------
 	//로그인 페이지 
 	@RequestMapping("/login")
@@ -38,8 +39,6 @@ public class UserController {
 	
 	@RequestMapping("/nCallback")
 	public String naverCallback(UserDto user ,HttpServletRequest request) {
-		System.out.println("gd");
-		System.out.println();
 		
 		return "user/nCallback";
 	}
@@ -92,7 +91,19 @@ public class UserController {
 	@RequestMapping(value="updateNick" , method=RequestMethod.POST)
 	public String updateNick(UserDto user,HttpServletRequest request) {
 		System.out.println("유저 닉네임 정보 수정하러 왔슴다~");
-		return userService.updateNick(user, request);
+		String result = "";
+		UserDto currentUser = null;
+		try {
+			result = userService.updateNick(user, request);
+			currentUser = userService.getUser(request.getParameter("user_email"));
+			
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentUser", currentUser);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return result;
 	}
 	
 	//---------- 계정정보 외 프로필정보 수정 -----------
@@ -105,12 +116,23 @@ public class UserController {
 		return "myBodiary/myProfileEdit";
 	}
 	
-	
 	@RequestMapping(value="/myProfileEdit" , method=RequestMethod.POST)
 	public String myProfileEdit(UserDto user,HttpServletRequest request) {
 		System.out.println("myProfileEdit 컨트롤러");
 		System.out.println("form에서 넘어오는 값 : " + user);
-		return userService.updateUser(user, request);
+		String result = "";
+		UserDto currentUser = null;
+		try {
+			result = userService.updateUser(user, request);
+			currentUser = userService.getUser(request.getParameter("user_email"));
+			
+			HttpSession session = request.getSession(true);
+			session.setAttribute("currentUser", currentUser);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		return result;
 	}
 	//------------- 이메일 확인 --------------
 	@ResponseBody
@@ -123,8 +145,8 @@ public class UserController {
 	//------------- 이메일 인증번호 전송 -------------
 	@ResponseBody
 	@RequestMapping("/confirmEmail")
-	public int sendConfirmEmail(EmailDto emaildto) throws Exception {
-        return userService.sendConfirmEmail(emaildto);
+	public String sendConfirmEmail(String user_email) throws Exception {
+        return userService.sendConfirmEmail(user_email);
     }
 	
 	
