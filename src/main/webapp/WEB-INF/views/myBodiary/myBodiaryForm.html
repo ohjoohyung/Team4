@@ -302,10 +302,11 @@
       //alert(bar.style.width); 0%로 나옴
       var origin = bar.style.width.slice(0,-1);
       //alert(origin);
-      var after = Number(origin)+Number(presentcal*100/totalcal);
+      var after = Number(preper)+Number(presentcal*100/totalcal);
       //alert(after);
+      preper = after;
        if (Number(after>=100)){
-         after=100;
+          bar.style.width = "100%";
          alert('과식하셨군요!!');
       } 
       bar.style.width = after+"%";
@@ -337,10 +338,11 @@
       //alert(bar.style.width); 0%로 나옴
       var origin = bar.style.width.slice(0,-1);
       //alert(origin);
-      var after = Number(origin)-Number(presentcal*100/totalcal);
+      var after = Number(preper)-Number(presentcal*100/totalcal);
       //alert(after);
+      preper = after;
        if (Number(after>=100)){
-         after=100;
+          bar.style.width = "100%";
          alert('과식하셨군요!!');
       }else if(Number(after<=0)){
          after=0;
@@ -365,6 +367,7 @@
    
    //덕끝
    var validate = new Array;
+   var preper = 0;
    
          $(function(){
             for(let i=0; i<3; i++) {
@@ -570,7 +573,7 @@
          '</div>';
                         
                
-               switch(밥) {
+               switch(meal) {
             case 1 :
                if($('#morning > div.row > div.'+food_name+'').text() == food_name) {
                   alert("이미 음식이 추가되어 있습니다.");

@@ -28,31 +28,30 @@
 							</div>
 						</div>
 						
-						<div class="row mb-5 mt-4">
-                                    <div class="col">
-                                        <div class="card card-profile text-center pt-2">
-                                            <span class="mb-1 text-primary"><i class="icon-fire"></i></span>
-                                            <h3 class="mb-0">1294.4</h3>
-                                            <p class="text-muted px-4">기초대사량</p>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card card-profile text-center pt-2">
-                                            <span class="mb-1 text-warning"><i class="icon-calculator"></i></span>
-                                            <h3 class="mb-0">20.3</h3>
-                                            <p class="text-muted">BMI 지수</p>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-12 text-center">
-                                        <button class="btn btn-danger px-5">Follow Now</button>
-                                    </div> -->
-							<div id="eventCalendar" class="ml-2">
-	                  		</div>
-                        </div>
+						<div class="row mb-3 mt-4">
+<!--                                      <div class="col">  -->
+<!--                                         <div class="card card-profile text-center pt-2"> -->
+<!--                                             <span class="mb-1 text-primary"><i class="icon-fire"></i></span> -->
+<!--                                             <h3 class="mb-0">1294.4</h3> -->
+<!--                                             <p class="text-muted px-4">기초대사량</p> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col"> -->
+<!--                                         <div class="card card-profile text-center pt-2"> -->
+<!--                                             <span class="mb-1 text-warning"><i class="icon-calculator"></i></span> -->
+<!--                                             <h3 class="mb-0">20.3</h3> -->
+<!--                                             <p class="text-muted">BMI 지수</p> -->
+<!--                                         </div> -->
+<!--                                     </div> -->
+<!--                                     <div class="col-12 text-center">
+<!--                                         <button class="btn btn-danger px-5">Follow Now</button> -->
+<!--                                     </div> --> 
+ 							<div id="eventCalendar" class="ml-2"></div>
+<!--                         </div> -->
 					</li>
 				</ul>
 				
-				<ul class="side-nav-menu side-nav-menu-top-level card mb-5" >
+				<ul class="side-nav-menu side-nav-menu-top-level card mb-5 mt-4" >
 					<li class="side-nav-menu-item mt-4 mb-3 ml-4">
 					<a class="side-nav-menu-link media align-items-center"
 					   href="myGoalList"> 
@@ -91,7 +90,10 @@
 					</li>
 					<!-- End Getting Started -->
 				</ul>
-				
+				<!-- 세션에 저장된 유저 이메일 저장 -->
+				<th:block th:if="${session.currentUser != null}">
+				<input type="hidden" th:value="${session.currentUser.user_email}" id="user_email">
+				</th:block>
 		</main>    
 	</th:block>
 </html>

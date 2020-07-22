@@ -65,7 +65,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                         <input type="email" class="form-control col-9 ml-3"  placeholder="사용할 이메일을 입력하세요" id="user_email" name="user_email" email_chk="fail">
                                     	<button type="button" class="btn btn-primary" id="emailCheck">이메일 확인</button>
                                     	<div class="tdemail"></div>
-                                    	<div id="emailChecking">
+                                    	<div id="emailChecking" class="col-12">
 	                                    	
                                     	</div>
                                     </div>
@@ -102,19 +102,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                                     <button class="btn login-form__btn submit w-100 mb-2 ">카카오 회갑....</button>
                                     <button class="btn login-form__btn submit w-100 mb-2 ">네이버 회갑...</button>
                                 </div>
-                                <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h4 class="card-title">Sweet Success</h4>
-                                <div class="card-content">
-                                    <div class="sweetalert m-t-30">
-                                        <button type="button" id="button" class="btn btn-success btn">Sweet Success</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /# card -->
-                    </div>s
                             </div>
                         </div>
                     </div>
@@ -134,9 +121,6 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	var validate = new Array;
 	
          $(document).ready(function() {
-        
-        	 
-        	 
         	 for(let i=0; i<4; i++) {
         			validate[i]=false;
         		}
@@ -257,25 +241,28 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
                            		return false;
                            } else {
                                alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
-                             $('#emailChecking').append(
-                           		"<input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'>"
-                            	+ "<button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button>"
-                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
-                               
-                               );
+                              	console.log($('#emailChecking').children().length);
+                               if($('#emailChecking').children().length == 0){
+	                             $('#emailChecking').append(
+	                           		"<div class='row mb-4'><div class='col'><input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'></div>"
+	                            	+ "<div class='col-3'><button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button></div></div>"
+	                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
+	                               
+	                               );
+                             };
 								/* $('#confirmNum').attr(type,'text');
 								$('#confirm').removeAttr('hidden'); */
                                $.ajax({
                                      type : "post",
                                      url : "confirmEmail",
-                                     data : {"receiveMail" : $('#user_email').val()},
+                                     data : {"user_email" : $('#user_email').val()},
                                      success : function(data) {
                                          alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
                                          $('#confirm').click(function() {
 					        		 		console.log("confirm버튼 눌림")
                                              console.log(data);
 					        		 		console.log($('#confirmNum').val());
-                                             if($('#confirmNum').val() != data) {
+                                             if($('#confirmNum').val().trim() != data) {
                                                  alert("인증정보가 정확하지 않습니다!")
                                              } else {
                                                  alert("인증정보가 확인되었습니다!")

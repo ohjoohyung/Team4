@@ -16,7 +16,6 @@
 
 			<div class="col mr-5">
 				<div class="card p-3">
-
 					<div class="tab-content br-n pn">
 						<!-- 계정관리 start -->
 						<div id="navpills-1" class="tab-pane active">
@@ -26,67 +25,52 @@
 										<label class="col-sm-3 col-form-label text-primary">이메일</label>
 										<div class="col-sm-9">
 											<input type="text" readonly="readonly"
-												class="form-control-plaintext" value="email@example.com">
+												class="form-control-plaintext"
+												th:if="${session.currentUser} !=null"
+												th:value="${session.currentUser.user_email}">
 										</div>
 									</div>
 									<hr>
 									<div class="form-group row mt-5 mb-5">
 										<label class="col-sm-3 col-form-label text-primary">비밀번호</label>
 										<div class="col-sm-9">
-											<input type="text" readonly="readonly"
-												class="form-control-plaintext" value="********">
-											<button type="button" class="btn btn-primary mt-3">변경하기</button>
-											<br>
-											<br>
+											<!-- 											<input type="text" readonly="readonly" -->
+											<!-- 												class="form-control-plaintext" value="********"> -->
 											<!-- 비밀번호 변경 폼 (나중에 비동기로 만들 예정) -->
-											<form>
-												<div>
-													<label class="col-form-label text-primary">현재 비밀번호</label>
-												</div>
-												<div>
-													<input type="password" class="form-control input-default"
-														placeholder="비밀번호를 입력해주세요">
-												</div>
-												<div>
-													<label class="col-form-label text-primary">새 비밀번호</label>
-												</div>
-												<div>
-													<input type="password" class="form-control input-default"
-														placeholder="비밀번호를 입력해주세요">
-												</div>
-												<div>
-													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button>
-													<button type="submit" class="btn btn-primary mt-3">변경하기</button>
-												</div>
-											</form>
+											<div id="pwdChangeForm"></div>
+											<button type="button"
+												class="btn btn-outline-primary mt-3 w-100" id="pwdChangeBtn">변경하기</button>
+											<br> <br>
+
 										</div>
 									</div>
 									<hr>
 									<div class="form-group row mt-5 mb-5">
 										<label class="col-sm-3 col-form-label text-primary">닉네임</label>
 										<div class="col-sm-9">
-											<input type="text" readonly="readonly"
-												class="form-control-plaintext" value="닉네임이지롱">
-											<button type="button" class="btn btn-primary mt-3">변경하기</button>
-											<br>
-											<br>
-											<!-- 닉네임 변경 폼 (나중에 비동기로 만들 예정) -->
-											<form>
-												<div>
-													<input type="text" class="form-control input-default"
-														value="닉네임이지롱">
-												</div>
-												<div>
-													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button>
-													<button type="submit" class="btn btn-primary mt-3">변경하기</button>
-												</div>
-											</form>
+											<div id="nick-div">
+											<input type="text" readonly="readonly" class="form-control-plaintext" th:if="${session.currentUser} != null" th:value="${session.currentUser.user_nickname}">
+											</div>
+											<div id="button-div">
+											<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>
+											</div>
+											
+<!-- 											<form> -->
+<!-- 												<div class="user_nickname-text"> -->
+<!-- 													<input type="text" class="form-control input-default" th:if="${session.currentUser} != null" th:value="${session.currentUser.user_nickname}"> -->
+<!-- 												</div> -->
+<!-- 												<div> -->
+<!-- 													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button> -->
+<!-- 													<button type="submit" class="btn btn-primary mt-3">변경하기</button> -->
+<!-- 												</div> -->
+<!-- 											</form> -->
 										</div>
 									</div>
 
 									<hr>
 									<div class="form-group row mt-5 mb-5">
-										<label class="col-sm-3 col-form-label text-primary">회원 탈퇴</label>
+										<label class="col-sm-3 col-form-label text-primary">회원
+											탈퇴</label>
 										<div class="col-sm-9">
 											<button type="button" class="btn btn-primary mt-3"
 												onclick="location.href='myWithdraw'">탈퇴하기</button>
@@ -105,5 +89,144 @@
 	</div>
 
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script type="text/javascript" th:inline="javascript">
+	
+	/* 비밀번호 변경 폼 불러오기 */
+		$('#pwdChangeBtn').on('click', function(){
+			if($('#pwdChangeForm').html().trim() ==""){
+				a = '<div>';
+				a += '	<label class="col-form-label text-primary">현재 비밀번호</label>';
+				a += '</div>';
+				a += '<div>';
+				a += '	<input type="password" id="user_pwd" name="user_pwd" class="form-control input-default" placeholder="비밀번호를 입력해주세요">';
+				a += '</div>';
+				a += '<div>';
+				a += '	<label class="col-form-label text-primary">새 비밀번호</label>';
+				a += '</div>';
+				a += '<div>';
+				a += '	<input type="password" id="user_new_pwd" name="user_new_pwd" class="form-control input-default" placeholder="비밀번호를 입력해주세요">';
+				a += '  <div class="tdpw"></div>';
+				a += '</div>';
+				a += '<div>';
+				a += '	<button type="submit" class="btn btn-primary mt-3 w-100" id="pwdChangeUpdateBtn">변경하기</button>';
+				a += '</div>';
+					$('#pwdChangeBtn').html("취소하기");
+// 					console.log(a);
+					$('#pwdChangeForm').html(a);
+			}else{
+				$('#pwdChangeForm').html("");
+				$('#pwdChangeBtn').html("변경하기");
+			}
+		});
+	
+		/* 비밀번호 변경 버튼 */
+		/*<![CDATA[*/
+		$(document).on('click','#pwdChangeUpdateBtn', function(){
+			console.log('click!');
+			var data = {
+				user_pwd : $('#user_pwd').val(),
+				user_new_pwd : $('#user_new_pwd').val(),
+				user_email :  /*[[${session.currentUser.user_email}]]*/
+			}
+			console.log(data);
+			$.ajax(
+				{
+					url: "updatePwd",
+					dataType: "html",
+					type: "POST",
+					data : data,
+					success: function(data){
+						if(data == 'redirect:/myBodiaryMain')
+						alert('비밀번호가 변경되었습니다.');
+						else
+						alert('비밀번호가 일치하지 않습니다.');
+					},
+					error : function(request,status,error) {
+						alert("Error!");
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					},complete : function(){
+// 						alert("complete");
+						$('#pwdChangeForm').html("");
+						$('#pwdChangeBtn').html("변경하기");
+					}
+			});
+	});
+	/*]]>*/
+	/*<![CDATA[*/
+	$(document).on('click','#nickChangeBtn', function(){
+		console.log('ㅎㅇㅎ');
+		a = "";
+		a+= '<div class="user_nickname-text">';
+		a+= '<input type="text" id="user_nickname" class="form-control input-default mt-3" th:if="'+/*[[${session.currentUser}]]*/;
+		a+= ' != null" ';
+		a+= 'value="'+/*[[${session.currentUser.user_nickname}]]*/;
+		a+= '">';
+		a+= '</div>';
+		a+= '<div>';
+		a+= '<button type="button" id="nickChangeCancelBtn" class="btn btn-outline-primary mt-3">취소하기</button>';
+		a+= '<button type="button" class="btn btn-primary mt-3 ml-3" id="nickChangeUpdateBtn">변경하기</button>';
+		a+= '</div>';
+		console.log(a);
+		$('#button-div').html(a);
+	});
+	/*]]>*/
+	/*<![CDATA[*/
+	$(document).on('click','#nickChangeCancelBtn',function(){
+// 		a  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/;
+// 		a += ' value="'+/*[[${session.currentUser.user_nickname}]]*/;
+// 		a += '">'
+		a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
+		$('#button-div').html(a);
+	});
+	/*]]>*/
+												
+	/* 닉네임 변경하기 버튼 클릭 */
+	/*<![CDATA[*/
+	$(document).on('click', '#nickChangeUpdateBtn', function(){
+		var data = {
+			user_email : /*[[${session.currentUser.user_email}]]*/,
+			user_nickname : $('#user_nickname').val()
+		};
+		console.log(data);
+		$.ajax(
+			{
+				url : "updateNick",
+				type : "POST",
+				dataType : "text",
+				data: data,
+				success : function(responsedata){
+					alert('성공적으로 변경하였습니다.');
+					var result = "<span>"+ responsedata +"</span>"
+					$('#nick-div').html(result);
+				},
+				complete : function(responsedata){
+					a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
+					$('#button-div').html(a);			
+// 					b  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/+ '!= null"';
+// 					b += ' th:value="'+/*[[${session.currentUser.user_nickname}]]*/+'">';
+// 					console.log(responsedata)
+				}
+			}
+		);
+	});
+	/*]]>*/
+	
+	/* 비밀번호 유효성 검증 */
+	//password
+	$(document).on('keyup','#user_new_pwd',
+		function() {
+			let pwd = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+			let blank = /\s/g;
+		if (!pwd.test($(this).val()) || blank.test($(this).val())) {
+			$('.tdpw').html(
+				'<p class="pl-1 mt-2" style="color:red">8~20자 사이의 특수문자가 포함된 영문 대소문자, 숫자를 입력하세요</p>');
+			validate[2] = false;
+		} else {
+			$('.tdpw').html('<p class="pl-1 mt-2" style="color:#7571f9">적합한 패스워드입니다.</p>');
+				validate[2] = true;
+			}
+				console.log(validate[2]);
+			});
+</script>
 </body>
 </html>

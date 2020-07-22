@@ -7566,7 +7566,7 @@ sub {
       margin: 0;
       color: #898989; }
     .footer .copyright a {
-      color: #7571f9; }
+      color: #000000; }
 
 [data-sidebar-style="mini"] .nav-control, [data-layout="horizontal"] .nav-control {
   display: none; }

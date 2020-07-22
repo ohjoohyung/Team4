@@ -37,6 +37,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from User
 		where user_email= #{user_email}
 	</select>
+	<select id="selectUserByGender" resultType="int">
+		select count(user_gender)
+		from User
+		where user_gender = #{user_gender}
+	</select>
+	<select id="selectUserCount" resultType="int">
+		select count(user_email)
+		from User
+	</select>
 	<!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(
@@ -44,6 +53,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			) 
 		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1, 'regular')
 	</insert>
+	<!-- 비밀번호 확인  -->
+	<select id="selectPwd" resultType="String">
+		select user_pwd
+		from User
+		where user_email= #{user_email}
+	</select>
+	<!-- 회원비번 수정 -->
+	<update id="updatePwd">
+		update User
+		set user_pwd = #{user_pwd}
+		where user_email = #{user_email}
+	</update>
+	<!-- 회원닉네임 수정 -->
+	<update id="updateNick">
+		update User
+		set user_nickname = #{user_nickname}
+		where user_email = #{user_email}
+	</update>
 	<!-- 회원정보 수정 -->
 	<update id="updateUser">
 		update User
@@ -65,7 +92,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원 탈퇴처리 후 grade 부여 -->
 	<update id="updateWithdrawalUser">
 		update User
-		set user_grade = 'withdrawal', user_nickname = 'N', user_gender = 'N', 
+		set user_grade = 'withdrawal', user_nickname = 'N', user_gender = 'N', enabled = 0, 
 			user_age = 0, user_height = 0, user_weight = 0, user_img='N', user_deletedate = now()
 		where user_email= #{user_email}
 	</update>
@@ -89,10 +116,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select avg(user_weight) from user where user_height=#{param1} and user_gender=#{param2}
 	</select>
 	
-	
-	
-	
-	
-	
-
 </mapper>

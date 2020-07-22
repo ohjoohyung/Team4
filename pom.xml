@@ -305,17 +305,39 @@
             <version>1.1</version>
         </dependency>
         
-        <!-- 이메일 발송 관련 라이브러리 -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.7</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
+       <!-- 자바 Email 관련 라이브러리 -->
+      <dependency>
+         <groupId>org.springframework</groupId>
+         <artifactId>spring-context-support</artifactId>
+         <version>${org.springframework-version}</version>
+      </dependency>
+
+      <!-- 벨로시티 -->
+      <dependency>
+         <groupId>org.apache.velocity</groupId>
+         <artifactId>velocity</artifactId>
+         <version>1.7</version>
+      </dependency>
+
+      <dependency>
+         <groupId>org.apache.velocity</groupId>
+         <artifactId>velocity-tools</artifactId>
+         <version>2.0</version>
+      </dependency>
+
+      <!-- 자바 Email -->
+      <dependency>
+         <groupId>javax.mail</groupId>
+         <artifactId>mail</artifactId>
+         <version>1.4.7</version>
+      </dependency>
+
+      <!-- 자바 Email -->
+      <dependency>
+         <groupId>com.sun.mail</groupId>
+         <artifactId>javax.mail</artifactId>
+         <version>1.5.6</version>
+      </dependency>
                
 	</dependencies>
     <build>

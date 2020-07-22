@@ -51,20 +51,6 @@ public class BodiaryController {
 	  
 	  @Autowired public void setBodiaryservice(BodiaryService bodiaryservice) {
 	  this.bodiaryservice = bodiaryservice; }
-	 
-	
-	
-	  
-
-		@RequestMapping("/")
-		public String index() {
-			return "index";
-		}
-		@RequestMapping("/main")
-		public String getMain() {
-			return "main";
-		}
-	  
 	
 	@RequestMapping("/myGoalForm")
 	public String myGoalForm() {

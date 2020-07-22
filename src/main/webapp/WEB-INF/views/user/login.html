@@ -58,9 +58,7 @@
 								transform="translate(0.11 -0.42)" /></svg></div>
                                 </a>
                                  <!-- 로그인실패시 alert창이든 머든 js로나타내기!! -->
-							   <div th:if="${param.error!=null}">
 							      <div id="" th:text="${#request.getAttribute('errormsgname')}"></div>
-							   </div>
                                 <!-- <span color="red" th:text="${session[SPRING_SECURITY_LAST_EXCEPTION]?.message}">Invalid credentials</span> -->
                                 <form class="mt-5 mb-5 login-input"  method="post">
                                     <div class="form-group">
