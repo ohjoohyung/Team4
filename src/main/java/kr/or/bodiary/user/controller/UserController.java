@@ -1,6 +1,7 @@
 package kr.or.bodiary.user.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -138,5 +139,18 @@ public class UserController {
 	public String deleteAccount() {
 		return "user/deleteAccount";
 	}
+	
+	
+	
+	//-------------- 차트 ------------------
+	
+	
+	//자신의 성별, 키에 해당하는 회원 평균 몸무게 조회
+	@ResponseBody
+	@RequestMapping("/getAvgWeight")
+	public int getAvgWeight(int user_height, String user_gender) throws ClassNotFoundException, SQLException {
+		return userService.getAvgWeight(user_height, user_gender);
+	}
+	
 
 }

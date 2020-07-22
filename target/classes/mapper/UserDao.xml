@@ -52,5 +52,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from User
 		where user_email=#{user_email}
 	</select>
+	
+	
+	<!-- ///////////////////////////////차트//////////////////////////////// -->
+	
+	<!-- 자신의 성별, 키에 해당하는 회원 평균 몸무게 조회 -->
+	<select id="getAvgWeight" resultType="Integer">
+		select avg(user_weight) from user where user_height=#{param1} and user_gender=#{param2}
+	</select>
+	
+	
+	
+	
+	
+	
 
 </mapper>

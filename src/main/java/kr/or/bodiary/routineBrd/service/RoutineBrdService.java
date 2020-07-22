@@ -86,6 +86,7 @@ private SqlSession sqlsession;
 	public String routineBrdInsert(RoutineBrdDto routinebrddto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		List<CommonsMultipartFile> files = routinebrddto.getFiles();
 		List<String> filenames = new ArrayList<String>();
+		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		
 		if(files != null && files.size() > 0) {
 			for(CommonsMultipartFile multifile : files) {
@@ -100,14 +101,15 @@ private SqlSession sqlsession;
 				}
 				filenames.add(filename);			
 			}
-				
+			
 		}
-		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-		routinebrddto.setUser_email(user.getUser_email());
 		routinebrddto.setBrd_image1(filenames.get(0));
 		routinebrddto.setBrd_image2(filenames.get(1));
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		routinebrddto.setUser_email(user.getUser_email());
 		
-		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		
+		
 		String url="";
 		try {
 			int result = routinebrddao.routineBoardInsert(routinebrddto);
@@ -137,10 +139,14 @@ private SqlSession sqlsession;
 		
 		List<CommonsMultipartFile> files = routinebrddto.getFiles();
 		List<String> filenames = new ArrayList<String>();
+		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+		System.out.println("파일" +files);
+		System.out.println("루틴게시판"+routinebrddto.toString());
 		
+		String filename = null;
 		if(files != null && files.size() > 0) {
 			for(CommonsMultipartFile multifile : files) {
-				String filename = multifile.getOriginalFilename();
+				filename = multifile.getOriginalFilename();
 				String path = request.getSession().getServletContext().getRealPath("/assets/upload/routineBrdUpload");
 				String fpath = path + "\\"+ filename;
 				
@@ -151,13 +157,23 @@ private SqlSession sqlsession;
 				}
 				filenames.add(filename);			
 			}
+			
+			if(filename.isEmpty() || filename.equals("")) {
+				routinebrddto.setBrd_image1(routinebrddao.routineBoardSelect(routinebrddto.getRoutine_brd_seq()).getBrd_image1());
+				routinebrddto.setBrd_image2(routinebrddao.routineBoardSelect(routinebrddto.getRoutine_brd_seq()).getBrd_image2());
 				
+			}else {
+				routinebrddto.setBrd_image1(filenames.get(0));
+				routinebrddto.setBrd_image2(filenames.get(1));
+			}
+		
+			
 		}
 		
-		routinebrddto.setBrd_image1(filenames.get(0));
-		routinebrddto.setBrd_image2(filenames.get(1));
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		routinebrddto.setUser_email(user.getUser_email());
 		
-		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+	
 		String url="";
 		try {
 			int result = routinebrddao.routineBoardEdit(routinebrddto);

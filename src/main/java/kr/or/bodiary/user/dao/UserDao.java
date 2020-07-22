@@ -31,5 +31,11 @@ public interface UserDao {
 	//----------- 이메일 체크 -----------
 	public int emailCheck(String user_email) throws ClassNotFoundException, SQLException;
 	
+	
+	////////////////////////////////////차트//////////////////////////////////////
+	public int getAvgWeight(int user_height, String user_gender) throws ClassNotFoundException, SQLException;
+	
+	
+	
 
 }

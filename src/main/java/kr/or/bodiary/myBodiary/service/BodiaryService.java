@@ -126,7 +126,7 @@ private SqlSession sqlsession;
 
 	//일지 수정하기
 	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
-	public String updateBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
+	public String updateBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		/*
 		 * if(bodiarydto.getDiary_pubchk() == null) { bodiarydto.setDiary_pubchk("N"); }
@@ -138,15 +138,27 @@ private SqlSession sqlsession;
 		String path = request.getSession().getServletContext().getRealPath("/assets/upload/myBodiaryUpload");
 				
 		String fpath = path + "\\" + filename;
-		FileOutputStream fs = new FileOutputStream(fpath);
-		fs.write(bodiarydto.getFile().getBytes());
-		fs.close();
+		FileOutputStream fs = null;
+		
 		String url = "";	
 		//파일명
-		bodiarydto.setDiary_main_img(filename);
-		System.out.println(bodiarydto.getDiary_main_img());
+		
+	
 		try {
 			
+				if(filename.isEmpty() || filename.equals("")) {
+					bodiarydto.setDiary_main_img(bodiarydao.getBodiary(bodiarydto.getDiary_seq()).getDiary_main_img());
+					
+				} else {
+					bodiarydto.setDiary_main_img(filename);
+					System.out.println(bodiarydto.getDiary_main_img());
+					fs = new FileOutputStream(fpath);
+					 fs.write(bodiarydto.getFile().getBytes());
+					 fs.close();
+				}
+				
+				
+				
 			List<DailyMealDto> list = dailymealdto.getDailyMealList();
 			bodiarydao.insertMealCart(dailymealdto);
 			

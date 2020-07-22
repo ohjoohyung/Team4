@@ -195,6 +195,7 @@ public class BodiaryController {
 		
 		bodiarydto.setDiary_date(dateNewFormat);
 		
+		
 		model.addAttribute("bodiary", bodiarydto);
 		model.addAttribute("dailymeallist", dailymeal);
 		model.addAttribute("routinelist", routinelist);
@@ -216,7 +217,7 @@ public class BodiaryController {
 	
 	//일지 수정
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.POST)
-	public String myBodiaryEdit(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
+	public String myBodiaryEdit(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		System.out.println("안녕 수정");
 		System.out.println("컨트롤 : "+bodiarydto.toString());
 		System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString());
@@ -269,6 +270,11 @@ public class BodiaryController {
 	public String myBodiaryDelete(String diary_seq) throws ClassNotFoundException, SQLException {
 		return bodiaryservice.myBodiaryDelete(diary_seq);
 	}
+	
+	
+	
+	
+	
 	
 
 

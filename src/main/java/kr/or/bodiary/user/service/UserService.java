@@ -1,6 +1,7 @@
 package kr.or.bodiary.user.service;
 
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -78,15 +79,16 @@ public class UserService {
 		int updateUserResult = 0;
 		int updateRoleResult = 0;
 		try {
-			System.out.println("updateUser try문");
-			fs = new FileOutputStream(fpath);
-			fs.write(user.getFile().getBytes());
-			fs.close();
-			System.out.println("filename : " + filename);
+			
 			if (filename.isEmpty() && filename == "") {
 				user.setUser_img(user.getUser_img());
 			} else {
 				user.setUser_img(filename);
+				System.out.println("updateUser try문");
+				fs = new FileOutputStream(fpath);
+				fs.write(user.getFile().getBytes());
+				fs.close();
+				System.out.println("filename : " + filename);
 			}
 			updateUserResult = userdao.updateUser(user);
 
@@ -122,15 +124,16 @@ public class UserService {
 		FileOutputStream fs = null;
 		int result = 0;
 		try {
-			System.out.println("updateUser try문");
-			fs = new FileOutputStream(fpath);
-			fs.write(user.getFile().getBytes());
-			fs.close();
-			System.out.println("filename : " + filename);
+		
 			if (filename.isEmpty() && filename == "") {
 				user.setUser_img(user.getUser_img());
 			} else {
 				user.setUser_img(filename);
+				System.out.println("updateUser try문");
+				fs = new FileOutputStream(fpath);
+				fs.write(user.getFile().getBytes());
+				fs.close();
+				System.out.println("filename : " + filename);
 			}
 			result = userdao.updateUser(user);
 		} catch (Exception e) {
@@ -196,6 +199,16 @@ public class UserService {
 		mailSender.send(messagedto);
 
 		return confirmation;
+	}
+	
+	
+	
+	
+	//------------------차트----------------------
+	//자신의 성별, 키에 해당하는 회원 평균 몸무게 조회
+	public int getAvgWeight(int user_height, String user_gender) throws ClassNotFoundException, SQLException {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		return userdao.getAvgWeight(user_height, user_gender);
 	}
 
 }

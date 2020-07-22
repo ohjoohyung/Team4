@@ -53,12 +53,10 @@
 														<div class="mt-3">
 															<label class="btn btn-outline-light btn-file">
 															<i class="icon-plus"></i><input type="file" id="imgFile"
-															name="file"  onchange="readURL(this); fileCheck(this);" accept="image/*"/></label> <img id="img"
+															name="file" multiple="multiple" onchange="readURL(this); fileCheck(this);" accept="image/*"/></label> <img id="img"
 															th:src="@{assets/upload/myBodiaryUpload/}+${bodiary.diary_main_img}"
 															alt="your image" style="width:300px; height:200px;"/>
-															 <div class="tdimg">
-                                                
-                                                </div>
+															 
 														</div>
 													</div>
 
@@ -283,7 +281,7 @@
 			loadRoutine();
 			loadDailyMeal();
 			
-			 for(let i=0; i<3; i++) {
+			 for(let i=0; i<2; i++) {
                  validate[i]=false;
               }
 			
@@ -292,7 +290,7 @@
 				if(routine_cart_seq.routine_cart_seq == 0) {
                     $('#cardio').empty();
                     $('#weightTraining').empty();
-                    validate[2] = false;
+                    validate[1] = false;
                     return;
                  }     
 	            console.log(routine_cart_seq);
@@ -345,7 +343,7 @@
 									$('.tdroutine')
 			                           .html(
 			                                 '');
-			                           validate[2] = true;
+			                           validate[1] = true;
 							 	}
 							 });
 					}
@@ -466,23 +464,23 @@
 	                        $('.tdweight')
 	                              .html(
 	                                    '<p style="color:red">몸무게는 숫자만 입력해주세요.</p>');
-	                         validate[1] = false;
+	                         validate[0] = false;
 	                     } else {
 	                        $('.tdweight').html('');
-	                        validate[1] = true;
+	                        validate[0] = true;
 	                     }
 	                     */
 	                     
 	                     if($('#diary_today_weight').val() >= 20 && $('#diary_today_weight').val() <= 300) {
-	                        validate[1] = true;
+	                        validate[0] = true;
 	                        $('.tdweight').html('');
 	                     }else {
-	                        validate[1] = false;
+	                        validate[0] = false;
 	                        $('.tdweight')
 	                        .html(
 	                              '<p style="color:red">몸무게는 30~300 사이의 수를 적어주세요.(kg 단위 제외)</p>');
 	                     }
-	                     console.log(validate[1]);
+	                     console.log(validate[0]);
 	                  }); 
 	            
 	            $('button:submit').click(function() {
@@ -493,20 +491,17 @@
 	                  if (validate[i] == false) {
 	                     switch (i) {
 	                     case 0:
-	                        $('#imgFile').focus();
-	                        $('.tdimg').html(
-	                              '<p style="color:red">필수 항목입니다.</p>');
-	                        return false;
+	                    	 $('#diary_today_weight').focus();
+		                        $('.tdweight').html(
+		                        '<p style="color:red">필수 항목입니다.</p>');
+		                        return false;
 	                     case 1:
-	                        $('#diary_today_weight').focus();
-	                        $('.tdweight').html(
-	                        '<p style="color:red">필수 항목입니다.</p>');
-	                        return false;
-	                     case 2:
-	                        $('#routine_cart_seq').focus();
-	                        $('.tdroutine').html(
-	                        '<p style="color:red">필수 항목입니다.</p>');
-	                        return false;
+	                    	   $('#routine_cart_seq').focus();
+		                        $('.tdroutine').html(
+		                        '<p style="color:red">필수 항목입니다.</p>');
+		                        return false;
+	                  
+	     
 	                     }
 	                  }
 	               }
@@ -686,7 +681,7 @@
 	          filepoint = obj.value.substring(pathpoint+1,obj.length);
 	          filetype = filepoint.toLowerCase();
 	          if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
-	             validate[0] = true;
+	            
 	             console.log("파일 검증 : " +validate[0]);
 	             $('.tdimg').html(
 	            '');
@@ -697,8 +692,8 @@
 	      
 	              parentObj  = obj.parentNode
 	              node = parentObj.replaceChild(obj.cloneNode(true),obj);
-	              validate[0] = false;
-	              console.log("파일 검증 : " + validate[0]);
+	              
+	              
 	              return false;
 	          }
 	         }

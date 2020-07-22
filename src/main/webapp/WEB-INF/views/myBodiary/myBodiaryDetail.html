@@ -134,7 +134,7 @@
 				                                    <div class="w-100">
 				                                        <div class="card card-profile text-center">
 				                                            <span class="mb-1 text-warning"><i class="icon-calculator"></i></span>
-				                                            <h3 class="mb-0">20.3</h3>
+				                                            <h3 class="mb-0" id="bmi" ></h3>
 				                                            <p class="text-muted">BMI 지수</p>
 				                                        </div>
 				                                    </div>
@@ -152,9 +152,17 @@
 						<!-- 식단 start -->
 						<div class="row">
 							<div class="card col mr-4 ml-3 p-4 mb-0" style="height:460px;">
+								
 								<span class="mb-3"> 하루 칼로리 섭취량</span>
 								<h2 th:text="${bodiary.diary_nut}"></h2>
+								<div class="row">
+								<div class="col-7">
 								<div id="morrisDonut" ></div> 
+								</div>
+								<div class="col p-0">
+								 <div id="stacked-bar-chart" class="ct-chart ct-golden-section h-100"></div>
+								</div>
+								</div>
 							</div>
 							<div class="card col-8 mb-0">
 								<div class="card-head mt-3 text-center">
@@ -382,6 +390,9 @@
     <script src="assets/plugins/morris/morris.min.js"></script>
     <script src="assets/js/plugins-init/morris-init.js"></script>
 	<script type="text/javascript" th:inline="javascript">
+	
+	
+	
 	/*<![CDATA[*/
 			function deleteCheck() {
 				 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
@@ -392,30 +403,65 @@
 			}	
 			/*]]>*/
 			
-    	/* <![CDATA[ */
-                 
-           new Morris.Bar({
-            element: 'morris-bar-chart',
-              data: [
-                      { y: '바디어리', value: 54 },
-                      { y: '나', value: $('#weight-info').html() },
-                      { y: '평균', value: 50 }
-                  ],
-            xkey: 'y',
-            ykeys: ['value'],
-            labels: ['value'],
-            barColors : ['#7571f9']
-        
-        });
     	
-           /* ]]> */
+          $(function() {
+        	  
+        	 //평균 몸무게랑 자신의 몸무게가 있는 바 그래프 
+        	  /*<![CDATA[*/
+  			$.ajax({
+  			type:'GET',
+  			url: 'getAvgWeight',
+  			data:{'user_height' : /*[[ ${session.currentUser.user_height} ]]*/,
+  				  'user_gender' : /*[[ ${session.currentUser.user_gender} ]]*/},
+  			success:function(responsedata){
+  				console.log(responsedata);
+  			    new Morris.Bar({
+  		            element: 'morris-bar-chart',
+  		              data: [
+  		                      { y: '바디어리', value: responsedata },
+  		                      { y: '나', value: $('#weight-info').html() }  
+  		                  ],
+  		            xkey: 'y',
+  		            ykeys: ['value'],
+  		            labels: ['value'],
+  		            barColors : ['#7571f9']
+  		        
+  		        });
+  			}
+  	    });
+        	  
+  			var weight = /*[[ ${bodiary.diary_today_weight} ]]*/;
+  			var height = /*[[ ${session.currentUser.user_height} ]]*/;
+  	  		var bmi = (weight / (height/100*height/100)).toFixed(1);	
+  	  			$('#bmi').html(bmi);
+        	  
+        	  
+  			/*]]>*/	
+  			
+  			
+  			
+  			
+  			
+		})
+			
+			
+		 
+		
+		
+			
+			
+       
+    	
+        
            
            
+		//하루 칼로리량 도넛 그래프
+		
            /*<![CDATA[*/
            var dailymeallist = /*[[ ${dailymeallist} ]]*/;
            console.log(dailymeallist);
            
-           
+           var recom = /*[[ ${bodiary.diary_recom} ]]*/;
            var morning = 0;
            var lunch = 0;
            var dinner = 0;
@@ -443,7 +489,7 @@
            /*]]>*/
            
            
-           /* <![CDATA[ */
+           
            new Morris.Donut({
             element: 'morrisDonut',
             data: [        
@@ -453,7 +499,40 @@
                     {label: "간식", value: dessert}
                   ]
         });
-           /* ]]> */
+           
+           //Stacked bar chart
+           
+           new Chartist.Bar('#stacked-bar-chart', {
+             labels: ['권장\n섭취량', '하루\n섭취량'],
+             series: [
+               [recom, 0],
+               [0, dessert],
+               [0, dinner],
+               [0, lunch],
+               [0,0],
+               [0, morning]
+             ]
+           }, {
+             stackBars: true,
+             axisY: {
+               labelInterpolationFnc: function(value) {
+                 return value;
+               }
+             },
+             plugins: [
+               Chartist.plugins.tooltip()
+             ]
+           }).on('draw', function(data) {
+             if(data.type === 'bar') {
+               data.element.attr({
+                 style: 'stroke-width: 30px'
+               });
+             }
+           });
+        
+           
+           
+      
 	</script>
 </body>
 </html>
