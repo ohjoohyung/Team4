@@ -48,7 +48,9 @@
 									<div class="form-group row mt-5 mb-5">
 										<label class="col-sm-3 col-form-label text-primary">닉네임</label>
 										<div class="col-sm-9">
+											<div id="nick-div">
 											<input type="text" readonly="readonly" class="form-control-plaintext" th:if="${session.currentUser} != null" th:value="${session.currentUser.user_nickname}">
+											</div>
 											<div id="button-div">
 											<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>
 											</div>
@@ -142,63 +144,72 @@
 					error : function(request,status,error) {
 						alert("Error!");
 						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					},complete : function(){
+// 						alert("complete");
+						$('#pwdChangeForm').html("");
+						$('#pwdChangeBtn').html("변경하기");
 					}
 			});
 	});
 	/*]]>*/
 	/*<![CDATA[*/
-												$(document).on('click','#nickChangeBtn', function(){
-													console.log('ㅎㅇㅎ');
-													
-													a = "";
-													a+= '<div class="user_nickname-text">';
-													a+= '<input type="text" id="user_nickname" class="form-control input-default mt-3" th:if="'+/*[[${session.currentUser}]]*/;
-													a+= ' != null" ';
-													a+= 'value="'+/*[[${session.currentUser.user_nickname}]]*/;
-													a+= '">';
-													a+= '</div>';
-													a+= '<div>';
-													a+= '<button type="button" id="nickChangeCancelBtn" class="btn btn-outline-primary mt-3">취소하기</button>';
-													a+= '<button type="button" class="btn btn-primary mt-3 ml-3" id="nickChangeUpdateBtn">변경하기</button>';
-													a+= '</div>';
-													
-													console.log(a);
-													$('#button-div').html(a);
-													
-												});
-												/*]]>*/
-												/*<![CDATA[*/
-												$(document).on('click','#nickChangeCancelBtn',function(){
-// 													a  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/;
-// 													a += ' value="'+/*[[${session.currentUser.user_nickname}]]*/;
-// 													a += '">'
-													a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
-													
-													$('#button-div').html(a);
-												});
-												/*]]>*/
+	$(document).on('click','#nickChangeBtn', function(){
+		console.log('ㅎㅇㅎ');
+		a = "";
+		a+= '<div class="user_nickname-text">';
+		a+= '<input type="text" id="user_nickname" class="form-control input-default mt-3" th:if="'+/*[[${session.currentUser}]]*/;
+		a+= ' != null" ';
+		a+= 'value="'+/*[[${session.currentUser.user_nickname}]]*/;
+		a+= '">';
+		a+= '</div>';
+		a+= '<div>';
+		a+= '<button type="button" id="nickChangeCancelBtn" class="btn btn-outline-primary mt-3">취소하기</button>';
+		a+= '<button type="button" class="btn btn-primary mt-3 ml-3" id="nickChangeUpdateBtn">변경하기</button>';
+		a+= '</div>';
+		console.log(a);
+		$('#button-div').html(a);
+	});
+	/*]]>*/
+	/*<![CDATA[*/
+	$(document).on('click','#nickChangeCancelBtn',function(){
+// 		a  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/;
+// 		a += ' value="'+/*[[${session.currentUser.user_nickname}]]*/;
+// 		a += '">'
+		a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
+		$('#button-div').html(a);
+	});
+	/*]]>*/
 												
-												/* 닉네임 변경하기 버튼 클릭 */
-												/*<![CDATA[*/
-												$(document).on('click', '#nickChangeUpdateBtn', function(){
-													var data = {
-															user_email : /*[[${session.currentUser.user_email}]]*/,
-															user_nickname : $('#user_nickname').val()
-													};
-													console.log(data);
-													$.ajax(
-														{
-															url : "updateNick",
-															type : "POST",
-															dataType : "html",
-															data: data,
-															success : function(responsedata){
-																alert('ok');
-															}
-														}
-													);
-												});
-												/*]]>*/
+	/* 닉네임 변경하기 버튼 클릭 */
+	/*<![CDATA[*/
+	$(document).on('click', '#nickChangeUpdateBtn', function(){
+		var data = {
+			user_email : /*[[${session.currentUser.user_email}]]*/,
+			user_nickname : $('#user_nickname').val()
+		};
+		console.log(data);
+		$.ajax(
+			{
+				url : "updateNick",
+				type : "POST",
+				dataType : "text",
+				data: data,
+				success : function(responsedata){
+					alert('성공적으로 변경하였습니다.');
+					var result = "<span>"+ responsedata +"</span>"
+					$('#nick-div').html(result);
+				},
+				complete : function(responsedata){
+					a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
+					$('#button-div').html(a);			
+// 					b  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/+ '!= null"';
+// 					b += ' th:value="'+/*[[${session.currentUser.user_nickname}]]*/+'">';
+// 					console.log(responsedata)
+				}
+			}
+		);
+	});
+	/*]]>*/
 	
 	/* 비밀번호 유효성 검증 */
 	//password

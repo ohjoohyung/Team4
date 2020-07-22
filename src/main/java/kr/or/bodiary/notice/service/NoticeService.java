@@ -87,6 +87,6 @@ public class NoticeService {
 		NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
 		noticedao.noticeDelete(notice_brd_seq);
 		return "redirect:noticeList";
-	}	
+	}
 
 }

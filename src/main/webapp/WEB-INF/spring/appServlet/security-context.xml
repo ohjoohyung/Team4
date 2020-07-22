@@ -78,7 +78,7 @@
 	<security:authentication-manager>
 		<security:authentication-provider>
 			
-		 <security:jdbc-user-service data-source-ref="driverManagerDataSource"
+		<security:jdbc-user-service data-source-ref="driverManagerDataSource"
 	   								 users-by-username-query="SELECT user_email, user_pwd, enabled FROM User where user_email=? and user_grade='regular'" 
 	   								 authorities-by-username-query="select u.user_email , r.ROLE_NAME  
 	   								 								from User u join Role r on u.user_email = r.user_email
@@ -93,10 +93,10 @@
 	    <property name="associateUrl" value="/profileEditAssociate"/>
 	</bean>
 	<bean id="loginFailureHandler" class="kr.or.bodiary.interceptor.LoginFailureHandler">
-	    <property name="loginEmail" value="loginId"/>
-	    <property name="loginPwd" value="loginPwd"/>
+	    <property name="loginEmail" value="user_email"/>
+	    <property name="loginPwd" value="user_pwd"/>
 	    <property name="errormsgname" value="ERRORMSG"/>
-	    <property name="defaultFailureUrl" value="/login?error"/>
+	    <property name="defaultFailureUrl" value="/loginFail"/>
 	</bean>
 	<context:component-scan base-package="kr.or.bodiary.interceptor"/>
 </beans>  

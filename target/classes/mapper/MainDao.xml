@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.or.bodiary.main.dao.MainDao">
+	
+	<!-- 메인 루틴 -->
+	<select id="routineBrdMain" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">
+		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_content, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, r.brd_rec, u.user_nickname 
+		  FROM routineboard r
+		  JOIN user u
+		    ON r.user_email = u.user_email
+		 WHERE DATE_FORMAT(r.routine_brd_regdate,"%Y-%m-%d") = CURDATE()
+	  ORDER BY routine_brd_hit desc limit 0,2;
+	</select>
+	
+	<!-- 메인 프리보드 -->
+	<select id="freeBrdMain" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+		SELECT f.free_brd_seq, f.free_brd_title, f.free_brd_content, f.free_brd_date, f.free_brd_hits, u.user_nickname
+		  FROM freeboard f
+		  JOIN user u
+		    ON f.user_email = u.user_email
+		 WHERE DATE_FORMAT(f.free_brd_date,"%Y-%m-%d") = CURDATE()
+	  ORDER BY free_brd_hits desc limit 0,8;
+	</select>	
+	
+	<!-- 메인 공지(풋터) -->
+	<select id="noticeMain" resultType="kr.or.bodiary.notice.dto.NoticeDto">
+		SELECT notice_brd_seq, notice_brd_title
+		  FROM NoticeBoard
+	  ORDER BY notice_brd_regdate desc limit 5;
+	</select>
+	
+</mapper>

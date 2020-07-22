@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원 탈퇴처리 후 grade 부여 -->
 	<update id="updateWithdrawalUser">
 		update User
-		set user_grade = 'withdrawal', user_nickname = 'N', user_gender = 'N', 
+		set user_grade = 'withdrawal', user_nickname = 'N', user_gender = 'N', enabled = 0, 
 			user_age = 0, user_height = 0, user_weight = 0, user_img='N', user_deletedate = now()
 		where user_email= #{user_email}
 	</update>

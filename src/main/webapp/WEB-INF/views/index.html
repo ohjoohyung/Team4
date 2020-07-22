@@ -1,41 +1,195 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" 
-				xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-				xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-	<!-- 공통 헤더-->
-	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<body>
-	<!-- 공통 nav -->
-	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<!-- 공통 sidenav -->
-	<div class="bodiary-wrapper">
-	<div class="row mt-4">
-	<nav class="col-3 ml-3 mr-0 sidenav">
-		<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
-		</aside>
-	</nav>
-		<!-- myBodiary 내 공통 목표 띠  -->
-		<div class="col mr-5">
-			<!-- 목표 인원수 + 목표 설정하기  -->
-			<div class="card card-body pt-0 pb-0 pl-4">
-				<div class="row">
-					<div class="col pl-3 mt-3 mb-2">
-						현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이 목표를 달성하고 있어요!
-					</div>
-					<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
-					<div class="col-1 mt-2 mb-2">
-						<a href="myGoal"><button class="btn btn-primary btn-flat"><i class="mdi mdi-plus"></i></button></a>
-					</div>
-				</div>
-			</div>
-			<!--  -->
-			</div>
+  <head>
+    <title>Bodiary</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css2/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css2/animate.css">
+    
+    <link rel="stylesheet" href="assets/css2/owl.carousel.min.css">
+    <link rel="stylesheet" href="assets/css2/owl.theme.default.min.css">
+    <link rel="stylesheet" href="assets/css2/magnific-popup.css">
+
+    <link rel="stylesheet" href="assets/css2/aos.css">
+
+    <link rel="stylesheet" href="assets/css2/ionicons.min.css">
+
+    <link rel="stylesheet" href="assets/css2/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="assets/css2/jquery.timepicker.css">
+    
+	<link rel="stylesheet" href="assets/css2/flaticon.css">
+	<link rel="stylesheet" href="assets/fonts2/flaticon/font/flaticon.css">
+    <link rel="stylesheet" href="assets/css2/icomoon.css">
+	<link rel="stylesheet" href="assets/css2/style.css">
+	<link rel="stylesheet" href="assets/css2/video.css">
+  </head>
+  <body>
+    
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	      <a class="navbar-brand" href="index">BO<span>DIARY.</span></a>
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Menu
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	          <li class="nav-item active"><a href="index" class="nav-link">Home</a></li>
+	          <li class="nav-item"><a href="login" class="nav-link">Log In</a></li>
+	          <li class="nav-item"><a href="register" class="nav-link">SIGN UP</a></li>
+	        </ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <div class="hero-wrap js-fullheight" data-stellar-background-ratio="0.5">
+		<video autoplay muted loop id="myVideo">
+			<source src="assets/videos/video1.mp4" type="video/mp4">
+		</video>
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
+          <div class="col-xl-10 ftco-animate" data-scrollax=" properties: { translateY: '70%' }">
+            <h1 class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Welcome To<br><span>BODIARY.</span></h1>
+			<p class="mb-4" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Get Healthy, Stay Healthy</p>
+			<a href="login" class="btn btn-primary">Start Now</a>
+	   	    </div>
+	   	  </div>
 		</div>
 	</div>
-	<!-- 기본 폼 완성 -->
 	
-	<!-- 공통 스크립트-->
-	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-</body>
+	<section class="ftco-section services-section bg-light">
+      <div class="container">
+        <div class="row d-flex">
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services d-block">
+              <div class="icon"><span class="flaticon-heart"></span></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Condition</h3>
+                <p>안녕안녕안녕ㅎ아ㅣ하이하임ㄴㅇㄹ댤멘ㅇ미리보기 텍스트를 입력하세요</p>
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services d-block">
+              <div class="icon"><span class="flaticon-banana"></span></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Healthy Eating</h3>
+                <p>A small river named Duden flows by their place and supplies.</p>
+              </div>
+            </div>    
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services d-block">
+              <div class="icon"><span class="flaticon-stationary-bike"></span></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Cardio</h3>
+                <p>A small river named Duden flows by their place and supplies.</p>
+              </div>
+            </div>      
+          </div>
+          <div class="col-md-3 d-flex align-self-stretch ftco-animate">
+            <div class="media block-6 services d-block">
+              <div class="icon"><span class="flaticon-weight"></span></div>
+              <div class="media-body">
+                <h3 class="heading mb-3">Weights</h3>
+                <p>A small river named Duden flows by their place and supplies.</p>
+              </div>
+            </div>      
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="ftco-footer ftco-bg-dark ftco-section">
+      <div class="container">
+        <div class="row mb-5">
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2"><a th:href="@{noticeList}">Notice</a></h2>
+             	<div th:each="notice:${noticeIndex}">
+               		<a th:href="@{noticeDetail(notice_brd_seq=${notice.notice_brd_seq})}" th:text="${notice.notice_brd_title}"></a>&nbsp;<span class="badge badge-danger">N</span><br>
+               	</div>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4 ml-md-5">
+              <h2 class="ftco-heading-2">Links</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Speakers</a></li>
+                <li><a href="#" class="py-2 d-block">Shcedule</a></li>
+                <li><a href="#" class="py-2 d-block">Events</a></li>
+                <li><a href="#" class="py-2 d-block">Blog</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+             <div class="ftco-footer-widget mb-4">
+              <h2 class="ftco-heading-2">Privacy</h2>
+              <ul class="list-unstyled">
+                <li><a href="#" class="py-2 d-block">Career</a></li>
+               <li><a href="#" class="py-2 d-block">About Us</a></li>
+                <li><a href="#" class="py-2 d-block">Contact Us</a></li>
+                <li><a href="#" class="py-2 d-block">Services</a></li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-md">
+            <div class="ftco-footer-widget mb-4">
+            	<h2 class="ftco-heading-2">Have a Questions?</h2>
+            	<div class="block-23 mb-3">
+	              <ul>
+	                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
+	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
+	              </ul>
+	            </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+	      <div class="col-md-12 text-center">
+	        <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+				Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Bodiary.
+			   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+	
+  <!-- loader -->
+  <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+
+
+  <script src="assets/js2/jquery.min.js"></script>
+  <script src="assets/js2/jquery-migrate-3.0.1.min.js"></script>
+  <script src="assets/js2/popper.min.js"></script>
+  <script src="assets/js2/bootstrap.min.js"></script>
+  <script src="assets/js2/jquery.easing.1.3.js"></script>
+  <script src="assets/js2/jquery.waypoints.min.js"></script>
+  <script src="assets/js2/jquery.stellar.min.js"></script>
+  <script src="assets/js2/owl.carousel.min.js"></script>
+  <script src="assets/js2/jquery.magnific-popup.min.js"></script>
+  <script src="assets/js2/aos.js"></script>
+  <script src="assets/js2/jquery.animateNumber.min.js"></script>
+  <script src="assets/js2/bootstrap-datepicker.js"></script>
+  <script src="assets/js2/jquery.timepicker.min.js"></script>
+  <script src="assets/js2/scrollax.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+  <script src="assets/js2/google-map.js"></script>
+  <script src="assets/js2/main.js"></script>
+  <script>
+  	// Get the video
+	var video = document.getElementById("myVideo");
+  </script>
+    
+  </body>
 </html>

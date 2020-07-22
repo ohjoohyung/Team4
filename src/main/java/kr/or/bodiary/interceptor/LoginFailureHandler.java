@@ -6,6 +6,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.DisabledException;
@@ -13,6 +14,10 @@ import org.springframework.security.authentication.InternalAuthenticationService
 import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.stereotype.Component;
+
+import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.user.service.UserService;
 
 public class LoginFailureHandler implements AuthenticationFailureHandler {
 	
@@ -20,6 +25,7 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
     private String loginPwd;
     private String errormsgname;
     private String defaultFailureUrl;
+    
     
 	public String getLoginEmail() {
 		return loginEmail;
@@ -62,10 +68,16 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	    String password = request.getParameter(loginPwd);
 	    String errormsg = null;
 	    
+	    
 	    if(exception instanceof BadCredentialsException) {
-            errormsg = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
+	    	
+//	    	if(userdto.getUser_grade() == "withdrawal") {
+//	    		errormsg = "탈퇴한 회원입니다. 한달 후 재가입이 가능합니다.";
+//	    	}else { 
+	    	errormsg = "비밀번호 또는 아이디가 일치하지 않습니다. 다시 확인해주세요.";
+//	    	}
         } else if(exception instanceof InternalAuthenticationServiceException) {
-            errormsg = "아이디나 비밀번호가 맞지 않습니다. 다시 확인해주세요.";
+            errormsg = "비밀번호 또는 아이디가 일치하지 않습니다. 다시 확인해주세요.";
         } else if(exception instanceof DisabledException) {
             errormsg = "계정이 비활성화되었습니다. 관리자에게 문의하세요.";
         } else if(exception instanceof CredentialsExpiredException) {
@@ -77,8 +89,11 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	    System.out.println(errormsg);
 	    
         request.setAttribute("errormsgname", errormsg);
+        request.setAttribute("user_email", username);
+        System.out.println(username);
         request.getRequestDispatcher(defaultFailureUrl).forward(request, response);
-
 	}
 
 }
+
+

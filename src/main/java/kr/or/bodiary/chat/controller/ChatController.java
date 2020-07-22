@@ -19,14 +19,7 @@ public class ChatController {
 
 	
 	
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	@RequestMapping("/main")
-	public String getMain() {
-		return "main";
-	}
+
 	@RequestMapping("/search")
 	public String getSearchExcs() {
 		return "searchExcs/searchExcs";

@@ -61,6 +61,7 @@
 	
 	<context:component-scan base-package="kr.or.bodiary.**.controller" />
 	<context:component-scan base-package="kr.or.bodiary.**.service"/>
+	<context:component-scan base-package="kr.or.bodiary.interceptor"/>
 	
 	<mvc:resources mapping="/assets/**" location="/assets/" />
 	

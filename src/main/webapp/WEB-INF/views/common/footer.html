@@ -4,17 +4,6 @@
 	<!--**********************************
             Footer start
         ***********************************-->
-       <head> 
-        <style>
-        	li{
-        		padding-bottom: 5px;
-        		font-size: 90%;
-        	}
-        	.footlogo{
-        		margin-bottom: 11px;
-        	}
-        </style>
-        </head>
         <div class="footer p-0" style="height: 230px;">
           
             <div class="copyright" style="margin-right: 80px; margin-left: 80px;">
@@ -22,15 +11,14 @@
             	  <hr>
                 <!-- <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p> -->
             	
+            	<!-- 메인 공지 start -->
             	<div class="notice" style="float:left; margin-right:800px;">
-               		<li><b>공지사항</b></li>
-               		<li>공지사항1</li>
-               		<li>공지사항2</li>
-               		<li>공지사항3</li>
-               		<li>공지사항4</li>
-               		<li>공지사항5</li>         
-            	</div>
-            	
+               		<a th:href="@{noticeList}"><b>NOTICE</b></a><br>
+	               	<div th:each="notice:${noticeMain}">
+	               		<a th:href="@{noticeDetail(notice_brd_seq=${notice.notice_brd_seq})}" th:text="${notice.notice_brd_title}"></a>&nbsp;<span class="badge badge-danger">N</span><br>
+	               	</div>
+            	</div>            	
+            	<!-- 메인 공지 end -->
             	
             	<div class="footlogo">
 					

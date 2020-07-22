@@ -49,7 +49,7 @@
 }
 
 .card-text2{
-	height:105px;
+	height:100px;
 }
 
 #exesrc{
@@ -239,255 +239,71 @@ color: #7571f9;
 									class="form-control input-rounded" onclick="href='/search'"> -->
 	
 							</div>
-							<!-- <i class="mdi mdi-magnify"></i> -->
-							
+							<!-- <i class="mdi mdi-magnify"></i> -->							
 						</div>
 						
+						<!-- 오늘의 루틴 start -->
 						<div class="col-12"style="margin-top: 20px;">
-							<h4>오늘의 루틴 자랑</h4>
+							<a th:href="@{routineBrdList}"><h4>오늘의 TOP2 루틴</h4></a>
 							<hr>
-							<div class="row">								
-									<div class="col-lg-6">
-										<div class="card">														
-											<div class="card-body">
-												<div class="row">
-													<div class="col-8">
-														<h5 class="card-title">ㄷㄷㄷ</h5>
-														<p class="card-text">This is a wider card with
-															supporting text and below as a natural lead-in to the
-															additional content. This content is a little bit longer.</p>
-														<div id="icon">
-															<div class="card-text"
-																style="float: left; margin-right: 20px;">
-																<i class="icon-eye"></i>&nbsp;&nbsp;10
-															</div>
-															<div class="card-text">
-																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-															</div>
-														</div>
-													</div>
-													<div class="col">
-															 <img id="card-img" class="d-block w-100" src="https://file.mk.co.kr/meet/neds/2019/05/image_readtop_2019_284928_15567734613733995.jpeg"
-																alt="Third slide">
-													</div>
-												</div>
-													
-												
-											</div>
-										</div>
-									</div>
-
-									<div class="col-lg-6">
-										<div class="card">
-											<div class="card-body">
-												<div class="row">
-													<div class="col-8">
-														<h5 class="card-title">ㄷㄷㄷ</h5>
-														<p class="card-text">This is a wider card with
-															supporting text and below as a natural lead-in to the
-															additional content. This content is a little bit longer.</p>
-														<div>
-															<div class="card-text"
-																style="float: left; margin-right: 20px;">
-																<i class="icon-eye"></i>&nbsp;&nbsp;10
-															</div>
-															<div class="card-text">
-																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+							<div class="row">
+								<th:block th:each="todayMain : ${routineBrdMain}">
+									<div class="col-lg-6">									
+											<div class="main-routine card">
+												<div class="card-body">
+													<div class="row">
+														<div class="col-8">
+															<h5 class="card-title">
+															<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h5>
+															<div id="icon">
+																<div class="card-text" style="float: left; margin-right: 20px;">
+																	<i class="icon-eye"></i>&nbsp;&nbsp;
+																	<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
+																</div>
+																<div class="card-text">
+																	<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+																</div>
+																<div class="card-text">
+																	<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
+																</div>
 															</div>
 														</div>
-													</div>	
-																			
-													<div class="col">
-														<img id="card-img" class="d-block w-100"
-															src="https://post-phinf.pstatic.net/MjAxODEyMTBfMjA1/MDAxNTQ0NDI3OTY0ODUw.
-																pUQMt_qZo_RzqRYljtYJMSVzajTDYgR9WAy0UtDTjGog.
-																2sGWeLn3xlgBnbL3nVCi0E1n0v4gMJ2T-sf0XxeQZwcg.JPEG/99132_95627_3214.jpg?type=w1200"
-															alt="First slide">
+														<div class="col">
+															<img id="card-img" class="d-block w-100" th:src="@{assets/upload/routineBrdUpload/}+${todayMain.brd_image2}">
+														</div>
 													</div>
-													
-													
 												</div>
-	
-	
 											</div>
-										</div>
+										</a>
 									</div>
+								</th:block>
 							</div>
 						</div>
-
+						<!-- 오늘의 루틴 end -->
 
 						<div class="col-12">
-							<h4>오늘의 팁</h4>
+							<a th:href="@{freeBrdList}"><h4>프리보드</h4></a>
 							<hr>
-
-
 							<div class="row">
-								<div class="col-md-6 col-lg-3">
+								<!-- 값 잘 넘어오나 찍어보기 -->
+								<!-- <div th:text="${freeBrdMain}"></div> -->
+								<div class="col-md-6 col-lg-3" th:each="freeMain : ${freeBrdMain}">
 									<div class="card">
-										<img class="img-fluid" src="images/big/img2.jpg" alt="">
 										<div class="card-body2">
-											<h5 class="card-title">오동률</h5>
-											<p class="card-text2">만 23세 동탄에 산다.</p>
+											<a th:href="@{freeBrdDetail(seq=${freeMain.free_brd_seq})}"><h5 class="card-title mb-3" th:text="${freeMain.free_brd_title}"></h5></a>
+											<div class="card-body-text" th:utext="${freeMain.free_brd_content}"></div>
 											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
+												<div class="card-footer" style="float:left;">
+													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
+													<span class="icon-clock"></span>&nbsp;20분 전
+												</div>
+												<div class="text">
+													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<!-- End Col -->
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img2.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!-- End Col -->
-
-
-
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- End Col -->
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img2.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- End Col -->
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img2.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<!-- End Col -->
-
-
-
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img1.jpg" alt="">
-										<div class="card-body2">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<!-- End Col -->
-								<div class="col-md-6 col-lg-3">
-									<div class="card">
-										<img class="img-fluid" src="images/big/img2.jpg" alt="">
-										<div class="card-body">
-											<h5 class="card-title">Card title</h5>
-											<p class="card-text2">This is a wider card with supporting
-												text and below as a natural lead-in to the additional
-												content. This content is a little bit longer.</p>
-											<div id="icon2">
-														<div class="card-text" style="float:left; margin-right: 20px;">
-															<i class="icon-eye"></i>&nbsp;&nbsp;10
-														</div>
-														<div class="card-text" >
-															<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
-														</div>
-											</div>
-										</div>
-									</div>
-								</div>
+								</div>								
 							</div>
 						</div>
 						<!-- End Col -->

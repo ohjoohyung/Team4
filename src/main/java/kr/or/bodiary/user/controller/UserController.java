@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.user.service.VerifyRecaptcha;
@@ -32,10 +33,27 @@ public class UserController {
 	//------------- 로그인 --------------
 	//로그인 페이지 
 	@RequestMapping("/login")
-	public String login() {
-		
+	public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, @RequestParam(value ="user_email", required = false) Object user_email, HttpServletRequest request) {
+		if (errormsg != null) {
+			System.out.println(user_email);
+			Object newerrormsg = userService.getWithdrawalUser(user_email,errormsg);
+			System.out.println(newerrormsg);
+			request.setAttribute("errormsgname", (String)newerrormsg);
+		}
 		return "user/login";
 	}
+	@RequestMapping("/loginFail")
+	public String login(HttpServletRequest request, RedirectAttributes redirect) {
+		System.out.println("에러 컨트롤러 탐");
+		Object errormsg = request.getAttribute("errormsgname");
+		Object user_email = request.getAttribute("user_email");
+		System.out.println(errormsg);
+		System.out.println(user_email);
+		redirect.addAttribute("errormsg", errormsg);
+		redirect.addAttribute("user_email", user_email);
+		return "redirect:/login";
+	}
+
 	
 	@RequestMapping("/nCallback")
 	public String naverCallback(UserDto user ,HttpServletRequest request) {
@@ -88,7 +106,7 @@ public class UserController {
 		return userService.updatePwd(user,request);
 	}
 	@ResponseBody
-	@RequestMapping(value="updateNick" , method=RequestMethod.POST)
+	@RequestMapping(value="updateNick" , method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String updateNick(UserDto user,HttpServletRequest request) {
 		System.out.println("유저 닉네임 정보 수정하러 왔슴다~");
 		String result = "";
@@ -103,6 +121,7 @@ public class UserController {
 			e.getMessage();
 		}
 		
+		System.out.println(result);
 		return result;
 	}
 	

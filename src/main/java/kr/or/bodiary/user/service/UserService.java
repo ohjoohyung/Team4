@@ -19,7 +19,7 @@ import kr.or.bodiary.utils.Mailer;
 import kr.or.bodiary.utils.Tempkey;
 
 @Service
-public class UserService {
+public class UserService { 
 	private SqlSession sqlsession;
 
 	@Autowired
@@ -35,6 +35,13 @@ public class UserService {
 	}
 	
 	
+	// -----------탈퇴 회원인지 찾기 서비스-----------
+//	public String getUserWithdrawal(String user_email) {
+//		System.out.println("탈퇴회원 찾아보기");
+//		
+//		return "";
+//	}
+	
 	// -----------유저찾기 서비스-----------
 
 	public UserDto getUser(String user_email) {
@@ -49,6 +56,26 @@ public class UserService {
 		}
 
 		return currentUser;
+	}
+	// -----------탈퇴유저 탐색 서비스-----------
+	public Object getWithdrawalUser(Object user_email, Object errormsg) {
+		System.out.println("탈퇴 유저 찾아야됨" + user_email);
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		UserDto currentUser = null;
+		try {
+			currentUser = userdao.getUser((String)user_email);
+			if(!currentUser.getUser_grade().equals("regular")) {
+				System.out.println("if문 탔다." + currentUser.getUser_grade());
+				errormsg = "탈퇴한 유저입니다. 탈퇴일로부터 한달 후 재가입이 가능합니다.";
+				System.out.println(errormsg);
+			}
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return errormsg;
 	}
 
 	// -----------회원가입 서비스-----------
@@ -101,24 +128,24 @@ public class UserService {
 	public String updateNick(UserDto user, HttpServletRequest request) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		int resultInt = 0;
-		String returnUrl = "";
+//		String returnUrl = "";
  		try {
 			
 			user.setUser_email(request.getParameter("user_email"));
 			user.setUser_nickname(request.getParameter("user_nickname"));
 			resultInt = userdao.updateNick(user);
 			
-			if(resultInt > 0) {
-				returnUrl = "redirect:/myPageEdit";
-			}else {
-				returnUrl = "redirect:/myPageEdit";
-			}
+//			if(resultInt > 0) {
+//				returnUrl = "redirect:/myPageEdit";
+//			}else {
+//				returnUrl = "redirect:/myPageEdit";
+//			}
 			
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		
-		return returnUrl;
+		return user.getUser_nickname();
 	}
 	// ----------- 준회원 유저정보 수정 서비스 -----------
 	@Transactional
@@ -195,7 +222,7 @@ public class UserService {
 		if (result > 0) {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("currentUser", user);
-
+			
 			resultReturn = "redirect:/myProfileDetail";
 		} else if (result == 0)
 			resultReturn = "redirect:/myProfileEdit";
@@ -212,7 +239,7 @@ public class UserService {
 		} catch (Exception e) {
 			e.getMessage();
 		}
-		return "redirect:/main";
+		return "redirect:/logout";
 	}
 	
 

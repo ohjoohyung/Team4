@@ -303,7 +303,41 @@
          var originnum = origin.slice(-3,-1);
       };
       alert(originnum); */
-      
+      console.log("푸드 칼로리"+$('.meal_'+food_seq).attr('food_cal'));
+   }
+   function eraseProgress(food_seq,food_cal,count){
+      var totalcal = $('#totalcal').text();
+      //alert('제발요'+totalcal);나온다
+      var count = $('#count'+food_seq).val();
+      //alert('개수'+count) 나온다
+      var presentcal = count*food_cal;
+      //alert(presentcal); 나온다
+      var bar = document.getElementById("progress-bar");
+      //alert(bar.style.width); 0%로 나옴
+      var origin = bar.style.width.slice(0,-1);
+      //alert(origin);
+      var after = Number(origin)-Number(presentcal*100/totalcal);
+      //alert(after);
+       if (Number(after>=100)){
+         after=100;
+         alert('과식하셨군요!!');
+      }else if(Number(after<=0)){
+         after=0;
+    	  
+      }
+      bar.style.width = after+"%";
+      //alert(origin.slice(-3,-1));
+      //bar.style.width = presentcal*100/totalcal="%";
+      //alert(presentcal*100/totalcal+"%"); 나옴
+      //bar.style.width = presentcal*100/totalcal+"%";
+/*                var origin = bar.styale.width;
+      if(origin.slice(-3,-1)=100){
+         var originnum = 100;
+      }else{
+         var originnum = origin.slice(-3,-1);
+      };
+      alert(originnum); */
+      console.log("푸드 칼로리"+$('.meal_'+food_seq).attr('food_cal'));
    }
    
    
@@ -315,9 +349,6 @@
                  validate[i]=false;
               }
             //일지 유효성 검증
-            
-            
-            
             $('#diary_today_weight').keyup(function() {
                /*      
                let weight = /^[0-9]*$/;
@@ -397,7 +428,7 @@
                                  "<td>"+obj.food_cal+"</td>"+
                                  "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
 
-                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+"\""+obj.food_name+"\""+");drawProgress("+obj.food_seq+","+obj.food_cal+");'>추가</button>"+"</td><tr>";
+                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+'"'+obj.food_name+'",'+obj.food_cal+");drawProgress("+obj.food_seq+","+obj.food_cal+");'>추가</button>"+"</td><tr>";
                            });
                            table += "</table>";
                            $('#foodBox').append(table);
@@ -476,7 +507,7 @@
          //식단 인덱스
             var number = 0;
             //음식 추가하기 메소드
-            function addFood(food_seq, food_name) {
+            function addFood(food_seq, food_name, food_cal) {
                
 
                if($('#count'+food_seq).val() == "") {
@@ -503,10 +534,10 @@
                '<div class="col '+food_name+'">'+
                   '<h5>'+food_name+'</h5>'+
                '</div>'+
-               '<div class="col-3">'+count+
+               '<div class="col-2">'+count+
                '</div>'+
-               '<div class="col-2 center">'+
-                  '<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+               '<div class="col-3 center">'+
+                  '<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+food_seq+'" id="" food_cal='+food_cal+' onclick="delFood('+number+');eraseProgress('+food_seq+','+food_cal+','+count+')"><i class="mdi mdi-minus"></i></button>'+
                '</div>'+
                
                '<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+food_seq+'">'+
@@ -553,8 +584,6 @@
             
             function delFood(num) {
                $(".mealDiv"+num+"").remove();
-                  
-                  
                   for(let i=1; i < number; i++) {
                      
                      
