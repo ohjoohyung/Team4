@@ -113,6 +113,7 @@ public class BodiaryController {
 
 	      System.out.println("유저 정보 : " +user_email);
 	      List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
+	      model.addAttribute("user", user);
 	      model.addAttribute("routineList", list);
 	      return "myBodiary/myBodiaryForm";
 	}
