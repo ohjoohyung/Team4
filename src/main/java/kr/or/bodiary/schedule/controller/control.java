@@ -9,7 +9,9 @@ public class control {
 	
 	//@Scheduled(cron = "0 0 1 ? * 6L")
 	//@Scheduled(cron="0 0 0/1 * * *") 
-	@Scheduled(cron="*/30 * * * * *") 
+	// 0 0 20 ? * MON-FRI
+
+	@Scheduled(cron="0 0 20 ? * FRI") 
 	public void autoUpdate() {
 		
 		  int start_num = 1; int end_num = 300; 
