@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" 
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:util="http://www.springframework.org/schema/util"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.1.xsd
                            http://www.springframework.org/schema/context 
                            http://www.springframework.org/schema/context/spring-context.xsd">
 	<!-- Root Context: defines shared resources visible to all other web components -->
@@ -29,7 +33,12 @@
  </bean> -->
  
  <!-- 공통 UI  -->
- 
+ <!-- 스케쥴러 -->
+ <bean id="control" class="kr.or.bodiary.schedule.controller.control" />
+ <task:scheduler id="gsScheduler" pool-size="10" />
+ <task:executor id="gsTaskExecutor" pool-size="10" />
+ <task:annotation-driven executor="gsTaskExecutor"
+  scheduler="gsScheduler" />
  <!-- thymeleaf View 설정 -->
 <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
 	<property name="prefix" value="/WEB-INF/views/" />
