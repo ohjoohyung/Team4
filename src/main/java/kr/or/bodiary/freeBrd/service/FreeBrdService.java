@@ -3,6 +3,9 @@ package kr.or.bodiary.freeBrd.service;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +20,9 @@ import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
 import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.freeBrd.dto.Search;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.utils.DateUtils;
 
 
 @Service
@@ -36,18 +41,39 @@ public void setSqlsession(SqlSession sqlsession) {
 public List<FreeBrdDTO> highLankFree() throws Exception{
 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
 	List<FreeBrdDTO> list = FreeBrd.highLankFree();
+	//날짜변경
+	   for(FreeBrdDTO f : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+			String formatDate = DateUtils.formatTimeString(date);
+		
+			f.setFree_brd_date(formatDate);
+		}
 	return list;
 }
 //질문게시판 상위 랭크를 뽑아옴
 public List<FreeBrdDTO> highLankQna() throws Exception{
 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
 	List<FreeBrdDTO> list = FreeBrd.highLankQna();
+	//날짜변경
+	   for(FreeBrdDTO f : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+			String formatDate = DateUtils.formatTimeString(date);
+		
+			f.setFree_brd_date(formatDate);
+		}
 	return list;
 }
 //팁게시판 상위 랭크를 뽑아옴
 public List<FreeBrdDTO> highLankTip() throws Exception{
 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
 	List<FreeBrdDTO> list = FreeBrd.highLankTip();
+	//날짜변경
+	   for(FreeBrdDTO f : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+			String formatDate = DateUtils.formatTimeString(date);
+		
+			f.setFree_brd_date(formatDate);
+		}
 	return list;
 }
 
@@ -95,7 +121,7 @@ public int allFreeBrdCount(Search search) throws Exception {
 }
 
 	// 해당 카테고리 전체 게시글(자유,팁,궁금) 목록보기
-	public List<FreeBrdDTO> allFreeBrd(Search search) {
+	public List<FreeBrdDTO> allFreeBrd(Search search) throws ParseException {
 	
 		List<FreeBrdDTO> list = null;
 	
@@ -120,12 +146,19 @@ public int allFreeBrdCount(Search search) throws Exception {
 			e.printStackTrace();
 			System.out.println("allFreeBrd() 함수 실행중 오류발생" + e.getMessage());
 		}
+		//날짜변경
+		   for(FreeBrdDTO f : list) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+				String formatDate = DateUtils.formatTimeString(date);
+			
+				f.setFree_brd_date(formatDate);
+			}
 	
 		return list;
 	}
 		
 	//전체 카테고리 게시글(자유,팁,궁금) 목록보기
-	public List<FreeBrdDTO> allCatFreeBrd(Search search) {
+	public List<FreeBrdDTO> allCatFreeBrd(Search search) throws ParseException {
 	
 		List<FreeBrdDTO> list = null;
 	
@@ -146,13 +179,20 @@ public int allFreeBrdCount(Search search) throws Exception {
 			e.printStackTrace();
 			System.out.println("allCatFreeBrd() 함수 실행중 오류발생" + e.getMessage());
 		}
+		//날짜변경
+		   for(FreeBrdDTO f : list) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+				String formatDate = DateUtils.formatTimeString(date);
+			
+				f.setFree_brd_date(formatDate);
+			}
 	
 		return list;
 	}
 
 
 	// 글 상세보기 서비스 함수
-	public FreeBrdDTO freebrdDetail(String seq) {
+	public FreeBrdDTO freebrdDetail(String seq) throws ParseException {
 		FreeBrdDTO freeBrdDto = null;
 		try {
 			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);			
@@ -167,6 +207,13 @@ public int allFreeBrdCount(Search search) throws Exception {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		//날짜변경
+		 
+		Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(freeBrdDto.getFree_brd_date());
+		String formatDate = DateUtils.formatTimeString(date);
+			
+		freeBrdDto.setFree_brd_date(formatDate);
+		
 	
 		return freeBrdDto;
 	}

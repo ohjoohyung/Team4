@@ -38,7 +38,8 @@
 			</div>
 
 			<div class="row">
-
+				
+				
 				<th:block th:each="today : ${todayHit}">
 
 					<div class="grid-item card ml-3">
@@ -63,9 +64,17 @@
 
 						</a>
 					</div>
+					
+					<!-- 
+					<div th:unless="${today != null}">
+						<h2>오늘의 인기글이 없습니다. 글을 작성해보세요!</h2>
+					</div>
+				 -->
+					
 
 				</th:block>
-
+				
+			
 			</div>
 			<!-- 인기 많은 루틴 end -->
 

@@ -2,6 +2,7 @@ package kr.or.bodiary.routineBrd.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class RoutineBrdController {
 	//리스트 비동기로 불러오기
 	@ResponseBody
 	@RequestMapping("/getRoutineBrdList")
-	public List<RoutineBoardUserJoinDto> getRoutineBrdList(Model model, String cp, String ps) throws ClassNotFoundException, SQLException {
+	public List<RoutineBoardUserJoinDto> getRoutineBrdList(Model model, String cp, String ps) throws ClassNotFoundException, SQLException, ParseException {
 		List<RoutineBoardUserJoinDto> rlist = routinebrdservice.routineBoardList(cp, ps);
 		/* model.addAttribute("routineBoardList", rlist); */
 		return rlist;
@@ -49,7 +50,7 @@ public class RoutineBrdController {
 	
 	//리스트 페이지 들어가기
 	@RequestMapping("/routineBrdList")
-	public String routineBrdList(Model model) throws ClassNotFoundException, SQLException {
+	public String routineBrdList(Model model) throws ClassNotFoundException, SQLException, ParseException {
 		List<RoutineBoardUserJoinDto> todayHit = routinebrdservice.getTodayHit();
 		model.addAttribute("todayHit", todayHit);
 		return "routineBrd/routineBrdList";
@@ -60,7 +61,7 @@ public class RoutineBrdController {
 	
 	//상세
 	@RequestMapping("/routineBrdDetail")
-	public String routineBrdDetail(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	public String routineBrdDetail(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException, ParseException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
 		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routinebrddto.getRoutine_cart_seq());
 		
@@ -121,7 +122,7 @@ public class RoutineBrdController {
 	
 	//수정(폼)
 	@RequestMapping(value = "routineBrdEdit", method = RequestMethod.GET)		
-	public String routineBrdEdit(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	public String routineBrdEdit(int routine_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException, ParseException {
 		RoutineBrdDto routinebrddto = routinebrdservice.routineBrdDetail(routine_brd_seq);
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		String user_email = user.getUser_email();
@@ -162,7 +163,7 @@ public class RoutineBrdController {
 		// 댓글 인서트 나중에 리턴값 리팩토링해야함 댓글 불러오기 함수 넣어서...
 		@ResponseBody
 	   @RequestMapping(value = "routineCmtInsert", method = RequestMethod.POST)
-	   public List<RoutineBoardCommentDto> routineCmtInsert(RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+	   public List<RoutineBoardCommentDto> routineCmtInsert(RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		   System.out.println("댓글 인서트 컨트롤러 탐");
 		   System.out.println(request.getParameter("routine_brd_seq"));
 		   System.out.println(request.getParameter("routine_cmt"));
@@ -173,20 +174,20 @@ public class RoutineBrdController {
 		
 		@ResponseBody
 		@RequestMapping(value = "routineReCmtInsert", method = RequestMethod.POST)
-		public List<RoutineBoardCommentDto> routineReCmtInsert(RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		public List<RoutineBoardCommentDto> routineReCmtInsert(RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 			System.out.println("대댓글 인서트 컨트롤러 탐");
 		
 			return routinebrdservice.routineReCmtInsert(routineCmtDto, request);
 		}
 		@ResponseBody
 		@RequestMapping(value = "routineCmtModifyUpdate", method = RequestMethod.POST)
-		public List<RoutineBoardCommentDto> routineCmtModifyUpdate (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		public List<RoutineBoardCommentDto> routineCmtModifyUpdate (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 			
 			return routinebrdservice.routineCmtModifyUpdate(routineCmtDto, request);
 		}
 		@ResponseBody
 		@RequestMapping(value = "routineCmtDelete", method = RequestMethod.POST)
-		public List<RoutineBoardCommentDto> routineCmtDelete (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		public List<RoutineBoardCommentDto> routineCmtDelete (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 			
 			return routinebrdservice.routineCmtDelete(routineCmtDto, request);
 		}

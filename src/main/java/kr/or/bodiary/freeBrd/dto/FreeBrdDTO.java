@@ -19,7 +19,7 @@ public class FreeBrdDTO {
 	private String free_brd_title;
 	private String free_brd_image;
 	private String free_brd_content;
-	private Date free_brd_date;
+	private String free_brd_date;
 	private int free_brd_report_num;
 	private int free_brd_hits;
 	

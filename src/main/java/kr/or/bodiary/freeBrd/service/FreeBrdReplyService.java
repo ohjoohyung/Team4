@@ -1,5 +1,7 @@
 package kr.or.bodiary.freeBrd.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.utils.DateUtils;
 
 @Service
 public class FreeBrdReplyService {
@@ -36,6 +40,13 @@ public class FreeBrdReplyService {
 			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
 			rList.get(i).setBrd_cmt_count(list.commentCount(rList.get(i).getFree_brd_seq()));
 		}*/
+		//날짜변경
+		   for(FreeBrdReplyDTO f : rList) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getBrd_cmt_date());
+				String formatDate = DateUtils.formatTimeString(date);
+			
+				f.setBrd_cmt_date(formatDate);
+			}
 		
 		return rList;
 	}

@@ -100,10 +100,7 @@ public class BodiaryController {
 	//일지 컨트롤러
 	@RequestMapping("/myBodiaryMain")
 	public String myBodiaryMain(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
-		/*
-		 * //나중에 이메일 바꿔야함 userDTO user = userservice.getUser("1@1");
-		 * model.addAttribute("user", user);
-		 */
+
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		int todayCount = bodiaryservice.todatBodiaryCount(user.getUser_email());
 		

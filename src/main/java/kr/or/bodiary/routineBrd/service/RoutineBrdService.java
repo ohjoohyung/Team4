@@ -3,8 +3,12 @@ package kr.or.bodiary.routineBrd.service;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +24,7 @@ import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.utils.DateUtils;
 
 
 
@@ -34,7 +39,7 @@ private SqlSession sqlsession;
 
 		
 	//리스트
-	public List<RoutineBoardUserJoinDto> routineBoardList(String cp, String ps) throws ClassNotFoundException, SQLException {
+	public List<RoutineBoardUserJoinDto> routineBoardList(String cp, String ps) throws ClassNotFoundException, SQLException, ParseException {
 		
 		List<RoutineBoardUserJoinDto> rlist = null;
 		int cpage = 1;
@@ -54,6 +59,12 @@ private SqlSession sqlsession;
 		try {
 			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 			rlist = routinebrddao.routineBoardList(start,pagesize);
+			for(RoutineBoardUserJoinDto r : rlist) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_brd_regdate());
+				String formatDate = DateUtils.formatTimeString(date);
+				System.out.println(formatDate);
+				r.setRoutine_brd_regdate(formatDate);
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -63,17 +74,28 @@ private SqlSession sqlsession;
 	}
 	
 	//오늘의 게시글 불러오기
-	public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException {
+	public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException, ParseException {
 		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
-		return routinebrddao.getTodayHit();
+		List<RoutineBoardUserJoinDto> rlist = routinebrddao.getTodayHit();
+		for(RoutineBoardUserJoinDto r : rlist) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_brd_regdate());
+			String formatDate = DateUtils.formatTimeString(date);
+			System.out.println(formatDate);
+			r.setRoutine_brd_regdate(formatDate);
+		}
+		
+		return rlist;
 	}
 	
 	//상세
-	public RoutineBrdDto routineBrdDetail(int routine_brd_seq) throws ClassNotFoundException, SQLException {		
+	public RoutineBrdDto routineBrdDetail(int routine_brd_seq) throws ClassNotFoundException, SQLException, ParseException {		
 		RoutineBrdDto routinebrddto = null;
 		try {
 			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 			routinebrddto = routinebrddao.routineBoardSelect(routine_brd_seq);
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(routinebrddto.getRoutine_brd_regdate());
+			String formatDate = DateUtils.formatTimeString(date);
+			routinebrddto.setRoutine_brd_regdate(formatDate);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
@@ -211,6 +233,14 @@ private SqlSession sqlsession;
 			List<RoutineBoardCommentDto> rCmtList = null; 
 			try {
 				rCmtList = routinebrddao.routineCmtList(routine_brd_seq);
+				
+				//날짜 변경
+				for(RoutineBoardCommentDto r : rCmtList) {
+					Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_cmt_date());
+					String formatDate = DateUtils.formatTimeString(date);
+					System.out.println(formatDate);
+					r.setRoutine_cmt_date(formatDate);
+				}
 			} catch (Exception e) {
 				e.getMessage();
 			}
@@ -219,7 +249,7 @@ private SqlSession sqlsession;
 		}
 
 	   //인서트 
-	   public List<RoutineBoardCommentDto> routineCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+	   public List<RoutineBoardCommentDto> routineCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 //		   int returnselect = 0;
 		   System.out.println("댓글 인서트 서비스 try문 직전");
@@ -243,10 +273,20 @@ private SqlSession sqlsession;
 			}
 		   
 		   System.out.println(routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq"))));
-		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   
+		   List<RoutineBoardCommentDto> rCmtList = routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   //날짜변경
+		   for(RoutineBoardCommentDto r : rCmtList) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_cmt_date());
+				String formatDate = DateUtils.formatTimeString(date);
+				System.out.println(formatDate);
+				r.setRoutine_cmt_date(formatDate);
+			}
+		   
+		   return rCmtList;
 	   }
 	   //업데이트
-	   public List<RoutineBoardCommentDto> routineCmtModifyUpdate (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+	   public List<RoutineBoardCommentDto> routineCmtModifyUpdate (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
 		   try {
@@ -256,10 +296,19 @@ private SqlSession sqlsession;
 		   } catch (Exception e) {
 			   e.getMessage();
 		   }
-		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   List<RoutineBoardCommentDto> rCmtList = routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   //날짜변경
+		   for(RoutineBoardCommentDto r : rCmtList) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_cmt_date());
+				String formatDate = DateUtils.formatTimeString(date);
+				System.out.println(formatDate);
+				r.setRoutine_cmt_date(formatDate);
+			}
+		   
+		   return rCmtList;
 	   }
 	   //삭제
-	   public List<RoutineBoardCommentDto> routineCmtDelete (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+	   public List<RoutineBoardCommentDto> routineCmtDelete (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		   routineCmtDto.setRoutine_cmt(request.getParameter("routine_cmt"));
 		   try {
@@ -269,7 +318,16 @@ private SqlSession sqlsession;
 		   } catch (Exception e) {
 			   e.getMessage();
 		   }
-		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   List<RoutineBoardCommentDto> rCmtList = routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   //날짜변경
+		   for(RoutineBoardCommentDto r : rCmtList) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_cmt_date());
+				String formatDate = DateUtils.formatTimeString(date);
+			
+				r.setRoutine_cmt_date(formatDate);
+			}
+		   
+		   return rCmtList;
 	   }
 	   
 	   
@@ -277,7 +335,7 @@ private SqlSession sqlsession;
 	   
 	   
 	   //대댓 인서트 
-	   public List<RoutineBoardCommentDto> routineReCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+	   public List<RoutineBoardCommentDto> routineReCmtInsert (RoutineBoardCommentDto routineCmtDto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException, ParseException {
 		   RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		   routineCmtDto.setRoutine_cmt_ref(Integer.parseInt(request.getParameter("routine_cmt_ref")));
 		   try {
@@ -290,7 +348,16 @@ private SqlSession sqlsession;
 			} catch (Exception e) {
 				e.getMessage();
 			}
-		   return routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   List<RoutineBoardCommentDto> rCmtList = routinebrddao.routineCmtList(Integer.parseInt(request.getParameter("routine_brd_seq")));
+		   //날짜변경
+		   for(RoutineBoardCommentDto r : rCmtList) {
+				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_cmt_date());
+				String formatDate = DateUtils.formatTimeString(date);
+				System.out.println(formatDate);
+				r.setRoutine_cmt_date(formatDate);
+			}
+		   
+		   return rCmtList;
 	   }
 
 

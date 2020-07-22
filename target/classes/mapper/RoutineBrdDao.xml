@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    </update>
    <delete id="routineCmtDelete">
    	delete from RoutineBoardComment
-   	where routine_cmt_ref=#{routine_cmt_seq}
+   	where routine_cmt_seq=#{routine_cmt_seq}
    </delete>
    
    <!-- 대댓글 작성 -->
