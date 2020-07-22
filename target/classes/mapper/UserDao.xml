@@ -4,6 +4,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="kr.or.bodiary.user.dao.UserDao">
+	<!-- 회원테이블의 모든 유저 리스트 가져오기 (동률) -->
+	<select id="getUserList" resultType="kr.or.bodiary.user.dto.UserDto">
+		select user.user_email,user_nickname,user_gender,user_reportedcount,enabled,user_grade,role_name,user_age,user_height,user_weight,user_grade
+		from user 
+		inner join role
+		where user.user_email = role.user_email
+	</select>
+
+	<!-- 해당 유저의 권한을 수정하는 쿼리문 (동률) -->
+	<update id="userRoleUpdate" parameterType="kr.or.bodiary.user.dto.UserDto">
+		update role
+		set role_name = #{role_name}
+		where user_email = #{user_email}
+	</update>
+	
+	<!--  해당 유저의 총 자유게시물 가져오기(동률) -->
+	<select id="freeBrdCount" resultType="int">
+		SELECT count(*) as totalcount		
+		FROM freeboard
+		WHERE user_email = #{user_email}
+	</select>
+	
+	<!--  해당 유저의 총 루틴자랑 게시물 가져오기(동률) -->
+	<select id="routineBrdCount" resultType="int">
+		SELECT count(*) as totalcount		
+		FROM routineboard
+		WHERE user_email = #{user_email}
+	</select>
 	<select id="getUser" resultType="kr.or.bodiary.user.dto.UserDto">
 		select *
 		from User

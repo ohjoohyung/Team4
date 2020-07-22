@@ -16,6 +16,8 @@ import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.notice.service.NoticeService;
+import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.user.service.UserService;
 
 @Controller
 public class AdminController {
@@ -32,6 +34,63 @@ public class AdminController {
 		this.noticeservice = noticeservice;
 	}
 	
+	//동률 -------------------------------------------------------------------
+		@Autowired
+		private UserService userService;
+		
+		public void setUserService(UserService userService) {
+			this.userService = userService;
+		}
+		
+
+		//유저 관리 페이지 
+		@RequestMapping("/adminUserBrdList")
+		public String adminUserBrdList(Model model) {
+			System.out.println("유저관리 페이지로 이동............");
+			//모든 유저를 가져오는 서비스 호출 
+			List<UserDto> userList = userService.getUserList();
+			model.addAttribute("userList",userList);
+			
+			return "admin/adminUserBrdList";
+		}
+		
+		//유저 권한 수정 컨트롤러 
+		@RequestMapping("/adminRoleUpdate")
+		public String adminRoleUpdate(String role,String email) {
+			System.out.println("수정할 권한 "+role);
+			System.out.println("수정할 권한 이메일 "+email);
+			System.out.println("해당 유저 권한 수정중 ............");
+			
+			//해당 유저의 권한을 수정하는 서비스 호출 
+			int result = userService.userRoleUpdate(role,email);
+			
+			if(result == 1) System.out.println("수정성공(result값이 1이라면)"+result);
+
+			
+			return "redirect:adminUserBrdList";
+		}
+		
+		//해당 유저 디테일 페이지
+		@RequestMapping("/adminUserBrdDetail")
+		public String adminUserBrdDetail(String userEmail,Model model) throws ClassNotFoundException, SQLException {
+			System.out.println("해당 유저 세부 페이지로 이동............");
+			
+			UserDto getUser = null;
+			try {		
+				getUser = userService.getUser(userEmail);
+			}catch (Exception e) {
+				System.out.println("에러발생...");
+			    System.out.println(e.getMessage());
+			}
+			
+			model.addAttribute("routineBrdCount",userService.routineBrdCount(userEmail));
+			model.addAttribute("freeBrdCount",userService.freeBrdCount(userEmail));
+			model.addAttribute("getUser",getUser);
+			
+			return "admin/adminUserBrdDetail";
+		}
+		
+		//동률 -------------------------------------------------------------------
 
 	
 	@RequestMapping("/admin")

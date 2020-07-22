@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -17,7 +18,7 @@
 		<div class="content mt-4">
 
 			<div class="card">
-				<form action="freeBrdForm" method="post" enctype="multipart/form-data" onsubmit="postForm()">
+				<form action="freeBrdForm" method="post" enctype="multipart/form-data" onsubmit="return postForm()">
 					<!-- 카테고리 선택 드롭다운 -->
 					<div class="row">
 						<div class="col-2">
@@ -52,7 +53,7 @@
 					<!-- 썸머노트 -->
 					<div class="card-body">
 							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
-							 <textarea name="content" style="display: none;" th:text></textarea>
+							 <textarea name="content" id="content" style="display: none;" th:text></textarea>
 							 <!-- 썸머노트가 적용되는 부분 -->
 							 <div id="summernote" ></div>					
 						<hr>
@@ -88,8 +89,43 @@ $(document).ready(function() {
 출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
 <script>
 function postForm() {
-    $('textarea[name="content"]').val($('#summernote').summernote('code'));
+	
+    var title = $("#title").val();
+    if (!title) {
+      alert("제목을 입력하십시오");
+      return false;
+    }
+    
+    var value = $('textarea[name="content"]').val($('#summernote').summernote('code'));
+    //alert("내용" + value);
+    //왜 아무내용도 입력을 안했는데 object로 반환되지??? 
+    		
+    //var value = $("#content").val();
+    //alert("내용" +value);
+    
+    if (value == "" || value == null || value == undefined){
+        alert("내용을 입력하십시오");
+        return false;
+    } 
+    return true;
 }
+
+
+
 </script>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,11 +1,23 @@
 package kr.or.bodiary.user.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import kr.or.bodiary.user.dto.UserDto;
 
 
 public interface UserDao {
+	//----------- 전체 회원정보 리스트 가져오기 ------------(동률)
+	public List<UserDto> getUserList() throws ClassNotFoundException, SQLException;
+	
+	//----------- 해당 회원권한 수정하기 ------------(동률)
+	public int userRoleUpdate(UserDto user) throws ClassNotFoundException, SQLException;
+	
+	//------------ 해당 유저의 총 자유게시물 가져오기------------------ (동률)
+	public int freeBrdCount(String user_email) throws ClassNotFoundException, SQLException;
+	
+	//------------ 해당 유저의 총 루틴 자랑 게시물 가져오기------------------ (동률)
+	public int routineBrdCount(String user_email) throws ClassNotFoundException, SQLException;
 	
 	//----------- 회원정보 얻기 ------------
 	public UserDto getUser(String user_email) throws ClassNotFoundException, SQLException;

@@ -49,21 +49,6 @@ public class FreeBrdController {
 		System.out.println("검색타입"+searchType);
 		System.out.println("검색키워드"+keyword);
 		
-		/*
-		//총 게시물수를 받아옴 
-		int totalListCnt;
-		//카테고리 별로 총게시물을 가져오는 숫자가 다름 
-		if(cateGory == 0) {
-			totalListCnt = freeBrdService.allFreeBrdCount();
-		}else if(cateGory == 1) {
-			totalListCnt = freeBrdService.getLibertyCnt(); //자유게시판 총 게시물 
-		}else if(cateGory == 2) {
-			totalListCnt = freeBrdService.getQuestionCnt(); //질문게시판 총 게시물 
-		}else if(cateGory == 3) {
-			totalListCnt = freeBrdService.getTipCnt(); //팁게시판 총 게시물 
-		}
-		*/
-		
 		//검색을 했을 경우 (검색한게 없어도 실행) 
 		model.addAttribute("search",search);
 		search.setSearchType(searchType);
@@ -97,7 +82,14 @@ public class FreeBrdController {
 		//검색후 페이징 처리 계산 (검색한게 없어도 실행) 
 		search.pageInfo(searchListCnt, page);
 		
-		List<FreeBrdDTO> freeBrdList = freeBrdService.allFreeBrd(search);
+		List<FreeBrdDTO> freeBrdList = null;
+		if(cateGory == 0) {
+			System.out.println("전체게시물중에 해당조건 가져오기----------------------------------------------------");
+			freeBrdList = freeBrdService.allCatFreeBrd(search);
+		}
+		else{
+			freeBrdList = freeBrdService.allFreeBrd(search);
+		}
 		
 		//로그인한 해당 유저의 정보를 뽑아올수 있음  
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
@@ -147,6 +139,7 @@ public class FreeBrdController {
 		//로그인한 해당 유저의 정보를 뽑아올수 있음  
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		String user_email = user.getUser_email();
+		
 		
 		model.addAttribute("user",user_email);
 		model.addAttribute("freeBrdDetail",freeBrdDetail);

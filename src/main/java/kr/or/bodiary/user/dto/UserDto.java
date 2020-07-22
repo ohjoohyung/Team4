@@ -25,4 +25,6 @@ public class UserDto {
 	private String user_deletedate;
 	//파일 업로드 지원---------
 	private CommonsMultipartFile file;
+	//롤 권한 이름 
+	private String role_name;
 }

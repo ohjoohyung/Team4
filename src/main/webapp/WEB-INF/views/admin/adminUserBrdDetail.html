@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+<head>
+
+</head>
+<body>
+		<!-- 공통 nav -->
+	<div class="bodiary-wrapper main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+	
+			
+		<div class="content-body p-4">
+			   <div class="card">
+                    <div class="card-body">
+                        <div class="media align-items-center mb-4">
+                            <img class="mr-3" width="80" height="80" alt="" th:src="@{assets/upload/userUpload/}+${getUser.user_img}">
+                            <div class="media-body">
+                                <h3 class="mb-0" th:text="${getUser.user_nickname}"></h3>
+                                <p th:text="${getUser.user_gender}"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-5">
+                            <div class="col">
+                                <div class="card card-profile text-center">
+                                    <span class="mb-1 text-primary"><i class="icon-people"></i></span>
+                                    <h3 class="mb-0" th:text="${routineBrdCount}"></h3>
+                                    <p class="text-muted px-4">루틴 자랑게시판 총 게시물</p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card card-profile text-center">
+                                    <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
+                                    <h3 class="mb-0" th:text="${freeBrdCount}"></h3>
+                                    <p class="text-muted">자유게시판 총 게시물</p>
+                                </div>
+                            </div>
+                            <div class="col-12 text-center">
+                            	<button type="button" onclick="location.href='adminUserBrdList'"
+								class="btn btn-outline-primary">유저관리 목록</button>
+                       
+                            </div>
+                        </div>
+
+                        <h4>About Me</h4>
+                        <ul class="card-profile__info">
+                            <li class="mb-1"><strong class="text-dark mr-4">나이</strong> <span th:text="${getUser.user_age}"></span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">키</strong> <span th:text="${getUser.user_height}"></span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">몸무게</strong> <span th:text="${getUser.user_weight}"></span></li>
+                            <li class="mb-1"><strong class="text-dark mr-4">등급</strong> <span th:text="${getUser.user_grade}"></span></li>
+                            <li><strong class="text-dark mr-4">Email</strong> <span th:text="${getUser.user_email}"></span></li>
+                        </ul>
+                    </div>
+                </div>
+		</div>
+		
+		 <!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+	</div>
+	<!-- 기본 폼 완성 -->
+	<!-- 공통 스크립트-->
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

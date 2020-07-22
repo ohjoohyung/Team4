@@ -9,10 +9,10 @@ import kr.or.bodiary.freeBrd.dto.Search;
 
 
 public interface FreeBrdDao {
-	//전체 게시글 가져오기(팁,자유,궁금) 원본
-		//public List<FreeBrdDto> allFreeBrd(@Param("startIndex")int startIndex,@Param("pageSize")int pageSize) throws ClassNotFoundException, SQLException;	
+	    //모든 카테고리 전체 게시글 가져오기(팁,자유,궁금) 
+		public List<FreeBrdDTO> allCatFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
 
-		//전체 게시글 가져오기(팁,자유,궁금)
+		//해당카테고리의 전체 게시글 가져오기(팁,자유,궁금)
 		public List<FreeBrdDTO> allFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
 		
 		//전체 게시글 가져오기(팁,자유,궁금)
