@@ -38,24 +38,76 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where user_email= #{user_email}
 	</select>
 	<select id="selectUserByGender" resultType="int">
-		select count(user_gender)
-		from User
-		where user_gender = #{user_gender}
-	</select>
-	<select id="selectUserCount" resultType="int">
-		select count(user_email)
-		from User
-	</select>
-	<!-- 회원가입 -->
+      select count(user_gender)
+      from User
+      where user_gender = #{user_gender}
+   </select>
+   <select id="selectUserCount" resultType="int">
+      select count(user_email)
+      from User
+   </select>
+   <!-- 탈퇴한 회원수 -->
+   <select id="deleteUserCount" resultType="int">
+      select count(user_email)
+      from User
+      where user_deletedate is not null
+   </select>
+   <!-- 신고게시글수 -->
+   <select id="countBodiary" resultType="int">
+      select count(free_brd_seq)
+      from diary   
+   </select>
+   
+   <!-- 일일회원가입수 -->
+   <select id="todayUser" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=date_format(now(), '%Y-%m-%d')
+   </select>
+   <!-- updatingChart -->
+   <select id="updatingChart" resultType="int">
+      select count(user_email)
+      from user
+      where user_deletedate is null
+   </select>
+   <!-- monthlyCount -->
+   <select id="monthlyCount0" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=date_format(now(), '%Y-%m-%d')
+   </select>
+   <select id="monthlyCount1" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+   </select>
+   <select id="monthlyCount2" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+   </select>
+   <select id="monthlyCount3" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+   </select>
+   <select id="monthlyCount4" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+   </select>
+   <select id="monthlyCount5" resultType="int">
+      select count(user_email)
+      from user
+      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+   </select>
+   <!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(
-			user_email, user_pwd, user_nickname, user_gender, user_age , user_img, user_reportedcount, enabled, user_grade, user_insertdate,user_height, user_weight
-			<if test="user_pwd == 'naver'">
-				,user_snstype
-			</if>
-			
+			user_email, user_pwd, user_nickname, user_gender, user_age , user_img, user_reportedcount, enabled, user_grade, user_insertdate,user_height, user_weight,user_snstype
 			) 
-		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 'user.png', 0, 1, 'regular', now()
+		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 'user.png', 0, 1, 'regular', date_format(now(), '%Y-%m-%d')
+
 		<choose>
 			<when test="user_pwd == 'naver'">
 				,#{user_height}, #{user_weight},#{user_snstype}

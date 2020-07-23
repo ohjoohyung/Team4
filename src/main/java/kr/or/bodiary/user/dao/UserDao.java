@@ -8,11 +8,26 @@ import kr.or.bodiary.user.dto.UserDto;
 public interface UserDao {
 
 	// ----------- 회원정보 얻기 ------------
-	public UserDto getUser(String user_email) throws ClassNotFoundException, SQLException;
+	   public UserDto getUser(String user_email) throws ClassNotFoundException, SQLException;
 
-	public int selectUserByGender(String user_gender) throws ClassNotFoundException, SQLException;
+	   public int selectUserByGender(String user_gender) throws ClassNotFoundException, SQLException;
 
-	public int selectUserCount() throws ClassNotFoundException, SQLException;
+	   public int selectUserCount() throws ClassNotFoundException, SQLException;
+	   
+	   public int deleteUserCount() throws ClassNotFoundException, SQLException;
+	   
+	   public int countBodiary() throws ClassNotFoundException, SQLException;
+	   
+	   public int todayUser() throws ClassNotFoundException, SQLException;
+	   
+	   public int updatingChart() throws ClassNotFoundException, SQLException;
+	   
+	   public int monthlyCount0() throws ClassNotFoundException, SQLException;
+	   public int monthlyCount1() throws ClassNotFoundException, SQLException;
+	   public int monthlyCount2() throws ClassNotFoundException, SQLException;
+	   public int monthlyCount3() throws ClassNotFoundException, SQLException;
+	   public int monthlyCount4() throws ClassNotFoundException, SQLException;
+	   public int monthlyCount5() throws ClassNotFoundException, SQLException;
 
 	// ----------- 회원 가입 ------------
 	public int insertUser(UserDto user) throws ClassNotFoundException, SQLException;

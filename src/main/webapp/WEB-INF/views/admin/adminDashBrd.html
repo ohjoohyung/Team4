@@ -3,656 +3,890 @@
 
 <!-- 공통 헤더-->
 <th:block
-	th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+   th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
 
 <body>
-	<script src="https://code.highcharts.com/highcharts.js"></script>
-	<script src="https://code.highcharts.com/modules/series-label.js"></script>
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+   <script src="https://code.highcharts.com/modules/series-label.js"></script>
 
-	<!--**********************************
+   <!--**********************************
         Main wrapper start
     ***********************************-->
-	<div id="main-wrapper">
-		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+   <div id="main-wrapper">
+      <th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
 
 
 
-		<!--**********************************
+      <!--**********************************
             Content body start
         ***********************************-->
-		<div class="content-body">
+      <div class="content-body">
 
-			<div class="container-fluid mt-3">
-				<div class="row">
-					<div class="col-lg-3 col-sm-6">
-						<div class="card gradient-1">
-							<div class="card-body">
-								<h3 class="card-title text-white">일일 가입자 수</h3>
-								<div class="d-inline-block">
-									<h2 class="text-white">25 명</h2>
-									<p class="text-white mb-0">Jan - March 2019</p>
-								</div>
-								<span class="float-right display-5 opacity-5"><i
-									class="fa fa-shopping-cart"></i></span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card gradient-2">
-							<div class="card-body">
-								<h3 class="card-title text-white">바디어리 남녀 비율</h3>
-								<div class="d-inline-block">
-									<h2 class="text-white" id="genderPer">4 : 6</h2>
-									<p class="text-white mb-0">총 <span id="total-user"></span>명의 회원 기준</p>
+         <div class="container-fluid mt-3">
+            <div class="row">
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card gradient-1">
+                     <div class="card-body">
+                        <h3 class="card-title text-white">오늘 가입한 회원수</h3>
+                        <div class="d-inline-block">
+                           <h2 class="text-white"><span id="todayUser"></span>명</h2>
+                           <p class="text-white mb-0"><span id="todayDate"></span></p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i
+                           class="fa fa-shopping-cart"></i></span>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card gradient-2">
+                     <div class="card-body">
+                        <h3 class="card-title text-white">바디어리 남녀 비율</h3>
+                        <div class="d-inline-block">
+                           <h2 class="text-white" id="genderPer">4 : 6</h2>
+                           <p class="text-white mb-0">총 <span id="total-user"></span>명의 회원 기준</p>
 
-								</div>
-								<span class="float-right display-5 opacity-5"><i
-									class="fa fa-money"></i></span>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card gradient-3">
-							<a href="#">
-								<div class="card-body">
-									<h3 class="card-title text-white">신고 게시글 수</h3>
-									<div class="d-inline-block">
-										<h2 class="text-white">4565</h2>
-										<p class="text-white mb-0">Jan - March 2019</p>
-									</div>
-									<span class="float-right display-5 opacity-5"><i
-										class="fa fa-users"></i></span>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card gradient-4">
-							<div class="card-body">
-								<h3 class="card-title text-white">탈퇴 회원 수</h3>
-								<div class="d-inline-block">
-									<h2 class="text-white">3 명</h2>
-									<p class="text-white mb-0">Jan - March 2019</p>
-								</div>
-								<span class="float-right display-5 opacity-5"><i
-									class="fa fa-heart"></i></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i
+                           class="fa fa-money"></i></span>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card gradient-3">
+                     <a href="#">
+                        <div class="card-body">
+                           <h3 class="card-title text-white">Bodiary 수</h3>
+                           <div class="d-inline-block">
+                              <h2 class="text-white"><span id="countReport">3</span> 개</h2>
+                              <p class="text-white mb-0"><span id="todayDate2"></span></p>
+                           </div>
+                           <span class="float-right display-5 opacity-5"><i
+                              class="fa fa-users"></i></span>
+                        </div>
+                     </a>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card gradient-4">
+                     <div class="card-body">
+                        <h3 class="card-title text-white">탈퇴 회원 수</h3>
+                        <div class="d-inline-block">
+                           <h2 class="text-white"><span id="userDelete">3</span> 명</h2>
+                           <p class="text-white mb-0"><span id="todayDate3"></span></p>
+                        </div>
+                        <span class="float-right display-5 opacity-5"><i
+                           class="fa fa-heart"></i></span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-12">
+               <div class="card p-5">
+                  <div >
+                     <canvas id="chart_user" style="width:80%"></canvas>
+                  </div>
+                  </div>
+               </div>
+            </div>
+            <!-- 가입자 수 변동 추이 시작 -->
+            <!-- <div class="row">
+               <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">Live Update</h4>
+                                <div class="text-center"><span class="updating-chart" id="updatingChart"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+            <!-- 가입자 수 변동 추이 끝 -->
+            
+            <!-- 가입자 수 변동 추이 시작 -->
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="row">
+                     <div class="col-12">
+                        <div class="card">
+                           <div class="card-body pb-0 d-flex justify-content-between">
+                              <div>
+                                 <h4 class="mb-1">가입자 수 변동 추이</h4>
+                                 <p>실시간 변화</p>
+                                 <h3 class="m-0">$ 12,555</h3>
+                              </div>
+                              <div>
+                                 <ul>
+                                    <li class="d-inline-block mr-3"><a class="text-dark"
+                                       href="#">Day</a></li>
+                                    <li class="d-inline-block mr-3"><a class="text-dark"
+                                       href="#">Week</a></li>
+                                    <li class="d-inline-block"><a class="text-dark"
+                                       href="#">Month</a></li>
+                                 </ul>
+                              </div>
+                           </div>
+                           <div class="chart-wrapper pl-5 pr-5">
+                              <canvas id="chart_widget_2"></canvas>
+                           </div>
+                           <div class="card-body"></div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- 가입자 수 변동 추이 끝 -->
+            
+            
+            <div class="row">
+               <div class="col-lg-6 col-md-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <h4 class="card-title">Order Summary</h4>
+                        <div id="morris-bar-chart"></div>
+                     </div>
+                  </div>
 
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body pb-0 d-flex justify-content-between">
-										<div>
-											<h4 class="mb-1">가입자 수 변동 추이</h4>
-											<p>실시간 변화</p>
-											<h3 class="m-0">$ 12,555</h3>
-										</div>
-										<div>
-											<ul>
-												<li class="d-inline-block mr-3"><a class="text-dark"
-													href="#">Day</a></li>
-												<li class="d-inline-block mr-3"><a class="text-dark"
-													href="#">Week</a></li>
-												<li class="d-inline-block"><a class="text-dark"
-													href="#">Month</a></li>
-											</ul>
-										</div>
-									</div>
-									<div class="chart-wrapper pl-5 pr-5">
-										<canvas id="chart_widget_2"></canvas>
-									</div>
-									<div class="card-body"></div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+               </div>
+               <div class="col-lg-3 col-md-6">
+                  <div class="card card-widget">
+                     <div class="card-body">
+                        <h5 class="text-muted">Order Overview</h5>
+                        <h2 class="mt-4">5680</h2>
+                        <span>Total Revenue</span>
+                        <div class="mt-4">
+                           <h4>30</h4>
+                           <h6>
+                              Online Order <span class="pull-right">30%</span>
+                           </h6>
+                           <div class="progress mb-3" style="height: 7px">
+                              <div class="progress-bar bg-primary" style="width: 30%;"
+                                 role="progressbar">
+                                 <span class="sr-only">30% Order</span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mt-4">
+                           <h4>50</h4>
+                           <h6 class="m-t-10 text-muted">
+                              Offline Order <span class="pull-right">50%</span>
+                           </h6>
+                           <div class="progress mb-3" style="height: 7px">
+                              <div class="progress-bar bg-success" style="width: 50%;"
+                                 role="progressbar">
+                                 <span class="sr-only">50% Order</span>
+                              </div>
+                           </div>
+                        </div>
+                        <div class="mt-4">
+                           <h4>20</h4>
+                           <h6 class="m-t-10 text-muted">
+                              Cash On Develery <span class="pull-right">20%</span>
+                           </h6>
+                           <div class="progress mb-3" style="height: 7px">
+                              <div class="progress-bar bg-warning" style="width: 20%;"
+                                 role="progressbar">
+                                 <span class="sr-only">20% Order</span>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+               <div class="col-lg-3 col-md-6">
+                  <div class="card">
+                     <div class="card-body px-0">
+                        <h4 class="card-title px-4 mb-3">Todo</h4>
+                        <div class="todo-list">
+                           <div class="tdl-holder">
+                              <div class="tdl-content">
+                                 <ul id="todo_list">
+                                    <li><label><input type="checkbox"><i></i><span>Get
+                                             up</span><a href='#' class="ti-trash"></a></label></li>
+                                    <li><label><input type="checkbox" checked><i></i><span>Stand
+                                             up</span><a href='#' class="ti-trash"></a></label></li>
+                                    <li><label><input type="checkbox"><i></i><span>Don't
+                                             give up the fight.</span><a href='#' class="ti-trash"></a></label></li>
+                                    <li><label><input type="checkbox" checked><i></i><span>Do
+                                             something else</span><a href='#' class="ti-trash"></a></label></li>
+                                 </ul>
+                              </div>
+                              <div class="px-4">
+                                 <input type="text" class="tdl-new form-control"
+                                    placeholder="Write new item and hit 'Enter'...">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="text-center">
+                           <img src="./images/users/8.jpg" class="rounded-circle" alt="">
+                           <h5 class="mt-3 mb-1">Ana Liem</h5>
+                           <p class="m-0">Senior Manager</p>
+                           <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="text-center">
+                           <img src="./images/users/5.jpg" class="rounded-circle" alt="">
+                           <h5 class="mt-3 mb-1">John Abraham</h5>
+                           <p class="m-0">Store Manager</p>
+                           <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="text-center">
+                           <img src="./images/users/7.jpg" class="rounded-circle" alt="">
+                           <h5 class="mt-3 mb-1">John Doe</h5>
+                           <p class="m-0">Sales Man</p>
+                           <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="text-center">
+                           <img src="./images/users/1.jpg" class="rounded-circle" alt="">
+                           <h5 class="mt-3 mb-1">Mehedi Titas</h5>
+                           <p class="m-0">Online Marketer</p>
+                           <!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <div class="active-member">
+                           <div class="table-responsive">
+                              <table class="table table-xs mb-0">
+                                 <thead>
+                                    <tr>
+                                       <th>Customers</th>
+                                       <th>Product</th>
+                                       <th>Country</th>
+                                       <th>Status</th>
+                                       <th>Payment Method</th>
+                                       <th>Activity</th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/1.jpg"
+                                          class=" rounded-circle mr-3" alt="">Sarah Smith</td>
+                                       <td>iPhone X</td>
+                                       <td><span>United States</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-success" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-success  mr-2"></i>
+                                          Paid</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">10
+                                             sec ago</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/2.jpg"
+                                          class=" rounded-circle mr-3" alt="">Walter R.</td>
+                                       <td>Pixel 2</td>
+                                       <td><span>Canada</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-success" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-success  mr-2"></i>
+                                          Paid</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">50
+                                             sec ago</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/3.jpg"
+                                          class=" rounded-circle mr-3" alt="">Andrew D.</td>
+                                       <td>OnePlus</td>
+                                       <td><span>Germany</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-warning  mr-2"></i>
+                                          Pending</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">10
+                                             sec ago</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/6.jpg"
+                                          class=" rounded-circle mr-3" alt=""> Megan S.</td>
+                                       <td>Galaxy</td>
+                                       <td><span>Japan</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-success" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-success  mr-2"></i>
+                                          Paid</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">10
+                                             sec ago</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/4.jpg"
+                                          class=" rounded-circle mr-3" alt=""> Doris R.</td>
+                                       <td>Moto Z2</td>
+                                       <td><span>England</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-success" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-success  mr-2"></i>
+                                          Paid</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">10
+                                             sec ago</span></td>
+                                    </tr>
+                                    <tr>
+                                       <td><img src="assets/images/avatar/5.jpg"
+                                          class=" rounded-circle mr-3" alt="">Elizabeth W.</td>
+                                       <td>Notebook Asus</td>
+                                       <td><span>China</span></td>
+                                       <td>
+                                          <div>
+                                             <div class="progress" style="height: 6px">
+                                                <div class="progress-bar bg-warning" style="width: 50%"></div>
+                                             </div>
+                                          </div>
+                                       </td>
+                                       <td><i class="fa fa-circle-o text-warning  mr-2"></i>
+                                          Pending</td>
+                                       <td><span>Last Login</span> <span class="m-0 pl-3">10
+                                             sec ago</span></td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="row">
+               <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+
+                  <div class="card">
+                     <div class="chart-wrapper mb-4">
+                        <div class="px-4 pt-4 d-flex justify-content-between">
+                           <div>
+                              <h4>Sales Activities</h4>
+                              <p>Last 6 Month</p>
+                           </div>
+                           <div>
+                              <span><i class="fa fa-caret-up text-success"></i></span>
+                              <h4 class="d-inline-block text-success">720</h4>
+                              <p class=" text-danger">+120.5(5.0%)</p>
+                           </div>
+                        </div>
+                        <div>
+                           <canvas id="chart_widget_3"></canvas>
+                        </div>
+                     </div>
+                     <div class="card-body border-top pt-4">
+                        <div class="row">
+                           <div class="col-sm-6">
+                              <ul>
+                                 <li>5% Negative Feedback</li>
+                                 <li>95% Positive Feedback</li>
+                              </ul>
+                              <div>
+                                 <h5>Customer Feedback</h5>
+                                 <h3>385749</h3>
+                              </div>
+                           </div>
+                           <div class="col-sm-6">
+                              <div id="chart_widget_3_1"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
+                  <div class="card">
+                     <div class="card-body">
+                        <h4 class="card-title">Activity</h4>
+                        <div id="activity">
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/1.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>Received New Order</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/2.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>iPhone develered</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/2.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>3 Order Pending</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/2.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>Join new Manager</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/2.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>Branch open 5 min Late</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media border-bottom-1 pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/2.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>New support ticket received</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                           <div class="media pt-3 pb-3">
+                              <img width="35" src="assets/images/avatar/3.jpg"
+                                 class="mr-3 rounded-circle">
+                              <div class="media-body">
+                                 <h5>Facebook Post 30 Comments</h5>
+                                 <p class="mb-0">I shared this on my fb wall a few months
+                                    back,</p>
+                              </div>
+                              <span class="text-muted ">April 24, 2018</span>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-6 col-lg-12 col-sm-12 col-xxl-12">
+                  <div class="card">
+                     <div class="card-body">
+                        <h4 class="card-title mb-0">Store Location</h4>
+                        <div id="world-map" style="height: 470px;"></div>
+                     </div>
+                  </div>
+               </div>
+            </div>
 
 
 
-				<div class="row">
-					<div class="col-lg-6 col-md-12">
-						<div class="card">
-							<div class="card-body">
-								<h4 class="card-title">Order Summary</h4>
-								<div id="morris-bar-chart"></div>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<div class="card card-widget">
-							<div class="card-body">
-								<h5 class="text-muted">Order Overview</h5>
-								<h2 class="mt-4">5680</h2>
-								<span>Total Revenue</span>
-								<div class="mt-4">
-									<h4>30</h4>
-									<h6>
-										Online Order <span class="pull-right">30%</span>
-									</h6>
-									<div class="progress mb-3" style="height: 7px">
-										<div class="progress-bar bg-primary" style="width: 30%;"
-											role="progressbar">
-											<span class="sr-only">30% Order</span>
-										</div>
-									</div>
-								</div>
-								<div class="mt-4">
-									<h4>50</h4>
-									<h6 class="m-t-10 text-muted">
-										Offline Order <span class="pull-right">50%</span>
-									</h6>
-									<div class="progress mb-3" style="height: 7px">
-										<div class="progress-bar bg-success" style="width: 50%;"
-											role="progressbar">
-											<span class="sr-only">50% Order</span>
-										</div>
-									</div>
-								</div>
-								<div class="mt-4">
-									<h4>20</h4>
-									<h6 class="m-t-10 text-muted">
-										Cash On Develery <span class="pull-right">20%</span>
-									</h6>
-									<div class="progress mb-3" style="height: 7px">
-										<div class="progress-bar bg-warning" style="width: 20%;"
-											role="progressbar">
-											<span class="sr-only">20% Order</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div>
-					<div class="col-lg-3 col-md-6">
-						<div class="card">
-							<div class="card-body px-0">
-								<h4 class="card-title px-4 mb-3">Todo</h4>
-								<div class="todo-list">
-									<div class="tdl-holder">
-										<div class="tdl-content">
-											<ul id="todo_list">
-												<li><label><input type="checkbox"><i></i><span>Get
-															up</span><a href='#' class="ti-trash"></a></label></li>
-												<li><label><input type="checkbox" checked><i></i><span>Stand
-															up</span><a href='#' class="ti-trash"></a></label></li>
-												<li><label><input type="checkbox"><i></i><span>Don't
-															give up the fight.</span><a href='#' class="ti-trash"></a></label></li>
-												<li><label><input type="checkbox" checked><i></i><span>Do
-															something else</span><a href='#' class="ti-trash"></a></label></li>
-											</ul>
-										</div>
-										<div class="px-4">
-											<input type="text" class="tdl-new form-control"
-												placeholder="Write new item and hit 'Enter'...">
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body">
-								<div class="text-center">
-									<img src="./images/users/8.jpg" class="rounded-circle" alt="">
-									<h5 class="mt-3 mb-1">Ana Liem</h5>
-									<p class="m-0">Senior Manager</p>
-									<!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body">
-								<div class="text-center">
-									<img src="./images/users/5.jpg" class="rounded-circle" alt="">
-									<h5 class="mt-3 mb-1">John Abraham</h5>
-									<p class="m-0">Store Manager</p>
-									<!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body">
-								<div class="text-center">
-									<img src="./images/users/7.jpg" class="rounded-circle" alt="">
-									<h5 class="mt-3 mb-1">John Doe</h5>
-									<p class="m-0">Sales Man</p>
-									<!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="card-body">
-								<div class="text-center">
-									<img src="./images/users/1.jpg" class="rounded-circle" alt="">
-									<h5 class="mt-3 mb-1">Mehedi Titas</h5>
-									<p class="m-0">Online Marketer</p>
-									<!-- <a href="javascript:void()" class="btn btn-sm btn-warning">Send Message</a> -->
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="card">
-							<div class="card-body">
-								<div class="active-member">
-									<div class="table-responsive">
-										<table class="table table-xs mb-0">
-											<thead>
-												<tr>
-													<th>Customers</th>
-													<th>Product</th>
-													<th>Country</th>
-													<th>Status</th>
-													<th>Payment Method</th>
-													<th>Activity</th>
-												</tr>
-											</thead>
-											<tbody>
-												<tr>
-													<td><img src="assets/images/avatar/1.jpg"
-														class=" rounded-circle mr-3" alt="">Sarah Smith</td>
-													<td>iPhone X</td>
-													<td><span>United States</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-success" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-success  mr-2"></i>
-														Paid</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">10
-															sec ago</span></td>
-												</tr>
-												<tr>
-													<td><img src="assets/images/avatar/2.jpg"
-														class=" rounded-circle mr-3" alt="">Walter R.</td>
-													<td>Pixel 2</td>
-													<td><span>Canada</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-success" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-success  mr-2"></i>
-														Paid</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">50
-															sec ago</span></td>
-												</tr>
-												<tr>
-													<td><img src="assets/images/avatar/3.jpg"
-														class=" rounded-circle mr-3" alt="">Andrew D.</td>
-													<td>OnePlus</td>
-													<td><span>Germany</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-warning  mr-2"></i>
-														Pending</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">10
-															sec ago</span></td>
-												</tr>
-												<tr>
-													<td><img src="assets/images/avatar/6.jpg"
-														class=" rounded-circle mr-3" alt=""> Megan S.</td>
-													<td>Galaxy</td>
-													<td><span>Japan</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-success" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-success  mr-2"></i>
-														Paid</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">10
-															sec ago</span></td>
-												</tr>
-												<tr>
-													<td><img src="assets/images/avatar/4.jpg"
-														class=" rounded-circle mr-3" alt=""> Doris R.</td>
-													<td>Moto Z2</td>
-													<td><span>England</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-success" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-success  mr-2"></i>
-														Paid</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">10
-															sec ago</span></td>
-												</tr>
-												<tr>
-													<td><img src="assets/images/avatar/5.jpg"
-														class=" rounded-circle mr-3" alt="">Elizabeth W.</td>
-													<td>Notebook Asus</td>
-													<td><span>China</span></td>
-													<td>
-														<div>
-															<div class="progress" style="height: 6px">
-																<div class="progress-bar bg-warning" style="width: 50%"></div>
-															</div>
-														</div>
-													</td>
-													<td><i class="fa fa-circle-o text-warning  mr-2"></i>
-														Pending</td>
-													<td><span>Last Login</span> <span class="m-0 pl-3">10
-															sec ago</span></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
-
-						<div class="card">
-							<div class="chart-wrapper mb-4">
-								<div class="px-4 pt-4 d-flex justify-content-between">
-									<div>
-										<h4>Sales Activities</h4>
-										<p>Last 6 Month</p>
-									</div>
-									<div>
-										<span><i class="fa fa-caret-up text-success"></i></span>
-										<h4 class="d-inline-block text-success">720</h4>
-										<p class=" text-danger">+120.5(5.0%)</p>
-									</div>
-								</div>
-								<div>
-									<canvas id="chart_widget_3"></canvas>
-								</div>
-							</div>
-							<div class="card-body border-top pt-4">
-								<div class="row">
-									<div class="col-sm-6">
-										<ul>
-											<li>5% Negative Feedback</li>
-											<li>95% Positive Feedback</li>
-										</ul>
-										<div>
-											<h5>Customer Feedback</h5>
-											<h3>385749</h3>
-										</div>
-									</div>
-									<div class="col-sm-6">
-										<div id="chart_widget_3_1"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-3 col-lg-6 col-sm-6 col-xxl-6">
-						<div class="card">
-							<div class="card-body">
-								<h4 class="card-title">Activity</h4>
-								<div id="activity">
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/1.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>Received New Order</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/2.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>iPhone develered</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/2.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>3 Order Pending</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/2.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>Join new Manager</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/2.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>Branch open 5 min Late</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media border-bottom-1 pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/2.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>New support ticket received</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-									<div class="media pt-3 pb-3">
-										<img width="35" src="assets/images/avatar/3.jpg"
-											class="mr-3 rounded-circle">
-										<div class="media-body">
-											<h5>Facebook Post 30 Comments</h5>
-											<p class="mb-0">I shared this on my fb wall a few months
-												back,</p>
-										</div>
-										<span class="text-muted ">April 24, 2018</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-12 col-sm-12 col-xxl-12">
-						<div class="card">
-							<div class="card-body">
-								<h4 class="card-title mb-0">Store Location</h4>
-								<div id="world-map" style="height: 470px;"></div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-
-
-				<div class="row">
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="social-graph-wrapper widget-facebook">
-								<span class="s-icon"><i class="fa fa-facebook"></i></span>
-							</div>
-							<div class="row">
-								<div class="col-6 border-right">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">89k</h4>
-										<p class="m-0">Friends</p>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">119k</h4>
-										<p class="m-0">Followers</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="social-graph-wrapper widget-linkedin">
-								<span class="s-icon"><i class="fa fa-linkedin"></i></span>
-							</div>
-							<div class="row">
-								<div class="col-6 border-right">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">89k</h4>
-										<p class="m-0">Friends</p>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">119k</h4>
-										<p class="m-0">Followers</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="social-graph-wrapper widget-googleplus">
-								<span class="s-icon"><i class="fa fa-google-plus"></i></span>
-							</div>
-							<div class="row">
-								<div class="col-6 border-right">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">89k</h4>
-										<p class="m-0">Friends</p>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">119k</h4>
-										<p class="m-0">Followers</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 col-sm-6">
-						<div class="card">
-							<div class="social-graph-wrapper widget-twitter">
-								<span class="s-icon"><i class="fa fa-twitter"></i></span>
-							</div>
-							<div class="row">
-								<div class="col-6 border-right">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">89k</h4>
-										<p class="m-0">Friends</p>
-									</div>
-								</div>
-								<div class="col-6">
-									<div class="pt-3 pb-3 pl-0 pr-0 text-center">
-										<h4 class="m-1">119k</h4>
-										<p class="m-0">Followers</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- #/ container -->
-		</div>
-		<!--**********************************
+            <div class="row">
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="social-graph-wrapper widget-facebook">
+                        <span class="s-icon"><i class="fa fa-facebook"></i></span>
+                     </div>
+                     <div class="row">
+                        <div class="col-6 border-right">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">89k</h4>
+                              <p class="m-0">Friends</p>
+                           </div>
+                        </div>
+                        <div class="col-6">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">119k</h4>
+                              <p class="m-0">Followers</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="social-graph-wrapper widget-linkedin">
+                        <span class="s-icon"><i class="fa fa-linkedin"></i></span>
+                     </div>
+                     <div class="row">
+                        <div class="col-6 border-right">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">89k</h4>
+                              <p class="m-0">Friends</p>
+                           </div>
+                        </div>
+                        <div class="col-6">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">119k</h4>
+                              <p class="m-0">Followers</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="social-graph-wrapper widget-googleplus">
+                        <span class="s-icon"><i class="fa fa-google-plus"></i></span>
+                     </div>
+                     <div class="row">
+                        <div class="col-6 border-right">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">89k</h4>
+                              <p class="m-0">Friends</p>
+                           </div>
+                        </div>
+                        <div class="col-6">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">119k</h4>
+                              <p class="m-0">Followers</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 col-sm-6">
+                  <div class="card">
+                     <div class="social-graph-wrapper widget-twitter">
+                        <span class="s-icon"><i class="fa fa-twitter"></i></span>
+                     </div>
+                     <div class="row">
+                        <div class="col-6 border-right">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">89k</h4>
+                              <p class="m-0">Friends</p>
+                           </div>
+                        </div>
+                        <div class="col-6">
+                           <div class="pt-3 pb-3 pl-0 pr-0 text-center">
+                              <h4 class="m-1">119k</h4>
+                              <p class="m-0">Followers</p>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- #/ container -->
+      </div>
+      <!--**********************************
             Content body end
         ***********************************-->
 
 
-		<!--**********************************
+      <!--**********************************
             Footer start
         ***********************************-->
-		<th:block
-			th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
-		<!--**********************************
+      <th:block
+         th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+      <!--**********************************
             Footer end
         ***********************************-->
-	</div>
-	<!--**********************************
+   </div>
+   <!--**********************************
         Main wrapper end
     ***********************************-->
-	<!-- 공통 스크립트-->
-	<th:block
-		th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
-	<script>
-		$(function() {
-			$.ajax({
-				url : "genderPer",
-				type : "GET",
-				dataType : "html",
-				success : function(responsedata) {
-// 					alert('뭐라도 띄워봐');
-					console.log(responsedata);
-					$('#genderPer').html(responsedata);
-				},
-				error : function(responsedata) {
-					console.log(responsedata);
-					alert(responsedata + '에러라도 띄워봐');
-				}
+   <!-- 공통 스크립트-->
+   <th:block
+      th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+   <script>
+   /* var num1 = 0;
+   var num2 = 0;
+   var num3 = 0;
+   var num4 = 0;
+   var num5 = 0; */
+      $(function() {
+         var todaydate = new Date();
+         Date.prototype.format = function (f) {
+             if (!this.valueOf()) return " ";
+             var weekKorName = ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"];
+             var weekKorShortName = ["일", "월", "화", "수", "목", "금", "토"];
+             var weekEngName = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+             var weekEngShortName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+             var d = this;
+             return f.replace(/(yyyy|yy|MM|dd|KS|KL|ES|EL|HH|hh|mm|ss|a\/p)/gi, function ($1) {
+                 switch ($1) {
+                     case "yyyy": return d.getFullYear(); // 년 (4자리)
+                     case "yy": return (d.getFullYear() % 1000).zf(2); // 년 (2자리)
+                     case "MM": return (d.getMonth() + 1).zf(2); // 월 (2자리)
+                     case "dd": return d.getDate().zf(2); // 일 (2자리)
+                     case "KS": return weekKorShortName[d.getDay()]; // 요일 (짧은 한글)
+                     case "KL": return weekKorName[d.getDay()]; // 요일 (긴 한글)
+                     case "ES": return weekEngShortName[d.getDay()]; // 요일 (짧은 영어)
+                     case "EL": return weekEngName[d.getDay()]; // 요일 (긴 영어)
+                     case "HH": return d.getHours().zf(2); // 시간 (24시간 기준, 2자리)
+                     case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2); // 시간 (12시간 기준, 2자리)
+                     case "mm": return d.getMinutes().zf(2); // 분 (2자리)
+                     case "ss": return d.getSeconds().zf(2); // 초 (2자리)
+                     case "a/p": return d.getHours() < 12 ? "오전" : "오후"; // 오전/오후 구분
+                     default: return $1;
+                 }
+             });
+         };
+         String.prototype.string = function (len) { var s = '', i = 0; while (i++ < len) { s += this; } return s; };
+         String.prototype.zf = function (len) { return "0".string(len - this.length) + this; };
+         Number.prototype.zf = function (len) { return this.toString().zf(len); };
+         
+         
+         var todaydate2 = todaydate.format('yyyy-MM-dd');
+         
+         
+         $.ajax({
+            url : "genderPer",
+            type : "GET",
+            dataType : "html",
+            success : function(responsedata) {
+//                alert('뭐라도 띄워봐');
+               //console.log(responsedata);
+               $('#genderPer').html(responsedata);
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐1');
+            }
 
-			});
-			$.ajax({
-				url : "selectUserCount",
-				type : "GET",
-				dataType : "html",
-				success : function(responsedata) {
-// 					alert('뭐라도 띄워봐');
-					console.log(responsedata);
-					$('#total-user').html(responsedata);
-				},
-				error : function(responsedata) {
-					console.log(responsedata);
-					alert(responsedata + '에러라도 띄워봐');
-				}
+         });
+         $.ajax({
+            url : "selectUserCount",
+            type : "GET",
+            dataType : "html",
+            success : function(responsedata) {
+//                alert('뭐라도 띄워봐');
+               //console.log(responsedata);
+               $('#total-user').html(responsedata);
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐2');
+            }
 
-			});
-		});
-	</script>
+         });
+         $.ajax({
+            url : "userDelete",
+            type : "GET",
+            dataType : "html",
+            success : function(responsedata) {
+//                alert('뭐라도 띄워봐');
+               //console.log(responsedata);
+               $('#userDelete').html(responsedata);
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐3');
+            }
+
+         });
+         $.ajax({
+            url : "countReport",
+            type : "GET",
+            dataType : "html",
+            success : function(responsedata) {
+//                alert('뭐라도 띄워봐');
+               //console.log(responsedata);
+               $('#countReport').html(responsedata);
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐4');
+            }
+
+         });
+         
+         $.ajax({
+            url : "todayUser",
+            type : "GET",
+            dataType : "html",
+            success : function(responsedata) {
+//                alert('뭐라도 띄워봐');
+               //console.log(responsedata);
+               $('#todayUser').html(responsedata);
+               
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐');
+            }
+            /* var _today = new Date();
+            $('#todayDate').html(today.format('yyyy-MM-dd')) */
+         });
+         $('#todayDate').html(todaydate2);
+         $('#todayDate2').html(todaydate2);
+         $('#todayDate3').html(todaydate2);
+         //monthly회원
+         $.ajax({
+            url : "monthlyCount",
+            type : "GET",
+            dataType : "json",
+            success : function(responsedata) {
+               //alert(responsedata)
+               let ctx = document.getElementById("chart_user");
+                ctx.height = 150;
+                new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["5일전", "4일전", "3일전", "2일전", "어제", "오늘"],
+                        type: 'line',
+                        defaultFontFamily: 'Montserrat',
+                        datasets: [{
+                            data: [responsedata[0], responsedata[1],
+                               responsedata[2], responsedata[3], 
+                               responsedata[4], responsedata[5]],
+                            label: "회원수",
+                            backgroundColor: 'transparent',
+                            borderColor: '#847DFA',
+                            borderWidth: 2,
+                            pointStyle: 'circle',
+                            pointRadius: 5,
+                            pointBorderColor: '#847DFA',
+                            pointBackgroundColor: '#fff',
+                        }]
+                    },
+                    options: {
+                        responsive: !0,
+                        maintainAspectRatio: true,
+                        tooltips: {
+                            mode: 'index',
+                            titleFontSize: 12,
+                            titleFontColor: '#fff',
+                            bodyFontColor: '#fff',
+                            backgroundColor: '#000',
+                            titleFontFamily: 'Montserrat',
+                            bodyFontFamily: 'Montserrat',
+                            cornerRadius: 3,
+                            intersect: false,
+                        },
+                        legend: {
+                            display: false,
+                            position: 'top',
+                            labels: {
+                                usePointStyle: true,
+                                fontFamily: 'Montserrat',
+                            },
+
+
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: false,
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                scaleLabel: {
+                                    display: false,
+                                    labelString: 'Month'
+                                }
+                            }],
+                            yAxes: [{
+                                display: false,
+                                gridLines: {
+                                    display: false,
+                                    drawBorder: false
+                                },
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'Value'
+                                }
+                            }]
+                        },
+                        title: {
+                            display: false,
+                        }
+                    }
+                });
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐3');
+            }
+
+         });
+         
+
+         //setInterval("calMethod()",1000);//updating  
+      });
+      //live update
+      /* function calMethod() {   
+         
+      $.ajax({
+         url : "updatingChart",
+         type : "GET",
+         dataType : "html",
+         success : function(responsedata) {
+//               alert('뭐라도 띄워봐');
+             num1 = num2;
+             num2 = num3;
+             num3 = num4;
+            num4 = num5;
+            num5= responsedata;
+            var result = num1+","+num2+","+num3+","+num4+","+num5;
+             //alert(result);
+             $('#updatingChart').html(result);
+         },
+         error : function(responsedata) {
+            //console.log(responsedata);
+            alert(responsedata + '에러라도 띄워봐');
+         }
+         
+      });
+      } */
+      
+   </script>
+   <script src="assets/plugins/peity/jquery.peity.min.js"></script>
+    <script src="assets/js/plugins-init/peitychart.init.js"></script>
 </body>
 </html>
