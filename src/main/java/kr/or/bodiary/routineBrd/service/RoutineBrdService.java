@@ -17,6 +17,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import kr.or.bodiary.routineBrd.dao.RoutineBrdDao;
@@ -224,6 +225,35 @@ private SqlSession sqlsession;
 		RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
 		return routinebrddao.updateHit(routine_brd_seq);	
 	}
+	
+	
+		//좋아요 했는지 체크하기
+		public int checkRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+			return routinebrddao.checkRoutineBrdLike(routine_brd_seq, user_email);
+		}
+		//좋아요 추가하기
+		@RequestMapping("/addRoutineBrdLike")
+		public int addRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+			return routinebrddao.addRoutineBrdLike(routine_brd_seq, user_email);
+		}
+		
+		//좋아요 취소하기
+		@RequestMapping("/cancleRoutineBrdLike")
+		public int cancleRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+			int routine_brd_like_seq = routinebrddao.getRoutineBrdLikeSeq(routine_brd_seq, user_email);
+			
+			return routinebrddao.cancleRoutineBrdLike(routine_brd_like_seq, routine_brd_seq);
+		}
+		
+		//좋아요 수 카운트
+		@RequestMapping("/countRoutineBrdLike")
+		public int countRoutineBrdLike(int routine_brd_seq) throws ClassNotFoundException, SQLException {
+			RoutineBrdDao routinebrddao = sqlsession.getMapper(RoutineBrdDao.class);
+			return routinebrddao.countRoutineBrdLike(routine_brd_seq);
+		}
    
 	  
 	//------------------------------------------- 댓글 -------------------------------------------------

@@ -49,9 +49,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(
-			user_email, user_pwd, user_nickname, user_gender, user_age , user_height, user_weight, user_img, user_reportedcount, enabled, user_grade
+			user_email, user_pwd, user_nickname, user_gender, user_age , user_img, user_reportedcount, enabled, user_grade, user_insertdate,user_height, user_weight
+			<if test="user_pwd == 'naver'">
+				,user_snstype
+			</if>
+			
 			) 
-		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 0, 0,'user.png', 0, 1, 'regular')
+		VALUES( #{user_email},#{user_pwd}, #{user_nickname} ,#{user_gender},#{user_age}, 'user.png', 0, 1, 'regular', now()
+		<choose>
+			<when test="user_pwd == 'naver'">
+				,#{user_height}, #{user_weight},#{user_snstype}
+			</when>
+			<when test="user_pwd != 'naver'">
+				,0, 0,#{user_snstype}
+			</when>
+		</choose>
+		)
 	</insert>
 	<!-- 비밀번호 확인  -->
 	<select id="selectPwd" resultType="String">

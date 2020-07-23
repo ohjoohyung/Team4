@@ -148,7 +148,36 @@ public class RoutineBrdController {
 		
 		return routinebrdservice.routineBoardDelete(routine_brd_seq);
 	}	
-   
+	
+	
+	//좋아요 했는지 체크하기
+	@ResponseBody
+	@RequestMapping("/checkRoutineBrdLike")
+	public int checkRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+		return routinebrdservice.checkRoutineBrdLike(routine_brd_seq, user_email);
+	}
+	//좋아요 추가하기
+	@ResponseBody
+	@RequestMapping("/addRoutineBrdLike")
+	public int addRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+		return routinebrdservice.addRoutineBrdLike(routine_brd_seq, user_email);
+	}
+	
+	//좋아요 취소하기
+	@ResponseBody
+	@RequestMapping("/cancleRoutineBrdLike")
+	public int cancleRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException {
+		return routinebrdservice.cancleRoutineBrdLike(routine_brd_seq, user_email);
+	}
+	
+	//좋아요 수 카운트
+	@ResponseBody
+	@RequestMapping("/countRoutineBrdLike")
+	public int countRoutineBrdLike(int routine_brd_seq) throws ClassNotFoundException, SQLException {
+		return routinebrdservice.countRoutineBrdLike(routine_brd_seq);
+	}
+	
+	
    
 
 	// ------------------------ 댓글 ------------------------

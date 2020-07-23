@@ -85,8 +85,8 @@ function appendMessage(msg) {
 function sendQna() {
 	let qna_brd_title = $('#qna_brd_title').val();
 	let qna_brd_content = $('#qna_brd_content').val();
-	
-	wsocket.send(qna_brd_title + "," + qna_brd_content);
+	let user = "새로운 문의가 도착했습니다.";
+	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + user);
 	$('#qna_brd_title').val('');
 	$('#qna_brd_content').val('');
 

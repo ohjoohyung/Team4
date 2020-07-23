@@ -2,6 +2,7 @@ package kr.or.bodiary.user.service;
 
 import java.io.FileOutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +25,6 @@ import kr.or.bodiary.user.dto.EmailDto;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.utils.Mailer;
 import kr.or.bodiary.utils.Tempkey;
-
 @Service
 public class UserService {
 	private SqlSession sqlsession;
@@ -116,19 +121,21 @@ public class UserService {
 	}
 
 	// -----------회원가입 서비스-----------
-	public String register(UserDto user) {
-		System.out.println(user.toString());
-		UserDao userdao = sqlsession.getMapper(UserDao.class);
-		
-		try {
-			System.out.println("register try문");
-			user.setUser_pwd(bCryptPasswordEncoder.encode(user.getUser_pwd()));
-			userdao.insertUser(user);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
+		public String register(UserDto user) {
+			System.out.println(user.toString());
+			UserDao userdao = sqlsession.getMapper(UserDao.class);
+			
+			try {
+				System.out.println("register try문");
+				if(!user.getUser_pwd().equals("naver")) {
+				user.setUser_pwd(bCryptPasswordEncoder.encode(user.getUser_pwd()));
+				}
+				userdao.insertUser(user);
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			return "redirect:/login";
 		}
-		return "redirect:/login";
-	}
 	// ----------- 유저 비밀번호 수정 서비스 -----------
 	public String updatePwd(UserDto user, HttpServletRequest request) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
@@ -184,52 +191,62 @@ public class UserService {
 		return user.getUser_nickname();
 	}
 	// ----------- 준회원 유저정보 수정 서비스 -----------
-	@Transactional
-	public String updateUserAssociate(UserDto user, HttpServletRequest request) {
-		UserDao userdao = sqlsession.getMapper(UserDao.class);
-		String filename = user.getFile().getOriginalFilename();
-		String path = request.getSession().getServletContext().getRealPath("assets/upload/userUpload");
-		String fpath = path + "\\" + filename;
-		System.out.println(fpath);
-		FileOutputStream fs = null;
-		String resultReturn = null;
-		int updateUserResult = 0;
-		int updateRoleResult = 0;
-		try {
-			
-			if (filename.isEmpty() && filename == "") {
-				user.setUser_img(user.getUser_img());
-			} else {
-				user.setUser_img(filename);
-				System.out.println("updateUser try문");
-				fs = new FileOutputStream(fpath);
-				fs.write(user.getFile().getBytes());
-				fs.close();
-				System.out.println("filename : " + filename);
-			}
-			updateUserResult = userdao.updateUser(user);
-
-			System.out.println("유저정보 수정 서비스 내 user : " + user);
-			if (updateUserResult > 0) {
-				System.out.println("롤 업데이트치러 갑니다");
-				updateRoleResult = userdao.updateRole(user);
-				System.out.println("롤 업데이트 : " + updateRoleResult);
-				if (updateUserResult > 0) {
-					resultReturn = "redirect:/myProfileDetail";
+		@Transactional
+		public String updateUserAssociate(UserDto user, HttpServletRequest request) {
+			UserDao userdao = sqlsession.getMapper(UserDao.class);
+			String filename = user.getFile().getOriginalFilename();
+			String path = request.getSession().getServletContext().getRealPath("assets/upload/userUpload");
+			String fpath = path + "\\" + filename;
+			System.out.println(fpath);
+			FileOutputStream fs = null;
+			String resultReturn = null;
+			int updateUserResult = 0;
+			int updateRoleResult = 0;
+			try {
+				
+				if (filename.isEmpty() && filename == "") {
+					user.setUser_img(user.getUser_img());
 				} else {
-					resultReturn = "redirect:/myProfileEdit";
-					return resultReturn;
+					user.setUser_img(filename);
+					System.out.println("updateUser try문");
+					fs = new FileOutputStream(fpath);
+					fs.write(user.getFile().getBytes());
+					fs.close();
+					System.out.println("filename : " + filename);
 				}
+				updateUserResult = userdao.updateUser(user);
 
-				HttpSession session = request.getSession(true);
-				session.setAttribute("currentUser", user);
+				System.out.println("유저정보 수정 서비스 내 user : " + user);
+				if (updateUserResult > 0) {
+					System.out.println("롤 업데이트치러 갑니다");
+					updateRoleResult = userdao.updateRole(user);
+					System.out.println("롤 업데이트 : " + updateRoleResult);
+					if (updateUserResult > 0) {
+						user = userdao.getUser(user.getUser_email());
+						Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+						List<GrantedAuthority> updatedAuthorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
+						updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_REGULAR_USER")); //add your role here [e.g., new SimpleGrantedAuthority("ROLE_NEW_ROLE")]
+
+						Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+
+						SecurityContextHolder.getContext().setAuthentication(newAuth);
+						resultReturn = "redirect:/main";
+					} else {
+						resultReturn = "redirect:/myProfileEdit";
+						return resultReturn;
+					}
+
+					HttpSession session = request.getSession(true);
+					session.setAttribute("currentUser", user);
+
+				}
+			} catch (Exception e) {
 			}
-		} catch (Exception e) {
-		}
+			
 
-		return resultReturn;
-	}
+			return resultReturn;
+		}
 
 	// -----------유저정보 수정 서비스-----------
 	public String updateUser(UserDto user, HttpServletRequest request) {

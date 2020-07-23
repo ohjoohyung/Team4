@@ -187,7 +187,8 @@ function send() {
 	let qna_brd_content = $('#qna_brd_content').val();
 	let qna_brd_ref = $('#qna_brd_ref').val();
 	let user_email = $('#user_email').val();
-	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email);
+	let admin = "관리자가 답변을 했습니다.";
+	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email + "," + admin);
 	
 	$('#qna_brd_content').val('');
 

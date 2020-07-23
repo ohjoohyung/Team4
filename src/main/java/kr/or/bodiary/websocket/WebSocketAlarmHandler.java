@@ -76,16 +76,16 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			String user_email = (String)session.getAttributes().get("user_email");
 			int count = 0;
 			//나중에 어드민으로 정한 이메일 또는 role이 어드민 일 경우로 바꾸자
-			if(users.containsKey(user_email) && user_email.equals("kimdukkung@naver.com")) {
+			if(users.containsKey(user_email) && user_email.equals("xntm1111@gmail.com")) {
 				count = qnabrddao.getCountAdminNotRead();
-				TextMessage msg = new TextMessage("읽지 않은 문의 : " + count + " 건");
+				TextMessage msg = new TextMessage(count + ",로그인");
 				 users.get(user_email).sendMessage(msg);
 				  
 				  log(user_email + " / " + message.getPayload() + " / " + msg.getPayload());
-			} else if(users.containsKey(user_email) && !user_email.equals("kimdukkung@naver.com")) {
+			} else if(users.containsKey(user_email) && !user_email.equals("xntm1111@gmail.com")) {
 				count = qnabrddao.getCountUserNotRead(user_email);
 				System.out.println("유저 카운트 : " +count);
-				TextMessage msg = new TextMessage("답변이 온 문의 : " + count + " 건");
+				TextMessage msg = new TextMessage(count + ",로그인");
 				 users.get(user_email).sendMessage(msg);
 				  
 				  log(user_email + " / " + message.getPayload() + " / " + msg.getPayload());
@@ -97,12 +97,13 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			QnaBrdDao qnabrddao = sqlsession.getMapper(QnaBrdDao.class);
 			String user_email = (String)session.getAttributes().get("user_email");
 			
-			if(user_email.equals("kimdukkung@naver.com")) {
+			if(user_email.equals("xntm1111@gmail.com")) {
 				String qna_brd_title = message.getPayload().split(",")[0];
 				String qna_brd_content = message.getPayload().split(",")[1];
 				String qna_brd_ref = message.getPayload().split(",")[2];
 				String to_user_email = message.getPayload().split(",")[3];
-				log(qna_brd_title + " / " + qna_brd_content + " / " + qna_brd_ref + " / " + to_user_email);
+				String admin = message.getPayload().split(",")[4];
+				log(qna_brd_title + " / " + qna_brd_content + " / " + qna_brd_ref + " / " + to_user_email + " / " + admin);
 				
 				QnaBrdDto qnabrddto = new QnaBrdDto();
 				qnabrddto.setUser_email(user_email);
@@ -114,7 +115,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 				
 				int count = qnabrddao.getCountUserNotRead(to_user_email);
 				System.out.println("유저 카운트 : " +count);
-				TextMessage msg = new TextMessage("답변이 온 문의 : " + count + " 건");
+				TextMessage msg = new TextMessage(count + "," + admin);
 				 users.get(to_user_email).sendMessage(msg);
 				  
 				  log(to_user_email + " / " + message.getPayload() + " / " + msg.getPayload());
@@ -123,8 +124,8 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			} else {
 				String qna_brd_title = message.getPayload().split(",")[0];
 				String qna_brd_content = message.getPayload().split(",")[1];
-				
-				log(qna_brd_title + " / " + qna_brd_content);
+				String user = message.getPayload().split(",")[2];
+				log(qna_brd_title + " / " + qna_brd_content + " / " + user);
 				
 				QnaBrdDto qnabrddto = new QnaBrdDto();
 				qnabrddto.setUser_email(user_email);
@@ -137,33 +138,12 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 				
 				int count = 0;
 				count = qnabrddao.getCountAdminNotRead();
-				TextMessage msg = new TextMessage("읽지 않은 문의 : " + count + " 건");
-				users.get("kimdukkung@naver.com").sendMessage(msg);
-				log("kimdukkung@naver.com" + " / " + message.getPayload() + " / " + msg.getPayload());
+				TextMessage msg = new TextMessage(count + "," + user);
+				users.get("xntm1111@gmail.com").sendMessage(msg);
+				log("xntm1111@gmail.com" + " / " + message.getPayload() + " / " + msg.getPayload());
 			}
 		}
-//		else {
-//			String fromid = message.getPayload().split(",")[1];
-//			
-//			Message savemsg = new Message(message.getPayload().split(",")[0], message.getPayload().split(",")[1], message.getPayload().split(",")[2]);
-//			EmpDao empdao = sqlsession.getMapper(EmpDao.class);
-//			  empdao.insertMessage(savemsg);
-//			  
-//			  int result = empdao.getmsgcount(fromid);
-//			 
-//			
-//			if(users.containsKey(fromid)) {
-//				
-//				  TextMessage msg = new TextMessage("수신된 쪽지 : " + result + "건");
-//				  users.get(fromid).sendMessage(msg); 
-//				  log(fromid + " / " + message.getPayload()
-//				  + " / " + msg.getPayload());
-//				 
-//			}
-//			
-//			System.out.println("fromid : " + fromid);
-//			System.out.println(message.getPayload());
-//		}
+
 	}
 	
 	//연결에 문제 발생시

@@ -13,6 +13,5 @@ public class RoutineBoardUserJoinDto {
 	   private String brd_image1;
 	   private String brd_image2;
 	   private int routine_brd_hit;
-	   private int brd_rec;
 	   private String user_nickname;
 }

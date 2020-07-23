@@ -3,6 +3,8 @@ package kr.or.bodiary.routineBrd.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
@@ -30,6 +32,23 @@ public interface RoutineBrdDao {
    
    //오늘의 Hit 게시글 가져오기
    public List<RoutineBoardUserJoinDto> getTodayHit() throws ClassNotFoundException, SQLException;
+   
+   
+   //좋아요 했는지 체크하기	
+ 	public int checkRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException; 
+ 		
+ 	//좋아요 추가하기	
+ 	public int addRoutineBrdLike(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException; 
+ 	
+ 	//좋아요 취소하기 
+ 	public int cancleRoutineBrdLike(int routine_brd_like_seq, int routine_brd_seq) throws ClassNotFoundException, SQLException; 
+ 		 	
+ 	//좋아요 수 카운트
+ 	public int countRoutineBrdLike(int routine_brd_seq) throws ClassNotFoundException, SQLException;
+ 	
+ 	//좋아요 seq 체크
+ 	public int getRoutineBrdLikeSeq(int routine_brd_seq, String user_email) throws ClassNotFoundException, SQLException; 
+ 	
    
 // ---------------------- 댓글 -------------------------
    

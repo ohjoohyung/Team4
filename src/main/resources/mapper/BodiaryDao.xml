@@ -59,7 +59,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  #{routine_cart_seq, jdbcType=INTEGER,javaType=Integer, mode=IN},
 	  #{meal_cart_seq, jdbcType=INTEGER, javaType=Integer,mode=IN},
 	  #{diary_content, jdbcType=VARCHAR, javaType=String, mode=IN},
-	  #{goal_seq, jdbcType=INTEGER, javaType=Integer,mode=IN},
 	  #{diary_condition, jdbcType=VARCHAR, javaType=String, mode=IN},
 	  #{diary_main_img, jdbcType=VARCHAR, javaType=String, mode=IN},
 	  now()

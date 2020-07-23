@@ -135,9 +135,9 @@
                   </a>
                </div>
                <div class="col-6">
-                  <a class="text-center d-block text-muted" href="javascript:void()">
-                     <i class="fa fa-heart gradient-3-text"></i>
-                     <p th:text="${routineBoard.brd_rec}+'  개'"></p>
+                  <a class="text-center d-block text-muted" href="javascript:selectRoutineBrdLike()">
+                     <i id="likeicon" class="fa fa-heart gradient-3-text"></i>
+                     <p id="brdlike"></p>
                   </a>
                </div>
             </div>
@@ -194,25 +194,95 @@
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    
    <script type="text/javascript" th:inline="javascript">
-	   /*<![CDATA[*/
+   	/*<![CDATA[*/
+   		var routine_brd_seq = /*[[ ${routineBoard.routine_brd_seq} ]]*/;
+   		var user_email = /*[[${session.currentUser.user_email}]]*/;
+   			/*]]>*/
+   
+	  
 		function deleteCheck() {
 			 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
-				location.href="routineBrdDelete?routine_brd_seq="+/*[[ ${routineBoard.routine_brd_seq} ]]*/;
+				location.href="routineBrdDelete?routine_brd_seq="+routine_brd_seq;
 			 }else{   //취소
 			     return false;
 			 }
 		}	
-		/*]]>*/
-   		$(function(){
-   			//루틴 자랑 게시판 댓글 불러오기
-   			getReplyList();
    			
-   		});
+   		function selectRoutineBrdLike() {
+   			$.ajax({
+				type:'POST',
+				url: 'checkRoutineBrdLike',
+				data:{'routine_brd_seq' : routine_brd_seq ,
+					   'user_email' : user_email},
+				success:function(data){
+					if(data > 0) {
+						cancleRoutineBrdLike();
+						$('#likeicon').hide();
+					} else{
+						addRoutineBrdLike();
+						$('#likeicon').show();
+					}
+				}
+		    });
+		}
+   		
+   		
+   		function cancleRoutineBrdLike() {
+   			$.ajax({
+				type:'POST',
+				url: 'cancleRoutineBrdLike',
+				data:{'routine_brd_seq' : routine_brd_seq ,
+					   'user_email' : user_email},
+				success:function(data){
+					countRoutineBrdLike();
+				}
+		    });
+		}
+   		
+		
+		
+		function addRoutineBrdLike() {
+			$.ajax({
+				type:'POST',
+				url: 'addRoutineBrdLike',
+				data:{'routine_brd_seq' : routine_brd_seq ,
+					   'user_email' : user_email},
+				success:function(data){
+					countRoutineBrdLike();
+				}
+		    });
+		}
+		
+		function countRoutineBrdLike() {
+			$.ajax({
+				type:'POST',
+				url: 'countRoutineBrdLike',
+				data:{'routine_brd_seq' : routine_brd_seq},
+				success:function(data){
+					$('#brdlike').html(data);
+				}
+		    });
+		}
+		
    		
    		/* ------------------------------------------------------------------------ */		
    		$(function(){
    			//루틴 자랑 게시판 댓글 불러오기
    			getReplyList();
+   			
+   			$.ajax({
+				type:'POST',
+				url: 'checkRoutineBrdLike',
+				data:{'routine_brd_seq' : routine_brd_seq ,
+					   'user_email' : user_email},
+				success:function(data){
+			
+					countRoutineBrdLike();
+				}
+		    });
+   			
+   			
+   			
    			
    		});
    		/* 댓글 출력 함수 */
