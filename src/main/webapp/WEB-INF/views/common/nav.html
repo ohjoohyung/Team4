@@ -178,7 +178,8 @@
 			
 			
 			var data = evt.data;
-			appendMessage(data);
+			var msg = JSON.parse(data);
+			appendMessage(msg);
 			console.log(evt.data);
 			
 			
@@ -190,11 +191,60 @@
 		}
 		
 		function send() {
-			wsocket.send("login");
+			var msg = {"type" : "view"};
+			wsocket.send(JSON.stringify(msg));
+			/* wsocket.send("login"); */
 		}
 	
 		function appendMessage(msg) {
-			var count = msg.split(",")[0];
+			$(".alarmCount").html(msg.count);
+			if(msg.type = "view") {
+				if(msg.now == "user") {
+					$("#alarmMessage").html(
+							'<li>'+
+		                         '<a href="myQnaList">'+
+		                             '<span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>'+
+		                             '<div class="notification-content">'+
+		                                '<h6 class="notification-heading">'+msg.text+'</h6>'+
+		                             '</div>'+
+		                         '</a>'+
+		                     '</li>')	
+				}else {
+					$("#alarmMessage").html(
+							'<li>'+
+		                         '<a href="adminQnaList">'+
+		                             '<span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>'+
+		                             '<div class="notification-content">'+
+		                                '<h6 class="notification-heading">'+msg.text+'</h6>'+
+		                             '</div>'+
+		                         '</a>'+
+		                     '</li>'	)
+				}
+			} else if(msg.type == "user") {
+				$("#alarmMessage").html(
+						'<li>'+
+	                         '<a href="adminQnaList">'+
+	                             '<span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>'+
+	                             '<div class="notification-content">'+
+	                                '<h6 class="notification-heading">'+msg.text+'</h6>'+
+	                             '</div>'+
+	                         '</a>'+
+	                     '</li>'	)
+			} else {
+				$("#alarmMessage").html(
+						'<li>'+
+	                         '<a href="myQnaList">'+
+	                             '<span class="mr-3 avatar-icon bg-success-lighten-2"><i class="icon-present"></i></span>'+
+	                             '<div class="notification-content">'+
+	                                '<h6 class="notification-heading">'+msg.text+'</h6>'+
+	                             '</div>'+
+	                         '</a>'+
+	                     '</li>'	)
+			}
+				
+		
+			
+		/* 	var count = msg.split(",")[0];
 			var message = msg.split(",")[1];
 			
 			$(".alarmCount").html(count);
@@ -225,7 +275,7 @@
 		                     '</li>'		
 						)
 				}
-			}
+			} */
 		
 		}
 		

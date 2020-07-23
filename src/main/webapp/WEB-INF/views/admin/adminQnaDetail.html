@@ -183,12 +183,24 @@ function onClose(evt) {
 
 function send() {
 	
-	let qna_brd_title = $('#qna_brd_title').val();
+/* 	let qna_brd_title = $('#qna_brd_title').val();
 	let qna_brd_content = $('#qna_brd_content').val();
 	let qna_brd_ref = $('#qna_brd_ref').val();
 	let user_email = $('#user_email').val();
 	let admin = "관리자가 답변을 했습니다.";
-	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email + "," + admin);
+	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email + "," + admin); */
+	
+	var text = "문의 답변이 도착했습니다.";
+	var msg = {"type" : "admin",
+				"qna_brd_title" : $('#qna_brd_title').val(), 
+				"qna_brd_content" : $('#qna_brd_content').val(),	
+				"qna_brd_ref" : $('#qna_brd_ref').val(),
+				"to_user_email" : $('#user_email').val(),
+				"text" : text
+				}
+	wsocket.send(JSON.stringify(msg));
+	
+	
 	
 	$('#qna_brd_content').val('');
 
