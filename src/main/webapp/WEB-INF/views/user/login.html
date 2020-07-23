@@ -67,6 +67,8 @@
                                     <div class="form-group">
                                         <input type="password" class="form-control" placeholder="Password" id="user_pwd" name="user_pwd">
                                     </div>
+                                    <!--   로그인실패시 출력.ModelMap으로 담아 키값으로 바로 꺼내기 가능 -->
+							      <div id="" th:text="${errormsg}" class="pt-2 pb-3" style="color:red;"></div>
                                     <button class="submit btn login-form__btn w-100">로그인 하기</button>
                                 </form>
                                 <hr>

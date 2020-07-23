@@ -5,73 +5,102 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/task
                            http://www.springframework.org/schema/task/spring-task-3.0.xsd
 		http://www.springframework.org/schema/tx
- 						   http://www.springframework.org/schema/tx/spring-tx.xsd">
-	
-<task:annotation-driven />
-	<mvc:annotation-driven/>
+ 						   http://www.springframework.org/schema/tx/spring-tx.xsd
+ 		 http://www.springframework.org/schema/websocket 
+ 		 http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+
+	<task:annotation-driven />
+	<mvc:annotation-driven />
 	<context:annotation-config />
-	<!-- <context:component-scan base-package="ncontroller" />
-	<context:component-scan base-package="service"/> -->
 
-	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
-	
+	<context:component-scan base-package="kr.or.bodiary.websocket" />
+
+	<!-- 웹소켓 -->
+	<websocket:handlers>
+		<websocket:mapping path="/chat" handler="chatHandler" />
+		<websocket:handshake-interceptors>
+			<bean class="kr.or.bodiary.interceptor.ChatHandShakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+	<websocket:handlers>
+		<websocket:mapping path="/alarm" handler="alarmHandler" />
+		<websocket:handshake-interceptors>
+			<bean class="kr.or.bodiary.interceptor.AlarmHandShakeInterceptor" />
+		</websocket:handshake-interceptors>
+	</websocket:handlers>
+
+	<bean class="kr.or.bodiary.websocket.WebSocketChatHandler"
+		id="chatHandler" />
+
+	<bean class="kr.or.bodiary.websocket.WebSocketAlarmHandler"
+		id="alarmHandler" />
+
 	<!-- thymeleaf 사용을 위한 필수 추가 사항 -->
-   <bean id="templateEngine"
-      class="org.thymeleaf.spring4.SpringTemplateEngine">
-      <property name="templateResolver">
-         <ref bean="templateResolver" />
-      </property>
-      <property name="additionalDialects">
-         <set>
-            <bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
-            <bean class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
-            <bean class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
-         </set>
-      </property>
-   </bean>
-   
-   
-<!--     thymeleaf laytout ViewResolver 설정  -->
-   <bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
-      <property name="templateEngine" ref="templateEngine" />
-      <property name="characterEncoding" value="UTF-8" />
-      <property name="order" value="2" />
-   </bean>
-   <!-- 뷰리조버3 -->
-   <bean id="velocityViewResolver"
-      class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
-      <property name="contentType" value="text/html; charset=UTF-8" />
-      <property name="cache" value="true" />
-      <property name="prefix" value="/" />
-      <property name="suffix" value=".vm" />
-      <property name="order" value="4" />
-   </bean>
-
-<!--     bean네임추가  -->
-   <bean id="viewResolver"
-      class="org.springframework.web.servlet.view.BeanNameViewResolver">
-      <property name="order" value="3"></property>
-   </bean>
-	
-	<context:component-scan base-package="kr.or.bodiary.**.controller" />
-	<context:component-scan base-package="kr.or.bodiary.**.service"/>
-	<context:component-scan base-package="kr.or.bodiary.interceptor"/>
-	
-	<mvc:resources mapping="/assets/**" location="/assets/" />
-	
-	<!-- 트랜잭션에 관련된 bean 객체 생성 injection 처리 (root 컨테이너에 있는 자원은 밑에 컨테이너에서 참조가능)  -->
-	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-	   <property name="dataSource" ref="driverManagerDataSource" />
+	<bean id="templateEngine"
+		class="org.thymeleaf.spring4.SpringTemplateEngine">
+		<property name="templateResolver">
+			<ref bean="templateResolver" />
+		</property>
+		<property name="additionalDialects">
+			<set>
+				<bean class="nz.net.ultraq.thymeleaf.LayoutDialect" />
+				<bean
+					class="org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect" />
+				<bean
+					class="org.thymeleaf.extras.java8time.dialect.Java8TimeDialect" />
+			</set>
+		</property>
 	</bean>
-	<tx:annotation-driven transaction-manager="transactionManager"/>
-	
+
+
+	<!-- thymeleaf laytout ViewResolver 설정 -->
+	<bean class="org.thymeleaf.spring4.view.ThymeleafViewResolver">
+		<property name="templateEngine" ref="templateEngine" />
+		<property name="characterEncoding" value="UTF-8" />
+		<property name="order" value="2" />
+	</bean>
+	<!-- 뷰리조버3 -->
+	<bean id="velocityViewResolver"
+		class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+		<property name="contentType" value="text/html; charset=UTF-8" />
+		<property name="cache" value="true" />
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".vm" />
+		<property name="order" value="4" />
+	</bean>
+
+	<!-- bean네임추가 -->
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="3"></property>
+	</bean>
+
+	<context:component-scan
+		base-package="kr.or.bodiary.**.controller" />
+	<context:component-scan
+		base-package="kr.or.bodiary.**.service" />
+	<context:component-scan
+		base-package="kr.or.bodiary.interceptor" />
+
+	<mvc:resources mapping="/assets/**" location="/assets/" />
+
+	<!-- 트랜잭션에 관련된 bean 객체 생성 injection 처리 (root 컨테이너에 있는 자원은 밑에 컨테이너에서 참조가능) -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="driverManagerDataSource" />
+	</bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
 	<!-- 리캡차 -->
-      <context:component-scan base-package="org.alpreah.reCAptcha" />
-      <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<context:component-scan
+		base-package="org.alpreah.reCAptcha" />
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
 </beans>

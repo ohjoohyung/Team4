@@ -252,7 +252,7 @@
    					idCss +="<span class='badge badge-primary'>나</span>";
    					dropdownItem += "<span class='dropdown-item modify_seq_"+this.routine_cmt_seq+"' id='cmtModifyBtn'";
    					dropdownItem += " routine_cmt_seq='" + this.routine_cmt_seq + "' user_email='"+this.user_email+"' routine_cmt='"+ this.routine_cmt +"' routine_brd_seq='"+this.routine_brd_seq+"' onclick='modifyCmt(this)'>수정</span>";
-   					dropdownItem += "<span class='dropdown-item delete_seq_"+this.routine_cmt_seq+"' routine_cmt_seq='"+this.routine_cmt_seq+"' routine_brd_seq='"+this.routine_brd_seq+"'id='cmtDeleteBtn' onclick='deleteCmtCheck(this)'>삭제</span>";
+   					dropdownItem += "<span class='dropdown-item delete_seq_"+this.routine_cmt_seq+"' routine_cmt_seq='"+this.routine_cmt_seq+"' routine_brd_seq='"+this.routine_brd_seq+"'id='cmtDeleteBtn' routine_cmt_depth='"+this.routine_cmt_depth+"' onclick='deleteCmtCheck(this)'>삭제</span>";
    				}else{
    					dropdownItem += "<a class='dropdown-item' id='cmtReportBtn'>신고</a>";
    				}
@@ -407,7 +407,8 @@
 		function deleteCmt(data){
 			var data2 = {
 					routine_cmt_seq : $(data).attr('routine_cmt_seq'),
-					routine_brd_seq : $(data).attr('routine_brd_seq')
+					routine_brd_seq : $(data).attr('routine_brd_seq'),
+					routine_cmt_depth : $(data).attr('routine_cmt_depth')
 			}
 			$.ajax(
 					{

@@ -159,65 +159,65 @@ public class AdminController {
 	}
 
 	//공지사항
-			//리스트
-			@RequestMapping("noticeList")
-			public String noticeList(Model model) throws ClassNotFoundException, SQLException {
-				List<NoticeDto> nlist = noticeservice.noticeList();
-				model.addAttribute("noticeList", nlist);
-				return "notice/noticeList";
-			}
-				
-			//입력(폼)
-			@RequestMapping(value = "noticeForm", method = RequestMethod.GET)
-			public String noticeForm() {
-				return "notice/noticeForm";
-			}
-			
-			//입력(처리)
-			@RequestMapping(value = "noticeForm", method = RequestMethod.POST)
-			public String noticeForm(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
-				System.out.println("noticeForm, POST방식");
-				String url = noticeservice.noticeForm(noticedto, request);
-				return url;
-			}
-			
-			//상세
-			@RequestMapping("noticeDetail")
-			public String noticeDetail(int notice_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
-//				noticeservice.noticeHitCnt(notice_brd_seq);
-				NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
-				//조회수 증가
-				UserDto userdto = (UserDto)request.getSession().getAttribute("currentUser");
-				System.out.println("유저의 이메일 : " + userdto.getUser_email());
-				System.out.println("지금 글의 작성자 이메일 : " + noticedto.getUser_email());
-				if(userdto != null && !(userdto.getUser_email().equals(noticedto.getUser_email()))) {
-					noticeservice.noticeHitCnt(notice_brd_seq);
-				}
-				//
-				model.addAttribute("noticeDetail", noticedto);
-				return "notice/noticeDetail";
-			}
-			
-			//수정(폼)
-			@RequestMapping(value = "noticeEdit", method = RequestMethod.GET)
-			public String noticeEdit(int notice_brd_seq, Model model) throws ClassNotFoundException, SQLException {
-				NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
-				model.addAttribute("noticeEdit", noticedto);
-				return "notice/noticeEdit";
-			}
-			
-			//수정(처리)
-			@RequestMapping(value = "noticeEdit", method = RequestMethod.POST)
-			public String noticeEdit(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
-				return noticeservice.noticeEdit(noticedto, request);
-			}
-			
-			//삭제
-			@RequestMapping("noticeDelete")
-			public String noticeDelete(int notice_brd_seq) throws ClassNotFoundException, SQLException {
-				noticeservice.noticeDelete(notice_brd_seq);
-				return "redirect:noticeList";
-			}	
+	//리스트
+	@RequestMapping("noticeList")
+	public String noticeList(Model model) throws ClassNotFoundException, SQLException {
+		List<NoticeDto> nlist = noticeservice.noticeList();
+		model.addAttribute("noticeList", nlist);
+		return "notice/noticeList";
+	}
+		
+	//입력(폼)
+	@RequestMapping(value = "noticeForm", method = RequestMethod.GET)
+	public String noticeForm() {
+		return "notice/noticeForm";
+	}
+	
+	//입력(처리)
+	@RequestMapping(value = "noticeForm", method = RequestMethod.POST)
+	public String noticeForm(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		System.out.println("noticeForm, POST방식");
+		String url = noticeservice.noticeForm(noticedto, request);
+		return url;
+	}
+	
+	//상세
+	@RequestMapping("noticeDetail")
+	public String noticeDetail(int notice_brd_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+//		noticeservice.noticeHitCnt(notice_brd_seq);
+		NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
+		//조회수 증가
+		UserDto userdto = (UserDto)request.getSession().getAttribute("currentUser");
+		System.out.println("유저의 이메일 : " + userdto.getUser_email());
+		System.out.println("지금 글의 작성자 이메일 : " + noticedto.getUser_email());
+		if(userdto != null && !(userdto.getUser_email().equals(noticedto.getUser_email()))) {
+			noticeservice.noticeHitCnt(notice_brd_seq);
+		}
+		//
+		model.addAttribute("noticeDetail", noticedto);
+		return "notice/noticeDetail";
+	}
+	
+	//수정(폼)
+	@RequestMapping(value = "noticeEdit", method = RequestMethod.GET)
+	public String noticeEdit(int notice_brd_seq, Model model) throws ClassNotFoundException, SQLException {
+		NoticeDto noticedto = noticeservice.noticeDetail(notice_brd_seq);
+		model.addAttribute("noticeEdit", noticedto);
+		return "notice/noticeEdit";
+	}
+	
+	//수정(처리)
+	@RequestMapping(value = "noticeEdit", method = RequestMethod.POST)
+	public String noticeEdit(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
+		return noticeservice.noticeEdit(noticedto, request);
+	}
+	
+	//삭제
+	@RequestMapping("noticeDelete")
+	public String noticeDelete(int notice_brd_seq) throws ClassNotFoundException, SQLException {
+		noticeservice.noticeDelete(notice_brd_seq);
+		return "redirect:noticeList";
+	}
 			
 			@ResponseBody
 			@RequestMapping("selectUserCount")

@@ -9,28 +9,30 @@
 	<div class="bodiary-wrapper">
 		<div class="content mt-4">
 			<div class="card">
-				<div class="card-body p-5" th:with="notice=${noticeDetail}">
+				<div class="card-body p-5" th:if="${session.currentUser != null}" th:with="notice=${noticeDetail}">
 					<div class="row">
 						<div class="col-11">
-							<h5><a th:text="${notice.notice_brd_title}"></a></h5><br>
+							<h5><a th:if="${session.currentUser != null}" th:text="${notice.notice_brd_title}"></a></h5><br>
 							<p class="font-italic">
-								<span class="mdi mdi-calendar-edit"></span>&nbsp;<a th:text="${notice.notice_brd_regdate}"></a><br>
-								<span class="mdi mdi-eye"></span>&nbsp;<a th:text="${notice.notice_brd_hit}"></a>
+								<span class="mdi mdi-calendar-edit"></span>&nbsp;<a th:if="${session.currentUser != null}" th:text="${notice.notice_brd_regdate}"></a><br>
+								<span class="mdi mdi-eye"></span>&nbsp;<a th:if="${session.currentUser != null}" th:text="${notice.notice_brd_hit}"></a>
 							</p>
 							<hr>
 							<div class="text mt-5">
-								<a th:utext="${notice.notice_brd_content}"></a>
+								<a th:if="${session.currentUser != null}" th:utext="${notice.notice_brd_content}"></a>
 							</div>							
 						</div>
-						<div class="col">
-							<div class="user-img c-pointer position-relative" data-toggle="dropdown">
-								<span class="activity active"></span>
-								<i class="icon-options-vertical"></i>
-							</div>
-							<div class="basic-dropdown">
-								<div class="dropdown-menu">
-									<a class="dropdown-item" th:href="@{noticeEdit(notice_brd_seq=${notice.notice_brd_seq})}">수정</a>
-									<a class="dropdown-item" th:href="@{noticeDelete(notice_brd_seq=${notice.notice_brd_seq})}">삭제</a>
+						<div sec:authorize="hasRole('ROLE_ADMIN')">
+							<div class="col">
+								<div class="user-img c-pointer position-relative" data-toggle="dropdown">
+									<span class="activity active"></span>
+									<i class="icon-options-vertical"></i>
+								</div>
+								<div class="basic-dropdown">
+									<div class="dropdown-menu">
+										<a class="dropdown-item" th:if="${session.currentUser != null}" th:href="@{noticeEdit(notice_brd_seq=${notice.notice_brd_seq})}">수정</a>
+										<a class="dropdown-item" th:if="${session.currentUser != null}" th:href="@{noticeDelete(notice_brd_seq=${notice.notice_brd_seq})}">삭제</a>
+									</div>
 								</div>
 							</div>
 						</div>

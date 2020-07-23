@@ -89,16 +89,13 @@
 			
 		console.log(user_email);
 		/*]]>*/
-	/* var chId= ${chatRoomSelect.chId};
-	var chatMasterId = ${chatRoomSelect.user_id};
-	var chatMemberId = ${user_id};
-	var currentUserNickname = '${loginUser.uNickname}';
+
+
 	
-	function getContextPath() {
-		var hostIndex = location.href.indexOf(location.host) + location.host.length;
-		return location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1));
-	}; */
 	
+	
+	
+	//채팅방 나가기
 	$('#exitBtn').click(function() {
 		
 		if(confirm("채팅방에서 나가시겠습니까?") == true) {
@@ -126,6 +123,8 @@
 
 	});
 	
+	
+	//방장일 경우 채팅방 삭제하기
 	$('#deleteBtn').click(function() {
 		if(confirm("채팅방을 정말 삭제하시겠습니까? 나가면 다시 참여가 불가합니다.") == true) {
 			swal("성공", "채팅방이 삭제되었습니다.", "success");
@@ -171,14 +170,21 @@
 			event.stopPropagation();
 		});
 		
-		$('#sendBtn').click(function() {
+		$('#sendBtn').click(function() { //메세지 보내는 버튼
 			send();
 		});
 	});
 	
-	// 웹소켓 접속
+
 	var webSocket;
 	
+	
+	/**
+	* @함수명 : connect()
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 웹소켓 연결하는 메소드
+	**/
 	function connect() {
 		webSocket = new WebSocket(
 				"ws://" + location.host + "/bodiary/chat?room_number="+room_number);
@@ -189,7 +195,14 @@
 	
 
 	
-	// 채팅방 접속할때 실행되는 메세지
+	
+	/**
+	* @함수명 : onMessage(evt)
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 채팅방 접속할때 실행되는 메소드
+	* @param evt - 핸들러에서 받은 파라미터
+	**/
 	function onOpen(evt) {
 				
 		
@@ -206,7 +219,14 @@
 		webSocket.send(JSON.stringify(msg));
 	}
 	
-	//채팅 메세지를 보내는 메서드
+
+	
+	/**
+	* @함수명 : send()
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 채팅 메세지를 보내는 메서드
+	**/
 	function send() {				 
 		var text = $("#message").val();
 		
@@ -225,7 +245,15 @@
 		$("#message").val("");
 	}
 	
-	// 채팅메세지를 받는 메세지
+	
+	
+	/**
+	* @함수명 : onMessage(evt)
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 채팅메세지를 받는 메소드
+	* @param evt - 핸들러에서 받은 메시지 내용
+	**/
 	function onMessage(evt) {
 	/* 	console.log(evt.data.split("/")[0]);
 		console.log(evt.data.split("/")[1]);
@@ -250,6 +278,9 @@
 		
 		var timeStr = ampm +" " +h + ":" +m;
 	/* 	appendUserList(userlist); */
+	
+	
+		//메세지 타입이 notice일 경우
 		if(msg.type == "notice") {
 			
 			/* memberCount += '<div>'+currentCount + " / " + room_count + '</div>';  */
@@ -261,6 +292,8 @@
 			appendMessage(tag); 
 			
 			/* appendCount(memberCount); */
+			
+		//메시지 타입이 delete일 경우
 		} else if(msg.type == "delete") {
 			tag += '<div class="notice">';
 			tag += '<div class="notice-message">';
@@ -268,6 +301,8 @@
 			tag += '</div>';
 			tag += '</div>';
 			appendMessage(tag);
+		
+		//메시지 타입이 msg 일 경우
 		} else if(msg.type == "msg") {
 			if(msg.user_email == user_email) {
 				
@@ -275,11 +310,8 @@
 				tag += msg.text;
 				tag += '</div>';
 				tag += '<small>' + timeStr + '</small>';
-				
-				
-				
-	    	
 	    		appendMessage(tag);    		
+	    		
 	    	} else {
 	    		
 	    		tag += '<div class="chatting your-chat">';
@@ -299,7 +331,16 @@
 		}
 	}
 	
-	// 보낸 채팅메세지를 화면에 나타내는 메서드
+	
+	
+	
+	/**
+	* @함수명 : appendMessage(tag)
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 보낸 채팅메세지를 화면에 나타내는 메서드
+	* @param tag- 메시지 내용
+	**/
 	function appendMessage(tag) {
 		$(".chat-content").append(tag);
 		/* $(".chatMessageArea").scrollTop($(".chatMessageArea")[0].scrollHeight);	 */
@@ -321,7 +362,15 @@
 	
 	
 	
-	// 현재 채팅방에 접속한 유저를 파악하는 메서드
+	
+	
+	/**
+	* @함수명 : getMemberList(room_number)
+	* @작성일 : 2020. 7. 21.
+	* @작성자 : 오주형
+	* @설명 : 현재 채팅방에 접속한 유저를 파악하는 메서드
+	* @param room_number- 방 번호
+	**/
 	 function getMemberList(room_number) {
 		$('.userlist').children().remove();
 		
@@ -349,61 +398,6 @@
 	    });
 	} 
 	
-	/* // 채팅방 삭제 메서드 : 방개설자만 가능
-	function chatRoomDelete(room_number, user_email) {
-		if(confirm("채팅방을 정말 삭제하시겠습니까? 나가면 다시 참여가 불가합니다.") == true) {
-			$.ajax({
-				type:'POST',
-				url: 'deleteChatRoom',
-				data:{'room_number' : room_number, 'user_email' : user_email},
-				success:function(data){
-					alert("채팅방이 삭제되었습니다.");
-	
-					var text = '[알  림] 방장이 해당 채팅방을 삭제했습니다. 나가면 다시 참여가 불가합니다.';
-					var msg = 
-						{
-							"type" : "delete",
-			            	"text": text,
-							"date" : Date.now()
-						};
-					
-					webSocket.send(JSON.stringify(msg));
-					location.href = "chatList";
-// 					window.close();
-				}
-	        });	
-		} else {
-			return false;
-		}
-	}
-	
-	// 채팅방 나가는 메서드 
-	function chatRoomExit(room_number, user_email) {
-		if(confirm("채팅방에서 나가시겠습니까?") == true) {					
-			$.ajax({
-				type:'POST',
-				url: 'exitChatRoom',
-				data:{'room_number' : room_number, 'user_email' : user_email},
-				success:function(data){
-					
-					var text = '님이 나가셨습니다.';
-					var msg = 
-						{
-							"type" : "notice",
-			            	"text": text,
-							"user_nickname" : user_nickname,
-							"date" : Date.now()
-						};
-					
-					webSocket.send(JSON.stringify(msg));
-					location.href = "chatList"; */
-					/* window.close(); */
-	/* 			}
-	        });
-		} else {
-			return false;
-		}
-	} */ 
 	
 	//새로고침 방지
 	function noEvent() { // 새로 고침 방지
@@ -422,16 +416,7 @@
 
 
 	
-	/* function closeIt() {
 		
-		/* 
-		alert("닫습니다"); 
-		{
-			location.href = "exitChatRoom?user_email="+user_email+"&room_number="+room_number;
-		    event.returnValue = "창을 닫겠는가?";
-		}
-		
-	} */
 	
 		
 	</script>

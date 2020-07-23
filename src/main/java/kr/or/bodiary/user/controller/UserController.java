@@ -2,17 +2,20 @@ package kr.or.bodiary.user.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
@@ -30,30 +33,34 @@ public class UserController {
 //	@Autowired
 //	private BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	
 	//------------- 로그인 --------------
-	//로그인 페이지 
-	@RequestMapping("/login")
-	public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, @RequestParam(value ="user_email", required = false) Object user_email, HttpServletRequest request) {
-		if (errormsg != null) {
-			System.out.println(user_email);
-			Object newerrormsg = userService.getWithdrawalUser(user_email,errormsg);
-			System.out.println(newerrormsg);
-			request.setAttribute("errormsgname", (String)newerrormsg);
+		//로그인 페이지 
+		@RequestMapping("/login")
+		public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, 
+				@RequestParam(value ="user_email", required = false) Object user_email, 
+				HttpServletRequest request, ModelMap modelmap) {
+			Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+			String newerrormsg = "";
+			
+			if ( errormsg != null ) {
+				System.out.println(user_email);
+				newerrormsg = (String)redirectMap.get("errormsg");
+				System.out.println(newerrormsg);
+				modelmap.put("errormsg", newerrormsg);
+			}
+			return "user/login";
 		}
-		return "user/login";
-	}
-	@RequestMapping("/loginFail")
-	public String login(HttpServletRequest request, RedirectAttributes redirect) {
-		System.out.println("에러 컨트롤러 탐");
-		Object errormsg = request.getAttribute("errormsgname");
-		Object user_email = request.getAttribute("user_email");
-		System.out.println(errormsg);
-		System.out.println(user_email);
-		redirect.addAttribute("errormsg", errormsg);
-		redirect.addAttribute("user_email", user_email);
-		return "redirect:/login";
-	}
+		@RequestMapping("/loginFail")
+		public String login(HttpServletRequest request, RedirectAttributes redirect) {
+			System.out.println("에러 컨트롤러 탐");
+			Object user_email = request.getAttribute("user_email");
+			Object errormsg = userService.getWithdrawalUser(user_email,request.getAttribute("errormsgname"));
+			System.out.println(errormsg);
+			System.out.println(user_email);
+			redirect.addFlashAttribute("errormsg", errormsg);
+			redirect.addFlashAttribute("user_email", user_email);
+			return "redirect:/login";
+		}
 
 	
 	@RequestMapping("/nCallback")

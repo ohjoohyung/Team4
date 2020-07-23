@@ -7523,7 +7523,7 @@ h1, h2, h3, h4, h5,
     .slider-text h1 {
       font-size: 40px; } }
   .slider-text h1 span {
-    font-size: 54px;
+    font-size: 64px;
     font-weight: 700; }
 
 .slider-text p {
@@ -8411,11 +8411,11 @@ textarea.form-control {
   .ftco-counter {
     background-position: center center !important; } }
 
-.ftco-counter .img {
+.ftco-section .img {
   display: block;
   width: 100%; }
   @media (max-width: 991.98px) {
-    .ftco-counter .img {
+    .ftco-section .img {
       height: 400px;
       background-position: top center !important; } }
 
@@ -8906,6 +8906,17 @@ textarea.form-control {
     stroke-dasharray: 89, 200;
     stroke-dashoffset: -136px; } }
 
-.card-img {
-	max-height: 100px;
+@font-face {
+	font-family: 'IBMPlexSansKR-Light';
+	src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Light.woff') format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.card-main {
+	font-family: 'IBMPlexSansKR-Light';
+}
+
+.welcome-main {
+	font-family: 'IBMPlexSansKR-Light';
 }

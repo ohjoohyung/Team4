@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  order by notice_brd_seq desc
 	</select>
 	
-	<!-- 전체 게시글 수-->
+	<!-- 전체 게시글 수 -->
 	<select id="totalCount" resultType="int">
     	select count(*) from NoticeBoard
     </select>
@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 상세 -->
 	<select id="noticeSelect" parameterType="int" resultType="kr.or.bodiary.notice.dto.NoticeDto">
-		select notice_brd_seq, notice_brd_title, notice_brd_content, notice_brd_regdate, notice_brd_hit
+		select user_email, notice_brd_seq, notice_brd_title, notice_brd_content, notice_brd_regdate, notice_brd_hit
 		  from NoticeBoard
 		 where notice_brd_seq=#{notice_brd_seq}
 	</select>
@@ -50,5 +50,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  from NoticeBoard
 		 where notice_brd_seq=#{notice_brd_seq}
 	</delete>
+	
+	<!-- 페이징 -->
+<!-- 	<select id="listCriteria" resultType="BoardVO">
+		<![CDATA[
+		select bno, title, content, writer, regdate, viewcnt
+		  from tbl_board
+		 where bno > 0
+	  order by bno desc, regdate desc limit #{pageStart}, #{perPageNum}
+		]]>
+	</select> -->
 	
 </mapper>

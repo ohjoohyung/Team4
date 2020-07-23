@@ -141,7 +141,7 @@ color: #7571f9;
 					<li class="nav-item main-active"><h2><a href="#"> 메인</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/routineBrdList">루틴자랑</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/freeBrdList">자유게시판</a></h2></li>
-					<li class="nav-item"><h2><a href="/bodiary/chatList">채팅</a></h2></li>
+					<li class="nav-item"><h2><a href="/bodiary/chatList" onclick="window.open(this.href,'채팅', 'width=400, height=700, resizable = no, location = no, left=770, top=100');return false;">채팅</a></h2></li>
 				</ul>
 
 			</div>
@@ -243,12 +243,12 @@ color: #7571f9;
 						</div>
 						
 						<!-- 오늘의 루틴 start -->
-						<div class="col-12"style="margin-top: 20px;">
-							<a th:href="@{routineBrdList}"><h4>오늘의 TOP2 루틴</h4></a>
+						<div class="col-main col-12"style="margin-top: 20px;">
+							<a th:href="@{routineBrdList}"><h4>오늘의 루틴 TOP2</h4></a>
 							<hr>
 							<div class="row">
 								<th:block th:each="todayMain : ${routineBrdMain}">
-									<div class="col-lg-6">									
+									<div class="col-lg-6">
 											<div class="main-routine card">
 												<div class="card-body">
 													<div class="row">
@@ -281,7 +281,7 @@ color: #7571f9;
 						</div>
 						<!-- 오늘의 루틴 end -->
 
-						<div class="col-12">
+						<div class="col-main col-12">
 							<a th:href="@{freeBrdList}"><h4>프리보드</h4></a>
 							<hr>
 							<div class="row">
@@ -308,6 +308,15 @@ color: #7571f9;
 						</div>
 						<!-- End Col -->
 					</div>
+				</div>
+			</div>
+		</div>		
+		
+		<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
+
+		<!--  -->
+
+	</div>
 
 					
 				</div>
