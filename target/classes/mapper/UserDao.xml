@@ -101,6 +101,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from user
       where user_insertdate=CURDATE() - INTERVAL 5 DAY;
    </select>
+   <!-- 하루 남녀 -->
+   <select id="dailyUser1" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE()  ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE()  ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser2" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 1 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 1 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 1 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser3" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 2 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 2 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 2 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser4" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 3 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 3 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 3 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser5" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 4 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 4 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 4 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser6" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 5 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 5 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 5 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
+   <select id="dailyUser7" resultType="kr.or.bodiary.admin.dto.AdminDashDto">
+      select distinct CURDATE() - INTERVAL 6 DAY as userDate,
+      (select count(if(user_gender='남' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 6 DAY ,user_gender,null)) from user) as man,
+      (select count(if(user_gender='여' and user_insertdate<![CDATA[ <= ]]>CURDATE() - INTERVAL 6 DAY ,user_gender,null)) from user) as woman
+      from user
+   </select>
    <!-- 회원가입 -->
 	<insert id="insertUser">
 		INSERT INTO User(

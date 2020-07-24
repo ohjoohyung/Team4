@@ -23,9 +23,13 @@
                 </div>
                 <div class="basic-dropdown">
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">신고</a>
-                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
-                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
+                    	<th:block th:if="${session.currentUser.user_email} != ${routineBoard.user_email}">
+                        	<a class="dropdown-item" href="#">신고</a>
+                        </th:block>
+                        <th:block th:unless="${session.currentUser.user_email} != ${routineBoard.user_email}">
+	                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
+	                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
+                        </th:block>
                 	</div>
                 </div>
             </div>
@@ -136,7 +140,8 @@
                </div> -->
                <div class="col">
                   <a class="text-center d-block text-muted" href="javascript:selectRoutineBrdLike()">
-                     <i id="likeicon" class="fa fa-heart gradient-3-text"></i>
+                     <i id="likeIcon" class="mdi mdi-heart gradient-3-text" style="display: none;"></i>
+                     <i id="dislikeIcon" class="mdi mdi-heart-outline gradient-3-text" style="display: none;"></i>
                      <p id="brdlike"></p>
                   </a>
                </div>
@@ -155,7 +160,7 @@
                   </form>
                 </div>
                 <div class="mt-0">
-                  <span class="card-text "><i class="icon-bubble"></i> 댓글 5</span>
+                  <span class="card-text " id="replyCount"><i class="icon-bubble"></i></span>
 				</div>
 			   <div id="replyList">
 	               <div class="mt-5 ">
@@ -217,10 +222,13 @@
 				success:function(data){
 					if(data > 0) {
 						cancleRoutineBrdLike();
-						$('#likeicon').hide();
+						$('#dislikeIcon').show();
+						$('#likeIcon').hide();
+					
 					} else{
 						addRoutineBrdLike();
-						$('#likeicon').show();
+						$('#likeIcon').show();
+						$('#dislikeIcon').hide();
 					}
 				}
 		    });
@@ -276,8 +284,18 @@
 				data:{'routine_brd_seq' : routine_brd_seq ,
 					   'user_email' : user_email},
 				success:function(data){
+					if(data > 0) {
+					
+						$('#likeIcon').show();
+						$('#dislikeIcon').hide();
+					} else{
+					
+						$('#dislikeIcon').show();
+						$('#likeIcon').hide();
+					}
 			
 					countRoutineBrdLike();
+					
 				}
 		    });
    			
@@ -288,6 +306,9 @@
    		/* 댓글 출력 함수 */
    		/*<![CDATA[*/
    		function printData(data){
+   			
+   			$('#replyCount').html('댓글 '+data.length);
+   			
    			console.log(data);
    			
    			let session_email = /*[[${session.currentUser.user_email}]]*/; 

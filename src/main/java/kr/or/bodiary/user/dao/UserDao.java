@@ -3,6 +3,7 @@ package kr.or.bodiary.user.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import kr.or.bodiary.admin.dto.AdminDashDto;
 import kr.or.bodiary.user.dto.UserDto;
 
 public interface UserDao {
@@ -28,6 +29,14 @@ public interface UserDao {
 	   public int monthlyCount3() throws ClassNotFoundException, SQLException;
 	   public int monthlyCount4() throws ClassNotFoundException, SQLException;
 	   public int monthlyCount5() throws ClassNotFoundException, SQLException;
+	   
+	   public List<AdminDashDto> dailyUser1() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser2() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser3() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser4() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser5() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser6() throws ClassNotFoundException, SQLException;
+	   public List<AdminDashDto> dailyUser7() throws ClassNotFoundException, SQLException;
 
 	// ----------- 회원 가입 ------------
 	public int insertUser(UserDto user) throws ClassNotFoundException, SQLException;

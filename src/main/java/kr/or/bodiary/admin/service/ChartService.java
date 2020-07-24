@@ -1,6 +1,8 @@
 package kr.or.bodiary.admin.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.bodiary.admin.dto.AdminDashDto;
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.UserDto;
 
@@ -120,5 +123,23 @@ public class ChartService {
                }
                return returnNum;
             }
+    //회원 남녀 성비
+      public List<AdminDashDto> dailyUser() throws ClassNotFoundException, SQLException {
+         UserDao userdao = sqlsession.getMapper(UserDao.class);
+         List<AdminDashDto> dlist = userdao.dailyUser1();
+         dlist.addAll(userdao.dailyUser2());
+         dlist.addAll(userdao.dailyUser3());
+         dlist.addAll(userdao.dailyUser4());
+         dlist.addAll(userdao.dailyUser5());
+         dlist.addAll(userdao.dailyUser6());
+         dlist.addAll(userdao.dailyUser7());
+         try {
+            
+            //dlist.add(userdao.dailyUser2());
+         } catch (Exception e) {
+            e.getMessage();
+         }
+         return dlist;
+      }
    
 }

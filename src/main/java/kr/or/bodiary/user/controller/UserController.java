@@ -1,4 +1,3 @@
-
 package kr.or.bodiary.user.controller;
 
 import java.io.IOException;
@@ -7,36 +6,52 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.google.connect.GoogleOAuth2Template;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
+import kr.or.bodiary.user.dto.AuthInfo;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.user.service.VerifyRecaptcha;
 import kr.or.bodiary.utils.NaverLoginBO;
-
 @Controller
 public class UserController {
 	
@@ -45,6 +60,19 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	/* GoogleLogin */
+	@Inject
+	private AuthInfo authInfo;
+
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+
+	@Autowired
+	private GoogleOAuth2Template googleOAuth2Template;
+
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
 	
 	
 	/* NaverLoginBO */
@@ -58,27 +86,38 @@ public class UserController {
 	
 
 	//------------- 로그인 --------------
-		//로그인 페이지 
-		@RequestMapping("/login")
-		public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, 
-				@RequestParam(value ="user_email", required = false) Object user_email, 
-				HttpServletRequest request, ModelMap modelmap) {
-			Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
-			String newerrormsg = "";
-			String naverAuthUrl = naverLoginBO.getAuthorizationUrl(request.getSession());
-			System.out.println(naverAuthUrl);
-			if ( errormsg != null ) {
-				System.out.println(user_email);
-				newerrormsg = (String)redirectMap.get("errormsg");
-				System.out.println(newerrormsg);
-				modelmap.put("errormsg", newerrormsg);
-			} else {
-				modelmap.put("url", naverAuthUrl);
+	//로그인 페이지 
+			@RequestMapping("/login")
+			public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, 
+					@RequestParam(value ="user_email", required = false) Object user_email, 
+					HttpServletRequest request, ModelMap modelmap) {
+				
+				// 구글 로그인 인증을 위한 url 생성
+				OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+				String googleAuthUrl = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+				
+				Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+				String newerrormsg = "";
+				//네이버 url
+				String naverAuthUrl = naverLoginBO.getAuthorizationUrl(request.getSession());
+				
+				System.out.println(naverAuthUrl);
+				if ( errormsg != null ) {
+					System.out.println(user_email);
+					newerrormsg = (String)redirectMap.get("errormsg");
+					System.out.println(newerrormsg);
+					modelmap.put("errormsg", newerrormsg);
+				} else {
+					modelmap.put("naver_url", naverAuthUrl); 
+					modelmap.put("google_url", googleAuthUrl); 
+					// 확인용 출력문
+					System.out.println("네이버:" + naverAuthUrl);
+					System.out.println("구글" + googleAuthUrl);
+				}
+				
+				
+				return "user/login";
 			}
-			
-			
-			return "user/login";
-		}
 		@RequestMapping("/loginFail")
 		public String login(HttpServletRequest request, RedirectAttributes redirect) {
 			System.out.println("에러 컨트롤러 탐");
@@ -90,7 +129,89 @@ public class UserController {
 			redirect.addFlashAttribute("user_email", user_email);
 			return "redirect:/login";
 		}
-
+		
+		
+		//구글 로그인
+		@RequestMapping(value = "/gCallback", method = { RequestMethod.GET, RequestMethod.POST })
+		public String googlecallback(Model model, HttpSession session, HttpServletRequest request) throws Exception {
+		      String code = request.getParameter("code");
+		      
+		      //RestTemplate을 사용하여 Access Token 및 profile을 요청한다.
+		      RestTemplate restTemplate = new RestTemplate();
+		      MultiValueMap<String, String> parameters = new LinkedMultiValueMap<String, String>();
+		        parameters.add("code", code);
+		        parameters.add("client_id", authInfo.getClientId());
+		        parameters.add("client_secret", authInfo.getClientSecret());
+		        parameters.add("redirect_uri", googleOAuth2Parameters.getRedirectUri());
+		        parameters.add("grant_type", "authorization_code");      
+		        
+		        
+		        HttpHeaders headers = new HttpHeaders();
+		        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		        HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
+		        ResponseEntity<Map> responseEntity = restTemplate.exchange("https://www.googleapis.com/oauth2/v4/token", HttpMethod.POST, requestEntity, Map.class);
+		        Map<String, Object> responseMap = responseEntity.getBody();
+		        
+		        // id_token 라는 키에 사용자가 정보가 존재한다.
+		        // 받아온 결과는 JWT (Json Web Token) 형식으로 받아온다. 콤마 단위로 끊어서 첫 번째는 현 토큰에 대한 메타 정보, 두 번째는 우리가 필요한 내용이 존재한다.
+		        // 세번째 부분에는 위변조를 방지하기 위한 특정 알고리즘으로 암호화되어 사이닝에 사용한다.
+		        //Base 64로 인코딩 되어 있으므로 디코딩한다.
+		        
+		        String[] tokens = ((String)responseMap.get("id_token")).split("\\.");
+		        Base64 base64 = new Base64(true);
+		        String body = new String(base64.decode(tokens[1]));
+		       
+		        System.out.println(tokens.length);
+		        System.out.println(new String(Base64.decodeBase64(tokens[0]), "utf-8"));
+		        System.out.println(new String(Base64.decodeBase64(tokens[1]), "utf-8"));
+		        
+		        //Jackson을 사용한 JSON을 자바 Map 형식으로 변환
+		        ObjectMapper mapper = new ObjectMapper();
+		        Map<String, String> result = mapper.readValue(body, Map.class);
+		        System.out.println(result);
+		        System.out.println("너는 어디에 찍히는값인가: "+result.get(""));
+		        
+		      String user_email = (String) result.get("email");
+		        
+		      //return "login/naverSuccess"; 여기까지가 성공
+		        
+		        if(userService.getUser(user_email)==null) {
+		         
+		         model.addAttribute("user_email", user_email);  //회원가입 시 id로 활용
+		         model.addAttribute("user_snstype", "google"); //snstype 파악을 위해
+		         return "user/SNSRegister";  //나중에 redirect화 하자
+		      }else if(userService.getUser(user_email).getUser_snstype() != null) {
+		      
+		      //스프링 시큐리티 수동 로그인을 위한 작업//
+		      //로그인 세션에 들어갈 권한을 설정
+		         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+		         list.add(new SimpleGrantedAuthority("ROLE_REGULAR_USER"));
+		      
+		         SecurityContext sc = SecurityContextHolder.getContext();
+		      //아이디, 패스워드, 권한을 설정. 아이디는 Object단위로 넣어도 무방하며
+		      //패스워드는 null로 하여도 값이 생성.
+		         sc.setAuthentication(new UsernamePasswordAuthenticationToken(user_email, null, list));
+		         session = request.getSession(true);
+		      
+		      //위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+		         session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+		      //스프링 시큐리티 수동 로그인을 위한 작업 끝//
+		      
+		      //로그인 유저 정보 가져와서 세션객체에 저장  
+		          UserDto user = userService.getUser(user_email);
+		         
+		          session = request.getSession();
+		          session.setAttribute("currentUser", user);
+		      //로그인 유저 정보 가져와서 세션객체에 저장 끝//      
+		         
+		      return "user/callback";
+		      }else {
+		    	  return "redirect:/login?error";
+		      }
+		      
+		}
+		
+		
 		//네이버 로그인 성공시 callback호출 메소드
 		@RequestMapping(value = "/nCallback", method = { RequestMethod.GET, RequestMethod.POST })
 		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request)
@@ -126,7 +247,8 @@ public class UserController {
 	           model.addAttribute("user_snstype", "naver"); //snstype 파악을 위해
 	           
 	           return "user/SNSRegister";  //나중에 redirect화 하자
-	        }
+	           
+	        }else if(userService.getUser(user_email).getUser_snstype() != null) {
 
 	        //스프링 시큐리티 수동 로그인을 위한 작업//
 	        //로그인 세션에 들어갈 권한을 설정
@@ -149,9 +271,12 @@ public class UserController {
 	        session = request.getSession();
 	        session.setAttribute("currentUser", user);
 	        //로그인 유저 정보 가져와서 세션객체에 저장 끝//      
-			return "redirect:main";
-		}
-	//------------- 회원가입 --------------
+			return "user/callback";
+	        }else {
+	        	return "redirect:/login?error";
+	        }
+		}	
+		//------------- 회원가입 --------------
 	//회원가입 페이지
 	@RequestMapping("/register")
 	public String register() {

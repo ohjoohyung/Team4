@@ -84,7 +84,18 @@
                <div class="col-12">
                <div class="card p-5">
                   <div >
+                  <h4 class="mb-1">가입자 수 변동 추이</h4>
                      <canvas id="chart_user" style="width:80%"></canvas>
+                  </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-12">
+               <div class="card p-5">
+                  <div >
+                  <h4 class="mb-1">남녀회원수</h4>
+                     <div id="dailyUser" style="width:100%"></div>
                   </div>
                   </div>
                </div>
@@ -855,8 +866,62 @@
             }
 
          });
-         
+         //bar chart
+         $.ajax({
+            url : "dailyUser",
+            type : "GET",
+            dataType : "json",
+            success : function(responsedata) {
+               console.log(responsedata);
+               console.log(responsedata[0].userDate);
+               console.log(responsedata[0].man);
+               console.log(responsedata[0].woman);
+          Morris.Bar({
+                element: 'dailyUser',
+                data: [{
+                   y: responsedata[6].userDate,
+                    a: responsedata[6].man,
+                    b: responsedata[6].woman,
+                }, {
+                   y: responsedata[5].userDate,
+                    a: responsedata[5].man,
+                    b: responsedata[5].woman,
+                }, {
+                   y: responsedata[4].userDate,
+                    a: responsedata[4].man,
+                    b: responsedata[4].woman,
+                }, {
+                   y: responsedata[3].userDate,
+                    a: responsedata[3].man,
+                    b: responsedata[3].woman,
+                }, {
+                    y: responsedata[2].userDate,
+                       a: responsedata[2].man,
+                       b: responsedata[2].woman,
+                }, {
+                       y: responsedata[1].userDate,
+                       a: responsedata[1].man,
+                       b: responsedata[1].woman,
+                }, {
+                       y: responsedata[0].userDate,
+                       a: responsedata[0].man,
+                       b: responsedata[0].woman,
+                }],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['남', '여'],
+                barColors: ['#FC6C8E', '#7571f9'],
+                hideHover: 'auto',
+                gridLineColor: 'transparent',
+                resize: true
+            });
+            },
+            error : function(responsedata) {
+               //console.log(responsedata);
+               alert(responsedata + '에러라도 띄워봐3');
+            }
 
+         });
          //setInterval("calMethod()",1000);//updating  
       });
       //live update
