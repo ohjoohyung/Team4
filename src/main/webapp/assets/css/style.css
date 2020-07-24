@@ -7556,8 +7556,8 @@ sub {
   color: #abafb3; }
 
 .footer {
-  padding-left: 15.1875rem;
-  background-color: #fff; }
+  background-color: #fff;
+  font-size: 13px; }
   .footer .copyright {
     padding: 0.9375rem;
     background: white; }
@@ -7566,7 +7566,7 @@ sub {
       margin: 0;
       color: #898989; }
     .footer .copyright a {
-      color: #000000; }
+      color: #898989; }
 
 [data-sidebar-style="mini"] .nav-control, [data-layout="horizontal"] .nav-control {
   display: none; }

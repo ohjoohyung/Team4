@@ -244,37 +244,36 @@ color: #7571f9;
 						
 						<!-- 오늘의 루틴 start -->
 						<div class="col-main col-12"style="margin-top: 20px;">
-							<a th:href="@{routineBrdList}"><h4>오늘의 루틴 TOP2</h4></a>
+							<a th:href="@{routineBrdList}"><h4>오늘의 루틴</h4></a>
 							<hr>
 							<div class="row">
 								<th:block th:each="todayMain : ${routineBrdMain}">
 									<div class="col-lg-6">
-											<div class="main-routine card">
-												<div class="card-body">
-													<div class="row">
-														<div class="col-8">
-															<h5 class="card-title">
-															<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h5>
-															<div id="icon">
-																<div class="card-text" style="float: left; margin-right: 20px;">
-																	<i class="icon-eye"></i>&nbsp;&nbsp;
-																	<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
-																</div>
-																<div class="card-text">
-																	<i class="icon-clock"></i>&nbsp;&nbsp;<span class="card-text" th:text="${todayMain.routine_brd_regdate}"></span>
-																</div>
-																<div class="card-text">
-																	<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
-																</div>
+										<div class="main-routine card">
+											<div class="card-body">
+												<div class="row">
+													<div class="col-8">
+														<h5 class="card-title">
+														<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h5>
+														<div id="icon">
+															<div class="card-text" style="float: left; margin-right: 20px;">
+																<i class="icon-eye"></i>&nbsp;&nbsp;
+																<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
+															</div>
+															<div class="card-text">
+																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+															</div>
+															<div class="card-text">
+																<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
 															</div>
 														</div>
-														<div class="col">
-															<img id="card-img" class="d-block w-100" th:src="@{assets/upload/routineBrdUpload/}+${todayMain.brd_image2}">
-														</div>
+													</div>
+													<div class="col">
+														<img id="card-img" class="d-block w-100" th:src="@{assets/upload/routineBrdUpload/}+${todayMain.brd_image2}">
 													</div>
 												</div>
 											</div>
-										</a>
+										</div>
 									</div>
 								</th:block>
 							</div>
@@ -295,7 +294,7 @@ color: #7571f9;
 											<div id="icon2">
 												<div class="card-footer" style="float:left;">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
-													<span class="icon-clock"></span>&nbsp;<span class="card-text" th:text="${freeMain.free_brd_date}"></span>
+													<span class="icon-clock"></span>&nbsp;20분 전
 												</div>
 												<div class="text">
 													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>
@@ -310,22 +309,7 @@ color: #7571f9;
 					</div>
 				</div>
 			</div>
-		</div>		
-		
-		<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
-
-		<!--  -->
-
-	</div>
-
-					
-				</div>
-			</div>
 		</div>
-		
-		
-		<main class="pl-6 pr-6 pt-2 pb-8 main"></main>
-
 		<!--  -->
 
 	</div>
