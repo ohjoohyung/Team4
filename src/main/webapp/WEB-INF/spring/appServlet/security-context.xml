@@ -17,8 +17,6 @@
 		/> <security:intercept-url pattern="/customer/noticeReg.htm" access="hasRole('ROLE_ADMIN')" 
 		/> </security:http> <security:authentication-manager> <security:authentication-provider> 
 		<security:user-service> <security:user name="hong" password="1004" authorities="ROLE_USER"/> 
-		<security:user name="admin" password="1004" authorities="ROLE_ADMIN,ROLE_USER"/> 
-		</security:user-service> </security:authentication-provider> </security:authentication-manager> 
 		</beans> -->
 	<!-- 1단계 : 로그인 페이지 제공 <form name='f' action='/SpringMVC_Basic03_Sts_Mybatis_Security/login' 
 		method='POST'> <input type='text' name='username' value=''> <input type='password' 

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import kr.or.bodiary.admin.service.ChartService;
 import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.notice.service.NoticeService;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
 
@@ -84,16 +86,29 @@ public class AdminController {
 		public String adminUserBrdDetail(String userEmail,Model model) throws ClassNotFoundException, SQLException {
 			System.out.println("해당 유저 세부 페이지로 이동............");
 			
+			//해당유저의 전체 자유게시물 개수 
+			int totalFreeBrdCount = userService.freeBrdCount(userEmail);
+			//해당 유저의 전체 루틴자랑 게시물 개수 
+			int totalRoutineBrdCount = userService.routineBrdCount(userEmail);		
+					
 			UserDto getUser = null;
+			List<FreeBrdDTO> UserFreeBrdList = null;
+			List<RoutineBrdDto> UserRoutineBrdList = null;
 			try {		
 				getUser = userService.getUser(userEmail);
+				//해당 유저의 모든 자유 게시글을 얻어오는 서비스 호출 
+				UserFreeBrdList = userService.getUserFreeBrdList(userEmail);
+				//해당 유저의 모든 루틴 자랑 게시글을 얻어오는 서비스 호출 
+				UserRoutineBrdList = userService.getUserRoutineBrdList(userEmail);
 			}catch (Exception e) {
 				System.out.println("에러발생...");
 			    System.out.println(e.getMessage());
 			}
 			
-			model.addAttribute("routineBrdCount",userService.routineBrdCount(userEmail));
-			model.addAttribute("freeBrdCount",userService.freeBrdCount(userEmail));
+			model.addAttribute("UserRoutineBrdList",UserRoutineBrdList);
+			model.addAttribute("UserFreeBrdList",UserFreeBrdList);
+			model.addAttribute("routineBrdCount",totalRoutineBrdCount);
+			model.addAttribute("freeBrdCount",totalFreeBrdCount);
 			model.addAttribute("getUser",getUser);
 			
 			return "admin/adminUserBrdDetail";
