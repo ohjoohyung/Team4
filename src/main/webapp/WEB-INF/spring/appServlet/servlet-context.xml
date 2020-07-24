@@ -71,7 +71,9 @@
 	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
+	<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+	<bean id="naverLoginBO" class="kr.or.bodiary.utils.NaverLoginBO" />
 	<!-- 리캡차 -->
-      <context:component-scan base-package="org.alpreah.reCAptcha" />
-      <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+    <context:component-scan base-package="org.alpreah.reCAptcha" />
+    <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
 </beans>

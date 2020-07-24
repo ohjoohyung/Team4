@@ -2,6 +2,7 @@ package kr.or.bodiary.user.service;
 
 import java.io.FileOutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,11 @@ import javax.servlet.http.HttpSession;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -100,13 +106,12 @@ public class UserService {
 		UserDto currentUser = null;
 		try {
 			currentUser = userdao.getUser((String)user_email);
-			System.out.println(currentUser.toString());
+//			System.out.println(currentUser.toString());
 			if(!currentUser.getUser_grade().equals("regular")) {
 				System.out.println("if문 탔다." + currentUser.getUser_grade());
 				errormsg = "탈퇴한 유저입니다. 탈퇴일로부터 한달 후 재가입이 가능합니다.";
 				System.out.println(errormsg);
 			}
-			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -122,7 +127,9 @@ public class UserService {
 		
 		try {
 			System.out.println("register try문");
+			if(!user.getUser_pwd().equals("naver")) {
 			user.setUser_pwd(bCryptPasswordEncoder.encode(user.getUser_pwd()));
+			}
 			userdao.insertUser(user);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -215,7 +222,16 @@ public class UserService {
 				updateRoleResult = userdao.updateRole(user);
 				System.out.println("롤 업데이트 : " + updateRoleResult);
 				if (updateUserResult > 0) {
-					resultReturn = "redirect:/myProfileDetail";
+					user = userdao.getUser(user.getUser_email());
+					Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+					List<GrantedAuthority> updatedAuthorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
+					updatedAuthorities.add(new SimpleGrantedAuthority("ROLE_REGULAR_USER")); //add your role here [e.g., new SimpleGrantedAuthority("ROLE_NEW_ROLE")]
+
+					Authentication newAuth = new UsernamePasswordAuthenticationToken(auth.getPrincipal(), auth.getCredentials(), updatedAuthorities);
+
+					SecurityContextHolder.getContext().setAuthentication(newAuth);
+					resultReturn = "redirect:/main";
 				} else {
 					resultReturn = "redirect:/myProfileEdit";
 					return resultReturn;
@@ -227,6 +243,7 @@ public class UserService {
 			}
 		} catch (Exception e) {
 		}
+		
 
 		return resultReturn;
 	}

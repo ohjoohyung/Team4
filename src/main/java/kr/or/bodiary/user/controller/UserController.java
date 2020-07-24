@@ -2,21 +2,39 @@ package kr.or.bodiary.user.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.user.service.VerifyRecaptcha;
+import kr.or.bodiary.utils.NaverLoginBO;
 
 @Controller
 public class UserController {
@@ -26,41 +44,122 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
-	
-//	@Autowired
-//	private BCryptPasswordEncoder bCryptPasswordEncoder;
-	
+	/* NaverLoginBO */
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 	
 	//------------- 로그인 --------------
 	//로그인 페이지 
 	@RequestMapping("/login")
-	public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, @RequestParam(value ="user_email", required = false) Object user_email, HttpServletRequest request) {
-		if (errormsg != null) {
+	public String login(@RequestParam(value ="errormsg", required = false)Object errormsg, 
+			@RequestParam(value ="user_email", required = false) Object user_email, 
+			HttpServletRequest request, ModelMap modelmap) {
+		Map<String,?> redirectMap = RequestContextUtils.getInputFlashMap(request);
+		String newerrormsg = "";
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(request.getSession());
+		System.out.println(naverAuthUrl);
+		if ( errormsg != null ) {
 			System.out.println(user_email);
-			Object newerrormsg = userService.getWithdrawalUser(user_email,errormsg);
+			newerrormsg = (String)redirectMap.get("errormsg");
 			System.out.println(newerrormsg);
-			request.setAttribute("errormsgname", (String)newerrormsg);
+			modelmap.put("errormsg", newerrormsg);
+		} else {
+			modelmap.put("url", naverAuthUrl);
 		}
+		
+		
 		return "user/login";
 	}
 	@RequestMapping("/loginFail")
 	public String login(HttpServletRequest request, RedirectAttributes redirect) {
 		System.out.println("에러 컨트롤러 탐");
-		Object errormsg = request.getAttribute("errormsgname");
 		Object user_email = request.getAttribute("user_email");
+		Object errormsg = userService.getWithdrawalUser(user_email,request.getAttribute("errormsgname"));
 		System.out.println(errormsg);
 		System.out.println(user_email);
-		redirect.addAttribute("errormsg", errormsg);
-		redirect.addAttribute("user_email", user_email);
+		redirect.addFlashAttribute("errormsg", errormsg);
+		redirect.addFlashAttribute("user_email", user_email);
 		return "redirect:/login";
 	}
 
-	
-	@RequestMapping("/nCallback")
-	public String naverCallback(UserDto user ,HttpServletRequest request) {
+	//네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/nCallback", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request)
+			throws IOException, ParseException {
+		System.out.println("여기는 callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		//1. 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBO.getUserProfile(oauthToken); // String형식의 json데이터
 		
-		return "user/nCallback";
+		//2. String형식인 apiResult를 json형태로 바꿈
+		JSONParser parser = new JSONParser();
+		Object obj = parser.parse(apiResult);
+		JSONObject jsonObj = (JSONObject) obj;
+		
+		//3. 데이터 파싱
+		//Top레벨 단계 _response 파싱
+		JSONObject response_obj = (JSONObject) jsonObj.get("response");
+		//response의 nickname값 파싱
+		String user_email = (String) response_obj.get("email");
+		String user_nickname = (String) response_obj.get("nickname");
+		System.out.println(user_email);
+		
+		//4.파싱 닉네임 세션으로 저장
+		session.setAttribute("user_email", user_email); // 세션 생성
+		model.addAttribute("result", apiResult);
+		
+		//5.회원가입한 아이디 여부 판단하여 회원가입으로 보낼지 로그인 시킬지 결정
+        if(userService.getUser(user_email)==null) {
+           
+           model.addAttribute("user_email", user_email);  //회원가입 시 id로 활용
+           model.addAttribute("user_nickname", user_nickname);  //회원가입 시 id로 활용
+           model.addAttribute("user_snstype", "naver"); //snstype 파악을 위해
+           
+           return "user/SNSRegister";  //나중에 redirect화 하자
+        }
+
+        //스프링 시큐리티 수동 로그인을 위한 작업//
+        //로그인 세션에 들어갈 권한을 설정
+        List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
+        list.add(new SimpleGrantedAuthority("ROLE_REGULAR_USER"));
+  
+        SecurityContext sc = SecurityContextHolder.getContext();
+        //아이디, 패스워드, 권한을 설정. 아이디는 Object단위로 넣어도 무방하며
+        //패스워드는 null로 하여도 값이 생성.
+        sc.setAuthentication(new UsernamePasswordAuthenticationToken(user_email, null, list));
+        session = request.getSession(true);
+  
+        //위에서 설정한 값을 Spring security에서 사용할 수 있도록 세션에 설정
+        session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, sc);
+        //스프링 시큐리티 수동 로그인을 위한 작업 끝//
+  
+        //로그인 유저 정보 가져와서 세션객체에 저장  
+        UserDto user = userService.getUser(user_email);
+     
+        session = request.getSession();
+        session.setAttribute("currentUser", user);
+        //로그인 유저 정보 가져와서 세션객체에 저장 끝//      
+		return "main";
 	}
+	
+	
+//	@RequestMapping("/SNSRegsiter")
+//	public String snsRegister() {
+//		
+//		return "user/SNSRegsiter";
+//	}
+	
+//	@RequestMapping("/nCallback")
+//	public String naverCallback(UserDto user ,HttpServletRequest request) {
+//		
+//		return "user/nCallback";
+//	}
 	//------------- 회원가입 --------------
 	//회원가입 페이지
 	@RequestMapping("/register")
@@ -81,6 +180,7 @@ public class UserController {
 	}
 	@RequestMapping(value="/profileEditAssociate" , method=RequestMethod.POST)
 	public String profileEditForAssociateUser(UserDto user ,HttpServletRequest request) {
+		
 		
 		return userService.updateUserAssociate(user, request);
 	}

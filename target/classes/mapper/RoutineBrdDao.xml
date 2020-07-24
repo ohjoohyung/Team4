@@ -73,9 +73,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	set routine_cmt = #{routine_cmt}
    	where routine_cmt_seq = #{routine_cmt_seq}
    </update>
+   <!-- 댓글 삭제 -->
    <delete id="routineCmtDelete">
    	delete from RoutineBoardComment
+   	<choose>
+   	<when test="routine_cmt_depth == 0">
    	where routine_cmt_ref=#{routine_cmt_seq}
+   	</when>
+   	<when test="routine_cmt_depth == 1">
+   	where routine_cmt_seq=#{routine_cmt_seq}
+   	</when>
+   	</choose>
    </delete>
    
    <!-- 대댓글 작성 -->

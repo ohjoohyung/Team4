@@ -23,6 +23,7 @@ public class UserDto {
 	private int enabled;
 	private String user_grade;
 	private String user_deletedate;
+	private String user_snstype;
 	//파일 업로드 지원---------
 	private CommonsMultipartFile file;
 	//롤 권한 이름 

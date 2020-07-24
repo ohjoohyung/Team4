@@ -60,27 +60,30 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 								transform="translate(0.11 -0.42)" /></svg></div>
 									</a>
         						
-                                <form class="mt-5 mb-5 login-input" action="" method="post">
+                                <form class="mt-5 mb-5 login-input" action="register" method="post">
                                     <div class="form-group row">
-                                        <input type="email" class="form-control col-9 ml-3"  placeholder="사용할 이메일을 입력하세요" id="user_email" name="user_email" email_chk="fail">
-                                    	<button type="button" class="btn btn-primary" id="emailCheck">이메일 확인</button>
-                                    	<div class="tdemail"></div>
-                                    	<div id="emailChecking" class="col-12">
+                                    <!-- 어떤 소셜 타입인지 받는 값  -->
+                     					<input type="hidden" name="user_snstype" th:value="${user_snstype}"> 
+                     					<!-- 어떤 소셜 타입인지 받는 값  -->
+                                        <input type="email" class="form-control col ml-3" id="user_email" name="user_email"readOnly th:value="${user_email}">
+<!--                                     	<button type="button" class="btn btn-primary" id="emailCheck">이메일 확인</button> -->
+<!--                                     	<div class="tdemail"></div> -->
+<!--                                     	<div id="emailChecking" class="col-12"> -->
 	                                    	
-                                    	</div>
+<!--                                     	</div> -->
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" class="form-control"  placeholder="사용할 닉네임을 입력하세요" id="user_nickname" name="user_nickname" >
+                                        <input type="text" class="form-control"  placeholder="사용할 닉네임을 입력하세요" id="user_nickname" name="user_nickname" th:value="${nickname}">
                                     	<div class="tdnickname"></div>
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="사용할 비밀번호를 입력하세요"  id="user_pwd" name="user_pwd">
+                                        <input type="hidden" class="form-control" placeholder="사용할 비밀번호를 입력하세요"  id="user_pwd" name="user_pwd" th:value="naver">
                                         <div class="tdpw"></div>
                                     </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" placeholder="비밀번호를 다시한번 더 입력하세요"  id="user_pwd_chk" name="user_pwd_chk">
-                                        <div class="tdpwch"></div>
-                                    </div>
+<!--                                     <div class="form-group"> -->
+<!--                                         <input type="password" class="form-control" placeholder="비밀번호를 다시한번 더 입력하세요"  id="user_pwd_chk" name="user_pwd_chk"> -->
+<!--                                         <div class="tdpwch"></div> -->
+<!--                                     </div> -->
                                     <div class="form-group row">
                                     	<div class="col-lg-6 col-sm-12">
                                     	<label>나이</label>
@@ -94,6 +97,18 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	                                    	</div>
                                     	</div>
                                     </div>
+                                    <hr>
+                                    <div class="form-group row">
+	                                    <div class="col-lg-12 col-sm-12">
+	                                    	<label>키</label>
+	                                    		<input type="number" class="form-control" id="user_height" name="user_height" min="120" max="300" style="ime-mode:disabled" required onkeydown="javascript: return event.keyCode == 69 ? false : true" placeholder="120~300 중 입력하세요">
+	                                    </div>
+	                                    <div class="col-lg-12 col-sm-12">
+	                                    	<label>몸무게</label>
+	                                    		<input type="number" class="form-control" id="user_weight" name="user_weight" min="30" max="300" style="ime-mode:disabled" required onkeydown="javascript: return event.keyCode == 69 ? false : true" placeholder="30~300 중 입력하세요">
+	                                    </div>
+                                    </div>
+                                    
                                     <!-- <div class="g-recaptcha" data-sitekey="6LfpFq4ZAAAAAPpsMTbRBQXDSLrP7EvV19hS8cnW"></div> -->
                                     <button id="registerBtn" class="btn login-form__btn submit w-100">가입하기</button>
                                 </form>
@@ -117,27 +132,27 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	
 	
 	<script>
-	var validate = new Array;
+// 	var validate = new Array;
 	
          $(document).ready(function() {
-        	 for(let i=0; i<4; i++) {
-        			validate[i]=false;
-        		}
-        	 $('#user_email')
-				.keyup(
-						function() {
-							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
-							if (!email.test($('#user_email').val())) {
-								$('.tdemail')
-										.html(
-												'<p class="pl-3 mt-2" style="color:red">적합하지 않은 이메일 형식입니다.</p>');
-								validate[0] = false;
-							} else {
-								$('.tdemail').html('<p class="pl-3 mt-2" style="color:#7571f9">적합한 이메일 입니다.</p>');
-								validate[0] = true;
-							}
-							console.log(validate[0]);
-						});
+//         	 for(let i=0; i<4; i++) {
+//         			validate[i]=false;
+//         		}
+//         	 $('#user_email')
+// 				.keyup(
+// 						function() {
+// 							let email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/;
+// 							if (!email.test($('#user_email').val())) {
+// 								$('.tdemail')
+// 										.html(
+// 												'<p class="pl-3 mt-2" style="color:red">적합하지 않은 이메일 형식입니다.</p>');
+// 								validate[0] = false;
+// 							} else {
+// 								$('.tdemail').html('<p class="pl-3 mt-2" style="color:#7571f9">적합한 이메일 입니다.</p>');
+// 								validate[0] = true;
+// 							}
+// 							console.log(validate[0]);
+// 						});
         	 
         	 $('#user_nickname')
 				.keyup(
@@ -156,126 +171,126 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
          );
 						
 
-		//password
-		$('#user_pwd')
-				.keyup(
-						function() {
-							let pwd = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-							let blank = /\s/g;
-							if (!pwd.test($(this).val()) || blank.test($(this).val())) {
-								$('.tdpw')
-										.html(
-												'<p class="pl-1 mt-2" style="color:red">8~20자에 특수문자가 반드시 포함된 영어 대소문자,숫자를 사용하세요</p>');
-								validate[2] = false;
-							} else {
-								$('.tdpw').html('<p class="pl-1 mt-2" style="color:#7571f9">적합한 패스워드입니다.</p>');
-								validate[2] = true;
-							}
-							console.log(validate[2]);
-						});
-		//password check
-		$('#user_pwd_chk, #user_pwd').keyup(function() {
-			if ($('#user_pwd').val() != $('#user_pwd_chk').val()) {
-				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">비밀번호가 다릅니다.</p>');
-				validate[3] = false;
-			} else {
-				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:#7571f9">비밀번호가 일치합니다.<p>');
-				validate[3] = true;
-			}
-			console.log(validate[3]);
-		});
+// 		//password
+// 		$('#user_pwd')
+// 				.keyup(
+// 						function() {
+// 							let pwd = /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+// 							let blank = /\s/g;
+// 							if (!pwd.test($(this).val()) || blank.test($(this).val())) {
+// 								$('.tdpw')
+// 										.html(
+// 												'<p class="pl-1 mt-2" style="color:red">8~20자에 특수문자가 반드시 포함된 영어 대소문자,숫자를 사용하세요</p>');
+// 								validate[2] = false;
+// 							} else {
+// 								$('.tdpw').html('<p class="pl-1 mt-2" style="color:#7571f9">적합한 패스워드입니다.</p>');
+// 								validate[2] = true;
+// 							}
+// 							console.log(validate[2]);
+// 						});
+// 		//password check
+// 		$('#user_pwd_chk, #user_pwd').keyup(function() {
+// 			if ($('#user_pwd').val() != $('#user_pwd_chk').val()) {
+// 				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">비밀번호가 다릅니다.</p>');
+// 				validate[3] = false;
+// 			} else {
+// 				$('.tdpwch').html('<p class="pl-1 mt-2" style="color:#7571f9">비밀번호가 일치합니다.<p>');
+// 				validate[3] = true;
+// 			}
+// 			console.log(validate[3]);
+// 		});
 
-		$('input').focus(function() {
-			$(this).css('border-bottom', "1px solid #7571f9");
-		});
-		$('input').blur(function() {
-			$(this).css('border-bottom', '1px solid #f5f5f5');
-		});
+// 		$('input').focus(function() {
+// 			$(this).css('border-bottom', "1px solid #7571f9");
+// 		});
+// 		$('input').blur(function() {
+// 			$(this).css('border-bottom', '1px solid #f5f5f5');
+// 		});
 		
-		$('button:submit').click(function() {
-			for (let i = 0; i < validate.length; i++) {
-				if (validate[i] == false) {
-					console.log(i);
-					switch (i) {
-					case 0:
-						$('#user_email').focus();
-						$('.tdemail').html('<p class="pl-3 mt-2" style="color:red">필수 정보입니다.</p>');
-						return false;
-					case 1:
-						$('#user_nickname').focus();
-						$('.tdnickname').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
-						return false;	
-					case 2:
-						$('#user_pwd').focus();
-						$('.tdpw').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
-						return false;
-					case 3:
-						$('#user_pwd_chk').focus();
-						$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
-						return false;
+// 		$('button:submit').click(function() {
+// 			for (let i = 0; i < validate.length; i++) {
+// 				if (validate[i] == false) {
+// 					console.log(i);
+// 					switch (i) {
+// 					case 0:
+// 						$('#user_email').focus();
+// 						$('.tdemail').html('<p class="pl-3 mt-2" style="color:red">필수 정보입니다.</p>');
+// 						return false;
+// 					case 1:
+// 						$('#user_nickname').focus();
+// 						$('.tdnickname').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+// 						return false;	
+// 					case 2:
+// 						$('#user_pwd').focus();
+// 						$('.tdpw').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+// 						return false;
+// 					case 3:
+// 						$('#user_pwd_chk').focus();
+// 						$('.tdpwch').html('<p class="pl-1 mt-2" style="color:red">필수 정보입니다.</p>');
+// 						return false;
 					
-					}
-				}
-			}
-			if ($('#user_email').attr("email_chk") == "fail"){
-				  alert("이메일 인증을 해주시기 바랍니다.");
-				  $('#user_email').focus();
-				    return false;
-			}			
+// 					}
+// 				}
+// 			}
+// 			if ($('#user_email').attr("email_chk") == "fail"){
+// 				  alert("이메일 인증을 해주시기 바랍니다.");
+// 				  $('#user_email').focus();
+// 				    return false;
+// 			}			
 		});	
         	 
         	 
         	 
-        	 $("#emailCheck").click(function(){
-        		 console.log("emailCheck버튼 눌림")
-        		 $.ajax({
-                     type: "post",
-                     url : "emailCheck",
-                     data : {"user_email" : $('#user_email').val()},
-                     success : function(data) {
-                           console.log(data);
-                           if(data == 1) {
-                           		alert("이미 같은 메일이 존재합니다!");
-                           		$('#user_email').focus();
-                           		return false;
-                           } else {
-                               alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
-                              	console.log($('#emailChecking').children().length);
-                               if($('#emailChecking').children().length == 0){
-	                             $('#emailChecking').append(
-	                           		"<div class='row mb-4'><div class='col'><input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'></div>"
-	                            	+ "<div class='col-3'><button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button></div></div>"
-	                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
+//         	 $("#emailCheck").click(function(){
+//         		 console.log("emailCheck버튼 눌림")
+//         		 $.ajax({
+//                      type: "post",
+//                      url : "emailCheck",
+//                      data : {"user_email" : $('#user_email').val()},
+//                      success : function(data) {
+//                            console.log(data);
+//                            if(data == 1) {
+//                            		alert("이미 같은 메일이 존재합니다!");
+//                            		$('#user_email').focus();
+//                            		return false;
+//                            } else {
+//                                alert("입력하신 E-mail 주소로 인증번호가 발송됩니다.");
+//                               	console.log($('#emailChecking').children().length);
+//                                if($('#emailChecking').children().length == 0){
+// 	                             $('#emailChecking').append(
+// 	                           		"<div class='row mb-4'><div class='col'><input type='text' class='form-control' placeholder='이메일을 통해 받은 인증번호를 입력하세요' id='confirmNum'></div>"
+// 	                            	+ "<div class='col-3'><button type='button' class='btn btn-outline-primary' id='confirm'>인증번호 확인</button></div></div>"
+// 	                                + "<input type='hidden' class='form-control' id='confirmVal' required>"
 	                               
-	                               );
-                             };
-								/* $('#confirmNum').attr(type,'text');
-								$('#confirm').removeAttr('hidden'); */
-                               $.ajax({
-                                     type : "post",
-                                     url : "confirmEmail",
-                                     data : {"user_email" : $('#user_email').val()},
-                                     success : function(data) {
-                                         alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
-                                         $('#confirm').click(function() {
-					        		 		console.log("confirm버튼 눌림")
-                                             console.log(data);
-					        		 		console.log($('#confirmNum').val());
-                                             if($('#confirmNum').val().trim() != data) {
-                                                 alert("인증정보가 정확하지 않습니다!")
-                                             } else {
-                                                 alert("인증정보가 확인되었습니다!")
-                                                 $('#confirmVal').val('1');
-                                                 $('#user_email').attr("email_chk", "success");
-                                             }
-                                         })
-                                     }
-                                 });
-                           }
-                       }
-                 })
-        	 });
-         });
+// 	                               );
+//                              };
+// 								/* $('#confirmNum').attr(type,'text');
+// 								$('#confirm').removeAttr('hidden'); */
+//                                $.ajax({
+//                                      type : "post",
+//                                      url : "confirmEmail",
+//                                      data : {"user_email" : $('#user_email').val()},
+//                                      success : function(data) {
+//                                          alert("인증번호를 발송했습니다!", "메일을 확인해주세요!")
+//                                          $('#confirm').click(function() {
+// 					        		 		console.log("confirm버튼 눌림")
+//                                              console.log(data);
+// 					        		 		console.log($('#confirmNum').val());
+//                                              if($('#confirmNum').val().trim() != data) {
+//                                                  alert("인증정보가 정확하지 않습니다!")
+//                                              } else {
+//                                                  alert("인증정보가 확인되었습니다!")
+//                                                  $('#confirmVal').val('1');
+//                                                  $('#user_email').attr("email_chk", "success");
+//                                              }
+//                                          })
+//                                      }
+//                                  });
+//                            }
+//                        }
+//                  })
+//         	 });
+//          });
         	 
         	 /*$("#registerBtn").click(function() {
                 $.ajax({
