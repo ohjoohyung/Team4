@@ -31,14 +31,20 @@ public class MainService {
 	//메인 루틴
 	public List<RoutineBoardUserJoinDto> routineBrdMain() throws ClassNotFoundException, SQLException, ParseException {
 		MainDao maindao = sqlsession.getMapper(MainDao.class);
-		List<RoutineBoardUserJoinDto> list = maindao.routineBrdMain();
-		for(RoutineBoardUserJoinDto r : list) {
+		List<RoutineBoardUserJoinDto> returnResult = null;
+		if(maindao.routineBrdMainToday().isEmpty()) {
+			returnResult = maindao.routineBrdMain();
+		} else {
+			returnResult = maindao.routineBrdMainToday();
+		}
+		for(RoutineBoardUserJoinDto r : returnResult) {
 			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_brd_regdate());
 			String formatDate = DateUtils.formatTimeString(date);
 			System.out.println(formatDate);
 			r.setRoutine_brd_regdate(formatDate);
 		}
-		return list;
+		return returnResult;
+		
 	}
 	
 	//메인 프리보드

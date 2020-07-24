@@ -261,7 +261,7 @@ color: #7571f9;
 																<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
 															</div>
 															<div class="card-text">
-																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+																<span th:text="${todayMain.routine_brd_regdate}"><i class="icon-clock"></i>&nbsp;&nbsp;</span>
 															</div>
 															<div class="card-text">
 																<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
@@ -294,7 +294,7 @@ color: #7571f9;
 											<div id="icon2">
 												<div class="card-footer" style="float:left;">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
-													<span class="icon-clock"></span>&nbsp;20분 전
+													<span class="icon-clock" th:text="${freeMain.free_brd_date}"></span>&nbsp;
 												</div>
 												<div class="text">
 													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>
