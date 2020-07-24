@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>책 검색 API</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+</head>
+<body>
+	<input id="bookName" type="text">
+	<button id="search">검색</button>
+	<p></p>
+	<script type="text/javascript">
+
+	
+		$('#search').click(function(){
+			
+		
+			$.ajax({
+				url :"https://dapi.kakao.com/v3/search/book?target=title",
+				mehtod : "GET",
+				data : {query: $('#bookName').val() ,
+						size : 50},
+				//headers 에 담는게 발급받은 API키 KakaoAK 발급받은키추가
+				headers :{'Authorization': 'KakaoAK 9815caf9b399fc6245a945478323a147'}	
+			})
+				.done(function(msg){
+					console.log(msg);
+					$('p').append("<strong>"+msg.documents[0].title+"</strong>");
+					$('p').append("<img src='"+msg.documents[0].thumbnail + "'>");
+				});
+			
+		})	
+	
+		//참고링크 : https://cbw1030.tistory.com/60(카카오 오픈API 도서검색)
+	</script>
+</body>
+</html>

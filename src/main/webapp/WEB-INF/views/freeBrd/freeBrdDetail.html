@@ -52,7 +52,8 @@
 								<div class="dropdown-menu">
 									
 										<a class="dropdown-item" th:href="@{/freeBrdEdit(seq=${list.free_brd_seq})}">수정</a>
-										<a	class="dropdown-item" th:href="@{/freeBrdDelete(seq=${list.free_brd_seq})}">삭제</a>
+										<a id="freeBrdDelete" class="dropdown-item" >삭제</a>
+										<!-- onclick="return freeBrdDelete();" -->
 									<!-- 글번호 -->
 									<button id="freeSeq" hidden="hidden" th:value="${list.free_brd_seq}"></button>
 								</div>
@@ -77,7 +78,7 @@
 
 						<div class="col mt-2">
 							<span class="card-text"> 
-								<i class="icon-bubble" th:text="${list.brd_cmt_count}"></i>
+								<i id="cmt_count" th:value="${list.brd_cmt_count}" class="icon-bubble" th:text="${list.brd_cmt_count}"></i>
 							</span>
 						</div>
 						<div class="col-9"></div>
@@ -119,9 +120,34 @@
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 <script type="text/javascript">
-//https://devbox.tistory.com/entry/jQuery-%EB%AC%B8%EC%84%9C-%EC%A4%80%EB%B9%84-%EC%9D%B4%EB%B2%A4%ED%8A%B8 (AJAX 개념)
-	var boardSeq = $('#boardSeq').val();
 
+	
+	$("#freeBrdDelete").on("click", function(){
+
+		var count = $('#cmt_count').text();
+		var seq = $("#freeSeq").val();
+		//alert("댓글 개수" + count +"해당 글번호"+seq);
+		
+		if(count > 0){
+			alert("댓글이 있는 게시물은 삭제 할 수 없습니다!");	
+		}else{
+			if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
+				location.href = "freeBrdDelete?seq="+seq;
+			}
+		} 
+
+	});
+
+
+</script>
+<script type="text/javascript" th:inline="javascript">
+//https://devbox.tistory.com/entry/jQuery-%EB%AC%B8%EC%84%9C-%EC%A4%80%EB%B9%84-%EC%9D%B4%EB%B2%A4%ED%8A%B8 (AJAX 개념)
+var boardSeq = $('#boardSeq').val();
+
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력 
+});
+	
 $('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시 
     var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴(객체 타입으로 가져옴)
     //alert("내용"+insertData);
@@ -130,8 +156,12 @@ $('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시
 
 
 //댓글 목록 
+/*<![CDATA[*/
 function commentList(){
 	// alert('게시글번호'+boardSeq); 게시글 번호 잘가져옴
+	let session_email = /*[[${user}]]*/;
+	//alert("현재 접속한 유저 이메일"+session_email);
+	
     $.ajax({
         url : 'comment/list',
         type : 'get',
@@ -143,9 +173,11 @@ function commentList(){
              $.each(data, function(key, value){ 
                  a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                  a += '<div class="commentInfo'+value.brd_cmt_seq+'">'+'작성자 : '+value.user_nickname;
-                 a += '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
-                 a += '<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
-                 a += '<div> <p> '+value.brd_cmt_date +'</p></div>'
+                 if(value.user_email == session_email){
+            		 a += '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
+                     a += '<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
+            	 }
+                 a += '<div> <p> '+value.brd_cmt_date +'</p></div>'                
                  a += '<div class="commentContent'+value.brd_cmt_seq+'"> <p> 내용 : '+value.brd_cmt +'</p>';
                  a += '</div></div>';
              });
@@ -158,7 +190,9 @@ function commentList(){
 	    }
     });
 }
-
+/*]]>*/
+ 
+ 
 //댓글 수정폼 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(cno, content){
     var a ='';
@@ -256,88 +290,10 @@ function commentDelete(cno){
 			
 } 
 
-$(document).ready(function(){
-    commentList(); //페이지 로딩시 댓글 목록 출력 
-});
+
  
 </script>
 
-
-<!-- 타임리프에서 자바스크립트 구문쓸라면 아래처럼 해줘야함 -->
-<!-- <th:block layout:fragment="script">
-	<script>
-		var seq = $('#freeSeq').val(); 	
-	
-		$(document).ready(function(){
-			console.log("안녕하세요");			
-			/* seq = $('#freeSeq').val();
-			console.log("글번호"+seq); */			
-			listReply();
-			
-			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리)
-			$("#btnReply").click(function(){
-				var replytext = $("#replytext").val();
-				var seq = $('#freeSeq').val();
-				var param ="replytext="+replytext+"&seq="+seq;
-				alert("글번호:"+seq);
-				//alert("param:"+param); //여기까지 잘넘어옴
-				//댓글 Insert는 되는데 success로 아예 못탐 
-				$.ajax({
-					type:"get",
-					url:"freeReply/insert",
-					async: false,
-					data : param,
-					success:function(){
-						alert("댓글 등록 완료");
-						
-						//listReply_1(seq); 이함수를 호출하면 에러가 발생함
-						listReply();
-					},
-				 	error : function(error) {
-				        alert("Error!"+error);
-				    }
-				    /* complete : function() {
-				    	listReply();   
-				    }  */
-				});
-				
-			});
-			//댓글쓰기 버튼 클릭 이벤트(Ajax 처리) END
-			
-		});
-						
-		
-		/* 해당 글번호에 해당하는 댓글 목록을 보여줌 */
-		function listReply(){
-			$.ajax({
-				type:"get",
-				url:"freeReply/list?seq="+seq,
-				success:function(result){
-					console.log(result);
-					$("#listReply").html(result); 
-				}
-			});
-		}
-		
-		/* 해당 글번호에 해당하는 댓글을 삭제하는 함수 */
-		function replyDelete(cmt){
-			d_param = "seq="+seq+"&cmt="+cmt;
-			alert("삭제할려고 하는 댓글번호"+cmt);
-			alert("d_param"+d_param);
-			$.ajax({
-				type:"post",
-				url:"freeReply/delete",
-				data : d_param,
-				success:function(result){
-					console.log("댓글 삭제 완료");
-					listReply(); 
-				}
-			});
-		}
-		
-		
-	</script>
-</th:block>  -->
 </html>
 
 

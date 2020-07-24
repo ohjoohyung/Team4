@@ -114,10 +114,7 @@ public class QnaBrdController {
 			return qnabrdservice.qnaAnsInsert(QnaBrdDto);
 		}
 
-		@RequestMapping("/adminUserBrdList")
-		public String adminUserBrdList() {
-			return "admin/adminUserBrdList";
-		}
+	
 		//어드민 Qna끝
 	/*
 	 * @RequestMapping("/myQnaForm")

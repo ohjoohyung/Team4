@@ -1,11 +1,15 @@
-package kr.or.bodiary.freeBrd.controller;
+      package kr.or.bodiary.freeBrd.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -33,6 +38,67 @@ public class FreeBrdController {
 		this.freeBrdService = freeBrdService;
 	}
 	
+	// 썸머노트 이미지 넣는 함수
+    @RequestMapping(value = "freeBrdImage", method = RequestMethod.POST)
+    @ResponseBody
+    public void profileUpload(MultipartFile file, HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+         PrintWriter out = response.getWriter();
+         // PrintWriter out = response.getWriter();
+         // 업로드할 폴더 경로
+         String realFolder = "C:\\summernote\\";
+         // String realFolder =
+         // request.getServletContext().getRealPath("/summernote/upload/");
+
+         System.out.println("업로드할 폴더경로 찍어봅니다.");
+         System.out.println(realFolder);
+         UUID uuid = UUID.randomUUID(); // 랜덤한키 생성해주는 객체
+
+         String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+         String storedFileName = uuid.toString().replaceAll("-", "") + fileExtension;
+         System.out.println("파일 익스텐션은 뭐지??"+fileExtension);
+         System.out.println("올린 파일 이름"+file.getOriginalFilename());
+         System.out.println("우철 : " + storedFileName);
+         // String filePath = "C:\\Users\\ksks7\\OneDrive\\바탕
+         // 화면\\FinalProject\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\nosangStudy\\board\\profileUpload\\";
+         // String filePath = "file:\\C:\\Users\\ksks7\\OneDrive\\바탕
+         // 화면\\FinalProject\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp2\\wtpwebapps\\nosangStudy\\board\\profileUpload\\";
+
+         File f = new File(realFolder + storedFileName);
+         // File f = new File(filepath);
+         if (!f.exists()) {
+            f.mkdirs(); // 존재하지 않으면 경로에 폴더를 생성해서 만들어준다.
+         }
+         Boolean a = f.isAbsolute();
+         System.out.println(a);
+         Boolean b = f.canExecute();
+         System.out.println(b);
+
+         // FileOutputStream fs = new FileOutputStream(filePath + "\\"+
+         // file.getOriginalFilename());//
+         // fs.write(file.getBytes());//
+
+         file.transferTo(f);
+         // out.println(filePath + storedFileName);
+         // out.println("profileUpload/"+email+"/"+str_filename);
+
+         int as = storedFileName.lastIndexOf(".");
+         String bs = storedFileName.substring(0, as);
+         System.out.println("아오 : " + bs);
+
+         response.setContentType("text/html;charset=utf-8");
+         System.out.println("sss");
+         out.println("/filepath/" + storedFileName);
+         out.close();
+      }
+    
+    
+	//책 검색 
+	@RequestMapping("bookSearch")
+	public String bookSearch() {		
+		return "freeBrd/bookSearch";
+	}
 	
 	//전체 게시글(자유,팁,궁금) 보기
 	@RequestMapping("freeBrdList")
@@ -48,21 +114,6 @@ public class FreeBrdController {
 		System.out.println("카테고리 번호"+cateGory);
 		System.out.println("검색타입"+searchType);
 		System.out.println("검색키워드"+keyword);
-		
-		/*
-		//총 게시물수를 받아옴 
-		int totalListCnt;
-		//카테고리 별로 총게시물을 가져오는 숫자가 다름 
-		if(cateGory == 0) {
-			totalListCnt = freeBrdService.allFreeBrdCount();
-		}else if(cateGory == 1) {
-			totalListCnt = freeBrdService.getLibertyCnt(); //자유게시판 총 게시물 
-		}else if(cateGory == 2) {
-			totalListCnt = freeBrdService.getQuestionCnt(); //질문게시판 총 게시물 
-		}else if(cateGory == 3) {
-			totalListCnt = freeBrdService.getTipCnt(); //팁게시판 총 게시물 
-		}
-		*/
 		
 		//검색을 했을 경우 (검색한게 없어도 실행) 
 		model.addAttribute("search",search);
@@ -97,7 +148,14 @@ public class FreeBrdController {
 		//검색후 페이징 처리 계산 (검색한게 없어도 실행) 
 		search.pageInfo(searchListCnt, page);
 		
-		List<FreeBrdDTO> freeBrdList = freeBrdService.allFreeBrd(search);
+		List<FreeBrdDTO> freeBrdList = null;
+		if(cateGory == 0) {
+			System.out.println("전체게시물중에 해당조건 가져오기----------------------------------------------------");
+			freeBrdList = freeBrdService.allCatFreeBrd(search);
+		}
+		else{
+			freeBrdList = freeBrdService.allFreeBrd(search);
+		}
 		
 		//로그인한 해당 유저의 정보를 뽑아올수 있음  
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");

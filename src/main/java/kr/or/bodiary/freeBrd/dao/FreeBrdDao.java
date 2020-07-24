@@ -6,13 +6,21 @@ import java.util.List;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.freeBrd.dto.Search;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 
 
 public interface FreeBrdDao {
-	//전체 게시글 가져오기(팁,자유,궁금) 원본
-		//public List<FreeBrdDto> allFreeBrd(@Param("startIndex")int startIndex,@Param("pageSize")int pageSize) throws ClassNotFoundException, SQLException;	
+	
+		//관리자 페이지 유저관리 (해당 유저 루틴자랑 게시판 리스트 가져오기)
+		public List<RoutineBrdDto> getUserRoutineBrdList(String user_email) throws ClassNotFoundException, SQLException;
+	
+		//관리자 페이지 유저관리 (해당 유저 자유게시판 리스트 가져오기)
+		public List<FreeBrdDTO> getUserFreeBrdList(String user_email) throws ClassNotFoundException, SQLException;
+		
+	    //모든 카테고리 전체 게시글 가져오기(팁,자유,궁금) 
+		public List<FreeBrdDTO> allCatFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
 
-		//전체 게시글 가져오기(팁,자유,궁금)
+		//해당카테고리의 전체 게시글 가져오기(팁,자유,궁금)
 		public List<FreeBrdDTO> allFreeBrd(Search search) throws ClassNotFoundException, SQLException;	
 		
 		//전체 게시글 가져오기(팁,자유,궁금)

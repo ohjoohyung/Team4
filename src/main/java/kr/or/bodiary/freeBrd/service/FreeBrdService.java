@@ -94,7 +94,7 @@ public int allFreeBrdCount(Search search) throws Exception {
 	return result;
 }
 
-	// 전체 게시글(자유,팁,궁금) 목록보기(가짜) 
+	// 해당 카테고리 전체 게시글(자유,팁,궁금) 목록보기
 	public List<FreeBrdDTO> allFreeBrd(Search search) {
 	
 		List<FreeBrdDTO> list = null;
@@ -102,6 +102,7 @@ public int allFreeBrdCount(Search search) throws Exception {
 		try {
 			System.out.println("시작인덱스"+search.getStartIndex());
 			System.out.println("한페이지 사이즈"+search.getPageSize());
+			System.out.println("카테고리"+search.getCateGory());
 			// mapper 를 통한 FreeBrdDao 인터페이스 연결
 			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
 			list = FreeBrd.allFreeBrd(search);
@@ -112,6 +113,7 @@ public int allFreeBrdCount(Search search) throws Exception {
 			for(int i=0;i<list.size();i++) {
 				//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
 				list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+				System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
 			}
 			
 		} catch (Exception e) {
@@ -122,29 +124,32 @@ public int allFreeBrdCount(Search search) throws Exception {
 		return list;
 	}
 		
-// 전체 게시글(자유,팁,궁금) 목록보기(원본)
-/*
-public List<FreeBrdDto> allFreeBrd(int startIndex,int pageSize) {
-
-	List<FreeBrdDto> list = null;
-
-	try {
-		// mapper 를 통한 FreeBrdDao 인터페이스 연결
-		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-		list = FreeBrd.allFreeBrd(startIndex,pageSize);
-		
-		for(int i=0;i<list.size();i++) {
-			System.out.println(list.get(i).getFree_brd_seq()+"번호");
+	//전체 카테고리 게시글(자유,팁,궁금) 목록보기
+	public List<FreeBrdDTO> allCatFreeBrd(Search search) {
+	
+		List<FreeBrdDTO> list = null;
+	
+		try {
+			// mapper 를 통한 FreeBrdDao 인터페이스 연결
+			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			list = FreeBrd.allCatFreeBrd(search);
+			
+			//해당 게시글의 총댓글 개수 얻어옴 
+			FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+			for(int i=0;i<list.size();i++) {
+				//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+				list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+				System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("allCatFreeBrd() 함수 실행중 오류발생" + e.getMessage());
 		}
-		
-	} catch (Exception e) {
-		e.printStackTrace();
-		System.out.println("allFreeBrd() 함수 실행중 오류발생" + e.getMessage());
+	
+		return list;
 	}
 
-	return list;
-}
-*/
 
 	// 글 상세보기 서비스 함수
 	public FreeBrdDTO freebrdDetail(String seq) {

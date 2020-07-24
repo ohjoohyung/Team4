@@ -29,10 +29,13 @@ public class FreeBrdReplyService {
 		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
 		List<FreeBrdReplyDTO> rList = list.replyList(Integer.parseInt(seq));
 	
-		for(int i=0;i<rList.size();i++) {
+		
+		
+		
+		/*for(int i=0;i<rList.size();i++) {
 			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
 			rList.get(i).setBrd_cmt_count(list.commentCount(rList.get(i).getFree_brd_seq()));
-		}
+		}*/
 		
 		return rList;
 	}

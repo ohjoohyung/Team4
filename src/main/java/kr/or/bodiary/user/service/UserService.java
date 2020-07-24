@@ -1,6 +1,8 @@
 package kr.or.bodiary.user.service;
 
 import java.io.FileOutputStream;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
@@ -16,6 +18,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.Pagination;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.EmailDto;
 import kr.or.bodiary.user.dto.UserDto;
@@ -34,6 +40,78 @@ public class UserService {
 		this.sqlsession = sqlsession;
 	}
 
+	//------------ 모든 유저 리스트 가져오기 ------------------ (동률)
+	public List<UserDto> getUserList() {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		List<UserDto> userList = null;
+		try {
+			userList = userdao.getUserList();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return userList;
+	}
+	
+	//------------ 해당 유저 권한 수정하기------------------ (동률)
+	public int userRoleUpdate(String role,String email) {
+		UserDto user = new UserDto();
+		user.setRole_name(role);
+		user.setUser_email(email);
+		
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		int userRoleUpdate = 0;
+		try {
+			userRoleUpdate = userdao.userRoleUpdate(user);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		
+		return userRoleUpdate;
+	}
+	
+	//------------ 해당 유저의 총 자유게시물 개수 가져오기------------------ (동률)
+	public int freeBrdCount(String user_email) throws ClassNotFoundException, SQLException {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		return userdao.freeBrdCount(user_email);
+	}
+	
+	//------------ 해당 유저의 총 루틴 자랑 게시물 개수 가져오기------------------ (동률)
+	public int routineBrdCount(String user_email) throws ClassNotFoundException, SQLException {
+		UserDao userdao = sqlsession.getMapper(UserDao.class);
+		return userdao.routineBrdCount(user_email);
+	}
+	
+	//------------ 해당 유저 자유게시판 리스트 가져오기 ------------------ (동률)
+	public List<FreeBrdDTO> getUserFreeBrdList(String user_email) {
+		FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		
+		List<FreeBrdDTO> userFreeBrdList = null;
+		try {
+			userFreeBrdList = FreeBrd.getUserFreeBrdList(user_email);
+			for(int i=0;i<userFreeBrdList.size();i++) {
+				System.out.println("글번호"+userFreeBrdList.get(i).getFree_brd_seq());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return userFreeBrdList;
+	}
+	//------------ 해당 유저 루틴 자랑게시판 리스트 가져오기 ------------------ (동률)
+	public List<RoutineBrdDto> getUserRoutineBrdList(String user_email) {
+		FreeBrdDao routineBrd = sqlsession.getMapper(FreeBrdDao.class);
+		
+		List<RoutineBrdDto> userRoutineBrdList = null;
+		try {
+			userRoutineBrdList = routineBrd.getUserRoutineBrdList(user_email);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+		return userRoutineBrdList;
+	}
+	
 	// -----------유저찾기 서비스-----------
 
 	public UserDto getUser(String user_email) {

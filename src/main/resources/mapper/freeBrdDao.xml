@@ -4,17 +4,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.bodiary.freeBrd.dao.FreeBrdDao">
 
+
+		<!-- 관리자 페이지 유저관리 (해당 유저 루틴자랑게시판 리스트 가져오기) -->
+		<select id="getUserRoutineBrdList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBrdDto">
+			select * 
+			from routineboard
+			where user_email = #{user_email}
+		</select>
+		
+		<!-- 관리자 페이지 유저관리 (해당 유저 자유게시판 리스트 가져오기) -->
+		<select id="getUserFreeBrdList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
+			select * 
+			from freeboard 
+			where user_email = #{user_email}		
+		</select>
 	
-	   <!-- 전체게시글 가져오는 쿼리문  원본 -->
-	  <!--  <select id="allFreeBrd"   parameterType="int" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDto">
+	   <!-- 모든 카테고리 전체게시글 가져오는 쿼리문 왜 이것만 검색이 안되지??? -->
+	   <select id="allCatFreeBrd"  parameterType="kr.or.bodiary.freeBrd.dto.Search" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
 	   				SELECT *
 	   				FROM freeboard
-	   				ORDER BY free_brd_seq DESC
+	   				INNER JOIN User
+	   				ON freeboard.user_email = User.user_email
+	   				<trim prefix="WHERE" prefixOverrides="AND|OR">
+						
+						
+					
+							<if test="searchType=='title' and keyword != null and keyword != '' ">
+				
+								AND freeboard.free_brd_title like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='content' and keyword != null and keyword != '' ">
+				
+								AND freeboard.free_brd_content like CONCAT('%', #{keyword}, '%')
+				
+							</if>
+				
+							<if test="searchType=='nickName' and keyword != null and keyword != '' ">
+				
+								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
+				
+							</if>	
+							
+						
+					</trim>
+					ORDER BY free_brd_seq DESC
 	   				LIMIT #{startIndex},#{pageSize}		
-	   					
-	   </select> -->
+	   </select> 
 	   
-	    <!-- 전체게시글 가져오는 쿼리문  가짜 -->
+	    <!-- 전체게시글 가져오는 쿼리문   -->
 	   <select id="allFreeBrd"   parameterType="kr.or.bodiary.freeBrd.dto.Search" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
 	   				SELECT *
 	   				FROM freeboard
@@ -23,7 +62,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   				<trim prefix="WHERE" prefixOverrides="AND|OR">
 						
 						<if test="cateGory != null and cateGory != '' ">
+							<!-- 전체게시판의 카테고리가 0인데 카테고리가 0 인데이터는 하나도 없기때문에 (1+2+3)을 한값을 넣어줘야됨 -->
 							AND free_cat = #{cateGory}
+							
+							
 							<if test="searchType=='title' and keyword != null and keyword != '' ">
 				
 								AND free_brd_title like CONCAT('%', #{keyword}, '%')
@@ -41,6 +83,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								AND User.user_nickname like CONCAT('%', #{keyword}, '%')
 				
 							</if>	
+							
 						</if>
 					</trim>
 					ORDER BY free_brd_seq DESC
@@ -54,31 +97,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			FROM freeboard
 			INNER JOIN User
 	   		ON freeboard.user_email = User.user_email
-			<trim prefix="WHERE" prefixOverrides="AND|OR">
-
-				<if test="keyword != null and keyword != '' ">
-	
-					<if test="searchType=='title'">
-		
-						AND free_brd_title like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-		
-					<if test="searchType=='content'">
-		
-						AND free_brd_content like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-		
-					<if test="searchType=='nickName'">
-		
-						AND User.user_nickname like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-	
-	     		 </if>
-
-			</trim>
 	   </select>
 	   
 	   <!-- 자유 게시글 총개수 가져오기 -->

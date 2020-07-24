@@ -11,11 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.bodiary.admin.service.ExerciseService;
 import kr.or.bodiary.exercise.dto.ExerciseDto;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.notice.service.NoticeService;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
+import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.user.service.UserService;
 
 @Controller
 public class AdminController {
@@ -31,8 +37,76 @@ public class AdminController {
 	public void setNoticeService(NoticeService noticeservice) {
 		this.noticeservice = noticeservice;
 	}
+	//동률 -------------------------------------------------------------------
+	@Autowired
+	private UserService userService;
+	
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 	
 
+	//유저 관리 페이지 
+	@RequestMapping("/adminUserBrdList")
+	public String adminUserBrdList(Model model) {
+		System.out.println("유저관리 페이지로 이동............");
+		//모든 유저를 가져오는 서비스 호출 
+		List<UserDto> userList = userService.getUserList();
+		model.addAttribute("userList",userList);
+		
+		return "admin/adminUserBrdList";
+	}
+	
+	//유저 권한 수정 컨트롤러 
+	@RequestMapping("/adminRoleUpdate")
+	public String adminRoleUpdate(String role,String email) {
+		System.out.println("수정할 권한 "+role);
+		System.out.println("수정할 권한 이메일 "+email);
+		System.out.println("해당 유저 권한 수정중 ............");
+		
+		//해당 유저의 권한을 수정하는 서비스 호출 
+		int result = userService.userRoleUpdate(role,email);
+		
+		if(result == 1) System.out.println("수정성공(result값이 1이라면)"+result);
+
+		
+		return "redirect:adminUserBrdList";
+	}
+	
+	//해당 유저 디테일 페이지
+	@RequestMapping("/adminUserBrdDetail")
+	public String adminUserBrdDetail(String userEmail,Model model) throws ClassNotFoundException, SQLException {
+		System.out.println("해당 유저 세부 페이지로 이동............");
+		
+		//해당유저의 전체 자유게시물 개수 
+		int totalFreeBrdCount = userService.freeBrdCount(userEmail);
+		//해당 유저의 전체 루틴자랑 게시물 개수 
+		int totalRoutineBrdCount = userService.routineBrdCount(userEmail);		
+				
+		UserDto getUser = null;
+		List<FreeBrdDTO> UserFreeBrdList = null;
+		List<RoutineBrdDto> UserRoutineBrdList = null;
+		try {		
+			getUser = userService.getUser(userEmail);
+			//해당 유저의 모든 자유 게시글을 얻어오는 서비스 호출 
+			UserFreeBrdList = userService.getUserFreeBrdList(userEmail);
+			//해당 유저의 모든 루틴 자랑 게시글을 얻어오는 서비스 호출 
+			UserRoutineBrdList = userService.getUserRoutineBrdList(userEmail);
+		}catch (Exception e) {
+			System.out.println("에러발생...");
+		    System.out.println(e.getMessage());
+		}
+		
+		model.addAttribute("UserRoutineBrdList",UserRoutineBrdList);
+		model.addAttribute("UserFreeBrdList",UserFreeBrdList);
+		model.addAttribute("routineBrdCount",totalRoutineBrdCount);
+		model.addAttribute("freeBrdCount",totalFreeBrdCount);
+		model.addAttribute("getUser",getUser);
+		
+		return "admin/adminUserBrdDetail";
+	}
+	
+	//동률 -------------------------------------------------------------------
 	
 	@RequestMapping("/admin")
 	public String adminDashBrd() {

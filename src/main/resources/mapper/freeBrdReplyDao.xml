@@ -14,11 +14,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	 <!-- 댓글목록 -->
 	 <select id="replyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
-	 		SELECT f.free_brd_seq,f.brd_cmt_seq,f.user_email,f.brd_cmt,f.brd_cmt_date,user_nickname
+			SELECT f.free_brd_seq,f.brd_cmt_seq,f.user_email,f.brd_cmt,f.brd_cmt_date,User.user_nickname
 			FROM freeboardcomment f
 			INNER JOIN User 
+            on f.user_email = User.user_email
 			WHERE free_brd_seq = #{seq}
-			order by f.brd_cmt_seq desc
+			order by f.brd_cmt_seq desc;
 	 </select>
    
    

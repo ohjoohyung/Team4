@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="admin/adminFragments/adminHead :: adminHeadFragment"></th:block>
+<head>
+
+</head>
+<body>
+		<!-- 공통 nav -->
+	<div class="bodiary-wrapper main-wrapper">
+		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
+	
+		<div class="container-fluid" style="margin-left: 242px;"> 	
+			<div class="row">
+				<!-- 유저 정보들  -->
+				<div class="col-lg-4 col-xl-4">
+				   <div class="card" style="background-color:#99CCFF;">
+	                    <div class="card-body">
+	                        <div class="media align-items-center mb-4">
+	                            <img class="mr-3" width="80" height="80" alt="" th:src="@{assets/upload/userUpload/}+${getUser.user_img}">
+	                            <div class="media-body">
+	                                <h3 class="mb-0" th:text="${getUser.user_nickname}"></h3>
+	                                <p th:text="${getUser.user_gender}"></p>
+	                            </div>
+	                        </div>
+	                        
+	                        <div class="row mb-5">
+	                            <div class="col">
+	                                <div class="card card-profile text-center">
+	                                    <span class="mb-1 text-primary"><i class="icon-people"></i></span>
+	                                    <h3 class="mb-0" th:text="${routineBrdCount}"></h3>
+	                                    <p class="text-muted px-4">루틴 자랑게시판 총 게시물</p>
+	                                </div>
+	                            </div>
+	                            <div class="col">
+	                                <div class="card card-profile text-center">
+	                                    <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
+	                                    <h3 class="mb-0" th:text="${freeBrdCount}"></h3>
+	                                    <p class="text-muted">자유게시판 총 게시물</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-12 text-center">
+	                            	<button type="button" onclick="location.href='adminUserBrdList'"
+									class="btn btn-outline-primary">유저관리 목록</button>
+	                       
+	                            </div>
+	                        </div>
+	
+	                        <h4>About Me</h4>
+	                        <ul class="card-profile__info">
+	                            <li class="mb-1"><strong class="text-dark mr-4">나이</strong> <span th:text="${getUser.user_age}"></span></li>
+	                            <li class="mb-1"><strong class="text-dark mr-4">키</strong> <span th:text="${getUser.user_height}"></span></li>
+	                            <li class="mb-1"><strong class="text-dark mr-4">몸무게</strong> <span th:text="${getUser.user_weight}"></span></li>
+	                            <li class="mb-1"><strong class="text-dark mr-4">등급</strong> <span th:text="${getUser.user_grade}"></span></li>
+	                            <li><strong class="text-dark mr-4">Email</strong> <span th:text="${getUser.user_email}"></span></li>
+	                        </ul>
+	                    </div>
+	                </div>
+	              </div> 
+	               <!-- 유저 정보들 END  -->
+	               
+	              <div class="col-lg-8 col-xl-8"> 
+		               <div class="card">
+	                            <div class="card-body">
+	                                <ul class="nav nav-pills mb-3">
+	                                    <li class="nav-item"><a href="#navpills-1" class="nav-link active show" data-toggle="tab" aria-expanded="false">자유게시판 게시물</a>
+	                                    </li>
+	                                    <li class="nav-item"><a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">루틴자랑 게시판 게시물</a>
+	                                    </li>                                 
+	                                </ul>
+	                                <div class="tab-content br-n pn">
+	                                    <div id="navpills-1" class="tab-pane active show" >
+					                            
+					                            <div class="media media-reply" th:each="UserFreeBrdList : ${UserFreeBrdList}">
+					                                <div class="media-body">
+					                                    <div class="d-sm-flex justify-content-between mb-2">
+					                                    	<!-- 제목 -->
+					                                        <h5 class="mb-sm-0" th:text="${UserFreeBrdList.free_brd_title}"></h5>
+					                                        <div class="media-reply__link">
+					                                        	<!-- 조회수 -->
+					                                        	<i class="icon-eye" th:text="${UserFreeBrdList.free_brd_hits}"></i>
+					                                        	<!-- 신고수  -->
+					                                        	<i class="fa fa-exclamation-circle" th:text="${UserFreeBrdList.free_brd_report_num}"></i>
+					                                        	<!-- 삭제버튼 -->
+					                                        	<i class="fa fa-trash"></i>
+					                                            
+					                                        </div>
+					                                    </div>
+					                                 	<!--  내용 -->
+					                                    <p th:utext="${UserFreeBrdList.free_brd_content}"></p>
+					                                </div>
+					                            </div>
+		
+	                                    </div>
+	                                    <div id="navpills-2" class="tab-pane">
+	              
+				                            <div class="media media-reply" th:each="UserRoutineBrdList : ${UserRoutineBrdList}">
+				                              
+				                                <div class="media-body">
+				                                    <div class="d-sm-flex justify-content-between mb-2">
+				                                    	
+				                                        <h5 class="mb-sm-0" th:text="${UserRoutineBrdList.routine_brd_title}"></h5>
+				                                        <div class="media-reply__link">
+				                                        	<!-- 좋아요 수 -->
+				                                            <i class="fa fa-thumbs-up" th:text="${UserRoutineBrdList.brd_rec}"></i>
+				                                           	<!-- 조회수 -->
+				                                        	<i class="icon-eye" th:text="${UserRoutineBrdList.routine_brd_hit}"></i>
+				                                          	  <!-- 삭제버튼 -->
+				                                        	<i class="fa fa-trash"></i>
+				                                        </div>
+				                                    </div>
+				                               		   <!--내용 -->
+				                                    <p th:utext="${UserRoutineBrdList.routine_brd_content}"></p>    
+				                                </div>
+				                            </div>
+	                                    </div>
+	                                  
+	                                </div>
+	                            </div>
+	                        </div>
+	               </div>
+	     
+			</div>
+		</div>
+		 <!--**********************************
+            Footer start
+        ***********************************-->
+		<th:block th:replace="admin/adminCommon/adminFooter :: adminFooterFragment"></th:block>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+	</div>
+	<!-- 기본 폼 완성 -->
+	<!-- 공통 스크립트-->
+	<th:block th:replace="admin/adminFragments/adminScript :: adminScriptFragment"></th:block>
+
+    
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
