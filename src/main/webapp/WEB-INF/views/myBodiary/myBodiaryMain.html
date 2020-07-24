@@ -36,30 +36,32 @@
                     <div class="card-body" th:if="${todayCount > 0}">
                         <h4 class="card-title" ><span th:text="${session.currentUser.user_nickname}"></span>님!</h4>
                         <p class="card-text">오늘의 일지를 이미 작성하셨어요. 확인하러 가볼까요?</p>
-                        <a href="myBodiaryForm" class="btn btn-primary">확인하러 가기 <i class="icon-note menu-icon"></i></a>
+                        <a href="" id="already" class="btn btn-primary">확인하러 가기 <i class="icon-note menu-icon"></i></a>
                     </div>    
                 </div>
                 <div class="row">
                 <th:block th:each="bodiary : ${list}">
 	                <div class="grid-item card ml-3">
+	                <div class="card-body">
+	                 <i class="icon-clock"></i>&nbsp;&nbsp;
+						                    	<h2 class="card-text" th:text="${bodiary.diary_date}"></h2>
+	                
 					<a th:href="@{/myBodiaryDetail(diary_seq=${bodiary.diary_seq})}" class="card-link">
 						 
-						<!-- 	<img th:src="@{assets/upload/myBoidaryUpload/}+${bodiary.diary_main_image}" /> -->
-							<div class="card-body">
-		                        
-		                           <h5 class="card-text mt-3 mb-3" th:text="${bodiary.diary_content}"></h5>
-		                        
-		                        <div class="card-footer">
-		                        <i class="icon-clock"></i>&nbsp;&nbsp;
-						                    	<span class="card-text" th:text="${bodiary.diary_date}"></span>
-						                        &nbsp;&nbsp;&nbsp;&nbsp;
-						                        <i class="icon-eye"></i>&nbsp;&nbsp;
-						                        <span class="card-text" th:text="${bodiary.diary_today_weight}" ></span>
-		                           <!-- <p class="card-text float-right" th:text="${today.user_nickname}"></p> -->
+						<img th:src="@{assets/upload/myBodiaryUpload/}+${bodiary.diary_main_img}" /> 
+							</a>
 		                        </div>
+		                          
+		                        <div class="card-footer">
+		                       
+						                        &nbsp;&nbsp;&nbsp;&nbsp;
+						                        
+						                        오늘의 몸무게 : <span class="card-text" th:text="${bodiary.diary_today_weight}+kg" ></span>
+		                         
+		                        
 		                     </div>
 						
-						</a>
+						
 					</div>
                 </th:block>
                 </div>
@@ -70,5 +72,16 @@
 	
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script type="text/javascript" th:inline="javascript">
+	/*<![CDATA[*/
+		var list = /*[[ ${list} ]]*/
+		console.log(list[0].diary_seq);
+	/*]]>*/
+	$(function() {
+		$('#already').attr("href", "myBodiaryDetail?diary_seq="+list[0].diary_seq+"");
+	});
+
+
+	</script>
 </body>
 </html>

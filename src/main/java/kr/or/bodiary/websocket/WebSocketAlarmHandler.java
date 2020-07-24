@@ -84,7 +84,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			
 			int count = 0;
 			//나중에 어드민으로 정한 이메일 또는 role이 어드민 일 경우로 바꾸자
-			if(users.containsKey(user_email) && user_email.equals("kimdukkung@naver.com")) {
+			if(users.containsKey(user_email) && user_email.equals("xntm1111@gmail.com")) {
 				count = qnabrddao.getCountAdminNotRead();
 				if(count > 0) {
 					obj.put("text", "새로운 문의가 도착했습니다.");
@@ -98,7 +98,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 				 users.get(user_email).sendMessage(msg);
 				  log(user_email + " / " + message.getPayload() + " / " + msg.getPayload());
 				  
-			} else if(users.containsKey(user_email) && !user_email.equals("kimdukkung@naver.com")) {
+			} else if(users.containsKey(user_email) && !user_email.equals("xntm1111@gmail.com")) {
 				count = qnabrddao.getCountUserNotRead(user_email);
 				System.out.println("유저 카운트 : " +count);
 				if(count > 0) {
@@ -134,8 +134,8 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			obj.put("count", count);
 			System.out.println(obj.toJSONString());
 			TextMessage msg = new TextMessage(obj.toJSONString());
-			users.get("kimdukkung@naver.com").sendMessage(msg);
-			log("kimdukkung@naver.com" + " / " + message.getPayload() + " / " + msg.getPayload());
+			users.get("xntm1111@gmail.com").sendMessage(msg);
+			log("xntm1111@gmail.com" + " / " + message.getPayload() + " / " + msg.getPayload());
 		} else {
 			String title = (String)obj.get("qna_brd_title");
 			String content = (String)obj.get("qna_brd_content");
@@ -149,6 +149,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 			qnabrddto.setQna_brd_title(title);
 			qnabrddto.setQna_brd_content(content);
 			qnabrddto.setQna_brd_ref(Integer.parseInt(ref));
+			
 			qnabrddao.insertQnaAnsBrd(qnabrddto);
 			qnabrddao.updateQnaRep(Integer.parseInt(ref));
 			

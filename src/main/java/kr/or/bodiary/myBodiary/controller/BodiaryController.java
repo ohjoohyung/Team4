@@ -33,6 +33,7 @@ import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
+import kr.or.bodiary.utils.DateUtils;
 
 
 @Controller
@@ -99,14 +100,19 @@ public class BodiaryController {
 	
 	//일지 컨트롤러
 	@RequestMapping("/myBodiaryMain")
-	public String myBodiaryMain(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+	public String myBodiaryMain(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException, ParseException {
 
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		int todayCount = bodiaryservice.todatBodiaryCount(user.getUser_email());
 		
 		String pagesize = "4";
 		List<BodiaryDto> list = bodiaryservice.getBodiaryList(user.getUser_email(), pagesize);
-		
+		for(BodiaryDto b : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(b.getDiary_date());
+			String formatDate = DateUtils.formatTimeString(date);
+			System.out.println(formatDate);
+			b.setDiary_date(formatDate);
+		}
 		model.addAttribute("todayCount", todayCount);
 		model.addAttribute("list", list);
 		return "myBodiary/myBodiaryMain";

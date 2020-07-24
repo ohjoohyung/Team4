@@ -84,22 +84,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <select id="monthlyCount2" resultType="int">
       select count(user_email)
       from user
-      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+      where user_insertdate=CURDATE() - INTERVAL 2 DAY;
    </select>
    <select id="monthlyCount3" resultType="int">
       select count(user_email)
       from user
-      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+      where user_insertdate=CURDATE() - INTERVAL 3 DAY;
    </select>
    <select id="monthlyCount4" resultType="int">
       select count(user_email)
       from user
-      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+      where user_insertdate=CURDATE() - INTERVAL 4 DAY;
    </select>
    <select id="monthlyCount5" resultType="int">
       select count(user_email)
       from user
-      where user_insertdate=CURDATE() - INTERVAL 1 DAY;
+      where user_insertdate=CURDATE() - INTERVAL 5 DAY;
    </select>
    <!-- 회원가입 -->
 	<insert id="insertUser">

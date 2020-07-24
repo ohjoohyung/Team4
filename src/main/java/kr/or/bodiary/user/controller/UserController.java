@@ -149,7 +149,7 @@ public class UserController {
 	        session = request.getSession();
 	        session.setAttribute("currentUser", user);
 	        //로그인 유저 정보 가져와서 세션객체에 저장 끝//      
-			return "main";
+			return "redirect:main";
 		}
 	//------------- 회원가입 --------------
 	//회원가입 페이지

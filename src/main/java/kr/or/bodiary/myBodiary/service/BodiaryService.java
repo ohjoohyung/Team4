@@ -4,7 +4,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,10 +25,12 @@ import kr.or.bodiary.myBodiary.dao.BodiaryDao;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 import kr.or.bodiary.myBodiary.dto.BodiaryDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.user.dao.UserDao;
 import kr.or.bodiary.user.dto.UserDto;
+import kr.or.bodiary.utils.DateUtils;
 
 
 @Service
@@ -221,7 +225,9 @@ private SqlSession sqlsession;
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("user_email", user_email);
 		map.put("pagesize", pagesize);
-		return bodiarydao.getBodiaryList(map);
+		List<BodiaryDto> list = bodiarydao.getBodiaryList(map);
+		
+		return list;
 	}
 	
 	//오늘 일지 개수 확인하기

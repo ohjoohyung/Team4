@@ -2,6 +2,7 @@ package kr.or.bodiary.main.controller;
 
 
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class MainController {
 		return "index";
 	}
 	@RequestMapping("main")
-	public String main(Model model) throws ClassNotFoundException, SQLException {
+	public String main(Model model) throws ClassNotFoundException, SQLException, ParseException {
 		List<NoticeDto> noticeMain = mainservice.noticeMain();
 		List<RoutineBoardUserJoinDto> routineBrdMain = mainservice.routineBrdMain();
 		List<FreeBrdDTO> freeBrdMain = mainservice.freeBrdMain();

@@ -25,30 +25,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      	</foreach>	
 	</insert>
 	
-	<!-- 일지 쓰기 (나중에 email이랑 닉네임 등 입력받는거 넣어줘야함) 성별에 따라 바꾸는걸 성별을 파라미터로 받아서 그걸로 조건식을 만들어야할듯 트랜잭션도 확실한지 아직 모르겠음-->
-<!-- 	<insert id="writeBodiary" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto" useGeneratedKeys="true" keyProperty="diary_seq"> -->
-<!-- 		<selectKey order="BEFORE" keyProperty="gender" resultType="String"> -->
-<!-- 			select user_gender from user where user_email = '1@1' -->
-<!-- 		</selectKey> -->
-<!-- 		insert into diary (meal_cart_seq, user_email, routine_cart_seq, diary_content, goal_seq -->
-<!-- 		, diary_condition, diary_main_img, diary_date -->
-<!-- 		, diary_today_weight, diary_metabolism, diary_recom, diary_nut) -->
-<!-- 		values (#{meal_cart_seq}, #{user_email}, #{routine_cart_seq}, #{diary_content}, null, #{diary_condition}, #{diary_main_img}, now(),  -->
-<!-- 		#{diary_today_weight},66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email})) -->
-<!-- 		<choose> -->
-<!-- 			<when test="gender == '남'.toString()"> -->
-<!-- 				66.47 + (13.75*#{diary_today_weight}) + (5*(select u -->
-<!-- 				ser_height from user where user_email = '1@1')) - (6.76*(select user_age from user where user_email = '1@1')) -->
-<!-- 			</when> -->
-<!-- 			<otherwise> -->
-<!-- 				655.1 + (9.56*#{diary_today_weight})+(1.85*(select user_height from user where user_email = '1@1'))-(4.68*(select user_age from user where user_email = '1@1')) -->
-<!-- 			</otherwise> -->
-<!-- 		</choose> -->
-<!-- 		,(((select user_height from user where user_email = #{user_email})-100)*0.9)*35 ,  -->
-<!-- 		(select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count -->
-<!-- 		from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f -->
-<!-- 		ON d.food_seq = f.food_seq) a)) -->
-<!-- 	</insert> -->
 
 <!-- 일지 작성하기 (프로시저 활용) -->
 <!-- 입력은 대소문자구분 (to의 필드값)-->

@@ -2,6 +2,9 @@ package kr.or.bodiary.main.service;
 
 
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,8 +13,10 @@ import org.springframework.stereotype.Service;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.main.dao.MainDao;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
+import kr.or.bodiary.utils.DateUtils;
 
 
 @Service
@@ -24,15 +29,29 @@ public class MainService {
 	}
 	
 	//메인 루틴
-	public List<RoutineBoardUserJoinDto> routineBrdMain() throws ClassNotFoundException, SQLException {
+	public List<RoutineBoardUserJoinDto> routineBrdMain() throws ClassNotFoundException, SQLException, ParseException {
 		MainDao maindao = sqlsession.getMapper(MainDao.class);
-		return maindao.routineBrdMain();
+		List<RoutineBoardUserJoinDto> list = maindao.routineBrdMain();
+		for(RoutineBoardUserJoinDto r : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(r.getRoutine_brd_regdate());
+			String formatDate = DateUtils.formatTimeString(date);
+			System.out.println(formatDate);
+			r.setRoutine_brd_regdate(formatDate);
+		}
+		return list;
 	}
 	
 	//메인 프리보드
-	public List<FreeBrdDTO> freeBrdMain() throws ClassNotFoundException, SQLException {
+	public List<FreeBrdDTO> freeBrdMain() throws ClassNotFoundException, SQLException, ParseException {
 		MainDao maindao = sqlsession.getMapper(MainDao.class);
-		return maindao.freeBrdMain();
+		List<FreeBrdDTO> list = maindao.freeBrdMain();
+		for(FreeBrdDTO f : list) {
+			Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getFree_brd_date());
+			String formatDate = DateUtils.formatTimeString(date);
+			System.out.println(formatDate);
+			f.setFree_brd_date(formatDate);
+		}
+		return list;
 	}
 	
 	//메인 공지(풋터)

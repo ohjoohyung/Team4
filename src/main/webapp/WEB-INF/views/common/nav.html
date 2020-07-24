@@ -198,7 +198,7 @@
 	
 		function appendMessage(msg) {
 			$(".alarmCount").html(msg.count);
-			if(msg.type = "view") {
+			if(msg.type == "view") {
 				if(msg.now == "user") {
 					$("#alarmMessage").html(
 							'<li>'+
@@ -230,7 +230,7 @@
 	                             '</div>'+
 	                         '</a>'+
 	                     '</li>'	)
-			} else {
+			} else if(msg.type == "admin"){
 				$("#alarmMessage").html(
 						'<li>'+
 	                         '<a href="myQnaList">'+
@@ -281,12 +281,23 @@
 		
 		
 		
-		
-		
 	
 
 		
 </script>
+
+		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-170180316-1"></script>
+		<script>
+		  window.dataLayer = window.dataLayer || [];
+		  function gtag(){dataLayer.push(arguments);}
+		  gtag('js', new Date());
+
+		  gtag('config', 'UA-170180316-1');
+		</script>
+		
+		
+		
+		
 </th:block>
 
 

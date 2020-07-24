@@ -48,6 +48,8 @@
 							class="card-link"> <img
 							th:src="@{assets/upload/routineBrdUpload/}+${today.brd_image2}" />
 							<div class="card-body">
+							<p class="card-text float-right"
+										th:text="${today.user_nickname}"></p>
 
 								<h5 class="card-text mt-3 mb-3"
 									th:text="${today.routine_brd_title}"></h5>
@@ -57,8 +59,7 @@
 										th:text="${today.routine_brd_regdate}"></span>
 									&nbsp;&nbsp;&nbsp;&nbsp; <i class="icon-eye"></i>&nbsp;&nbsp; <span
 										class="card-text" th:text="${today.routine_brd_hit}"></span>
-									<p class="card-text float-right"
-										th:text="${today.user_nickname}"></p>
+									
 								</div>
 							</div>
 
@@ -172,6 +173,7 @@
 									'<a href="routineBrdDetail?routine_brd_seq='+obj.routine_brd_seq+'" class="card-link">'+
 											'<img src="assets/upload/routineBrdUpload/'+obj.brd_image2+'" />'+
 											'<div class="card-body">'+
+											 '<p class="card-text float-right">'+obj.user_nickname+'</p>'+
 						                          '<h5 class="card-text mt-3 mb-3">'+obj.routine_brd_title+'</h5>'+
 						          
 						                        '<div class="card-footer">'+
@@ -180,7 +182,7 @@
 						                        '&nbsp;&nbsp;&nbsp;&nbsp;'+
 						                        '<i class="icon-eye"></i>&nbsp;&nbsp;'+
 						                        '<span class="card-text" >'+obj.routine_brd_hit+'</span>'+
-						                           '<p class="card-text float-right">'+obj.user_nickname+'</p>'+
+						                          
 						                        '</div>'+
 						                     '</div>'+
 										
