@@ -108,5 +108,33 @@
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가-->
 	<bean id="naverLoginBO" class="kr.or.bodiary.utils.NaverLoginBO" />
 	
+	<!-- google Class Bean설정 추가 -->
+	    
+   <!-- 클라이언트ID와 보안비밀 세팅 -->
+    <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory"> 
+      <constructor-arg value="251070765249-i061fatg6rnqdradkdek95movmo6gh3g.apps.googleusercontent.com"/> 
+      <constructor-arg value="ZGyWCXEMRCW9c4GFoa9p96AC" />
+	</bean>
+      
+      
+   <!-- google 소셜 로그인 연결 설정 -->
+   <bean id="googleOAuth2Template"
+        class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg value="251070765249-i061fatg6rnqdradkdek95movmo6gh3g.apps.googleusercontent.com"/>
+        <constructor-arg value="ZGyWCXEMRCW9c4GFoa9p96AC"/>
+    </bean>
+
+
+   <!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
+    <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters"> 
+      <property name="scope" value="email" /> 
+      <property name="redirectUri" value="http://localhost:8090/bodiary/gCallback" />
+    </bean>
+    <bean id="authInfo" class="kr.or.bodiary.user.dto.AuthInfo">
+        <constructor-arg
+            value="251070765249-i061fatg6rnqdradkdek95movmo6gh3g.apps.googleusercontent.com" />
+        <constructor-arg value="ZGyWCXEMRCW9c4GFoa9p96AC" />
+ 
+    </bean>
 	
 </beans>
