@@ -103,7 +103,7 @@ a:hover{
 }
 
 .jumbotron{
-	height: 480px;
+	height: 440px;
 	
 }
 
@@ -141,7 +141,7 @@ color: #7571f9;
 					<li class="nav-item main-active"><h2><a href="#"> 메인</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/routineBrdList">루틴자랑</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/freeBrdList">자유게시판</a></h2></li>
-					<li class="nav-item"><h2><a href="/bodiary/chatList" onclick="window.open(this.href,'채팅', 'width=400, height=700, resizable = no, location = no, left=770, top=100');return false;">채팅</a></h2></li>
+					<li class="nav-item"><h2><a onclick="popupchatList()">채팅</a></h2></li>
 				</ul>
 
 			</div>
@@ -154,8 +154,11 @@ color: #7571f9;
 					<div class="jumbotron" id="jumbo_main">	
 						<div class='console-container pt-5'><span id='text'>
 						<script>
+						
+						
+						
 						// function([string1, string2],target id,[color1,color2])    
-						 consoleText(['나를 바꾸는 기록', 'BODIARY', '머라고 씀 ㅜㅜ'], 'text',['white','white','white']);
+						 consoleText(['나를 바꾸는 기록', 'BODIARY', '머라고 씀 ㅜㅜ'], 'text',['#ccfff1','#6675ff','white']);
 
 						function consoleText(words, id, colors) {
 						  if (colors === undefined) colors = ['#fff'];
@@ -208,16 +211,18 @@ color: #7571f9;
 						
 						
 						</script>
-						
-						
-						
-						</span><div class='console-underscore' id='console'>&#95;</div></div>
-						
-						
+						</span>
+						<div class='console-underscore' id='console'>&#95;</div></div>
+						<div class="row">
+							<div class="col"></div>
+							<div class="col-lg-3 center mt-5 pt-5">
+								<button class="btn btn-info btn-lg mt-5 ml-auto" style="height:60px; font-size:24px; font-weight:300; opacity: 0.8;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;운동 일지 보러가기 & 작성하기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+							</div>
+							<div class="col"></div>
+						</div>
 					</div>
 
 					<!--  //////////////////////////////////////////////////////// 본문  ///////////////////////////////////////////////////////////////// -->
-
 
 					<!-- 오늘의 hit 일지 & 팁자유 -->
 					<div class="content ">
@@ -261,7 +266,7 @@ color: #7571f9;
 																<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
 															</div>
 															<div class="card-text">
-																<span th:text="${todayMain.routine_brd_regdate}"><i class="icon-clock"></i>&nbsp;&nbsp;</span>
+																<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${todayMain.routine_brd_regdate}"></span>
 															</div>
 															<div class="card-text">
 																<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
@@ -294,10 +299,10 @@ color: #7571f9;
 											<div id="icon2">
 												<div class="card-footer" style="float:left;">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
-													<span class="icon-clock" th:text="${freeMain.free_brd_date}"></span>&nbsp;
-												</div>
+													<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${freeMain.free_brd_date}"></span>
 												<div class="text">
 													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>
+												</div>
 												</div>
 											</div>
 										</div>
@@ -319,5 +324,19 @@ color: #7571f9;
 	<th:block th:replace="common/footer :: footerFragment"></th:block>
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script>
+	function popupchatList(){
+		   
+		   var popupX = (window.screen.width / 2) - (480 / 2);
+		   //만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+
+		   var popupY= (window.screen.height /2) - (720 / 2);
+		   //만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+		   
+//		   window.open('${pageContext.request.contextPath}/chatList.bit','_blank',
+//		         'width=580, height=700, left='+ popupX + ', top='+ popupY);
+		   window.open('/bodiary/chatList','채팅', 'width=480, height=720, resizable = no, location = no, left='+ popupX + ', top='+ popupY);return false;
+		}
+	</script>
 </body>
 </html>

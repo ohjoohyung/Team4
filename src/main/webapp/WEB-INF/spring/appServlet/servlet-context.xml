@@ -108,7 +108,6 @@
 	<!-- NaverLoginBO Class에 대한 Bean설정 추가-->
 	<bean id="naverLoginBO" class="kr.or.bodiary.utils.NaverLoginBO" />
 	
-	
 	<!-- google Class Bean설정 추가 -->
 	    
    <!-- 클라이언트ID와 보안비밀 세팅 -->
@@ -135,7 +134,6 @@
         <constructor-arg
             value="251070765249-i061fatg6rnqdradkdek95movmo6gh3g.apps.googleusercontent.com" />
         <constructor-arg value="ZGyWCXEMRCW9c4GFoa9p96AC" />
- 
     </bean>
 	
 	

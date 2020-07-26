@@ -60,6 +60,7 @@
 		<security:logout 	logout-url="/logout"
 							logout-success-url="/main"/>
 		<security:intercept-url pattern="/profileEditAssociate" access="hasRole('ROLE_ASSOCIATE_USER')" />
+		<security:intercept-url pattern="/main" access="hasAnyRole('ROLE_ASSOCIATE_USER','ROLE_REGULAR_USER')" />
 		<security:intercept-url pattern="/myProfile*" access="hasAnyRole('ROLE_ASSOCIATE_USER','ROLE_REGULAR_USER')" />
 		<security:intercept-url pattern="/my*" access="hasRole('ROLE_REGULAR_USER')" />
 		<security:intercept-url pattern="/free*" access="hasRole('ROLE_REGULAR_USER')" />

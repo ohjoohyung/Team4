@@ -11,39 +11,39 @@
 
 		<div class="content mt-4">
 			<!-- 탭 -->
-			<div class="custom-tab-1 ml-5 mr-5">
+			<div class="custom-tab-1 ml-5 mr-5 mt-5">
 			
-				<ul class="nav nav-tabs mb-3" >
+				<ul class="nav nav-tabs mb-4 pt-4" >
 					<li class="nav-item">
-						<a th:href="@{/freeBrdList}">전체 | </a> 
+						<a th:href="@{/freeBrdList}"><h2>전체&nbsp;&nbsp;|&nbsp;&nbsp;</h2></a> 
 					</li>				
 					<li class="nav-item">
-					  	<a th:href="@{/freeBrdList(cateGory=1)}">자유게시판 |</a>  
+					  	<a th:href="@{/freeBrdList(cateGory=1)}"><h2>자유게시판&nbsp;&nbsp;|&nbsp;&nbsp;</h2></a>  
 					</li>
 					<li class="nav-item">
-						<a th:href="@{/freeBrdList(cateGory=2)}">질문게시판 |</a>
+						<a th:href="@{/freeBrdList(cateGory=2)}"><h2>질문게시판&nbsp;&nbsp;|&nbsp;&nbsp;</h2></a>
 					</li>
 					<li class="nav-item">
-						<a th:href="@{/freeBrdList(cateGory=3)}">팁게시판</a>
+						<a th:href="@{/freeBrdList(cateGory=3)}"><h2>팁게시판</h2></a>
 					</li>
 				</ul>
+
 				
 				<!--carousel로 자유,팁,궁금 별로 조회수가 가장많고 최신글인 번호를 보여줌  -->
-				<div class="card ml-5 mr-5" th:if="${cateGory} == 0 ">
-					<div class="card-body" style="background-color:#d6e8f0;">
-	                     <h4 class="card-title">HOT 전체 게시물</h4>
+	            <h4 class="ml-5 mb-3"><svg class="pb-1" height="30" viewBox="0 0 512 512" width="30" xmlns="http://www.w3.org/2000/svg"><g id="flat"><path d="m276 116a107.37 107.37 0 0 1 20 62.409v21.591a30.739 30.739 0 0 0 29.821-23.283l2.179-8.717 5.912 7.095a63 63 0 0 1 -.564 81.333 22.147 22.147 0 0 0 1.152 30.072 22.147 22.147 0 0 0 32.955-1.826l16.545-20.674 16 40a139.835 139.835 0 0 1 -35.059 139.059l-2.018 2.018a146.549 146.549 0 0 1 -103.623 42.923h-16.325a146.549 146.549 0 0 1 -125.665-71.15 146.551 146.551 0 0 1 12.681-168.734l64.764-78.4a53.884 53.884 0 0 0 7.7-56.2 53.883 53.883 0 0 1 19.345-66.716l34.2-22.8v29.591a107.37 107.37 0 0 0 20 62.409z" fill="#e82f3e"/><path d="m315.077 433.411.071-.071a99.417 99.417 0 0 0 25.025-97.34l-23.273 23.274a23.652 23.652 0 0 1 -33.451 0 23.653 23.653 0 0 1 -1.449-31.868 62.507 62.507 0 0 0 7.889-67.971l-37.716-75.435-5.8 63.8a57.053 57.053 0 0 1 -21.173 39.382l-32.973 26.379a74.736 74.736 0 0 0 -28.049 58.36v9.079a74.74 74.74 0 0 0 26.891 57.415 74.741 74.741 0 0 0 48.584 17.319l23.118-.229a74.734 74.734 0 0 0 52.306-22.094z" fill="#ea9d2d"/><path d="m120 192a8 8 0 0 1 -8-8v-16a8 8 0 0 1 16 0v16a8 8 0 0 1 -8 8z" fill="#ff6268"/><path d="m144 152a8 8 0 0 1 -8-8v-16a8 8 0 0 1 16 0v16a8 8 0 0 1 -8 8z" fill="#e82f3e"/><path d="m112 120a8 8 0 0 1 -8-8v-16a8 8 0 0 1 16 0v16a8 8 0 0 1 -8 8z" fill="#961b20"/><path d="m392 216a8 8 0 0 1 -8-8v-16a8 8 0 0 1 16 0v16a8 8 0 0 1 -8 8z" fill="#e82f3e"/><path d="m368 160a8 8 0 0 1 -8-8v-16a8 8 0 0 1 16 0v16a8 8 0 0 1 -8 8z" fill="#ff6268"/><path d="m400 136a8 8 0 0 1 -8-8v-24a8 8 0 0 1 16 0v24a8 8 0 0 1 -8 8z" fill="#e82f3e"/></g></svg>HOT</h4>
+				<div class="card ml-5 mr-5" th:if="${cateGory} == 0 " style="border:1px solid #7571f9;">
+					<div class="card-body">
 	                     <div class="bootstrap-carousel">
 	                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-	                           
 	                             <div class="carousel-inner">
 	                                 <div class="carousel-item active" th:each="free : ${highLankFree}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${free.free_brd_seq}')|">
-	                                 		<b class="card-text" th:if="${free.free_cat} == 1 ">자유</b>
-	                                     	<h1 class="card-text text-primary" th:text="${free.free_brd_title}">
+	                                 		<b class="card-text pb-4" th:if="${free.free_cat} == 1 ">자유</b>
+	                                     	<h5 class="card-text mt-3 mb-5" th:text="${free.free_brd_title}">
 	                                     		
-	                                     	</h1>
+	                                     	</h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
-												<i class="icon-clock" th:text="${free.free_brd_date}"></i>
+												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${free.free_brd_date}"></span>
 											</p>
 											<!-- 해당글 조회수 , 댓글수 부분 -->
 											<p class="card-text">
@@ -53,11 +53,11 @@
 											</p>
 	                                 </div>
 	                                 <div class="carousel-item" th:each="qna : ${highLankQna}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${qna.free_brd_seq}')|">
-	                                 	 <b class="card-text" th:if="${qna.free_cat} == 2 ">질문</b>
-	                                     <h1 class="card-text text-primary" th:text="${qna.free_brd_title}"></h1>
+	                                 	 <b class="card-text pb-4" th:if="${qna.free_cat} == 2 ">질문</b>
+	                                     <h5 class="card-text mt-3 mb-5" th:text="${qna.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
-												<i class="icon-clock" th:text="${qna.free_brd_date}"></i>
+												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${qna.free_brd_date}"></span>
 											</p>
 											<!-- 해당글 조회수 , 댓글수 부분 -->
 											<p class="card-text">
@@ -68,10 +68,10 @@
 	                                 </div>
 	                                 <div class="carousel-item" th:each="tip : ${highLankTip}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${tip.free_brd_seq}')|">
 	                                 	<b class="card-text" th:if="${tip.free_cat} == 3 ">팁</b>
-	                                     <h1 class="card-text text-primary" th:text="${tip.free_brd_title}"></h1>
+	                                     <h5 class="card-text mt-3 mb-5">&nbsp;&nbsp;<span th:text="${tip.free_brd_title}"></span></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
-												<i class="icon-clock" th:text="${tip.free_brd_date}"></i>
+												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${tip.free_brd_date}"></span>
 											</p>
 											<!-- 해당글 조회수 , 댓글수 부분 -->
 											<p class="card-text">
@@ -81,14 +81,14 @@
 											</p>
 	                                 </div>
 	                             </div>
-	                             <a class="carousel-control-prev" href="#carouselExampleIndicators" data-slide="prev" style=" margin-top: 130px;margin-left: 300px;">
-			                             <span class="carousel-control-prev-icon" style="margin-right: 100px;"></span> 
-			                             <span class="sr-only">Previous</span> 
-	                           	</a>
-	                             <a class="carousel-control-next" href="#carouselExampleIndicators" data-slide="next" style="margin-top: 130px;margin-right: 300px;">
-			                             <span class="carousel-control-next-icon" style="margin-left: 100px;"></span> 
-			                             <span class="sr-only">Next</span>
-	                             </a>
+	                  <a class="carousel-control-prev" href="#carouselExampleIndicators" data-slide="prev" style="margin-left:12%;">
+			          	<span class="carousel-control-prev-icon" ></span> 
+			          	<span class="sr-only">Previous</span> 
+ 	                  </a>
+	                  <a class="carousel-control-next" href="#carouselExampleIndicators" data-slide="next" style="margin-right:12%;">
+			            <span class="carousel-control-next-icon" ></span> 
+			            <span class="sr-only">Next</span>
+	                  </a>
 	                         </div>
 	                     </div>
 	                 </div>                 
@@ -96,20 +96,19 @@
 	              <!--carousel로 자유,팁,궁금 별로 조회수가 가장많고 최신글인 번호를 보여줌 END -->
 	              
 	            <!--carousel로 자유 게시판만 보여줌  -->
-				<div class="card ml-5 mr-5" th:if="${cateGory} == 1 ">
+				<div class="card ml-5 mr-5" th:if="${cateGory} == 1 " style="border:1px solid #7571f9;">
 					<div class="card-body" style="">
 	                     <h4 class="card-title">HOT 자유 게시물</h4>
 	                     <div class="bootstrap-carousel">
 	                         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
 	                           
 	                             <div class="carousel-inner">
-	                                 
 	                                  <div class="carousel-item active" th:each="free : ${highLankFree}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${free.free_brd_seq}')|">
 	                                 		<b class="card-text" th:if="${free.free_cat} == 1 ">자유</b>
-	                                     	<h1 class="card-text text-primary" th:text="${free.free_brd_title}"></h1>
+	                                     	<h5 class="card-text mt-3" th:text="${free.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
-												<i class="icon-clock" th:text="${free.free_brd_date}"></i>
+												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${free.free_brd_date}"></span>
 											</p>
 											<!-- 해당글 조회수 , 댓글수 부분 -->
 											<p class="card-text">
@@ -125,7 +124,7 @@
 	             </div>
 	
 				 <!--carousel로 질문 게시판만 보여줌  -->
-				<div class="card ml-5 mr-5" th:if="${cateGory} == 2 ">
+				<div class="card ml-5 mr-5" th:if="${cateGory} == 2 " style="border:1px solid #7571f9;">
 					<div class="card-body" style="">
 	                     <h4 class="card-title">HOT 질문 게시물</h4>
 	                     <div class="bootstrap-carousel">
@@ -135,7 +134,7 @@
 	                                 
 	                                 <div class="carousel-item active" th:each="qna : ${highLankQna}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${qna.free_brd_seq}')|">
 	                                 	 <b class="card-text" th:if="${qna.free_cat} == 2 ">질문</b>
-	                                     <h1 class="card-text text-primary" th:text="${qna.free_brd_title}"></h1>
+	                                     <h5 class="card-text mt-3 mb-5" th:text="${qna.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock" th:text="${qna.free_brd_date}"></i>
@@ -154,7 +153,7 @@
 	             </div>
 	             
 	              <!--carousel로 팁 게시판만 보여줌  -->
-				<div class="card ml-5 mr-5" th:if="${cateGory} == 3 ">
+				<div class="card ml-5 mr-5" th:if="${cateGory} == 3 "style="border:1px solid #7571f9;">
 					<div class="card-body" style="">
 	                     <h4 class="card-title">HOT 팁 게시물</h4>
 	                     <div class="bootstrap-carousel">
@@ -164,10 +163,11 @@
 	                                 
 	                                  <div class="carousel-item active" th:each="tip : ${highLankTip}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${tip.free_brd_seq}')|">
 	                                 	<b class="card-text" th:if="${tip.free_cat} == 3 ">팁</b>
-	                                     <h1 class="card-text text-primary" th:text="${tip.free_brd_title}"></h1>
+	                                     <h5 class="card-text mt-3 mb-5" th:text="${tip.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock" th:text="${tip.free_brd_date}"></i>
+												<span th:text="${tip.free_brd_date}"></span>
 											</p>
 											<!-- 해당글 조회수 , 댓글수 부분 -->
 											<p class="card-text">
@@ -182,9 +182,14 @@
 	                 </div>                 
 	             </div>
 				
-				<div class="card ml-5 mr-5">
+				<div class="ml-4 mr-4">
 					<div class="card-body">
-					
+						<hr>
+						<!-- 글쓰기 버튼(로그인한 사람만 글을 쓸수 있음) -->
+						<button type="button" onclick="location.href='freeBrdForm'" 
+							class="btn btn-lg w-100 mt-3 mb-4 btn-primary" th:if="${user != null && user != ''}">
+							글쓰기&nbsp;&nbsp;&nbsp;<span><i class="icon-note"></i></span>
+						</button>
 						<!-- 게시글 순서 드롭다운 -->
 						<div class="row">
 							<div class="col"></div>
@@ -217,11 +222,6 @@
 						</div>
 						<!-- 게시글 순서 드롭다운 END-->
 						
-						<!-- 글쓰기 버튼(로그인한 사람만 글을 쓸수 있음) -->
-						<button type="button" onclick="location.href='freeBrdForm'" 
-							class="btn btn-lg w-100 mb-1 btn-primary" th:if="${user != null && user != ''}">
-							글쓰기&nbsp;&nbsp;&nbsp;<span><i class="icon-note"></i></span>
-						</button>
 						
 						
 							<!-- 전체 게시판 내용 -->
@@ -239,12 +239,12 @@
 												<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
 												<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
 												<!-- 글제목 부분 -->
-												<h5 class="card-title mt-3">
+												<h5 class="card-title mt-3 mb-5">
 													<a th:href="@{/freeBrdDetail(seq=${list.free_brd_seq})}" th:text="${list.free_brd_title}"></a>
 												</h5>
 												<!-- 해당 글쓴 시간-->
 												<p class="card-text">
-													<i class="icon-clock" th:text="${list.free_brd_date}"></i>
+													<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_date}"></span>
 												</p>
 												<!-- 해당글 조회수 , 댓글수 부분 -->
 												<p class="card-text">
@@ -404,7 +404,7 @@
 												<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
 												<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
 												<!-- 글제목 부분 -->
-												<h5 class="card-title mt-3">
+												<h5 class="card-title mt-3 mb-5" >
 													<a th:href="@{/freeBrdDetail(seq=${list.free_brd_seq})}" th:text="${list.free_brd_title}"></a>
 												</h5>
 												<!-- 해당 글쓴 시간-->
