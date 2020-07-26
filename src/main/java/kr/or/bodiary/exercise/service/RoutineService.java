@@ -57,6 +57,7 @@ public class RoutineService {
 			
 			if(result > 0) {
 				String referer = request.getHeader("Referer");
+				System.out.println("referer : " + referer);
 				url = "redirect:"+referer;
 			}else {
 				url = "redirect:search";

@@ -135,15 +135,12 @@ color: #7571f9;
 	<div class="bodiary-wrapper">
 		<div class="content2">
 			<div style="height: 56px;">
-
-
-				<ul class="nav nav-pills mb-3 pt-4">
-					<li class="nav-item main-active"><h2><a href="#"> 메인</a></h2></li>
+				<ul class="nav-main nav nav-pills-main mb-3 pt-4">
+					<li class="nav-item main-active"><h2><a href="#">메인</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/routineBrdList">루틴자랑</a></h2></li>
 					<li class="nav-item"><h2><a href="/bodiary/freeBrdList">자유게시판</a></h2></li>
-					<li class="nav-item"><h2><a href="/bodiary/chatList" onclick="window.open(this.href,'채팅', 'width=400, height=700, resizable = no, location = no, left=770, top=100');return false;">채팅</a></h2></li>
+					<li class="nav-item"><h2><a href="/bodiary/chatList" onclick="window.open(this.href,'梨꾪똿', 'width=400, height=700, resizable = no, location = no, left=770, top=100');return false;">채팅</a></h2></li>
 				</ul>
-
 			</div>
 		</div>
 
@@ -220,10 +217,10 @@ color: #7571f9;
 
 
 					<!-- 오늘의 hit 일지 & 팁자유 -->
-					<div class="content ">
+					<div class="content">
 					<div class="row mt-4">
 						
-						<div class="col-12" id="exesrc">
+						<div class="col-main col-12" id="exesrc">
 							<h2>운동 정보가 궁금할 땐?</h2>
 						
 							<div class="col-12 mt-4">
@@ -261,7 +258,7 @@ color: #7571f9;
 																<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
 															</div>
 															<div class="card-text">
-																<i class="icon-clock"></i>&nbsp;&nbsp;20분 전
+																<span th:text="${todayMain.routine_brd_regdate}"><i class="icon-clock"></i>&nbsp;&nbsp;</span>
 															</div>
 															<div class="card-text">
 																<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
@@ -294,7 +291,7 @@ color: #7571f9;
 											<div id="icon2">
 												<div class="card-footer" style="float:left;">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
-													<span class="icon-clock"></span>&nbsp;20분 전
+													<span class="icon-clock" th:text="${freeMain.free_brd_date}"></span>&nbsp;
 												</div>
 												<div class="text">
 													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>

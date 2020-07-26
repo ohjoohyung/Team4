@@ -6,10 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="kr.or.bodiary.notice.dao.NoticeDao">
 
 	<!-- 리스트 -->
-    <select id="noticeList" resultType="kr.or.bodiary.notice.dto.NoticeDto">
+    <select id="noticeList" parameterType="kr.or.bodiary.freeBrd.dto.Pagination" resultType="kr.or.bodiary.notice.dto.NoticeDto">
 		select notice_brd_seq, notice_brd_title, notice_brd_regdate, notice_brd_hit
-		  from NoticeBoard
-	  order by notice_brd_seq desc
+		from NoticeBoard
+		order by notice_brd_seq desc limit ${startIndex}, ${pageSize}
 	</select>
 	
 	<!-- 전체 게시글 수 -->

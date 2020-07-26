@@ -43,13 +43,13 @@
 						<div></div>
 					</div>
 					<!-- 사진 업로드(JPG,PNG,GIF) -->
-					<div class="row">
-						<div class="col-11">
-							<div class="mb-3 pl-4 mt-2">
-	                              <input type="file" id="image" name="image" class="form-control-file">
-	                         </div>
-	                    </div>
-					</div>	                         
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-11"> -->
+<!-- 							<div class="mb-3 pl-4 mt-2"> -->
+<!-- 	                              <input type="file" id="image" name="image" class="form-control-file"> -->
+<!-- 	                         </div> -->
+<!-- 	                    </div> -->
+<!-- 					</div>	                          -->
 					<!-- 썸머노트 -->
 					<div class="card-body">
 							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
@@ -81,38 +81,65 @@ $(document).ready(function() {
 	        minHeight: 500,
 	        maxHeight: null,
 	        focus: true, 
-	        lang : 'ko-KR'
-	  });
-	});
+	        lang : 'ko-KR',
+	        callbacks: {
+					onImageUpload: function(files, editor, welEditable) {
+					            for (var i = files.length - 1; i >= 0; i--) {
+					             sendFile(files[i], this);
+					            }
+					        }
+					}
+
+			});
+		});
+		
+
+		function sendFile(file, el) {
+		var form_data = new FormData();
+		       form_data.append('file', file);
+		       $.ajax({
+		         data: form_data,
+		         type: "POST",
+		         url: 'summerImageFree',
+		         cache: false,
+		         contentType: false,
+		         enctype: 'multipart/form-data',
+		         processData: false,
+		         success: function(img_name) {
+		        	
+						$(el).summernote('editor.insertImage', img_name);
+					
+
+					
+		         }
+		       });
+		    }
+		
+		function postForm() {
+			
+		    var title = $("#title").val();
+		    if (!title) {
+		      alert("제목을 입력하십시오");
+		      return false;
+		    }
+		    
+		    var value = $('textarea[name="content"]').val($('#summernote').summernote('code'));
+		    //alert("내용" + value);
+		    //왜 아무내용도 입력을 안했는데 object로 반환되지??? 
+		    		
+		    //var value = $("#content").val();
+		    //alert("내용" +value);
+		    
+		    if (value == "" || value == null || value == undefined){
+		        alert("내용을 입력하십시오");
+		        return false;
+		    } 
+		    return true;
+		}
 </script>
 <!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
 출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
-<script>
-function postForm() {
-	
-    var title = $("#title").val();
-    if (!title) {
-      alert("제목을 입력하십시오");
-      return false;
-    }
-    
-    var value = $('textarea[name="content"]').val($('#summernote').summernote('code'));
-    //alert("내용" + value);
-    //왜 아무내용도 입력을 안했는데 object로 반환되지??? 
-    		
-    //var value = $("#content").val();
-    //alert("내용" +value);
-    
-    if (value == "" || value == null || value == undefined){
-        alert("내용을 입력하십시오");
-        return false;
-    } 
-    return true;
-}
 
-
-
-</script>
 
 </html>
 

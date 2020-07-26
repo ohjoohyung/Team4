@@ -20,7 +20,7 @@ public interface BodiaryDao {
 	public BodiaryDto getBodiary(int diary_seq) throws ClassNotFoundException, SQLException;
 	
 	//음식 검색하기
-	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException;
+	public List<FoodDto> foodNameSearch(HashMap<String, Object> map) throws ClassNotFoundException, SQLException;
 
 	//식단 장바구니 시퀀스 추가
 	public int insertMealCart(DailyMealDto dailymealdto) throws ClassNotFoundException, SQLException;

@@ -18,233 +18,273 @@
 					th:replace="common/sidebar :: sidebarFragment"></aside>
 			</nav>
 			<!-- myBodiary 내 공통 목표 띠  -->
-			<div class="col mr-5">
+			<div class="col-lg-8">
 				<!-- 목표 인원수 + 목표 설정하기  -->
-				<div class="card card-body pt-0 pb-0 pl-4">
+			<!-- 	<div class="card card-body pt-0 pb-0 pl-4">
 					<div class="row">
 						<div class="col pl-3 mt-3 mb-2">
 							현재 <span class="text-info"> th:text사용해서 몇명인지 뿌려져야함</span> 명의 친구들이
 							목표를 달성하고 있어요!
 						</div>
-						<!-- 이미 목표 진행중일경우 보이지 않도록 해야함 -->
+						이미 목표 진행중일경우 보이지 않도록 해야함
 						<div class="col-1 mt-2 mb-2">
 							<button class="btn btn-primary btn-flat">
 								<i class="mdi mdi-plus"></i>
 							</button>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				<!--  -->
 
 				<div class="col-lg-12">
-					<div class="card">
+					<div class="card bodiary-form p-4">
 						<div class="d-flex justify-content-center">
 
 							<div class="card-body">
-								<div class="basic-form">
-									<form action="" method="post" id="diaryEdit"
-										enctype="multipart/form-data">
-										<div class="form-row">
-											<div class="form-group col-md-4">
-												<div class="card">
+                        <h2>나의 변화를 기록해볼까요 ?</h2>
+                        <h5>* 항목은 필수 입력 항목입니다.</h5>
+                        <div class="basic-form mt-5">
+                           <form action="myBodiaryForm" method="post" id="diaryForm"
+                              enctype="multipart/form-data">
+                              <div class="form-row mb-3">
 
-													<div class="form-group">
-														이미지 선택
-														<div class="mt-3">
-															<label class="btn btn-outline-light btn-file">
-															<i class="icon-plus"></i><input type="file" id="imgFile"
-															name="file" multiple="multiple" onchange="readURL(this); fileCheck(this);" accept="image/*"/></label> <img id="img"
-															th:src="@{assets/upload/myBodiaryUpload/}+${bodiary.diary_main_img}"
-															alt="your image" style="width:300px; height:200px;"/>
-															 
-														</div>
-													</div>
+                                 <div class="form-group col-md-5 mr-3">
+                                    이미지 선택&nbsp;&nbsp;*<br> <label
+                                       class="btn btn-outline-dark btn-file w-100 pt-2 mt-2"><i
+                                       class="icon-plus"></i> <input type="file" id="imgFile"
+                                       name="file" onchange="readURL(this); fileCheck(this);"
+                                       accept="image/*" /> </label>
+                                    <div class="form-group">
+                                       <div class="mt-3 card"
+                                          style="border-radius: 16px; overflow: hidden; min-height: 200px;">
+                                          <img id="img" alt="your image" style="width: 100%;" />
+                                          <div class="tdimg" th:src="@{assets/upload/myBodiaryUpload/}+${bodiary.diary_main_img}"></div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <div class="row">
+                                       <div class="form-group col">
+                                          <label>오늘의 몸무게&nbsp;&nbsp;*</label> <input type="number"
+                                             min="20" max="300" step='1'
+                                             onkeydown='return onlyNumber(event)'
+                                             onkeyup='removeChar(event)' id="diary_today_weight"
+                                             name="diary_today_weight"
+                                             class="form-control input-default" placeholder="" th:value="${bodiary.diary_today_weight}">
+                                          <div class="tdweight"></div>
+                                          <div class="before-weight">
+                                             <div class="weight-text"></div>
+                                          </div>
+                                       </div>
 
-												</div>
-											</div>
-
-											<div class="form-group col-md-4">
-												<label>오늘의 몸무게</label> <input type="number" min="20" max="300" step = '1' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'
-													id="diary_today_weight" name="diary_today_weight"
-													class="form-control input-default" placeholder="" th:value="${bodiary.diary_today_weight}">
-													<div class="tdweight"></div>
-											</div>
-
-											<div class="form-group col-md-4">
-												<label>오늘의 컨디션</label> <select
-													class="form-control input-default" id="diary_condition"
-													name="diary_condition" >
-													<option th:selected="${bodiary.diary_condition}== '좋아요'" >좋아요</option>
+                                       <div class="form-group col">
+                                          <label>오늘의 컨디션</label> <select
+                                             class="form-control input-default" id="diary_condition"
+                                             name="diary_condition">
+                                             <option th:selected="${bodiary.diary_condition}== '좋아요'" >좋아요</option>
 													<option th:selected="${bodiary.diary_condition}== '평범해요'">평범해요</option>
 													<option th:selected="${bodiary.diary_condition}== '나빠요'">나빠요</option>
-												</select>
-											</div>
+                                          </select>
+                                       </div>
+                                    </div>
+                                    <div class="form-group col-12 p-0">
+                                       <label>오늘의 한마디</label>
+                                       <textarea class="form-control input-default"
+                                          placeholder="최대 150자" id="diary_content"
+                                          name="diary_content" th:text="${bodiary.diary_content}" rows="7"></textarea>
+                                    </div>
+                                 </div>
+                              </div>
+                              <hr>
+                              <div class="row mt-5">
+                                 <div class="col-lg-4 col-md-6">
+                                    <h2>
+                                       <span th:if="${session.currentUser != null}"
+                                          th:text="${session.currentUser.user_nickname}"></span>님 !<br>오늘의
+                                       식단을<br> 기록해보세요 :)
+                                    </h2>
+                                 </div>
+                                 <div class="col ">
+                                    <!-- 그래프 뿌릴 곳 -->
 
-										</div>
-										<div class="form-group mt-5">
-											<label>오늘의 한마디</label>
-											<textarea class="form-control input-default"
-												placeholder="최대 150자" id="diary_content"
-												name="diary_content" th:text="${bodiary.diary_content}" rows="5" ></textarea>
-										</div>
+                                 </div>
+                              </div>
+                              <div class="row mt-5">
+                                 <div class="col">
+                                    <div class="row mt-4">
+                                       <div class="col">
+                                          <h4>아침</h4>
+                                       </div>
+                                    </div>
+                                    <hr>
+                                    <div class="p-2">
+                                       <div class="food-form outline-primary mt-1 p-1"
+                                          id="morning"></div>
 
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <div class="row mt-4">
+                                       <div class="col">
+                                          <h4>점심</h4>
 
-										<div class="row mt-5">
-											<div class="col-6">
-												<div class="form-group">
+                                       </div>
 
-
-													<label>오늘 먹은 음식</label>
-													<div class="row">
-														<div class="col-3">
-															<select class="form-control input-default" id="meal"
-																name="meal">
-																<option selected="selected">아침</option>
-																<option>점심</option>
-																<option>저녁</option>
-																<option>간식</option>
-															</select>
-														</div>
-													</div>
-													<div class="mt-3">
-														<input type="search" class="form-control input-default"
-															placeholder="Search" id="foodsearch" name="foodsearch">
-														<div class="table-responsive" id="foodBox"></div>
-													</div>
-												</div>
-
-
-											</div>
-											<div class="col-6 pt-4">
-												<div class="row mt-3">
-													<div class="col">
-														<h3>아침</h3>
-
-													</div>
-
-												</div>
-												<hr>
-												<div class="p-2">
-
-
-													<div class="food-form outline-primary mt-1 p-1"
-														id="morning"></div>
-
-												</div>
-												<div class="row mt-4">
-													<div class="col">
-														<h3>점심</h3>
-
-													</div>
-
-												</div>
-												<hr>
-												<div class="p-2">
+                                    </div>
+                                    <hr>
+                                    <div class="p-2">
 
 
-													<div class="food-form outline-primary mt-1 p-1" id="lunch">
+                                       <div class="food-form outline-primary mt-1 p-1" id="lunch">
 
-													</div>
+                                       </div>
 
-												</div>
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <div class="row mt-4">
+                                       <div class="col">
+                                          <h4>저녁</h4>
 
-												<div class="row mt-4">
-													<div class="col">
-														<h3>저녁</h3>
+                                       </div>
 
-													</div>
+                                    </div>
+                                    <hr>
+                                    <div class="p-2">
+                                       <div class="food-form outline-primary mt-1 p-1" id="dinner">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col">
+                                    <div class="row mt-4">
+                                       <div class="col">
+                                          <h4>간식</h4>
+                                       </div>
+                                    </div>
+                                    <hr>
+                                    <div class="p-2">
+                                       <div class="food-form outline-primary mt-1 p-1"
+                                          id="dessert"></div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="">
+                                 <div class="k-progress row">
+                                 <div class="col-4">
+                                    <div id="idealcal">
+                                       <label>나의 권장 칼로리 : </label> <span id="totalcal"
+                                          th:if="${user.user_height}>100"
+                                          th:text="(${user.user_height}-100)*0.9*35"
+                                          style="color: #7571F9;">kcal</span>
+                                       <p th:if="${user.user_height}<=100" style="color:red;">"신장이 올바르지 않습니다.
+                                          다시입력해주세요 ㅜ.ㅜ"</p>
+                                    </div>
+                                    
+                                    <div id="presentlcal">
+                                       <label>나의 현재 칼로리 : </label> <span id="precal" th:text="0"
+                                          style="color: #7571F9;"></span>
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="col text-right">
+                                    	<h2 id="warning" class="text-danger"></h2>
+                                    </div>
+                                    <div class="mb-3 w-100" id="foodprogress">
+                                       <div class="progress" style="height: 9px;">
+                                          <div id="progress-bar" class="progress-bar bg-primary "
+                                             style="width: 0%;" role="progressbar">
+                                             <span class="sr-only"></span>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="form-group">
+                                    <label>오늘 먹은 음식</label>
+                                    <div class="row">
+                                       <div class="col-lg-2">
+                                          <select class="form-control input-default" id="meal"
+                                             name="meal">
+                                             <option selected="selected">아침</option>
+                                             <option>점심</option>
+                                             <option>저녁</option>
+                                             <option>간식</option>
+                                          </select>
+                                       </div>
 
-												</div>
-												<hr>
-												<div class="p-2">
+                                       <div class="col">
+                                          <input type="search" class="form-control input-default"
+                                             placeholder="Search" id="foodsearch" name="foodsearch">
+                                          <div class="table-responsive" id="foodBox" style="overflow-y:scroll; height:300px;">
+                                          <table class='table table-bordered' id="divTable">
+	                                          <thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th></tr>
+	                                          </thead>
+	                                          <tbody id="foodTable">
+	                                          </tbody>
+                                          </table>
+                                          
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
 
 
-													<div class="food-form outline-primary mt-1 p-1" id="dinner">
-
-
-													</div>
-
-												</div>
-
-												<div class="row mt-4">
-													<div class="col">
-														<h3>간식</h3>
-
-													</div>
-
-												</div>
-												<hr>
-												<div class="p-2">
-
-
-													<div class="food-form outline-primary mt-1 p-1"
-														id="dessert"></div>
-
-												</div>
-											</div>
-										</div>
-
-										<div class="form-group mt-5">
-											<label>오늘의 루틴</label> <select id="routine_cart_seq"
+                              </div>
+                              <div class="form-group mt-5">
+                                 <label>오늘의 루틴&nbsp;&nbsp;*</label>&nbsp;&nbsp;&nbsp;&nbsp;(루틴이 없다면 오른쪽 버튼을 눌러 추가해보세요.)
+                                 <div class="row">
+                                <div class="col-lg-10">
+               <select id="routine_cart_seq"
 												name="routine_cart_seq" class="form-control input-default"
-												th:each="item : ${routineList}">
+												>
 
-											
-												<option value="0">선택없음</option>
-												<option th:text="${item.routine_cart_title}"
+
+                                    <option value="0">선택없음</option>
+												<option th:each="item : ${routineList}" th:text="${item.routine_cart_title}"
 													th:value="${item.routine_cart_seq}"
 													th:selected="${item.routine_cart_seq}== ${bodiary.routine_cart_seq}" 
 													></option>
 
+                                 </select> 
+                                 </div>
+                                 <div class="col">
+                                 <button type="button" class="btn mb-1 btn-outline-primary w-100" onclick="location.href='search'" style="height: 45px;"><i
+                                       class="icon-plus"></i>
+                                    </button>
+                                    </div>
+                                     </div>
+                                 <div class="tdroutine"></div>
+                              </div>
 
-											</select>
-											<div class="tdroutine"></div>
-										</div>
+                           
 
-										<!-- 	<div class="modal fade" id="basicModal">
-											<div class="modal-dialog" role="document">
-												<div class="modal-content">
-													<div class="modal-header">
-														<h5 class="modal-title">루틴에 있는 운동 목록</h5>
-														<button type="button" class="close" data-dismiss="modal">
-															<span>&times;</span>
-														</button>
-													</div>
-													<div class="modal-body">벤치프레스</div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-secondary"
-															data-dismiss="modal">Close</button>
-														<button type="button" class="btn btn-primary">Save
-															changes</button>
-													</div>
-												</div>
-											</div>
-										</div> -->
-
-										<div class="row mt-5">
-											<div class="form-group col-md-6">
-												<label for="exampleFormControlTextarea1">유산소</label>
-												<div class="cardio-cart p-2">
+                              <div class="row mt-3 ">
+                                 <div class="form-group col-md-6">
+                                    <div class="routine-title">
+                                       <label for="exampleFormControlTextarea1"><h3>유산소</h3></label>
+                                    </div>
+                                    <div class="cardio-cart p-2">
 
 
-													<div class="exs-form w-100 outline-primary mt-1 p-1 "
-														id="cardio"></div>
+                                       <div class="exs-form w-100 outline-primary mt-1 p-1 "
+                                          id="cardio"></div>
 
-												</div>
-											</div>
+                                    </div>
+                                 </div>
 
-											<div class="form-group col-md-6">
-												<label for="exampleFormControlTextarea2">무산소</label>
-												<div class="cardio-cart p-2">
+                                 <div class="form-group col-md-6">
+                                    <div class="routine-title">
+                                       <label for="exampleFormControlTextarea1"><h3>무산소</h3></label>
+                                    </div>
+                                    <div class="cardio-cart p-2">
 
 
-													<div class="exs-form w-100 outline-primary mt-1 p-1"
-														id="weightTraining"></div>
-												</div>
+                                       <div class="exs-form w-100 outline-primary mt-1 p-1"
+                                          id="weightTraining"></div>
+                                    </div>
 
-											</div>
-										</div>
-									
+                                 </div>
+                              </div>
+
 
 										<div class="text-right">
 											<button type="button" onclick="history.go(-1)" class="btn btn-outline-primary btn-sm">취소</button>
@@ -269,11 +309,116 @@
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<script type="text/javascript" th:inline="javascript">
-	 var validate = new Array;
+	
+	   
+		 var validate = new Array;
+		 var preper = 0;
+		 
+		 /**
+			* @함수명 : drawProgress(food_seq, food_cal)
+			* @작성일 : 2020. 7. 20.
+			* @작성자 : 김덕기
+			* @설명 : 음식 추가시 프로그레스바가 추가된다
+			* @param food_seq - 음식 번호,
+					 food_cal - 음식 칼로리
+			**/
+		   //덕추가 추가할때 progress바 추가
+		
+			
+			
+			
+			 function drawProgress(food_seq,food_cal, food_count){
+			      var totalcal = $('#totalcal').text();
+			 
+			      var count = food_count;
+			   
+			      var presentcal = count*food_cal;
+			  
+			      var bar = document.getElementById("progress-bar");
+			     
+			      var origin = bar.style.width.slice(0,-1);
+			    console.log(Number(preper))
+			      var after = Number(preper)+Number(presentcal*100/totalcal);
+			     console.log(totalcal);
+			     console.log(count);
+			     
+			     console.log(presentcal);
+			     
+			     console.log(bar);
+			     
+			     console.log(origin);
+			     
+			     console.log(after);
+			     
+			     
+			      preper = after;
+			       if (Number(after>=100)){
+			          bar.style.width = "100%";
+			         
+			         $('#warning').html('오늘은 과식하셨군요!!');
+			          
+			      }else{
+			    	  $('#warning').html('');
+			      }
+			      bar.style.width = after+"%";
+			      var precalbefore = document.getElementById("precal").innerHTML;
+			      document.getElementById("precal").innerHTML= Number(presentcal) + Number(precalbefore) ;
+			         
+			      console.log(preper);
+			      console.log("푸드 칼로리"+$('.meal_'+food_seq).attr('food_cal'));
+			   }
+			
+			
+			
+			 /**
+			* @함수명 : eraseProgress(food_seq, food_cal, count)
+			* @작성일 : 2020. 7. 23.
+			* @작성자 : 김덕기
+			* @설명 : 음식 제거시 프로그레스바가 줄어든다
+			* @param food_seq - 음식 번호,
+					 food_cal - 음식 칼로리,
+					 count - 음식 수량
+			**/
+		   function eraseProgress(food_seq,food_cal,count){
+		      var totalcal = $('#totalcal').text();
+		  
+		      var presentcal = count*food_cal;
+		     
+		      var bar = document.getElementById("progress-bar");
+		  
+		      var origin = bar.style.width.slice(0,-1);
+		 
+		      var after = Number(preper)-Number(presentcal*100/totalcal);
+		      console.log(totalcal);
+			    
+			     console.log(presentcal);
+			     
+			     console.log(bar);
+			     
+			     console.log(origin);
+			     
+			     console.log(after);
+		      
+		      preper = after;
+		       if (Number(after>=100)){
+		          bar.style.width = "100%";
+		        
+		         $('#warning').html('오늘은 과식하셨군요!!');
+		      }else if(Number(after<=0)){
+		         after=0;
+		         $('#warning').html('');
+		         
+		      }
+		      bar.style.width = after+"%";
+		     
+		      var precalbefore = document.getElementById("precal").innerHTML;
+		      document.getElementById("precal").innerHTML= Number(precalbefore) - Number(presentcal)  ;
+		   }
+	 
 	/*<![CDATA[*/
 		$(function(){
 			var seq = /*[[ ${bodiary.meal_cart_seq} ]]*/;
-	
+			
 			console.log(seq);
 				
 			/*]]>*/
@@ -284,6 +429,10 @@
 			 for(let i=0; i<2; i++) {
                  validate[i]=false;
               }
+			 
+			 
+			 
+			 
 			
 			function loadRoutine() {
 				var routine_cart_seq = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
@@ -372,17 +521,19 @@
 													'<div class="col '+obj.food_name+'">'+
 													'<h5>'+obj.food_name+'</h5>'+
 												'</div>'+
-												'<div class="col-3">'+obj.food_count+
+												'<div class="col-2">'+obj.food_count+
 												'</div>'+
-												'<div class="col-2 center">'+
-													'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+												'<div class="col-3 center">'+
+												'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+obj.food_seq+'" id="" food_cal='+obj.food_cal+' onclick="delFood('+number+');eraseProgress('+obj.food_seq+','+obj.food_cal+','+obj.food_count+')"><i class="mdi mdi-minus"></i></button>'+
 												'</div>'+
 												
 												'<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+obj.food_seq+'">'+
 												'<input class="ms'+number+'" type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+obj.meal_seq+'">'+
 												'<input class="fc'+number+'" type="hidden" name="dailyMealList['+number+'].food_count" value="'+obj.food_count+'">'+
-										'</div>'	
+												'<input class="fd'+number+'" type="hidden" name="dailyMealList['+number+'].food_cal" value="'+obj.food_cal+'">'+
+												'</div>'	
 											);
+											 drawProgress(obj.food_seq,obj.food_cal, obj.food_count);
 											number++;
 											break;
 										case 2 :
@@ -392,17 +543,19 @@
 													'<div class="col '+obj.food_name+'">'+
 													'<h5>'+obj.food_name+'</h5>'+
 												'</div>'+
-												'<div class="col-3">'+obj.food_count+
+												'<div class="col-2">'+obj.food_count+
 												'</div>'+
-												'<div class="col-2 center">'+
-													'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+												'<div class="col-3 center">'+
+												'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+obj.food_seq+'" id="" food_cal='+obj.food_cal+' onclick="delFood('+number+');eraseProgress('+obj.food_seq+','+obj.food_cal+','+obj.food_count+')"><i class="mdi mdi-minus"></i></button>'+
 												'</div>'+
 												
 												'<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+obj.food_seq+'">'+
 												'<input class="ms'+number+'" type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+obj.meal_seq+'">'+
 												'<input class="fc'+number+'" type="hidden" name="dailyMealList['+number+'].food_count" value="'+obj.food_count+'">'+
+												'<input class="fd'+number+'" type="hidden" name="dailyMealList['+number+'].food_cal" value="'+obj.food_cal+'">'+
 										'</div>'
 													);
+											 drawProgress(obj.food_seq,obj.food_cal, obj.food_count);
 											number++;
 											break;
 										case 3 :
@@ -412,17 +565,19 @@
 													'<div class="col '+obj.food_name+'">'+
 													'<h5>'+obj.food_name+'</h5>'+
 												'</div>'+
-												'<div class="col-3">'+obj.food_count+
+												'<div class="col-2">'+obj.food_count+
 												'</div>'+
-												'<div class="col-2 center">'+
-													'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+												'<div class="col-3 center">'+
+												'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+obj.food_seq+'" id="" food_cal='+obj.food_cal+' onclick="delFood('+number+');eraseProgress('+obj.food_seq+','+obj.food_cal+','+obj.food_count+')"><i class="mdi mdi-minus"></i></button>'+
 												'</div>'+
 												
 												'<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+obj.food_seq+'">'+
 												'<input class="ms'+number+'" type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+obj.meal_seq+'">'+
 												'<input class="fc'+number+'" type="hidden" name="dailyMealList['+number+'].food_count" value="'+obj.food_count+'">'+
-										'</div>'
+												'<input class="fd'+number+'" type="hidden" name="dailyMealList['+number+'].food_cal" value="'+obj.food_cal+'">'+
+												'</div>'
 											);
+											 drawProgress(obj.food_seq,obj.food_cal, obj.food_count);
 											number++;
 											break;
 										default :
@@ -432,44 +587,45 @@
 													'<div class="col '+obj.food_name+'">'+
 													'<h5>'+obj.food_name+'</h5>'+
 												'</div>'+
-												'<div class="col-3">'+obj.food_count+
+												'<div class="col-2">'+obj.food_count+
 												'</div>'+
-												'<div class="col-2 center">'+
-													'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+												'<div class="col-3 center">'+
+												'<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+obj.food_seq+'" id="" food_cal='+obj.food_cal+' onclick="delFood('+number+');eraseProgress('+obj.food_seq+','+obj.food_cal+','+obj.food_count+')"><i class="mdi mdi-minus"></i></button>'+
 												'</div>'+
 												
 												'<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+obj.food_seq+'">'+
 												'<input class="ms'+number+'" type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+obj.meal_seq+'">'+
 												'<input class="fc'+number+'" type="hidden" name="dailyMealList['+number+'].food_count" value="'+obj.food_count+'">'+
-										'</div>'
+												'<input class="fd'+number+'" type="hidden" name="dailyMealList['+number+'].food_cal" value="'+obj.food_cal+'">'+
+												'</div>'
 										
 											);
+										 drawProgress(obj.food_seq,obj.food_cal, obj.food_count);
 											number++;
 										}
 								
-									}); 	
+									}); 
+									
 							 	}
 							 });
 				}
 				
 				
+				
+				//무한스크롤 스크롤에 따라 동적인 변화 발생
+	    		$('#foodBox').scroll(function() {
+	    			  var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+	    		        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+	    		        var contentH = $('#divTable').height(); //문서 전체 내용을 갖는 div의 높이
+	 
+	    		        
+	    		        if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+	    		        
+	    		        	fetchList();
+	    		        }
+	    		});
 				 //일지 유효성 검증
-	            
-	            
-	            
 	            $('#diary_today_weight').keyup(function() {
-	               /*      
-	               let weight = /^[0-9]*$/;
-	                     if (!weight.test($('#diary_today_weight').val())) {
-	                        $('.tdweight')
-	                              .html(
-	                                    '<p style="color:red">몸무게는 숫자만 입력해주세요.</p>');
-	                         validate[0] = false;
-	                     } else {
-	                        $('.tdweight').html('');
-	                        validate[0] = true;
-	                     }
-	                     */
 	                     
 	                     if($('#diary_today_weight').val() >= 20 && $('#diary_today_weight').val() <= 300) {
 	                        validate[0] = true;
@@ -508,38 +664,83 @@
 	            
 	               
 	            });
-              	
+	            var curIndex = 1;
+	    	    var isEnd = false;
+	          //스크롤이 바닥에 닿았을 때 비동기로 리스트 불러오기
+	    		 /**
+				* @함수명 : fetchList()
+				* @작성일 : 2020. 7. 25.
+				* @작성자 : 오주형
+				* @설명 : 음식 검색하면 비동기로 db의 값을 불러온다
+				**/
+	    		function fetchList() {
+	    			
+	    			if(isEnd == true){
+	    	            return;
+	    	        }
+	    			isEnd = true;
+	    			var data = {food_name : $('#foodsearch').val(),
+	    						curIndex : curIndex};
+	    			
+	    			$.ajax(
+	                        {
+	                           type:"get",
+	                           data: data,
+	                           url:"foodNameSearch",
+	                           dataType:"json",
+	                           success:function(responsedata){ 
+	                        	   isEnd = false;
+	                            
+	                             console.log(responsedata);
+	                            var table = "";
+	                             $.each(responsedata,function(index,obj){
+	                                table += "<tr><td>"+obj.food_seq+"</td>" +
+	                                   "<td>"+obj.food_name+"</td>" +
+	                                   "<td>"+obj.food_cal+"</td>"+
+	                                   "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
+
+	                                
+	                                   "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+'"'+obj.food_name+'",'+obj.food_cal+");'>추가</button>"+"</td><tr>";
+	                             });
+	                    
+	                             $('#foodTable').append(table);
+	                             if(responsedata.length < 5) {
+	         						isEnd = true;
+	         						
+	         					} else {
+	         						curIndex++
+	         					} 
+	                           }   
+	                        }
+	                       );
+	    			
+	    	
+	         	}
 				
 				
 				
-				
-				//음식 검색하기
-				$('#foodsearch').keyup(function(){
-					var data = {food_name : $('#foodsearch').val()};
-					console.log(data);
-					$.ajax(
-							 {
-								 type:"get",
-								 data: data,
-								 url:"foodNameSearch",
-								 dataType:"json",
-								 success:function(responsedata){ 
-									$('#foodBox').empty();
-									console.log(responsedata);
-									var table="<table class='table table-bordered'><thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th>";
-									$.each(responsedata,function(index,obj){
-										table += "<tr><td>"+obj.food_seq+"</td>" +
-											"<td>"+obj.food_name+"</td>" +
-											"<td>"+obj.food_cal+"</td>"+
-											"<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td></td>"+
-											"<td>"+"<button type='button' class='btn btn-outline-primary' onclick=addFood("+obj.food_seq+",'"+obj.food_name+"')>추가</button>"+"</td><tr>";
-									});
-									table += "</table>";
-									$('#foodBox').append(table);
-								 }	
-							 }
-					      );
-				});
+	            var timeout = null;
+	            //keyup으로 음식 검색하기
+	            $('#foodsearch').keyup(function(){
+	            
+	            	if(isEnd == true) {
+	            		isEnd = false;
+	            	}
+	              	if(curIndex > 1) {
+	              		curIndex= 1;
+	              	}
+	        		
+	            	 $('#foodTable').empty();
+	            	 
+	            	 clearTimeout(timeout);
+
+	            	 timeout = setTimeout(function() {
+						fetchList();
+					}, 100);
+
+	              	console.log(curIndex);
+	              
+	            });
 				
 				//저장된 루틴 불러오기
 				$('#routine_cart_seq').change(function() {
@@ -554,7 +755,18 @@
 			//식단 인덱스
 			var number = 0;
 			//음식 추가하기 메소드
-			function addFood(food_seq, food_name) {
+			
+			/**
+			* @함수명 : addFood(food_seq, food_name, food_cal)
+			* @작성일 : 2020. 7. 9.
+			* @작성자 : 오주형
+			* @설명 : 검색한 음식을 추가하는 메소드
+			* @param food_seq - 음식 번호,
+					 food_name - 음식 이름
+					 food_cal - 음식 칼로리
+					 
+			**/
+			function addFood(food_seq, food_name, food_cal) {
 				
 				if($('#count'+food_seq).val() == "") {
 	                  alert("음식 수량을 적어주세요.");
@@ -580,16 +792,17 @@
 	               '<div class="col '+food_name+'">'+
 	                  '<h5>'+food_name+'</h5>'+
 	               '</div>'+
-	               '<div class="col-3">'+count+
+	               '<div class="col-2">'+count+
 	               '</div>'+
-	               '<div class="col-2 center">'+
-	                  '<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+'" onclick="delFood('+number+')"><i class="mdi mdi-minus"></i></button>'+
+	               '<div class="col-3 center">'+
+	               '<button type="button" class="btn btn-sm btn-outline-light mealDiv'+number+' meal_'+food_seq+'" id="" food_cal='+food_cal+' onclick="delFood('+number+');eraseProgress('+food_seq+','+food_cal+','+count+')"><i class="mdi mdi-minus"></i></button>'+
 	               '</div>'+
 	               
 	               '<input class="fs'+number+'" type="hidden" name="dailyMealList['+number+'].food_seq" value="'+food_seq+'">'+
 	               '<input class="ms'+number+'" type="hidden" name="dailyMealList['+number+'].meal_seq" value="'+meal+'">'+
 	               '<input class="fc'+number+'" type="hidden" name="dailyMealList['+number+'].food_count" value="'+count+'">'+
-	         '</div>';
+	               '<input class="fd'+number+'" type="hidden" name="dailyMealList['+number+'].food_cal" value="'+food_cal+'">'+
+	               '</div>';
 				
 	         
              switch(meal) {
@@ -599,6 +812,7 @@
 						return false;
 					}
 					$('#morning').append(div);
+					drawProgress(food_seq,food_cal, count);
 					number++;
 					break;
 				case 2 :
@@ -607,6 +821,7 @@
 						return false;
 					}
 					$('#lunch').append(div);
+					drawProgress(food_seq,food_cal,count);
 					number++;
 					break;
 				case 3 :
@@ -615,6 +830,7 @@
 						return false;
 					}
 					$('#dinner').append(div);
+					drawProgress(food_seq,food_cal,count);
 					number++;
 					break;
 				default :
@@ -623,12 +839,21 @@
 						return false;
 					}
 					$('#dessert').append(div);
+					drawProgress(food_seq,food_cal,count);
 					number++;
 					
 			}
-			
+             $('#count'+food_seq).val('');
 			}
 			
+			/**
+			* @함수명 : delFood(num)
+			* @작성일 : 2020. 7. 9.
+			* @작성자 : 오주형
+			* @설명 : 검색한 음식을 삭제하는 메소드
+			* @param num - 식단 index
+					 
+			**/
 			function delFood(num) {
 	            $(".mealDiv"+num+"").remove();
 	               
@@ -648,6 +873,9 @@
 	                  $(".fc"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].food_count",
 	                                      class : "fc"+(num+(i-1))+""
 	                                    });
+	                  $(".fd"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].food_cal",
+                          class : "fd"+(num+(i-1))+""
+            });
 	                  
 	               }
 	               number--;
@@ -655,6 +883,14 @@
 
 			
 			//이미지 추가 했을 때 화면에 띄우기
+	         /**
+				* @함수명 : readURL(input)
+				* @작성일 : 2020. 7. 10.
+				* @작성자 : 오주형
+				* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+				* @param input - 현재 input에 대한 정보
+						 
+				**/
 	         function readURL(input) {
 	            if (input.files && input.files[0]) {
 	               console.log(input.files[0])
@@ -672,10 +908,18 @@
 	                  return false;   
 	               }
 	            }
-	            /* $('#imgFileName').html(input.files[0].name); */
+	            
 	         };
 	         
-	         //업로드한 파일 검증
+	         //업로드한 파일 검증	         
+	         /**
+				* @함수명 : fileCheck(obj)
+				* @작성일 : 2020. 7. 10.
+				* @작성자 : 오주형
+				* @설명 : 업로드한 파일 검증
+				* @param obj - 현재 input에 대한 정보
+						 
+				**/
 	         function fileCheck(obj) {
 	          pathpoint = obj.value.lastIndexOf('.');
 	          filepoint = obj.value.substring(pathpoint+1,obj.length);
@@ -699,6 +943,13 @@
 	         }
 	          
 	         
+	         /**
+				* @함수명 : onlyNumber(event)
+				* @작성일 : 2020. 7. 13.
+				* @작성자 : 오주형
+				* @설명 : 입력시 숫자만 입력가능하게 하는 메소드
+				* @param event - 파라미터로 받는 이벤트 
+				**/
 	         function onlyNumber(event){
 	             event = event || window.event;
 	             var keyID = (event.which) ? event.which : event.keyCode;
@@ -707,6 +958,14 @@
 	             else
 	                 return false;
 	         }
+				
+				/**
+				* @함수명 : removeChar(event)
+				* @작성일 : 2020. 7. 13.
+				* @작성자 : 오주형
+				* @설명 : 입력시 문자 제거해주는 메소드
+				* @param event - 파라미터로 받는 이벤트 
+				**/
 	         function removeChar(event) {
 	             event = event || window.event;
 	             var keyID = (event.which) ? event.which : event.keyCode;

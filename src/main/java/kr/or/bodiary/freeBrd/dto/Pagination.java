@@ -38,6 +38,12 @@ public class Pagination {
 	/** 12. 다음 블럭의 시작 페이지 **/
 	private int nextBlock;
 	
+	//이전 페이지
+	private int prevPage;
+	
+	//다음 페이지
+	private int nextPage;
+	
 	//내가 쓴글 댓글 볼시 페이징 처리 할때 필요 
 	private String user_email;
 	
@@ -64,6 +70,22 @@ public class Pagination {
 
 	public int getBlockSize() {
 		return blockSize;
+	}
+
+	public int getPrevPage() {
+		return prevPage;
+	}
+
+	public void setPrevPage(int prevPage) {
+		this.prevPage = prevPage;
+	}
+
+	public int getNextPage() {
+		return nextPage;
+	}
+
+	public void setNextPage(int nextPage) {
+		this.nextPage = nextPage;
 	}
 
 	public void setBlockSize(int blockSize) {
@@ -150,7 +172,7 @@ public class Pagination {
 		this.nextBlock = nextBlock;
 	}
 	
-	public void pageInfo(int totalListCnt, int page) {
+	public void pageInfo(int totalListCnt, int page, int pageSize) {
 
 		// 총 게시물 수와 현재 페이지를 Controller로 부터 받아온다.
 
@@ -170,7 +192,8 @@ public class Pagination {
         
 		/** 총 게시글 수 **/
 		setTotalListCnt(totalListCnt);
-
+		
+		setPageSize(pageSize);
 
 		/** 총 페이지 수 **/
 		// 한 페이지의 최대 개수를 총 게시물 수 * 1.0로 나누어주고 올림 해준다.
@@ -196,6 +219,7 @@ public class Pagination {
 		// 현재 페이지 * 1.0을 블록의 최대 개수로 나누어주고 올림한다.
 		// 현재 블록을 구할 수 있다.
 		setBlock((int) Math.ceil((page * 1.0)/blockSize)); 
+	
 
 
 		/** 8. 블럭 시작 페이지 **/
@@ -228,6 +252,12 @@ public class Pagination {
         
 		/** 10. DB 접근 시작 index **/
 		setStartIndex((page-1) * pageSize);
+		
+		
+		//이전 페이지, 다음 페이지
+		setPrevPage(page-1);
+		
+		setNextPage(page+1);
 	
 	}
 

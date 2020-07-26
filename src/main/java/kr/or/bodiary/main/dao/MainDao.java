@@ -10,12 +10,16 @@ import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
 
 public interface MainDao {
 	
-	//메인 루틴
+	//오늘의 루틴 top2
+	public List<RoutineBoardUserJoinDto> routineBrdMainToday() throws ClassNotFoundException, SQLException;
+	
+	//오늘의 루틴 없을 때
 	public List<RoutineBoardUserJoinDto> routineBrdMain() throws ClassNotFoundException, SQLException;
 	
-	//메인 프리보드 HOT3
+	//보드
 	public List<FreeBrdDTO> freeBrdMain() throws ClassNotFoundException, SQLException;
 	
-	//메인 공지(풋터)
+	//공지(풋터)
 	public List<NoticeDto> noticeMain() throws ClassNotFoundException, SQLException;
+	
 }

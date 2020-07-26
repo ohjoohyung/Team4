@@ -43,12 +43,28 @@ private SqlSession sqlsession;
 		this.sqlsession = sqlsession;
 	}
 	
+	//일지 폼 들어가기
+	public String goBodiaryForm(String user_email) throws ClassNotFoundException, SQLException {
+		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+		String url = "";
+		if(bodiarydao.todatBodiaryCount(user_email) > 0) {
+			url = "redirect:myBodiaryMain";
+		} else {
+			url = "myBodiary/myBodiaryForm";
+		}
+		return url;
+	}
+	
+	
 	
 	//음식 검색하기
-	public List<FoodDto> foodNameSearch(String food_name) throws ClassNotFoundException, SQLException {
+	public List<FoodDto> foodNameSearch(String food_name, int curIndex) throws ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-		System.out.println("서비스");
-		return bodiarydao.foodNameSearch(food_name);
+		int startIndex = (curIndex-1)*5;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("food_name", food_name);
+		map.put("startIndex", startIndex);
+		return bodiarydao.foodNameSearch(map);
 	}
 	
 	//루틴 정보 불러오기
@@ -75,9 +91,9 @@ private SqlSession sqlsession;
 	//일지 작성
 	@Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
 
-	public String writeBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException {
+	public String writeBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-	
+		
 		
 		String filename = bodiarydto.getFile().getOriginalFilename();
 		
@@ -93,32 +109,29 @@ private SqlSession sqlsession;
 		bodiarydto.setDiary_main_img(filename);
 		try {
 			
-			List<DailyMealDto> list = dailymealdto.getDailyMealList();
-			
-			bodiarydao.insertMealCart(dailymealdto);
-			
-			for(DailyMealDto d : list) {
-				d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
-			}
-			
-			bodiarydao.writeDailyMeal(list);
-			
-			bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
-			
 			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-			bodiarydto.setUser_email(user.getUser_email());
-			int diary_seq = bodiarydao.writeBodiary(bodiarydto);
-			System.out.println(diary_seq);
-			user.setUser_weight(bodiarydto.getDiary_today_weight());
-			url = "redirect:myBodiaryDetail?diary_seq="+diary_seq;
-			/*
-			 * System.out.println("일지 번호 : " + bodiarydto.getDiary_seq());
-			 * System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
-			 * if(result > 0) { url =
-			 * "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); } else { url
-			 * = "redirect:myBodiaryForm"; }
-			 */
-
+			
+			
+				
+				List<DailyMealDto> list = dailymealdto.getDailyMealList();
+				
+				bodiarydao.insertMealCart(dailymealdto);
+				
+				for(DailyMealDto d : list) {
+					d.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+				}
+				
+				bodiarydao.writeDailyMeal(list);
+				
+				bodiarydto.setMeal_cart_seq(dailymealdto.getMeal_cart_seq());
+				
+				
+				bodiarydto.setUser_email(user.getUser_email());
+				int diary_seq = bodiarydao.writeBodiary(bodiarydto);
+				System.out.println(diary_seq);
+				user.setUser_weight(bodiarydto.getDiary_today_weight());
+				url = "redirect:myBodiaryDetail?diary_seq="+diary_seq;
+			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			

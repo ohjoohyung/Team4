@@ -53,17 +53,17 @@
 						<div></div>
 					</div>
 					<!-- 사진 업로드(JPG,PNG,GIF) -->
-					<div class="row">
-						<div class="col-11">
-							<div class="mb-3 pl-4 mt-2">
+<!-- 					<div class="row"> -->
+<!-- 						<div class="col-11"> -->
+<!-- 							<div class="mb-3 pl-4 mt-2"> -->
 							 	   
-	                              <input type="file" id="image" name="image" class="form-control-file" ></input>
-	                              <div th:if="${list.free_brd_image != null && list.free_brd_image != ''}">
-	                              	<input type="hidden" name="image_2" th:value="${list.free_brd_image}" ></input>
-	                              </div>	
-	                         </div>
-	                    </div>
-					</div>
+<!-- 	                              <input type="file" id="image" name="image" class="form-control-file" ></input> -->
+<!-- 	                              <div th:if="${list.free_brd_image != null && list.free_brd_image != ''}"> -->
+<!-- 	                              	<input type="hidden" name="image_2" th:value="${list.free_brd_image}" ></input> -->
+<!-- 	                              </div>	 -->
+<!-- 	                         </div> -->
+<!-- 	                    </div> -->
+<!-- 					</div> -->
 					<!-- 썸머노트 -->
 					<div class="card-body">
 							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
@@ -96,9 +96,39 @@ $(document).ready(function() {
 	        minHeight: 500,
 	        maxHeight: null,
 	        focus: true, 
-	        lang : 'ko-KR'
-	  });
-	});
+	        lang : 'ko-KR',
+	        	callbacks: {
+					onImageUpload: function(files, editor, welEditable) {
+					            for (var i = files.length - 1; i >= 0; i--) {
+					             sendFile(files[i], this);
+					            }
+					        }
+					}
+
+			});
+		});
+		
+
+		function sendFile(file, el) {
+		var form_data = new FormData();
+		       form_data.append('file', file);
+		       $.ajax({
+		         data: form_data,
+		         type: "POST",
+		         url: 'summerImageFree',
+		         cache: false,
+		         contentType: false,
+		         enctype: 'multipart/form-data',
+		         processData: false,
+		         success: function(img_name) {
+		        	
+						$(el).summernote('editor.insertImage', img_name);
+					
+
+					
+		         }
+		       });
+		    }
 </script>
 <!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
 출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
@@ -109,11 +139,11 @@ function postForm() {
 </script>
 
 <script type="text/javascript">
-function file_change(file){
-var str=file.lastIndexOf("\\")+1;	//파일 마지막 "\" 루트의 길이 이후부터 글자를 잘라 파일명만 가져온다.
-file = file.substring(str, file.length);
-document.getElementById('fileName').value=file;
-}
+// function file_change(file){
+// var str=file.lastIndexOf("\\")+1;	//파일 마지막 "\" 루트의 길이 이후부터 글자를 잘라 파일명만 가져온다.
+// file = file.substring(str, file.length);
+// document.getElementById('fileName').value=file;
+// }
 </script>
 
 </html>

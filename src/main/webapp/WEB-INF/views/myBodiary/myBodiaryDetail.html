@@ -186,14 +186,14 @@
 																<table class="table table-bordered">
 																	<tr>
 																		<td>이름</td>
-																		<td>칼로리</td>
-																		<td>개수</td>
+																		<td>기준 칼로리 / 섭취 수량</td>
+																		<td>총 섭취 칼로리</td>
 																	</tr>
 																	<tr th:each="d : ${dailymeallist}">
 																		<th:block th:if="${d.meal_seq}==1 ">
 																			<td th:text="${d.food_name}"></td>
-																			<td th:text="${d.food_cal}+'  kcal'"></td>
-																			<td th:text="${d.food_count}"></td>
+																			<td th:text="${d.food_cal}+'  kcal' + ' / ' + ${d.food_count}"></td>
+																			<td th:text="${d.food_cal} * ${d.food_count}+ ' kcal'"></td>
 																		</th:block>
 																	</tr>
 																</table>
@@ -216,14 +216,14 @@
 																<table class="table table-bordered">
 																	<tr>
 																		<td>이름</td>
-																		<td>칼로리</td>
-																		<td>개수</td>
+																		<td>기준 칼로리 / 섭취 수량</td>
+																		<td>총 섭취 칼로리</td>
 																	</tr>
 																	<tr th:each="d : ${dailymeallist}">
 																		<th:block th:if="${d.meal_seq}==2 ">
 																			<td th:text="${d.food_name}"></td>
-																			<td th:text="${d.food_cal}+'  kcal'"></td>
-																			<td th:text="${d.food_count}"></td>
+																			<td th:text="${d.food_cal}+'  kcal' + ' / ' + ${d.food_count}"></td>
+																			<td th:text="${d.food_cal} * ${d.food_count}+ ' kcal'"></td>
 																		</th:block>
 																	</tr>
 																</table>
@@ -244,14 +244,14 @@
 																<table class="table table-bordered">
 																	<tr>
 																		<td>이름</td>
-																		<td>칼로리</td>
-																		<td>개수</td>
+																		<td>기준 칼로리 / 섭취 수량</td>
+																		<td>총 섭취 칼로리</td>
 																	</tr>
 																	<tr th:each="d : ${dailymeallist}">
 																		<th:block th:if="${d.meal_seq}==3 ">
 																			<td th:text="${d.food_name}"></td>
-																			<td th:text="${d.food_cal}+'  kcal'"></td>
-																			<td th:text="${d.food_count}"></td>
+																			<td th:text="${d.food_cal}+'  kcal' + ' / ' + ${d.food_count}"></td>
+																			<td th:text="${d.food_cal} * ${d.food_count}+ ' kcal'"></td>
 																		</th:block>
 																	</tr>
 																</table>
@@ -272,14 +272,14 @@
 																<table class="table table-bordered">
 																	<tr>
 																		<td>이름</td>
-																		<td>칼로리</td>
-																		<td>개수</td>
+																		<td>기준 칼로리 / 섭취 수량</td>
+																		<td>총 섭취 칼로리</td>
 																	</tr>
 																	<tr th:each="d : ${dailymeallist}">
 																		<th:block th:if="${d.meal_seq}==4 ">
 																			<td th:text="${d.food_name}"></td>
-																			<td th:text="${d.food_cal}+'  kcal'"></td>
-																			<td th:text="${d.food_count}"></td>
+																			<td th:text="${d.food_cal}+'  kcal' + ' / ' + ${d.food_count}"></td>
+																			<td th:text="${d.food_cal} * ${d.food_count}+ ' kcal'"></td>
 																		</th:block>
 																	</tr>
 																</table>

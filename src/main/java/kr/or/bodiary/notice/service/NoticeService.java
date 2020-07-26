@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.notice.dao.NoticeDao;
 import kr.or.bodiary.notice.dto.NoticeDto;
 import kr.or.bodiary.user.dto.UserDto;
@@ -26,18 +28,25 @@ public class NoticeService {
 	}
 	
 	//리스트
-	public List<NoticeDto> noticeList() throws ClassNotFoundException, SQLException {
-		List<NoticeDto> nlist = null;
-		try {
-			NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
-			nlist = noticedao.noticeList();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return nlist;
-	}
+			public String noticeList(Model model, int curPage, int pageSize) throws ClassNotFoundException, SQLException {
+				List<NoticeDto> nlist = null;
+				try {
+					NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
+					int totalCount = noticedao.totalCount();
+					Pagination pagination = new Pagination();
+					pagination.pageInfo(totalCount, curPage, pageSize);
+					System.out.println(pagination.getBlock());
+					nlist = noticedao.noticeList(pagination);
+					
+					model.addAttribute("noticeList", nlist);
+					model.addAttribute("pagination", pagination);
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return "notice/noticeList";
+			}
 	
 	//입력(처리)
 	public String noticeForm(NoticeDto noticedto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {

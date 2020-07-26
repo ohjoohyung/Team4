@@ -1,11 +1,15 @@
 package kr.or.bodiary.freeBrd.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,6 +44,7 @@ public class FreeBrdController {
 	public String AllFreeBrdList(HttpServletRequest request
 								,Model model
 								,@RequestParam(defaultValue = "1")int page
+								,@RequestParam(defaultValue = "5")int pageSize
 								,@RequestParam(required = false,defaultValue = "title")String searchType
 								,@RequestParam(required = false,defaultValue = "0")int cateGory
 								,@RequestParam(required = false)String keyword
@@ -80,7 +86,7 @@ public class FreeBrdController {
 		// ******************* 페이징 처리 ****************************************//
 		
 		//검색후 페이징 처리 계산 (검색한게 없어도 실행) 
-		search.pageInfo(searchListCnt, page);
+		search.pageInfo(searchListCnt, page, pageSize);
 		
 		List<FreeBrdDTO> freeBrdList = null;
 		if(cateGory == 0) {
@@ -157,13 +163,13 @@ public class FreeBrdController {
 	
 	//글쓰기 처리(POST 방식)	
 	@RequestMapping(value="freeBrdForm",method=RequestMethod.POST)
-	public String freeBrdFormInsert(FreeBrdDTO n, HttpServletRequest request,MultipartFile image,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
+	public String freeBrdFormInsert(FreeBrdDTO n, HttpServletRequest request,RedirectAttributes redirectAttributes) throws UnsupportedEncodingException {
 		
 		String url="redirect:freeBrd/freeBrdForm";
 	
 		//트랜잭션 처리 .... 코드 수정...... 글쓰기 처리 서비스 호출 
 		try {
-					url = freeBrdService.freeBrdFormInsert(n, request, image,redirectAttributes);
+					url = freeBrdService.freeBrdFormInsert(n, request, redirectAttributes);
 		}catch (Exception e) {
 					System.out.println("에러발생...");
 				    System.out.println(e.getMessage());
@@ -188,25 +194,25 @@ public class FreeBrdController {
 	
 	//글수정하기(처리 단) 뷰단에서 올린 파일을 받아올라면 (MultipartFile image) 이걸써줘서 받아줘야됨
 	@RequestMapping(value="freeBrdEdit", method=RequestMethod.POST)
-	public String freeBrdEditOk(FreeBrdDTO n,String seq, HttpServletRequest request,MultipartFile image,RedirectAttributes redirectAttributes) throws IOException, ClassNotFoundException, SQLException {
+	public String freeBrdEditOk(FreeBrdDTO n,String seq, HttpServletRequest request,RedirectAttributes redirectAttributes) throws IOException, ClassNotFoundException, SQLException {
 
 		System.out.println("카테고리번호"+request.getParameter("freeBrdCat"));
 		System.out.println("글제목"+request.getParameter("title"));
 		System.out.println("글내용"+request.getParameter("content"));
 		System.out.println("글번호"+request.getParameter("seq"));
 		
-		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
-		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
-			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
-		}else {
-			System.out.println("올린첨부파일"+image.getOriginalFilename());
-		}
+//		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
+//		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
+//			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
+//		}else {
+//			System.out.println("올린첨부파일"+image.getOriginalFilename());
+//		}
 		
 		String url="redirect:freeBrd/freeBrdEdit";
 		
 		//트랜잭션 처리 .... 코드 수정...... 글수정 서비스 호출 
 		try {
-					url = freeBrdService.freeBrdEditOk(n,seq,request,image);
+					url = freeBrdService.freeBrdEditOk(n,seq,request);
 					redirectAttributes.addAttribute("seq",seq);
 		}catch (Exception e) {
 					System.out.println("에러발생...");
@@ -236,6 +242,36 @@ public class FreeBrdController {
 		//예외 발생에 상관없이 목록 페이지 새로고침 처리
 		return url;
 	}
+	
+	
+	//썸머노트 파일 업로드
+    @ResponseBody
+	@RequestMapping("/summerImageFree")
+    public void summerImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	response.setContentType("text/html;charset=utf-8");
+    	PrintWriter out = response.getWriter();
+    	// 업로드할 폴더 경로
+    	String realFolder = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
+    	UUID uuid = UUID.randomUUID();
+
+    	// 업로드할 파일 이름
+    	String org_filename = file.getOriginalFilename();
+    	String str_filename = uuid.toString() + org_filename;
+
+    	System.out.println("원본 파일명 : " + org_filename);
+    	System.out.println("저장할 파일명 : " + str_filename);
+
+    	String filepath = realFolder +  "\\" + str_filename;
+    	System.out.println("파일경로 : " + filepath);
+
+    	File f = new File(filepath);
+    	if (!f.exists()) {
+    	f.mkdirs();
+    	}
+    	file.transferTo(f);
+    	out.println("assets/upload/freeBrdUpload/"+str_filename);
+    	out.close();
+    	}
 	
 	
 	

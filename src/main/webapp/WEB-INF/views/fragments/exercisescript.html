@@ -708,13 +708,13 @@
                                        +"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
                                        +"<div class='form-group col-5'>"
                                           +"<select class='form-control form-control-sm input-rounded input-excs-cart hour-select"+number+"' id='sel1' onchange='eselected1("+number+");'>"
-                                             +"<option selected='selected'>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
+                                             +"<option selected='selected' value=0>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
                                           +"</select></div>"
                                           +"<div class='col-2 center pt-2'>"
                                           +"<a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
                                           +"<input class='kind"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
                                           +"<input class='seq"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'>"
+                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'  value=0>"
                                           +"</div>"
                                     );
                                     
@@ -724,14 +724,14 @@
                                     $('#exer_n_add').append(   
                                           "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'><div class='col pt-2'><h10>"
                                           +obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2("+number+");'class='set-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
-                                          +"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
+                                          +"<option selected='selected' value=0>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
                                           +"</div><div class='form-group col-3'><select  id='sel3' onchange='eselected3("+number+");'class='perset-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
-                                          +"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
+                                          +"<option selected='selected' value=0>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
                                           +"</div><div class='col-2 center pt-2'><a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
                                           +"<input type='hidden' class='kind"+number+"' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
                                           +"<input type='hidden' class='seq"+number+"' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set'>"
-                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set'>"
+                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set' value=0>"
+                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set' value=0>"
                                           +"</div>"
                                           );
                               
@@ -786,22 +786,59 @@
                }
                number--;
             }
+       
             function eselected1(number){
                var eselect = $('select.hour-select'+number+' option:selected').val();
                $("input.hourinput"+number+"").attr('value', eselect);
-               
+            
                
             }
             function eselected2(number){
                var eselect = $('select.set-select'+number+' option:selected').val();
                $("input.setinput"+number+"").attr('value', eselect);
+             
                
             }
             function eselected3(number){
                var eselect = $('select.perset-select'+number+' option:selected').val();
                $("input.persetinput"+number+"").attr('value', eselect);
+            
                
             }
+            
+            
+            $('#makeRoutine').click(function() {
+            	if(number == 0) {
+            		alert("운동을 선택해주세요.")
+            		return false;
+            	}
+            	
+            	for(let i = 0; i < number; i++) {
+            		if( $("input.hourinput"+i+"").val() == 0) {
+            			alert("시간을 선택해주세요.")
+            			return false;
+            		}
+            		if($("input.setinput"+i+"").val() == 0) {
+            			alert("세트 수를 선택해주세요.")
+            			return false;
+            		}
+            		if($("input.persetinput"+i+"").val() ==0){
+            			alert("횟수를 선택해주세요.")
+            			return false;
+            		}
+            	}
+            	
+            	if($('#routine_cart_title').val() == '') {
+            		alert("제목을 입력해주세요.")
+            		return false;
+            	}
+            	swal("성공", "루틴이 추가되었습니다.", "success");
+            	
+            	setTimeout(function() {
+					$('#routineForm')[0].submit();
+					}, 1000);
+            	
+              });		
 
       </script>
 </th:block>
