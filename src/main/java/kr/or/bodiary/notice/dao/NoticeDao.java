@@ -3,13 +3,16 @@ package kr.or.bodiary.notice.dao;
 import java.sql.SQLException;
 import java.util.List;
 
+import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.notice.dto.NoticeDto;
 
 
 public interface NoticeDao {
 	
+
 	//리스트 가져오기
-	public List<NoticeDto> noticeList() throws ClassNotFoundException, SQLException;
+		public List<NoticeDto> noticeList(Pagination pagination) throws ClassNotFoundException, SQLException;
+
 
 	//전체 게시글 수
 	public int totalCount() throws ClassNotFoundException, SQLException;

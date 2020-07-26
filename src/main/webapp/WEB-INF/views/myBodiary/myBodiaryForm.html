@@ -154,18 +154,25 @@
                                  </div>
                               </div>
                               <div class="">
-                                 <div class="k-progress ">
-                                    <div class="col-md-6" id="idealcal">
+                                 <div class="k-progress row">
+                                 <div class="col-4">
+                                    <div id="idealcal">
                                        <label>나의 권장 칼로리 : </label> <span id="totalcal"
                                           th:if="${user.user_height}>100"
                                           th:text="(${user.user_height}-100)*0.9*35"
                                           style="color: #7571F9;">kcal</span>
-                                       <p th:if="${user.user_height}<=100">"신장이 올바르지 않습니다.
+                                       <p th:if="${user.user_height}<=100" style="color:red;">"신장이 올바르지 않습니다.
                                           다시입력해주세요 ㅜ.ㅜ"</p>
                                     </div>
-                                    <div class="col-md-6" id="presentlcal">
+                                    
+                                    <div id="presentlcal">
                                        <label>나의 현재 칼로리 : </label> <span id="precal" th:text="0"
                                           style="color: #7571F9;"></span>
+                                    </div>
+                                    </div>
+                                    
+                                    <div class="col text-right">
+                                    	<h2 id="warning" class="text-danger"></h2>
                                     </div>
                                     <div class="mb-3 w-100" id="foodprogress">
                                        <div class="progress" style="height: 9px;">
@@ -192,7 +199,15 @@
                                        <div class="col">
                                           <input type="search" class="form-control input-default"
                                              placeholder="Search" id="foodsearch" name="foodsearch">
-                                          <div class="table-responsive" id="foodBox"></div>
+                                          <div class="table-responsive" id="foodBox" style="overflow-y:scroll; height:300px;">
+                                          <table class='table table-bordered' id="divTable">
+	                                          <thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th></tr>
+	                                          </thead>
+	                                          <tbody id="foodTable">
+	                                          </tbody>
+                                          </table>
+                                          
+                                          </div>
                                        </div>
                                     </div>
                                  </div>
@@ -200,9 +215,10 @@
 
                               </div>
                               <div class="form-group mt-5">
-                                 <label>오늘의 루틴&nbsp;&nbsp;*</label> <span>&nbsp;&nbsp;루틴이
-                                    없다면 <a href="search">여기</a>를 눌러 루틴 추가하기
-                                 </span> <select id="routine_cart_seq" name="routine_cart_seq"
+                                 <label>오늘의 루틴&nbsp;&nbsp;*</label>&nbsp;&nbsp;&nbsp;&nbsp;(루틴이 없다면 오른쪽 버튼을 눌러 추가해보세요.)
+                                 <div class="row">
+                                <div class="col-lg-10">
+                                 <select id="routine_cart_seq" name="routine_cart_seq"
                                     class="form-control input-default">
 
 
@@ -212,29 +228,18 @@
                                           th:value="${item.routine_cart_seq}"></option>
                                     </th:block>
 
-                                 </select>
+                                 </select> 
+                                 </div>
+                                 <div class="col">
+                                 <button type="button" class="btn mb-1 btn-outline-primary w-100" onclick="location.href='search'" style="height: 45px;"><i
+                                       class="icon-plus"></i>
+                                    </button>
+                                    </div>
+                                     </div>
                                  <div class="tdroutine"></div>
                               </div>
 
-                              <!--    <div class="modal fade" id="basicModal">
-                                 <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                       <div class="modal-header">
-                                          <h5 class="modal-title">루틴에 있는 운동 목록</h5>
-                                          <button type="button" class="close" data-dismiss="modal">
-                                             <span>&times;</span>
-                                          </button>
-                                       </div>
-                                       <div class="modal-body">벤치프레스</div>
-                                       <div class="modal-footer">
-                                          <button type="button" class="btn btn-secondary"
-                                             data-dismiss="modal">Close</button>
-                                          <button type="button" class="btn btn-primary">Save
-                                             changes</button>
-                                       </div>
-                                    </div>
-                                 </div>
-                              </div> -->
+                           
 
                               <div class="row mt-3 ">
                                  <div class="form-group col-md-6">
@@ -284,87 +289,110 @@
       </div>
    </div>
    <!-- 기본 폼 완성 -->
+   
+   
+   <div class="modal fade" id="routineModal" tabindex="-1"
+					role="dialog" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+<!-- 								<h5 class="modal-title">루틴 만들기</h5> -->
+								<button type="button" class="close" data-dismiss="modal">
+									<span>&times;</span>
+								</button>
+							</div>
+							<div class="modal-body p-5">
+								<h2 class="p-0">루틴이 없네요!!</h2><hr> <h4 style="line-height:150%; font-size:22px;"><span th:text="${session.currentUser.user_nickname}"></span>님만의 루틴을<br>먼저 만들고<br>일지를 작성해보아요:)</h4>
+							</div>
+							<div class="mb-5 ml-5">
+								
+								<button type="button" onclick="location.href='search'" class="btn btn-primary">루틴 만들러 가기</button>
+							</div>
+						</div>
+					</div>
+				</div>
 
 
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    <script type="text/javascript">
+   
+   
+   /**
+	* @함수명 : drawProgress(food_seq, food_cal)
+	* @작성일 : 2020. 7. 20.
+	* @작성자 : 김덕기
+	* @설명 : 음식 추가시 프로그레스바가 추가된다
+	* @param food_seq - 음식 번호,
+			 food_cal - 음식 칼로리
+	**/
    //덕추가 추가할때 progress바 추가
    function drawProgress(food_seq,food_cal){
       var totalcal = $('#totalcal').text();
-      //alert('제발요'+totalcal);나온다
+ 
       var count = $('#count'+food_seq).val();
-      //alert('개수'+count) 나온다
+   
       var presentcal = count*food_cal;
-      //alert(presentcal); 나온다
+  
       var bar = document.getElementById("progress-bar");
-      //alert(bar.style.width); 0%로 나옴
+     
       var origin = bar.style.width.slice(0,-1);
-      //alert(origin);
+    
       var after = Number(preper)+Number(presentcal*100/totalcal);
-      //alert(after);
+     
       preper = after;
        if (Number(after>=100)){
           bar.style.width = "100%";
-         alert('과식하셨군요!!');
-      } 
+          $('#warning').html('오늘은 과식하셨군요!!');
+      }else {
+    	  $('#warning').html('');
+      }
       bar.style.width = after+"%";
       var precalbefore = document.getElementById("precal").innerHTML;
       document.getElementById("precal").innerHTML= Number(presentcal) + Number(precalbefore) ;
          
-      //document.getElementById("precal").innerHTML="아아아";
-      //alert(origin.slice(-3,-1));
-      //bar.style.width = presentcal*100/totalcal="%";
-      //alert(presentcal*100/totalcal+"%"); 나옴
-      //bar.style.width = presentcal*100/totalcal+"%";
-/*                var origin = bar.styale.width;
-      if(origin.slice(-3,-1)=100){
-         var originnum = 100;
-      }else{
-         var originnum = origin.slice(-3,-1);
-      };
-      alert(originnum); */
+      
       console.log("푸드 칼로리"+$('.meal_'+food_seq).attr('food_cal'));
    }
+	
+	
+	
+	 /**
+	* @함수명 : eraseProgress(food_seq, food_cal, count)
+	* @작성일 : 2020. 7. 23.
+	* @작성자 : 김덕기
+	* @설명 : 음식 제거시 프로그레스바가 줄어든다
+	* @param food_seq - 음식 번호,
+			 food_cal - 음식 칼로리,
+			 count - 음식 수량
+	**/
    function eraseProgress(food_seq,food_cal,count){
       var totalcal = $('#totalcal').text();
-      //alert('제발요'+totalcal);나온다
-      //var count = $('#count'+food_seq).val();
-      //alert('개수'+count) 나온다
+  
       var presentcal = count*food_cal;
-      //alert(presentcal); 나온다
+     
       var bar = document.getElementById("progress-bar");
-      //alert(bar.style.width); 0%로 나옴
+  
       var origin = bar.style.width.slice(0,-1);
-      //alert(origin);
+ 
       var after = Number(preper)-Number(presentcal*100/totalcal);
-      //alert(after);
+    
       preper = after;
        if (Number(after>=100)){
           bar.style.width = "100%";
-         alert('과식하셨군요!!');
+          $('#warning').html('오늘은 과식하셨군요!!');
       }else if(Number(after<=0)){
          after=0;
-         
+         $('#warning').html('');
       }
       bar.style.width = after+"%";
-      //alert(origin.slice(-3,-1));
-      //bar.style.width = presentcal*100/totalcal="%";
-      //alert(presentcal*100/totalcal+"%"); 나옴
-      //bar.style.width = presentcal*100/totalcal+"%";
-/*                var origin = bar.styale.width;
-      if(origin.slice(-3,-1)=100){
-         var originnum = 100;
-      }else{
-         var originnum = origin.slice(-3,-1);
-      };
-      alert(originnum); */
+     
       var precalbefore = document.getElementById("precal").innerHTML;
       document.getElementById("precal").innerHTML= Number(precalbefore) - Number(presentcal)  ;
    }
    
-   
+	
    //덕끝
    var validate = new Array;
    var preper = 0;
@@ -373,20 +401,38 @@
             for(let i=0; i<3; i++) {
                  validate[i]=false;
               }
+            
+            
+           
+            	
+            //루틴 없을때 뜨는 창
+            /*<![CDATA[*/
+            var routinesize = [[ ${routineList.size()} ]]
+            	console.log(routinesize);
+            	/*]]>*/
+            	 if(routinesize === 0) {
+                    $('#routineModal').modal('show');
+            	 }
+            
+        	
+        	
+        	
+        	
+        	//무한스크롤 스크롤에 따라 동적인 변화 발생
+    		$('#foodBox').scroll(function() {
+    			  var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+    		        var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+    		        var contentH = $('#divTable').height(); //문서 전체 내용을 갖는 div의 높이
+ 
+    		        
+    		        if(scrollT + scrollH +1 >= contentH) { // 스크롤바가 아래 쪽에 위치할 때
+    		        
+    		        	fetchList();
+    		        }
+    		});
             //일지 유효성 검증
             $('#diary_today_weight').keyup(function() {
-               /*      
-               let weight = /^[0-9]*$/;
-                     if (!weight.test($('#diary_today_weight').val())) {
-                        $('.tdweight')
-                              .html(
-                                    '<p style="color:red">몸무게는 숫자만 입력해주세요.</p>');
-                         validate[1] = false;
-                     } else {
-                        $('.tdweight').html('');
-                        validate[1] = true;
-                     }
-                     */
+              
                      if($('#diary_today_weight').val() >= 20 && $('#diary_today_weight').val() <= 300) {
                         validate[1] = true;
                         $('.tdweight').html('');
@@ -401,6 +447,7 @@
                      console.log(validate[1]);
                   }); 
             
+            //등록 버튼 눌렀을 때 유효성 검증
             $('button:submit').click(function() {
                console.log($('#routine_cart_seq option:selected').val());
                
@@ -409,7 +456,7 @@
                   if (validate[i] == false) {
                      switch (i) {
                      case 0:
-                        $('#imgFile').focus();
+                    	 $('html').scrollTop(0);
                         $('.tdimg').html(
                               '<p style="color:red">필수 항목입니다.</p>');
                         return false;
@@ -431,36 +478,86 @@
             });
             
             
-            
-            
-            //음식 검색하기
-            $('#foodsearch').keyup(function(){
-               var data = {food_name : $('#foodsearch').val()};
-               console.log(data);
-               $.ajax(
-                      {
-                         type:"get",
-                         data: data,
-                         url:"foodNameSearch",
-                         dataType:"json",
-                         success:function(responsedata){ 
-                           $('#foodBox').empty();
-                           console.log(responsedata);
-                           var table="<table class='table table-bordered'><thead><tr><th></th><th>이름</th><th>칼로리</th><th>수량</th><th></th>";
-                           $.each(responsedata,function(index,obj){
-                              table += "<tr><td>"+obj.food_seq+"</td>" +
-                                 "<td>"+obj.food_name+"</td>" +
-                                 "<td>"+obj.food_cal+"</td>"+
-                                 "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
+      
+            var curIndex = 1;
+    	    var isEnd = false;
+    	    
+    		
+    		//스크롤이 바닥에 닿았을 때 비동기로 리스트 불러오기
+    		 /**
+			* @함수명 : fetchList()
+			* @작성일 : 2020. 7. 25.
+			* @작성자 : 오주형
+			* @설명 : 음식 검색하면 비동기로 db의 값을 불러온다
+			**/
+    		function fetchList() {
+    			
+    			if(isEnd == true){
+    	            return;
+    	        }
+    			isEnd = true;
+    			var data = {food_name : $('#foodsearch').val(),
+    						curIndex : curIndex};
+    			
+    			$.ajax(
+                        {
+                           type:"get",
+                           data: data,
+                           url:"foodNameSearch",
+                           dataType:"json",
+                           success:function(responsedata){ 
+                        	   isEnd = false;
+                            
+                             console.log(responsedata);
+                            var table = "";
+                             $.each(responsedata,function(index,obj){
+                                table += "<tr><td>"+obj.food_seq+"</td>" +
+                                   "<td>"+obj.food_name+"</td>" +
+                                   "<td>"+obj.food_cal+"</td>"+
+                                   "<td><input type = 'number' min = '1' max = '100' step = '1' pattern='[0-9]*' id='count"+obj.food_seq+"' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'></td>"+   
 
-                                 //"<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+'"'+obj.food_name+'",'+obj.food_cal+");drawProgress("+obj.food_seq+","+obj.food_cal+");'>추가</button>"+"</td><tr>";
-                                 "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+'"'+obj.food_name+'",'+obj.food_cal+");'>추가</button>"+"</td><tr>";
-                           });
-                           table += "</table>";
-                           $('#foodBox').append(table);
-                         }   
-                      }
-                     );
+                                
+                                   "<td>"+"<button type='button' class='btn btn-outline-primary' onclick='addFood("+obj.food_seq+","+'"'+obj.food_name+'",'+obj.food_cal+");'>추가</button>"+"</td><tr>";
+                             });
+                    
+                             $('#foodTable').append(table);
+                             if(responsedata.length < 5) {
+         						isEnd = true;
+         						
+         					} else {
+         						curIndex++
+         					} 
+                           }   
+                        }
+                       );
+    			
+    	
+         	}
+    			
+    				  
+    		
+            
+    		var timeout = null;
+            //keyup으로 음식 검색하기
+            $('#foodsearch').keyup(function(){
+            
+            	if(isEnd == true) {
+            		isEnd = false;
+            	}
+              	if(curIndex > 1) {
+              		curIndex= 1;
+              	}
+        		
+            	 $('#foodTable').empty();
+            	 
+            	 clearTimeout(timeout);
+
+            	 timeout = setTimeout(function() {
+					fetchList();
+				}, 100);
+
+              	console.log(curIndex);
+              
             });
             
             //저장된 루틴 불러오기
@@ -533,6 +630,19 @@
          //식단 인덱스
             var number = 0;
             //음식 추가하기 메소드
+            
+            
+            
+             /**
+			* @함수명 : addFood(food_seq, food_name, food_cal)
+			* @작성일 : 2020. 7. 9.
+			* @작성자 : 오주형
+			* @설명 : 검색한 음식을 추가하는 메소드
+			* @param food_seq - 음식 번호,
+					 food_name - 음식 이름
+					 food_cal - 음식 칼로리
+					 
+			**/
             function addFood(food_seq, food_name, food_cal) {
                
 
@@ -611,8 +721,21 @@
                number++;
                
          }
+               $('#count'+food_seq).val('');
+                   
          }
-            
+			
+			
+			
+			
+			  /**
+			* @함수명 : delFood(num)
+			* @작성일 : 2020. 7. 9.
+			* @작성자 : 오주형
+			* @설명 : 검색한 음식을 삭제하는 메소드
+			* @param num - 식단 index
+					 
+			**/
             function delFood(num) {
                $(".mealDiv"+num+"").remove();
                   for(let i=1; i < number; i++) {
@@ -640,7 +763,17 @@
             }
          
          
+			
+			
          //이미지 추가 했을 때 화면에 띄우기
+         /**
+			* @함수명 : readURL(input)
+			* @작성일 : 2020. 7. 10.
+			* @작성자 : 오주형
+			* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+			* @param input - 현재 input에 대한 정보
+					 
+			**/
          function readURL(input) {
             if (input.files && input.files[0]) {
                console.log(input.files[0])
@@ -658,10 +791,19 @@
                   return false;   
                }
             }
-            /* $('#imgFileName').html(input.files[0].name); */
+   
          };
          
          //업로드한 파일 검증
+         
+         /**
+			* @함수명 : fileCheck(obj)
+			* @작성일 : 2020. 7. 10.
+			* @작성자 : 오주형
+			* @설명 : 업로드한 파일 검증
+			* @param obj - 현재 input에 대한 정보
+					 
+			**/
          function fileCheck(obj) {
           pathpoint = obj.value.lastIndexOf('.');
           filepoint = obj.value.substring(pathpoint+1,obj.length);
@@ -684,7 +826,13 @@
           }
          }
           
-         
+			/**
+			* @함수명 : onlyNumber(event)
+			* @작성일 : 2020. 7. 13.
+			* @작성자 : 오주형
+			* @설명 : 입력시 숫자만 입력가능하게 하는 메소드
+			* @param event - 파라미터로 받는 이벤트 
+			**/
          function onlyNumber(event){
              event = event || window.event;
              var keyID = (event.which) ? event.which : event.keyCode;
@@ -693,6 +841,14 @@
              else
                  return false;
          }
+			
+			/**
+			* @함수명 : removeChar(event)
+			* @작성일 : 2020. 7. 13.
+			* @작성자 : 오주형
+			* @설명 : 입력시 문자 제거해주는 메소드
+			* @param event - 파라미터로 받는 이벤트 
+			**/
          function removeChar(event) {
              event = event || window.event;
              var keyID = (event.which) ? event.which : event.keyCode;

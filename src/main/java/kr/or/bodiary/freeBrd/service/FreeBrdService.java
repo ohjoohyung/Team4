@@ -219,28 +219,28 @@ public int allFreeBrdCount(Search search) throws Exception {
 	}
 
 	// 글쓰기 처리 서비스 함수
-	public String freeBrdFormInsert(FreeBrdDTO n, HttpServletRequest request, MultipartFile image,RedirectAttributes redirectAttributes) throws IOException {
+	public String freeBrdFormInsert(FreeBrdDTO n, HttpServletRequest request, RedirectAttributes redirectAttributes) throws IOException {
 	
-		// 업로드한 이미지 이름 얻어오기 ex)a.PNG
-		String imageName = image.getOriginalFilename();
-	
-		// 글쓰기 작성폼에서 이미지를 업로드한게 있다면 실행 (서버의 실제 업로드 파일 경로에 클라이언트가 올린 이미지를 업로드하는 과정)
-		if (!image.isEmpty()) {
-			// 클라이언트가 첨부한 이미지를 저장할 실제 서버파일 경로
-			// ex)
-			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload
-			String path = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
-			// 업로드 경로 + 저장할 파일이름(a.PNG)
-			// ex)
-			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload\a.PNG
-			String fpath = path + "\\" + imageName;
-			System.out.println("실경로"+fpath);
-			// FileOutput 이용해 실제 업로드하기
-			FileOutputStream fs = new FileOutputStream(fpath);
-			fs.write(image.getBytes());
-			fs.close();
-	
-		}
+//		// 업로드한 이미지 이름 얻어오기 ex)a.PNG
+//		String imageName = image.getOriginalFilename();
+//	
+//		// 글쓰기 작성폼에서 이미지를 업로드한게 있다면 실행 (서버의 실제 업로드 파일 경로에 클라이언트가 올린 이미지를 업로드하는 과정)
+//		if (!image.isEmpty()) {
+//			// 클라이언트가 첨부한 이미지를 저장할 실제 서버파일 경로
+//			// ex)
+//			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload
+//			String path = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
+//			// 업로드 경로 + 저장할 파일이름(a.PNG)
+//			// ex)
+//			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload\a.PNG
+//			String fpath = path + "\\" + imageName;
+//			System.out.println("실경로"+fpath);
+//			// FileOutput 이용해 실제 업로드하기
+//			FileOutputStream fs = new FileOutputStream(fpath);
+//			fs.write(image.getBytes());
+//			fs.close();
+//	
+//		}
 	
 		// DTO에 게시판에서 작성한 값 넣어주기
 		
@@ -254,19 +254,19 @@ public int allFreeBrdCount(Search search) throws Exception {
 		// 글제목
 		n.setFree_brd_title(request.getParameter("title"));
 		// 업로드한 사진이름(글쓰기 뷰단에서 이미지를 첨부안하면 "" 공백으로 인식해서 들어옴)
-		if(imageName != null && imageName != "") {
-			System.out.println("업로드한 사진있음");
-			n.setFree_brd_image(imageName);
-		}else {
-			System.out.println("업로드한 사진없음");
-			n.setFree_brd_image(null);
-		}
+//		if(imageName != null && imageName != "") {
+//			System.out.println("업로드한 사진있음");
+//			n.setFree_brd_image(imageName);
+//		}else {
+//			System.out.println("업로드한 사진없음");
+//			n.setFree_brd_image(null);
+//		}
 		// 글내용
 		n.setFree_brd_content(request.getParameter("content"));
 	
 		System.out.println("카테고리->" + n.getFree_cat());
 		System.out.println("글제목->" + n.getFree_brd_title());
-		System.out.println("업로드 사진 이름->" + n.getFree_brd_image());
+//		System.out.println("업로드 사진 이름->" + n.getFree_brd_image());
 		System.out.println("글내용->" + n.getFree_brd_content());
 	
 		// DB연동해서 클라이언트가 입력한 데이터들을 DB안에 테이블에 넣어주기
@@ -308,34 +308,34 @@ public int allFreeBrdCount(Search search) throws Exception {
 
 
 	// 글 수정 서비스 함수
-	public String freeBrdEditOk(FreeBrdDTO n,String seq, HttpServletRequest request, MultipartFile image) throws IOException {
+	public String freeBrdEditOk(FreeBrdDTO n,String seq, HttpServletRequest request) throws IOException {
 		
-		//새로올린 이미지
-		String newImage = "";
-		//과거에 올렸던 이미지 
-		String pastImage = "";
-		
-		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
-		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
-			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
-			pastImage = request.getParameter("image_2");
-		}else {
-			System.out.println("새로 올린첨부파일"+image.getOriginalFilename());
-			newImage = image.getOriginalFilename();
-			// 클라이언트가 첨부한 이미지를 저장할 실제 서버파일 경로
-			// ex)
-			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload
-			String path = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
-			// 업로드 경로 + 저장할 파일이름(a.PNG)
-			// ex)
-			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload\a.PNG
-			String fpath = path + "\\" + newImage;
-			System.out.println("실경로"+fpath);
-			// FileOutput 이용해 실제 업로드하기
-			FileOutputStream fs = new FileOutputStream(fpath);
-			fs.write(image.getBytes());
-			fs.close();
-		}
+//		//새로올린 이미지
+//		String newImage = "";
+//		//과거에 올렸던 이미지 
+//		String pastImage = "";
+//		
+//		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
+//		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
+//			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
+//			pastImage = request.getParameter("image_2");
+//		}else {
+//			System.out.println("새로 올린첨부파일"+image.getOriginalFilename());
+//			newImage = image.getOriginalFilename();
+//			// 클라이언트가 첨부한 이미지를 저장할 실제 서버파일 경로
+//			// ex)
+//			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload
+//			String path = request.getSession().getServletContext().getRealPath("/assets/upload/freeBrdUpload");
+//			// 업로드 경로 + 저장할 파일이름(a.PNG)
+//			// ex)
+//			// C:\Team4_Project\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\SpringProject_Bodiary\assets/upload\freeBrdUpload\a.PNG
+//			String fpath = path + "\\" + newImage;
+//			System.out.println("실경로"+fpath);
+//			// FileOutput 이용해 실제 업로드하기
+//			FileOutputStream fs = new FileOutputStream(fpath);
+//			fs.write(image.getBytes());
+//			fs.close();
+//		}
 	
 	
 		// DTO에 게시판에서 작성한 값 넣어주기
@@ -347,11 +347,11 @@ public int allFreeBrdCount(Search search) throws Exception {
 		// 글제목
 		n.setFree_brd_title(request.getParameter("title"));
 		// 업로드한 사진이름(글쓰기 뷰단에서 이미지를 첨부안하면 "" 공백으로 인식해서 들어옴)
-		if(newImage != null && newImage != "") {
-			n.setFree_brd_image(newImage); //글 수정할때 새로올린 이미지가 있다면 실행 
-		}else {
-			n.setFree_brd_image(pastImage); //글 수정할때 새로올린 이미지 없다면 기존이미지를 들고옴 
-		}
+//		if(newImage != null && newImage != "") {
+//			n.setFree_brd_image(newImage); //글 수정할때 새로올린 이미지가 있다면 실행 
+//		}else {
+//			n.setFree_brd_image(pastImage); //글 수정할때 새로올린 이미지 없다면 기존이미지를 들고옴 
+//		}
 		// 글내용
 		n.setFree_brd_content(request.getParameter("content"));
 		

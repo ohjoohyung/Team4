@@ -123,21 +123,22 @@ public class BodiaryController {
 	public String myBodiaryForm(Model model , HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 	    String user_email = user.getUser_email();
+	    
+	    
 
 	    System.out.println("유저 정보 : " +user_email);
 	    List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
 	    model.addAttribute("routineList", list);
 	    System.out.println("userdto: "+user);//추가
         model.addAttribute("user", user);//추가
-	    return "myBodiary/myBodiaryForm";
+	    return bodiaryservice.goBodiaryForm(user.getUser_email());
 	}
 	
 	//일지 작성하기
 	@RequestMapping(value = "/myBodiaryForm", method = RequestMethod.POST)
 	public String myBodiaryForm(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws ClassNotFoundException, SQLException, IOException {
-		System.out.println("안녕");
-		System.out.println("컨트롤 : "+bodiarydto.toString());
-		/* System.out.println("컨트롤 : "+dailymealdto.getDailyMealList().toString()); */
+	
+		System.out.println("일지 작성하기 : "+bodiarydto.toString());
 		
 		
 		
@@ -193,13 +194,16 @@ public class BodiaryController {
 	
 	//일지 수정 페이지 이동
 	@RequestMapping(value = "/myBodiaryEdit", method = RequestMethod.GET)
-	public String myBodiaryEdit(String diary_seq, Model model) throws ClassNotFoundException, SQLException {
+	public String myBodiaryEdit(String diary_seq, Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
 		BodiaryDto bodiarydto = bodiaryservice.getBodiary(diary_seq);
 		System.out.println("수정페이지 이동 전 : "+bodiarydto.toString());
 		String user_email = bodiarydto.getUser_email();
 		List<RoutineJoinDto> list = bodiaryservice.getRoutineListById(user_email);
 		model.addAttribute("routineList", list);
 		model.addAttribute("bodiary", bodiarydto);
+		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		System.out.println("userdto: "+user);//추가
+        model.addAttribute("user", user);//추가
 		
 		return "myBodiary/myBodiaryEdit";
 	}
@@ -217,9 +221,10 @@ public class BodiaryController {
 	//음식 검색하기
 	@ResponseBody 
 	@RequestMapping("/foodNameSearch")
-	public List<FoodDto> foodNameSearch(@RequestParam String food_name) throws ClassNotFoundException, SQLException {
+	public List<FoodDto> foodNameSearch(@RequestParam String food_name, @RequestParam int curIndex) throws ClassNotFoundException, SQLException {
 		System.out.println("food_name:"+food_name);
-		List<FoodDto> foodlist = bodiaryservice.foodNameSearch(food_name);
+		System.out.println("Startindex: "+curIndex);
+		List<FoodDto> foodlist = bodiaryservice.foodNameSearch(food_name, curIndex);
 		System.out.println(foodlist.toString());
 		return foodlist;
 	}

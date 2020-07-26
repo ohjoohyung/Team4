@@ -60,9 +60,39 @@
 			minHeight: 400, //최소 높이
 			maxHeight: null, //최대 높이
 			focus: true, //에디터 로딩 후 포커스를 맞출지 여부
-			lang: 'ko-KR' //한글 설정
+			lang: 'ko-KR', //한글 설정
+			callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+				            for (var i = files.length - 1; i >= 0; i--) {
+				             sendFile(files[i], this);
+				            }
+				        }
+				}
+
 		});
 	});
+	
+
+	function sendFile(file, el) {
+	var form_data = new FormData();
+	       form_data.append('file', file);
+	       $.ajax({
+	         data: form_data,
+	         type: "POST",
+	         url: 'summerImageNotice',
+	         cache: false,
+	         contentType: false,
+	         enctype: 'multipart/form-data',
+	         processData: false,
+	         success: function(img_name) {
+	        	
+					$(el).summernote('editor.insertImage', img_name);
+				
+
+				
+	         }
+	       });
+	    }
 </script>
 <!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다. -->
 <script>

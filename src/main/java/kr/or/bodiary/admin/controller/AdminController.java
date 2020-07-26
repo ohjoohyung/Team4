@@ -1,18 +1,24 @@
 package kr.or.bodiary.admin.controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.bodiary.admin.service.ChartService;
 import kr.or.bodiary.admin.service.ExerciseService;
@@ -23,7 +29,6 @@ import kr.or.bodiary.notice.service.NoticeService;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
-
 @Controller
 public class AdminController {
 
@@ -176,12 +181,12 @@ public class AdminController {
 
 	//공지사항
 	//리스트
-	@RequestMapping("noticeList")
-	public String noticeList(Model model) throws ClassNotFoundException, SQLException {
-		List<NoticeDto> nlist = noticeservice.noticeList();
-		model.addAttribute("noticeList", nlist);
-		return "notice/noticeList";
-	}
+		@RequestMapping("noticeList")
+		public String noticeList(Model model, 
+								@RequestParam(defaultValue="1") int curPage, 
+								@RequestParam(defaultValue = "5") int pageSize) throws ClassNotFoundException, SQLException {
+			return noticeservice.noticeList(model, curPage, pageSize);
+		}
 		
 	//입력(폼)
 	@RequestMapping(value = "noticeForm", method = RequestMethod.GET)
@@ -286,6 +291,35 @@ public class AdminController {
        
        return chartService.monthlyCount();
     }
+    
+  //썸머노트 파일 업로드
+    @ResponseBody
+	@RequestMapping("/summerImageNotice")
+    public void summerImage(MultipartFile file, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	response.setContentType("text/html;charset=utf-8");
+    	PrintWriter out = response.getWriter();
+    	// 업로드할 폴더 경로
+    	String realFolder = request.getSession().getServletContext().getRealPath("/assets/upload/noticeUpload");
+    	UUID uuid = UUID.randomUUID();
+
+    	// 업로드할 파일 이름
+    	String org_filename = file.getOriginalFilename();
+    	String str_filename = uuid.toString() + org_filename;
+
+    	System.out.println("원본 파일명 : " + org_filename);
+    	System.out.println("저장할 파일명 : " + str_filename);
+
+    	String filepath = realFolder +  "\\" + str_filename;
+    	System.out.println("파일경로 : " + filepath);
+
+    	File f = new File(filepath);
+    	if (!f.exists()) {
+    	f.mkdirs();
+    	}
+    	file.transferTo(f);
+    	out.println("assets/upload/noticeUpload/"+str_filename);
+    	out.close();
+    	}
 			
 		
 	}

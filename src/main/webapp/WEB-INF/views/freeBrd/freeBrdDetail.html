@@ -64,9 +64,9 @@
 					<hr>
 					<div class="contentFBD">
 						<!-- 해당 글에 해당하는 이미지가 있을경우 뿌려주고 없으면 안뿌려줌 -->
-						<div th:if="${list.free_brd_image != null}">
-							 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" alt="" style="width:300px;height:200px;" />
-						</div>
+<!-- 						<div th:if="${list.free_brd_image != null}"> -->
+<!-- 							 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" alt="" style="width:300px;height:200px;" /> -->
+<!-- 						</div> -->
 					
 						<p th:utext="${list.free_brd_content}"></p> 
 					</div>

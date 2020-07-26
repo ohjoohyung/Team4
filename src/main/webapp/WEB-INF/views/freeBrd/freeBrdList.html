@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -192,31 +191,46 @@
 						</button>
 						<!-- 게시글 순서 드롭다운 -->
 						<div class="row">
-							<div class="col"></div>
-							<div class="col-3">
-								<div class="dropdown custom-dropdown ml-2">
-									<button type="button" class="btn btn-sm btn-outline-primary"
-										data-toggle="dropdown">
-										<i class="ti-search m-r-5"></i>&nbsp;최신순&nbsp;<i
-											class="fa fa-angle-down m-l-5"></i>
-									</button>
-									<div class="dropdown-menu dropdown-menu-right">
-										<a class="dropdown-item" href="#">조회순</a> <a
-											class="dropdown-item" href="#">댓글순</a> <a
-											class="dropdown-item" href="#">12 AM</a>
-									</div>
-								</div>&nbsp;
+							<div class="col-10"></div>
+							<div class="col-2 pl-5">
+						
 								<!-- 페이징 사이즈 드롭다운 -->
 								<div class="dropdown custom-dropdown">
-									<button type="button" class="btn btn-sm btn-outline-primary"
+										<button type="button" class="btn btn-sm btn-outline-primary"
 										data-toggle="dropdown">
-										10개씩&nbsp;<i class="fa fa-angle-down m-l-5"></i>
+										<span th:text="${pagination.pageSize} + 개씩"></span><i class="fa fa-angle-down m-l-5"></i>
 									</button>
-									<div class="dropdown-menu dropdown-menu-right">
-										<a class="dropdown-item" href="#">5개씩</a> <a
-											class="dropdown-item" href="#">15개씩</a> <a
-											class="dropdown-item" href="#">20개씩</a>
+									
+									<div th:if="${cateGory} == 0" class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item" href="freeBrdList?page=1&pageSize=5">5개씩</a>
+										<a class="dropdown-item" href="freeBrdList?page=1&pageSize=10">10개씩</a> <a
+											class="dropdown-item" href="freeBrdList?page=1&pageSize=15">15개씩</a> <a
+											class="dropdown-item" href="freeBrdList?page=1&pageSize=20">20개씩</a>
 									</div>
+									
+									<div th:if="${cateGory} == 1" class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item" href="freeBrdList?cateGory=1&page=1&pageSize=5">5개씩</a>
+										<a class="dropdown-item" href="freeBrdList?cateGory=1&page=1&pageSize=10">10개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=1&page=1&pageSize=15">15개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=1&page=1&pageSize=20">20개씩</a>
+									</div>
+									
+									<div th:if="${cateGory} == 2" class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item" href="freeBrdList?cateGory=2&page=1&pageSize=5">5개씩</a>
+										<a class="dropdown-item" href="freeBrdList?cateGory=2&page=1&pageSize=10">10개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=2&page=1&pageSize=15">15개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=2&page=1&pageSize=20">20개씩</a>
+									</div>
+									
+									<div th:if="${cateGory} == 3" class="dropdown-menu dropdown-menu-right">
+										<a class="dropdown-item" href="freeBrdList?cateGory=3&page=1&pageSize=5">5개씩</a>
+										<a class="dropdown-item" href="freeBrdList?cateGory=3&page=1&pageSize=10">10개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=3&page=1&pageSize=15">15개씩</a> <a
+											class="dropdown-item" href="freeBrdList?cateGory=3&page=1&pageSize=20">20개씩</a>
+									</div>
+									
+									
+									
 								</div>
 							</div>
 						</div>
@@ -307,32 +321,32 @@
 										<nav>
 											<ul class="pagination justify-content-center">
 												<li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(page=1,searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(page=1,searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">처음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword}),pageSize=${search.pageSize}}" aria-label="Previous">
 											        <span aria-hidden="true">이전</span>
 											      </a>
 											    </li>
 											    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">										    	    	
 												    <li class="page-item" th:each="pageButton : ${#numbers.sequence(start, end)}">  	
 													    <th:block th:if="${pageButton == pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
+												    		<a class="page-link" th:href="@{freeBrdList(page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
 												    	</th:block>
 												    	<th:block th:if="${pageButton != pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} ></a>											    		
+												    		<a class="page-link" th:href="@{freeBrdList(page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} ></a>											    		
 												    	</th:block>				  	
 												    </li>										    
 											    </th:block>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}"> 
-											      <a class="page-link" th:href="@{freeBrdList(page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Next">
+											      <a class="page-link" th:href="@{freeBrdList(page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Next">
 											        <span aria-hidden="true">다음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}">
-											      <a class="page-link"  th:href="@{freeBrdList(page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link"  th:href="@{freeBrdList(page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">끝</span>
 											      </a>
 											    </li>
@@ -466,32 +480,32 @@
 										<nav>
 											<ul class="pagination justify-content-center">
 												<li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=1,searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=1,searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">처음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">이전</span>
 											      </a>
 											    </li>
 											    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">										    	    	
 												    <li class="page-item" th:each="pageButton : ${#numbers.sequence(start, end)}">  	
 													    <th:block th:if="${pageButton == pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
 												    	</th:block>
 												    	<th:block th:if="${pageButton != pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} ></a>											    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} ></a>											    		
 												    	</th:block>				  	
 												    </li>										    
 											    </th:block>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}"> 
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Next">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=1,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Next">
 											        <span aria-hidden="true">다음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}">
-											      <a class="page-link"  th:href="@{freeBrdList(cateGory=1,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link"  th:href="@{freeBrdList(cateGory=1,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">끝</span>
 											      </a>
 											    </li>
@@ -613,32 +627,32 @@
 										<nav>
 											<ul class="pagination justify-content-center">
 												<li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=1,searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=1,searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">처음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">이전</span>
 											      </a>
 											    </li>
 											    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">										    	    	
 												    <li class="page-item" th:each="pageButton : ${#numbers.sequence(start, end)}">  	
 													    <th:block th:if="${pageButton == pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
 												    	</th:block>
 												    	<th:block th:if="${pageButton != pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} ></a>											    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} ></a>											    		
 												    	</th:block>				  	
 												    </li>										    
 											    </th:block>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}"> 
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Next">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=2,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Next">
 											        <span aria-hidden="true">다음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}">
-											      <a class="page-link"  th:href="@{freeBrdList(cateGory=2,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link"  th:href="@{freeBrdList(cateGory=2,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">끝</span>
 											      </a>
 											    </li>
@@ -759,32 +773,32 @@
 										<nav>
 											<ul class="pagination justify-content-center">
 												<li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=1,searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=1,searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">처음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != 1}">
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pagination.prevBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">이전</span>
 											      </a>
 											    </li>
 											    <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">										    	    	
 												    <li class="page-item" th:each="pageButton : ${#numbers.sequence(start, end)}">  	
 													    <th:block th:if="${pageButton == pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} style="background-color:#b3cbe5;"></a>								   													    		
 												    	</th:block>
 												    	<th:block th:if="${pageButton != pagination.page}">
-												    		<a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword})}" th:text=${pageButton} ></a>											    		
+												    		<a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pageButton},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" th:text=${pageButton} ></a>											    		
 												    	</th:block>				  	
 												    </li>										    
 											    </th:block>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}"> 
-											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Next">
+											      <a class="page-link" th:href="@{freeBrdList(cateGory=3,page=${pagination.nextBlock},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Next">
 											        <span aria-hidden="true">다음</span>
 											      </a>
 											    </li>
 											    <li class="page-item" th:if="${pagination.block != pagination.totalBlockCnt}">
-											      <a class="page-link"  th:href="@{freeBrdList(cateGory=3,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword})}" aria-label="Previous">
+											      <a class="page-link"  th:href="@{freeBrdList(cateGory=3,page=${pagination.totalPageCnt},searchType=${search.searchType},keyword=${search.keyword},pageSize=${search.pageSize})}" aria-label="Previous">
 											        <span aria-hidden="true">끝</span>
 											      </a>
 											    </li>

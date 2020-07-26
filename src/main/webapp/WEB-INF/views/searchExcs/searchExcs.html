@@ -8,7 +8,7 @@
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<div class="bodiary-wrapper excs">
-		<form action="insertRoutineBundle">
+		<form action="insertRoutineBundle" id="routineForm">
 		<div class="mt-5 ml-3 mr-5">
 			<div class="row">
 				<div class="col-2 ">
@@ -136,9 +136,7 @@
 								<div class="col">
 									<h3>유산소 운동</h3>
 								</div>
-								<div class="col-2 center">
-									<i class="mdi mdi-window-close"></i>
-								</div>
+								
 							</div>
 							<hr>
 							<div class="cardio-cart p-2">
@@ -172,9 +170,7 @@
 								<div class="col">
 									<h3>무산소 운동</h3>
 								</div>
-								<div class="col-2 center">
-									<i class="mdi mdi-window-close"></i>
-								</div>
+								
 							</div>
 							<hr />
 							<div class="weight-cart">
@@ -208,8 +204,8 @@
 							</div>
 							<!-- Large modal -->
 							<button type="button"
-								class="submit btn btn-primary btn-flat btn-lg w-100 mt-3 "
-								data-toggle="modal" data-target=".bd-example-modal-lg">루틴
+								class="btn btn-primary btn-flat btn-lg w-100 mt-3 "
+								data-toggle="modal" data-target="#routineModal">루틴
 								만들기</button>
 					</div>
 				</div>
@@ -231,7 +227,7 @@
 							<div class="center mb-4 mt-2">
 								<button type="button" class="btn btn-outline-light"
 									data-dismiss="modal">취소</button>
-								<button type="submit" class="btn btn-primary">루틴 만들기</button>
+								<button type="button" id="makeRoutine" class="btn btn-primary">루틴 만들기</button>
 							</div>
 						</div>
 					</div>
@@ -247,6 +243,7 @@
 		
 		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 		<th:block th:replace="fragments/exercisescript :: scriptFragment"></th:block>
+		
 
 </body>
 </html>
