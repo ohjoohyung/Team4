@@ -50,21 +50,21 @@
 							<div class="form-group row mt-5 mb-5">
 								<label class="col-sm-3 col-form-label text-primary">나이</label>
 								<div class="col-sm-9">
-									<input id="user_age" name="user_age" type="text" class="form-control input-default" th:value="${session.currentUser.user_age}">
+									<input id="user_age" name="user_age" type="number" min="1" max="120" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control input-default" th:value="${session.currentUser.user_age}">
 								</div>
 							</div>
 							<hr>
 							<div class="form-group row mt-5 mb-5">
 								<label class="col-sm-3 col-form-label text-primary">키</label>
 								<div class="col-sm-9">
-									<input id="user_height" name="user_height" type="text" class="form-control input-default" th:value="${session.currentUser.user_height}">
+									<input id="user_height" name="user_height" type="number" min="101" max="300" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control input-default" th:value="${session.currentUser.user_height}">
 								</div>
 							</div>
 							<hr>
 							<div class="form-group row mt-5 mb-5">
 								<label class="col-sm-3 col-form-label text-primary">몸무게</label>
 								<div class="col-sm-9">
-									<input id="user_weight" name="user_weight" type="text" class="form-control input-default" th:value="${session.currentUser.user_weight}">
+									<input id="user_weight" name="user_weight" type="number" min="20" max="200" onkeydown="javascript: return event.keyCode == 69 ? false : true" class="form-control input-default" th:value="${session.currentUser.user_weight}">
 								</div>
 							</div>
 							<hr>

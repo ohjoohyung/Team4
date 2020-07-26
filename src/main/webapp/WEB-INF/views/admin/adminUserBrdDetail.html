@@ -10,11 +10,12 @@
 	<div class="bodiary-wrapper main-wrapper">
 		<th:block th:replace="admin/adminCommon/adminNav :: adminNavFragment"></th:block>
 	
-		<div class="container-fluid" style="margin-left: 242px;"> 	
+		<div class="container mt-4" style="margin-left: 250px;"> 	
 			<div class="row">
 				<!-- 유저 정보들  -->
 				<div class="col-lg-4 col-xl-4">
-				   <div class="card" style="background-color:#99CCFF;">
+				<button type="button" onclick="location.href='adminUserBrdList'" class="btn btn-outline-primary w-100 mb-3">유저관리 목록</button>
+				   <div class="card">
 	                    <div class="card-body">
 	                        <div class="media align-items-center mb-4">
 	                            <img class="mr-3" width="80" height="80" alt="" th:src="@{assets/upload/userUpload/}+${getUser.user_img}">
@@ -23,29 +24,6 @@
 	                                <p th:text="${getUser.user_gender}"></p>
 	                            </div>
 	                        </div>
-	                        
-	                        <div class="row mb-5">
-	                            <div class="col">
-	                                <div class="card card-profile text-center">
-	                                    <span class="mb-1 text-primary"><i class="icon-people"></i></span>
-	                                    <h3 class="mb-0" th:text="${routineBrdCount}"></h3>
-	                                    <p class="text-muted px-4">루틴 자랑게시판 총 게시물</p>
-	                                </div>
-	                            </div>
-	                            <div class="col">
-	                                <div class="card card-profile text-center">
-	                                    <span class="mb-1 text-warning"><i class="icon-user-follow"></i></span>
-	                                    <h3 class="mb-0" th:text="${freeBrdCount}"></h3>
-	                                    <p class="text-muted">자유게시판 총 게시물</p>
-	                                </div>
-	                            </div>
-	                            <div class="col-12 text-center">
-	                            	<button type="button" onclick="location.href='adminUserBrdList'"
-									class="btn btn-outline-primary">유저관리 목록</button>
-	                       
-	                            </div>
-	                        </div>
-	
 	                        <h4>About Me</h4>
 	                        <ul class="card-profile__info">
 	                            <li class="mb-1"><strong class="text-dark mr-4">나이</strong> <span th:text="${getUser.user_age}"></span></li>
@@ -54,9 +32,30 @@
 	                            <li class="mb-1"><strong class="text-dark mr-4">등급</strong> <span th:text="${getUser.user_grade}"></span></li>
 	                            <li><strong class="text-dark mr-4">Email</strong> <span th:text="${getUser.user_email}"></span></li>
 	                        </ul>
+	                        <div class="row mb-5 mt-4">
+	                            <div class="col">
+	                                <div class="card card-profile text-center">
+	                                    <span class="mb-1 text-primary"><i class="icon-notebook"></i></span>
+	                                    <h3 class="mb-0" th:text="${routineBrdCount}"></h3>
+	                                    <p class="text-muted px-4">루틴 자랑게시판 총 게시물</p>
+	                                </div>
+	                            </div>
+	                            <div class="col">
+	                                <div class="card card-profile text-center">
+	                                    <span class="mb-1 text-warning"><i class="icon-book-open"></i></span>
+	                                    <h3 class="mb-0" th:text="${freeBrdCount}"></h3>
+	                                    <p class="text-muted">자유게시판<br>총 게시물</p>
+	                                </div>
+	                            </div>
+	                            <div class="col-12 text-center">
+	                            	
+	                            </div>
+	                        </div>
 	                    </div>
 	                </div>
+	              
 	              </div> 
+	                       
 	               <!-- 유저 정보들 END  -->
 	               
 	              <div class="col-lg-8 col-xl-8"> 
@@ -101,8 +100,6 @@
 				                                    	
 				                                        <h5 class="mb-sm-0" th:text="${UserRoutineBrdList.routine_brd_title}"></h5>
 				                                        <div class="media-reply__link">
-				                                        	<!-- 좋아요 수 -->
-				                                            <i class="fa fa-thumbs-up" th:text="${UserRoutineBrdList.brd_rec}"></i>
 				                                           	<!-- 조회수 -->
 				                                        	<i class="icon-eye" th:text="${UserRoutineBrdList.routine_brd_hit}"></i>
 				                                          	  <!-- 삭제버튼 -->

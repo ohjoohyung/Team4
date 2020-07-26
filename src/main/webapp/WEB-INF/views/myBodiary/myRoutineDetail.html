@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<!-- 공통 헤더-->
+<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<!-- 공통 sidenav -->
+	<div class="bodiary-wrapper">
+		<div class="row mt-4">
+			<nav class="col-3 ml-3 mr-0 sidenav">
+				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
+			</nav>
+			
+			<div class="col mr-5">
+				<div class="card p-5">
+					<h2 th:text="${routine[0].routine_cart_title}" class="mb-4">루틴 제목</h2>
+					<div class="row">
+						<div class="col-6">
+							<div class="p-2 mb-3" style="border:1px solid #7571f9;">
+								<h4>유산소</h4>
+								
+							</div>
+							<div class="basic-form" th:each="r : ${routine}">
+								<th:block th:if="${r.excs_kind}=='C'">
+									<div class="row m-0 pt-2">
+										<div class="col-8">
+											<p class="text mb-2" th:text="${r.excs_name}"></p>
+										</div>
+										<div class="col-4">
+											<p class="text mb-2" th:text="${r.routine_exercise_hour}"></p>
+										</div>
+									</div>
+									<hr class="m-2">
+								</th:block>
+							</div>
+						</div>
+						<div class="col-6">
+							<div class="p-2 mb-3" style="border:1px solid #7571f9;">
+								<h4>무산소</h4>
+							
+							</div>
+							<div class="basic-form" th:each="r : ${routine}">
+								<th:block th:if="${r.excs_kind}=='N'">
+									<div class="row m-0 pt-2">
+										<div class="col-8">
+											<p class="text mb-2" th:text="${r.excs_name}"></p>
+										</div>
+										<div class="col-4">
+											<p class="text mb-2" th:text="${r.routine_set}+ '세트  '+ ${r.routine_reps_per_set}+'회'"></p>
+										</div>
+									</div>
+									<hr class="m-2">
+								</th:block>
+							</div>
+						</div>
+						<div class="col-12 center mt-4">
+							<button class="btn btn-outline-primary">삭제하기</button>
+							<button class="btn btn-primary">수정하기</button>
+						</div>
+						<div class="col-12 mt-5">
+							<button class="btn btn-outline-light" type="button" onclick="location.href='myRoutineList'" >목록 가기</button>
+						</div>
+					</div>
+                    </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

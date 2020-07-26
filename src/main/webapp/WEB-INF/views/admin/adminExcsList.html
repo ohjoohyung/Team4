@@ -14,42 +14,43 @@
             Content body start
         ***********************************-->
         <div class="content-body">
-<!-- 뿌려줄 내용 수정하고 페이징 처리도 해야함 -->
+	<!-- 뿌려줄 내용 수정하고 페이징 처리도 해야함 -->
 			<div class="card m-4">
 				<div class="card-body">
-					<button type="button" onclick="location.href='adminExcsForm'"
-                        class="btn btn-outline-primary">새운동 등록</button>
-					<h2>운동 목록</h2>
+					<h2 class="text-center text-primary">운동 목록</h2>
+					<div class="pull-right">
+					<button type="button" onclick="location.href='adminExcsForm'" class="btn btn-lg btn-outline-primary">새로운 운동 등록하기</button>
+					</div>
 					<div class="table-responsive mt-5">
-                                    <table class="table table-striped table-bordered zero-configuration">
+                    	<table class="table table-striped table-bordered zero-configuration">
                                         <thead>
                                             <tr>
-                                                <th scope="col">excs_seq</th>
-                                                <th scope="col">excs_kind</th>
-                                                <th scope="col">excs_name</th>
-                                                <th scope="col">excs_cal_per_minweight</th>
-                                                <th scope="col">excs_body_part</th>
-                                                <th scope="col">excs_equipment</th>
-                                                <th scope="col">excs_description</th>
-                                                <th scope="col">excs_video_link</th>
-                                                <th scope="col">excs_level</th>
+<!--                                                 <th scope="col">excs_seq</th> -->
+                                                <th scope="col">운동 종류</th>
+                                                <th scope="col">운동 이름</th>
+                                                <th scope="col">분당 칼로리 소모량</th>
+                                                <th scope="col">운동 부위</th>
+                                                <th scope="col">기구 사용 여부</th>
+<!--                                                 <th scope="col">excs_description</th> -->
+                                                <th scope="col">관련 유튜브 링크</th>
+                                                <th scope="col">운동 난이도</th>
                                                 <th scope="col">수정</th>
                                                 <th scope="col">삭제</th>
                                             </tr>
                                         </thead>
                                         <tr th:each="exer : ${list}">
-								         <td th:text="${exer.excs_seq}">excs_seq</td>    
+<!-- 								         <td th:text="${exer.excs_seq}">excs_seq</td>     -->
 								         <td th:text="${exer.excs_kind}">excs_kind</td>
 								         <td><a th:href="@{/adminExcsDetail(excs_seq=${exer.excs_seq})}"><span th:text="${exer.excs_name}">excs_name</span></a> </td>
-								         <td th:text="${exer.excs_cal_per_minweight}">excs_cal_per_minweight</td>
+								         <td th:text="${exer.excs_cal_per_minweight}+' kcal'">excs_cal_per_minweight</td>
 								    	 <td th:text="${exer.excs_body_part}">excs_body_part</td>
 								    	 <td th:text="${exer.excs_equipment}">excs_equipment</td>
-								    	 <td th:text="${exer.excs_description}">excs_description</td>
+<!-- 								    	 <td th:text="${exer.excs_description}">excs_description</td> -->
 								    	 <td th:text="${exer.excs_video_link}">excs_video_link</td>
 								    	 <td th:text="${exer.excs_level}">excs_level</td>
 								      	 <td><a th:href="@{/adminExcsEdit(excs_seq=${exer.excs_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
 								    	 <td><a th:href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}"><i class="ti-close m-r-5 f-s-12"></i></a></td>
-								    	 </tr>
+								    	</tr>
                                     </table>
                                 </div>
                                
