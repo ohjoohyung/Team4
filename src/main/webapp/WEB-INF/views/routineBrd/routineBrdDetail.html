@@ -117,7 +117,7 @@
                                                   <td th:text="${r.excs_name}"></td><td th:text="${r.routine_set}+'  세트    '+${r.routine_reps_per_set}+'   회'"></td>
                                                </th:block>
                                                </tr>
-                                               </table>
+                                 </table>
                               </div>  
                            </div>
                         </div>
@@ -129,28 +129,19 @@
          </div>
          <!-- 루틴 end -->
          
-         <!-- 좋아요 추천수 start -->
-         <div class="col-12">
-            <div class="row">
-               <!-- <div class="col-6">
-                  <a class="text-center d-block text-muted" href="javascript:void()">
-                     <i class="fa fa-star gradient-1-text" aria-hidden="true"></i>
-                     <p class="">00개</p>
-                  </a>
-               </div> -->
-               <div class="col">
-                  <a class="text-center d-block text-muted" href="javascript:selectRoutineBrdLike()">
-                     <i id="likeIcon" class="mdi mdi-heart gradient-3-text" style="display: none;"></i>
-                     <i id="dislikeIcon" class="mdi mdi-heart-outline gradient-3-text" style="display: none;"></i>
-                     <p id="brdlike"></p>
-                  </a>
-               </div>
-            </div>
-         </div>
-         <!-- 좋아요 추천수 end -->
          
          <!-- 댓글 start -->
-         <div class="col card p-5">
+         <div class="card p-5">
+         <!-- 좋아요 추천수 start -->
+               <div class="center">
+               <h4>게시글 좋아요</h4>
+                  <a class="text-center d-block text-muted" href="javascript:selectRoutineBrdLike()">
+                     <i id="likeIcon"style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0H24V24H0z"/><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2z" fill="rgba(237,70,94,1)"/></svg></i>
+                     <i id="dislikeIcon" style="display: none;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path fill="none" d="M0 0H24V24H0z"/><path d="M16.5 3C19.538 3 22 5.5 22 9c0 7-7.5 11-10 12.5C9.5 20 2 16 2 9c0-3.5 2.5-6 5.5-6C9.36 3 11 4 12 5c1-1 2.64-2 4.5-2zm-3.566 15.604c.881-.556 1.676-1.109 2.42-1.701C18.335 14.533 20 11.943 20 9c0-2.36-1.537-4-3.5-4-1.076 0-2.24.57-3.086 1.414L12 7.828l-1.414-1.414C9.74 5.57 8.576 5 7.5 5 5.56 5 4 6.656 4 9c0 2.944 1.666 5.533 4.645 7.903.745.592 1.54 1.145 2.421 1.7.299.189.595.37.934.572.339-.202.635-.383.934-.571z" fill="rgba(191,193,230,1)"/></svg></i>
+                     <span id="brdlike"></span>
+                  </a>
+               </div>
+         <!-- 좋아요 추천수 end -->
                 <!-- 오주시작 -->
                 <div class="form-group pt-5">
                   <form method="post">

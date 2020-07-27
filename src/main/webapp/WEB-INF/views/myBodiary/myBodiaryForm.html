@@ -194,6 +194,7 @@
                                              <option>저녁</option>
                                              <option>간식</option>
                                           </select>
+                                          <div class="tdfood"></div>
                                        </div>
 
                                        <div class="col">
@@ -397,7 +398,7 @@
    var preper = 0;
    
          $(function(){
-            for(let i=0; i<3; i++) {
+            for(let i=0; i<4; i++) {
                  validate[i]=false;
               }
             
@@ -449,7 +450,9 @@
             //등록 버튼 눌렀을 때 유효성 검증
             $('button:submit').click(function() {
                console.log($('#routine_cart_seq option:selected').val());
-               
+               if(number != 0) {
+            	   validate[3] = true;
+               }
             
                for (let i = 0; i < validate.length; i++) {
                   if (validate[i] == false) {
@@ -469,6 +472,13 @@
                         $('.tdroutine').html(
                         '<p style="color:red">필수 항목입니다.</p>');
                         return false;
+                     case 3:
+                    	 $('#foodsearch').focus();
+                    	 $('.tdfood').html(
+                         '<p style="color:red">필수 항목입니다.</p>');
+                    	 return false;
+                    	 
+                    	 
                      }
                   }
                }
@@ -682,7 +692,7 @@
          '</div>';
                         
                
-               switch(meal) {
+               switch(밥) {
             case 1 :
                if($('#morning > div.row > div.'+food_name+'').text() == food_name) {
                   alert("이미 음식이 추가되어 있습니다.");
@@ -691,6 +701,7 @@
                $('#morning').append(div);
                drawProgress(food_seq,food_cal);
                number++;
+               $('.tdfood').html('');
                break;
             case 2 :
                if($('#lunch > div.row > div.'+food_name+'').text() == food_name) {
@@ -700,6 +711,7 @@
                $('#lunch').append(div);
                drawProgress(food_seq,food_cal);
                number++;
+               $('.tdfood').html('');
                break;
             case 3 :
                if($('#dinner > div.row > div.'+food_name+'').text() == food_name) {
@@ -709,6 +721,7 @@
                $('#dinner').append(div);
                drawProgress(food_seq,food_cal);
                number++;
+               $('.tdfood').html('');
                break;
             default :
                if($('#dessert > div.row > div.'+food_name+'').text() == food_name) {
@@ -718,7 +731,7 @@
                $('#dessert').append(div);
                drawProgress(food_seq,food_cal);
                number++;
-               
+               $('.tdfood').html('');
          }
                $('#count'+food_seq).val('');
                    

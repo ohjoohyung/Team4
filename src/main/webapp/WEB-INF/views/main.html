@@ -132,7 +132,7 @@ color: #7571f9;
 	<!--*******************
         Preloader end
     ********************-->
-	<div class="bodiary-wrapper">
+	<div class="bodiary-wrapper mb-5">
 		<div class="content2">
 			<div style="height: 56px;">
 
@@ -254,12 +254,15 @@ color: #7571f9;
 							<div class="row">
 								<th:block th:each="todayMain : ${routineBrdMain}">
 									<div class="col-lg-6">
-										<div class="main-routine card">
+										<div class="main-routine card scale">
 											<div class="card-body">
 												<div class="row">
-													<div class="col-8">
-														<h5 class="card-title">
-														<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h5>
+													<div class="col-7">
+														<div style=" height:70%;">
+														<label class="text-muted" th:text="${todayMain.user_nickname}"></label>
+														<h3>
+														<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h3>
+														</div>
 														<div id="icon">
 															<div class="card-text" style="float: left; margin-right: 20px;">
 																<i class="icon-eye"></i>&nbsp;&nbsp;
@@ -269,12 +272,11 @@ color: #7571f9;
 																<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${todayMain.routine_brd_regdate}"></span>
 															</div>
 															<div class="card-text">
-																<span class="text-muted mt-5 float-right" th:text="${todayMain.user_nickname}"></span>
 															</div>
 														</div>
 													</div>
 													<div class="col">
-														<img id="card-img" class="d-block w-100" th:src="@{assets/upload/routineBrdUpload/}+${todayMain.brd_image2}">
+														<img id="card-img" style="border-radius:6px;" class="d-block w-100" th:src="@{assets/upload/routineBrdUpload/}+${todayMain.brd_image2}">
 													</div>
 												</div>
 											</div>
@@ -292,16 +294,21 @@ color: #7571f9;
 								<!-- 값 잘 넘어오나 찍어보기 -->
 								<!-- <div th:text="${freeBrdMain}"></div> -->
 								<div class="col-md-6 col-lg-3" th:each="freeMain : ${freeBrdMain}">
-									<div class="card">
-										<div class="card-body2">
-											<a th:href="@{freeBrdDetail(seq=${freeMain.free_brd_seq})}"><h5 class="card-title mb-3" th:text="${freeMain.free_brd_title}"></h5></a>
-											<div class="card-body-text" th:utext="${freeMain.free_brd_content}"></div>
+									<div class="card scale">
+										<div class="card-body2 p-4">
+											<a th:href="@{freeBrdDetail(seq=${freeMain.free_brd_seq})}">
+											<label class="" th:text="${freeMain.user_nickname}"></label>
+												<div style="height:70%;">
+												<h2 class=" mb-3" th:text="${freeMain.free_brd_title}"></h2>
+												</div>
+											</a>
+<!-- 											<div class="card-body-text" th:utext="${freeMain.free_brd_content}"></div> -->
 											<div id="icon2">
-												<div class="card-footer" style="float:left;">
+												<div class="card-footer p-0 pt-3">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
 													<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${freeMain.free_brd_date}"></span>
 												<div class="text">
-													<span class="text-muted float-right" th:text="${freeMain.user_nickname}"></span>
+													
 												</div>
 												</div>
 											</div>
