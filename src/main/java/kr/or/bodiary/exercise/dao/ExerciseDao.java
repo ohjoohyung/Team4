@@ -51,4 +51,7 @@ public interface ExerciseDao {
 	
 	// 루틴 삭제하기
 	public int deleteRoutineCart(int routine_cart_seq) throws ClassNotFoundException, SQLException; 
+	
+	// 루틴 상태 수정하기
+	public int updateRoutineCart(int routine_cart_seq) throws ClassNotFoundException, SQLException;
 }

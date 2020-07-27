@@ -8,7 +8,7 @@
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
 	<div class="bodiary-wrapper excs">
-		<form action="insertRoutineBundle" id="routineForm">
+		<form action="updateRoutineBundle" id="routineForm" method="post">
 		<div class="mt-5 ml-3 mr-5">
 			<div class="row">
 				<div class="col-2 ">
@@ -165,7 +165,7 @@
 							<button type="button"
 								class="btn btn-primary btn-flat btn-lg w-100 mt-3 "
 								data-toggle="modal" data-target="#routineModal">루틴
-								만들기</button>
+								수정하기</button>
 					</div>
 				</div>
 				<!-- 운동 장바구니 끝-->
@@ -179,7 +179,7 @@
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
-								<h5 class="modal-title">루틴 만들기</h5>
+								<h5 class="modal-title">루틴 수정하기</h5>
 								<button type="button" class="close" data-dismiss="modal">
 									<span>&times;</span>
 								</button>
@@ -190,12 +190,13 @@
 							<div class="center mb-4 mt-2">
 								<button type="button" class="btn btn-outline-light"
 									data-dismiss="modal">취소</button>
-								<button type="button" id="makeRoutine" class="btn btn-primary">루틴 만들기</button>
+								<button type="button" id="makeRoutine" class="btn btn-primary">루틴 수정하기</button>
 							</div>
 						</div>
 					</div>
 				</div>
 				<!-- modal end -->
+				<input type="hidden" id="before_routine_cart_seq" name="before_routine_cart_seq" th:value="${routine_cart_seq}">
 		</form>
 		</div>
 		
@@ -203,7 +204,95 @@
 		
 		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 		<th:block th:replace="fragments/exercisescript :: scriptFragment"></th:block>
+		<script type="text/javascript">
+		$(function() {
+			loadRoutine();
+		})
 		
+		
+		
+		
+		
+		/*<![CDATA[*/
+		function loadRoutine() {
+			var seq = [[ ${routine_cart_seq} ]]
+			var routine_cart_seq = {"routine_cart_seq" : seq};
+			
+			/*]]>*/  
+            
+            $.ajax(
+						 {
+							 type:"get",
+							 data: routine_cart_seq,
+							 url:"getRoutine",
+							 dataType:"json",
+							 success:function(responsedata){ 
+								$('#routine_cart_title').val(responsedata[0].routine_cart_title);
+								 $.each(responsedata,function(index,obj){
+									 var selectarray = new Array;
+							
+									 for(let i = 0; i < 8; i++) {
+										 if(obj.routine_exercise_hour == (i*30)+30)
+											 selectarray[i] = "selected";
+									 }
+									 
+									 var selectarray2 = new Array;
+									 for(let i = 0; i < 5; i++) {
+										 if(obj.routine_set == (i+1))
+											 selectarray2[i] = "selected";
+									 }
+									 
+									 var selectarray3 = new Array;
+									 for(let i = 0; i < 5; i++) {
+										 if(obj.routine_reps_per_set == (i+1)*5)
+											 selectarray3[i] = "selected";
+									 }
+									
+									 
+									 
+									 
+	                                 //유산소에 달자
+	                                 if(obj.excs_kind == "C"){
+	                                    $('#exer_c_add').append(   
+	                                       "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'>"
+	                                       +"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
+	                                       +"<div class='form-group col-5'>"
+	                                          +"<select class='form-control form-control-sm input-rounded input-excs-cart hour-select"+number+"' id='sel1' onchange='eselected1("+number+");'>"
+	                                             +"<option value=0>시간</option><option "+selectarray[0]+" value=30>30분</option><option "+selectarray[1]+" value=60>1시간</option><option "+selectarray[2]+" value=90>1시간 30분</option><option "+selectarray[3]+" value=120>2시간</option><option "+selectarray[4]+" value=150>2시간 30분</option><option "+selectarray[5]+" value=180>3시간</option><option "+selectarray[6]+" value=210>3시간 30분</option><option "+selectarray[7]+" value=240>4시간</option>"
+	                                          +"</select></div>"
+	                                          +"<div class='col-2 center pt-2'>"
+	                                          +"<a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
+	                                          +"<input class='kind"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
+	                                          +"<input class='seq"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
+	                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'  value='"+obj.routine_exercise_hour+"'>"
+	                                          +"</div>"
+	                                    );
+	                                    
+	                                    
+	                                 //무산소에 달자
+	                                 }else if(obj.excs_kind == "N"){
+	                                    $('#exer_n_add').append(   
+	                                          "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'><div class='col pt-2'><h10>"
+	                                          +obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2("+number+");'class='set-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
+	                                          +"<option value=0>세트</option><option "+selectarray2[0]+" value=1>1</option><option "+selectarray2[1]+" value=2>2</option><option "+selectarray2[2]+" value=3>3</option><option "+selectarray2[3]+" value=4>4</option><option "+selectarray2[4]+" value=5>5</option></select>"
+	                                          +"</div><div class='form-group col-3'><select  id='sel3' onchange='eselected3("+number+");'class='perset-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
+	                                          +"<option value=0>횟수</option><option "+selectarray3[0]+" value=5>5</option><option "+selectarray3[1]+" value=10>10</option><option "+selectarray3[2]+" value=15>15</option><option "+selectarray3[3]+" value=20>20</option><option "+selectarray3[4]+" value=25>25</option></select>"
+	                                          +"</div><div class='col-2 center pt-2'><a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
+	                                          +"<input type='hidden' class='kind"+number+"' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
+	                                          +"<input type='hidden' class='seq"+number+"' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
+	                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set' value='"+obj.routine_set+"'>"
+	                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set' value='"+obj.routine_reps_per_set+"'>"
+	                                          +"</div>"
+	                                          );
+	                              
+	                                 }
+	                                 number++;   
+	                           });
+				}
+						 })
+		}
+		
+		</script>
 
 </body>
 </html>

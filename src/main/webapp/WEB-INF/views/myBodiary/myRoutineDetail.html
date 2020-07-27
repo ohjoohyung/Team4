@@ -61,8 +61,8 @@
 												</div>
 						</div>
 						<div class="col-12 center mt-4">
-							<button class="btn btn-outline-primary">삭제하기</button>
-							<button class="btn btn-primary">수정하기</button>
+							<button class="btn btn-outline-primary" onclick="deleteCheck();">삭제하기</button>
+							<button class="btn btn-primary"  th:onclick="|location.href='updateRoutineBundle?routine_cart_seq=${routine[0].routine_cart_seq}'|">수정하기</button>
 						</div>
 						<div class="col-12 mt-5">
 							<button class="btn btn-outline-light" type="button" onclick="location.href='myRoutineList'" >목록 가기</button>
@@ -72,7 +72,19 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	function deleteCheck() {
+		 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
+			location.href="deleteRoutineCart?routine_cart_seq="+[[ ${routine[0].routine_cart_seq} ]];
+		 }else{   //취소
+		     return false;
+		 }
+	}	
+	/*]]>*/
+	</script>
 </body>
 </html>
