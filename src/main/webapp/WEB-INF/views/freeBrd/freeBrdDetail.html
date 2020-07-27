@@ -191,7 +191,7 @@ function commentList(){
         },
         error : function(error) {
         	console.log(error);
-	        alert("Error!"+error);
+	        /* alert("Error!"+error); */
 	    }
     });
 }
@@ -241,17 +241,17 @@ function commentInsert(insertData){
         data : insertData,
         success : function(data){
             if(data == 1) {
-            	alert("댓글 작성 성공");
+            	/* alert("댓글 작성 성공"); */
             	commentList(); //댓글 작성 후 댓글 목록 reload 과정에서 에러발생?? 왜지??
                 $('[name=content]').val('');
             }else{
             	//insert 실패시 
-            	alert("댓글 작성 실패");
+            	/* alert("댓글 작성 실패"); */
             	commentList();
             }
         },
    		error : function(error) {
-	        alert("댓글작성실패!"+error);
+	        alert("댓글이 작성되지 않았습니다.");
 	    }
     });
 }
@@ -276,7 +276,7 @@ function commentInsert(insertData){
 
 //댓글 삭제 (POST방식)
 function commentDelete(cno){
-	alert("삭제할 댓글번호"+cno);
+	/* alert("삭제할 댓글번호"+cno); */
 	//ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 
 	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
 		$.ajax({

@@ -106,7 +106,9 @@ private SqlSession sqlsession;
 		
 		ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
 		chatdao.removeMember(user_email, Integer.parseInt(room_number));
-		
+		if(chatdao.getMemberCount(Integer.parseInt(room_number)) == 0) {
+			chatdao.deleteChatRoom(Integer.parseInt(room_number));
+		}
 		
 	}
 

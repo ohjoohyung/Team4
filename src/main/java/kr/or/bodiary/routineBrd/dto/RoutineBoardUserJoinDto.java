@@ -14,4 +14,7 @@ public class RoutineBoardUserJoinDto {
 	   private String brd_image2;
 	   private int routine_brd_hit;
 	   private String user_nickname;
+	   
+	   //댓글 수
+	   private int routine_brd_comcount;
 }

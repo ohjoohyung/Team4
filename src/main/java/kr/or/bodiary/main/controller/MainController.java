@@ -30,7 +30,7 @@ public class MainController {
 		return "index";
 	}
 	@RequestMapping("main")
-	public String main(Model model) throws ClassNotFoundException, SQLException, ParseException {
+	public String main(Model model) throws Exception {
 		List<NoticeDto> noticeMain = mainservice.noticeMain();
 		List<RoutineBoardUserJoinDto> routineBrdMain = mainservice.routineBrdMain();
 		List<FreeBrdDTO> freeBrdMain = mainservice.freeBrdMain();

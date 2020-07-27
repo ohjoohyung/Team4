@@ -48,6 +48,15 @@ public List<FreeBrdDTO> highLankFree() throws Exception{
 		
 			f.setFree_brd_date(formatDate);
 		}
+	   
+	 //해당 게시글의 총댓글 개수 얻어옴 
+		FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+
+		for(int i=0;i<list.size();i++) {
+			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+			list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+			System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
+		}
 	return list;
 }
 //질문게시판 상위 랭크를 뽑아옴
@@ -61,6 +70,15 @@ public List<FreeBrdDTO> highLankQna() throws Exception{
 		
 			f.setFree_brd_date(formatDate);
 		}
+	   
+	 //해당 게시글의 총댓글 개수 얻어옴 
+		FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+
+		for(int i=0;i<list.size();i++) {
+			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+			list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+			System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
+		}
 	return list;
 }
 //팁게시판 상위 랭크를 뽑아옴
@@ -73,6 +91,15 @@ public List<FreeBrdDTO> highLankTip() throws Exception{
 			String formatDate = DateUtils.formatTimeString(date);
 		
 			f.setFree_brd_date(formatDate);
+		}
+	   
+	 //해당 게시글의 총댓글 개수 얻어옴 
+		FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+
+		for(int i=0;i<list.size();i++) {
+			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+			list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+			System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
 		}
 	return list;
 }
