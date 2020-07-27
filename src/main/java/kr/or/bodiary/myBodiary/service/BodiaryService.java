@@ -1,12 +1,8 @@
 package kr.or.bodiary.myBodiary.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,22 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import kr.or.bodiary.freeBrd.dao.FreeBrdDao;
+import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
 import kr.or.bodiary.myBodiary.dao.BodiaryDao;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto;
-import kr.or.bodiary.myBodiary.dto.BodiaryDto;
-import kr.or.bodiary.myBodiary.dto.DailyMealDto;
-import kr.or.bodiary.user.dao.UserDao;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 import kr.or.bodiary.user.dto.UserDto;
-import kr.or.bodiary.utils.DateUtils;
 
 
 @Service
@@ -248,6 +244,55 @@ private SqlSession sqlsession;
 		BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
 		return bodiarydao.todatBodiaryCount(user_email);
 	}
+	
+
+	//내 히스토리 카테고리(자유) 게시판 전체 게시물 글 List 형태로 불러오기 
+		public List<FreeBrdDTO> myHistoryFreeBrd(String user_email) throws Exception {
+			FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			
+			List<FreeBrdDTO> list = FreeBrd.getUserFreeBrdList(user_email);
+			//해당 게시글의 총댓글 개수 얻어옴 
+			FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+			for(int i=0;i<list.size();i++) {
+				//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+				list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+			}
+			
+			return list;
+		}
+		//내 히스토리 카테고리(자유) 게시판 전체 게시물 댓글 List 형태로 불러오기 
+		public List<FreeBrdReplyDTO> myHistoryFreeBrdReply(String user_email) throws Exception {
+			FreeBrdReplyDao FreeBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
+			return FreeBrdReply.getUserFreeBrdReplyList(user_email);
+		}
+		//내 히스토리 내가쓴글(자유)게시판 글삭제하기 서비스 함수
+		 public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
+		 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+			FreeBrd.freeBrdDelete(seq);
+			return "redirect:myHistory";
+		}
+		
+		//내 히스토리 루틴자랑게시판 글 가져오기 
+		public List<RoutineBrdDto> myHistoryRoutineBrd(String user_email) throws Exception {
+			FreeBrdDao RoutineBrd = sqlsession.getMapper(FreeBrdDao.class);
+			return RoutineBrd.getUserRoutineBrdList(user_email);
+		}
+		
+		//내 히스토리 루틴자랑게시판 댓글 가져오기 
+		public List<RoutineBoardCommentDto> myHistoryRoutineBrdReply(String user_email) throws Exception {
+			FreeBrdReplyDao RoutineBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
+			return RoutineBrdReply.getUserRoutineReplyList(user_email);
+		}
+
+			
+		//루틴 리스트 들어가기
+		public List<RoutineJoinDto> myRoutineList(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+			BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
+			UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+			List<RoutineJoinDto> list = bodiarydao.getRoutineListById(user.getUser_email());					
+			return list;
+		}
+	
 	
 	
 	

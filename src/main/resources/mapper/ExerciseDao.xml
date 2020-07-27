@@ -64,8 +64,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <!-- 루틴 장바구니 추가 -->
     <insert id="insertRoutineCart" parameterType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto" useGeneratedKeys="true" keyProperty="routine_cart_seq">
-    	insert into routinecart (routine_cart_title)
-    	values (#{routine_cart_title})
+    	insert into routinecart (routine_cart_title, routine_cart_check)
+    	values (#{routine_cart_title}, 'Y')
     </insert>
     
     <!-- 루틴 만들기 (운동 몇시간, 운동 몇세트 몇회) -->
@@ -85,6 +85,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     		(#{item.routine_cart_seq}, #{item.user_email}, #{item.routine_seq})
     	</foreach>
     </insert>
+        
+    <!-- 루틴 번들 가져오기 -->	
+	<select id="getRoutineBundle" resultType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto">                                                                                                                                                                                                                                                                                                                                                                     
+		select * from routinebundle
+		where routine_cart_seq = #{routine_cart_seq} and user_email = #{user_email}
+	</select>
+
+	<!-- 루틴 삭제하기 -->
+	<update id="deleteRoutineCart">
+		update routinecart
+		set routine_cart_check = 'N' where routine_cart_seq = #{routine_cart_seq}
+    </update>
     
    
 </mapper>

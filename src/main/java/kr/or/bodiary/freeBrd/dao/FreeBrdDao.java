@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
 import kr.or.bodiary.freeBrd.dto.Pagination;
 import kr.or.bodiary.freeBrd.dto.Search;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
 import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
 
 
@@ -74,7 +76,8 @@ public interface FreeBrdDao {
 	    
 	    //팁게시판 상위 랭크를 뽑아옴 
 	    public List<FreeBrdDTO> highLankTip() throws Exception;
-
+	    
+	
 }
 
 

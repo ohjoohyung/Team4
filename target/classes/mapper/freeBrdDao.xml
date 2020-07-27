@@ -325,6 +325,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					AND free_brd_hits = (select max(free_brd_hits) from freeboard where free_cat =3 ) order by free_brd_seq desc limit 1 )	   					
 	   </select>
 	   
+	   
+	   
+	   
 </mapper>
 
 

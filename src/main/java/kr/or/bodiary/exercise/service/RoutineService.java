@@ -1,5 +1,6 @@
 package kr.or.bodiary.exercise.service;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,5 +70,22 @@ public class RoutineService {
 		
 		
 		return url;
+	}
+	
+	
+	@Transactional
+	public String updateRoutineBundle(int routine_cart_seq) throws ClassNotFoundException, SQLException {
+		try {
+			ExerciseDao exercisedao = sqlsession.getMapper(ExerciseDao.class);
+			List<RoutineJoinDto> list = exercisedao.getRoutineBundle();
+			exercisedao.insertRoutineCart(routinejoindto);
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		
+		return null;
 	}
 }

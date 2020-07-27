@@ -28,6 +28,15 @@ public class RoutineController {
 		return url;
 	}
 	
+	
+	@RequestMapping("/updateRoutineBundle")
+	public String updateRoutineBundle() {
+		
+		return null;
+	}
+	
+	
+	
 	@RequestMapping("/search")
 	public String getSearchExcs() {
 		return "searchExcs/searchExcs";

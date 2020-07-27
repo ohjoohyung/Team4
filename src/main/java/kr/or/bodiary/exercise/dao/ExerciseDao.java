@@ -45,4 +45,10 @@ public interface ExerciseDao {
 
 	// 루틴을 하나로 묶어주기
 	public int insertRoutineBundle(List<RoutineBundleDto> list) throws ClassNotFoundException, SQLException;
+
+	// 루틴 번들 가져오기
+	public List<RoutineJoinDto> getRoutineBundle() throws ClassNotFoundException, SQLException; 
+	
+	// 루틴 삭제하기
+	public int deleteRoutineCart(int routine_cart_seq) throws ClassNotFoundException, SQLException; 
 }

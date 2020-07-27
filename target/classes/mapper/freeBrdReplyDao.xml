@@ -64,6 +64,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by brd_cmt_seq desc;
 	 </select>
 	 
+	 
+	 <!-- 내 히스토리 자유 게시글 댓글 리스트 -->
+	<select id="getUserFreeBrdReplyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
+	        select *
+			from freeboardcomment
+			where user_email=#{user_email}
+    </select>
+    
+    <!-- 내 히스토리 루틴 자랑 게시글 댓글 리스트 -->
+	<select id="getUserRoutineReplyList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto">
+	        select *
+			from routineboardcomment
+			where user_email=#{user_email}
+    </select>
+	 
+	 
 </mapper>
 
 

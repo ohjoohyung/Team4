@@ -1,14 +1,10 @@
 package kr.or.bodiary.myBodiary.controller;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,23 +12,23 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
-
-
+import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
+import kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO;
+import kr.or.bodiary.myBodiary.dto.BodiaryDto;
+import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.dto.DailyMealFoodJoinDto;
 import kr.or.bodiary.myBodiary.dto.FoodDto;
 import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
-import kr.or.bodiary.myBodiary.dto.BodiaryDto;
-import kr.or.bodiary.myBodiary.dto.DailyMealDto;
 import kr.or.bodiary.myBodiary.service.BodiaryService;
+import kr.or.bodiary.routineBrd.dto.RoutineBoardCommentDto;
+import kr.or.bodiary.routineBrd.dto.RoutineBrdDto;
+import kr.or.bodiary.routineBrd.service.RoutineBrdService;
 import kr.or.bodiary.user.dto.UserDto;
-import kr.or.bodiary.user.service.UserService;
 import kr.or.bodiary.utils.DateUtils;
 
 
@@ -40,19 +36,74 @@ import kr.or.bodiary.utils.DateUtils;
 public class BodiaryController {
 
 	
-	/*
-	 * private UserService userservice;
-	 * 
-	 * @Autowired public void setUserservice(UserService userservice) {
-	 * this.userservice = userservice; }
-	 */
-	
+
 	
 	  private BodiaryService bodiaryservice;
 	  
 	  @Autowired public void setBodiaryservice(BodiaryService bodiaryservice) {
 	  this.bodiaryservice = bodiaryservice; }
+	  
+	  @Autowired
+		private RoutineBrdService routinebrdservice;
+		
+		public void setRoutineBrdservice(RoutineBrdService routinebrdservice) {
+			this.routinebrdservice = routinebrdservice;
+		}
 	
+		
+		
+		//내가 쓴글,댓글 보기(자유게시판+루틴자랑) 
+		   @RequestMapping("/myHistory")
+		   public String myHistory(HttpServletRequest request
+		                     ,Model model
+		                     ) throws Exception {
+		      
+		      UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+		      String user_email = user.getUser_email();
+		      System.out.println("유저 이메일"+user_email);
+		      
+
+		   
+		      //내가쓴 글 가져오기(자유게시판)
+		      List<FreeBrdDTO> freeBrdList = bodiaryservice.myHistoryFreeBrd(user_email);
+		      
+		      //내가쓴 댓글 가져오기(자유게시판 댓글)
+		      List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.myHistoryFreeBrdReply(user_email);
+		      
+		      //내가 쓴글 가져오기(루틴자랑게시판)
+		      List<RoutineBrdDto> routineBrdList = bodiaryservice.myHistoryRoutineBrd(user_email);
+		      
+		      //내가 댓글 가져오기(루틴자랑게시판 댓글)
+		      List<RoutineBoardCommentDto> routineBrdReplyList = bodiaryservice.myHistoryRoutineBrdReply(user_email);
+		      
+		      
+		      model.addAttribute("routineBrdList",routineBrdList);
+		      model.addAttribute("routineBrdReplyList",routineBrdReplyList);
+		      model.addAttribute("freeBrdReplyList",freeBrdReplyList);
+		      model.addAttribute("freeBrdList",freeBrdList);
+		      
+		      
+		      return "myBodiary/myHistory";
+		   }
+
+		   //내가 쓴글 삭제(자유게시판)
+		   @RequestMapping("/myHistoryDelete")
+		   public String myHistoryDelete(String seq) {
+		      String url="redirect:myBodiary/myHistory";
+		      
+		      try {
+		               url = bodiaryservice.freeBrdDelete(seq);
+		      }catch (Exception e) {
+		               System.out.println("에러발생...");
+		                System.out.println(e.getMessage());
+		      }
+		      
+		      //예외 발생에 상관없이 목록 페이지 새로고침 처리
+		      return url;
+		   }
+			
+			
+			
 	@RequestMapping("/myGoalForm")
 	public String myGoalForm() {
 		return "myBodiary/myGoalForm";
@@ -62,10 +113,7 @@ public class BodiaryController {
 		return "myBodiary/myGoalList";
 	}
 
-	@RequestMapping("/myHistory")
-	public String myHistory() {
-		return "myBodiary/myHistory";
-	}
+	
 
 	@RequestMapping("/myHistoryDetail")
 	public String myHistoryDetail() {
@@ -91,10 +139,6 @@ public class BodiaryController {
 
 
 	
-	@RequestMapping("/myRoutineList")
-	public String getMyRoutineList() {
-		return "myBodiary/myRoutineList";
-	}
 	
 	
 	
@@ -265,6 +309,40 @@ public class BodiaryController {
 		return bodiaryservice.myBodiaryDelete(diary_seq);
 	}
 	
+	
+	
+	//루틴 리스트 모아보기
+	@RequestMapping("/myRoutineList")
+	public String myRoutineList(Model model, HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		List<RoutineJoinDto> list = bodiaryservice.myRoutineList(request);
+		model.addAttribute("routineList", list);
+		return "myBodiary/myRoutineList";
+	}
+	
+	//루틴 상세보기
+	@RequestMapping("/myRoutineDetail")
+	public String myRouitneDetail(Model model, int routine_cart_seq) throws ClassNotFoundException, SQLException {
+		List<RoutineJoinDto> routine = bodiaryservice.getRoutine(routine_cart_seq);
+		
+		//분을 시간으로 변환
+		  for(RoutineJoinDto r : routine) {
+			if(r.getExcs_kind().equals("C")) { 
+				String hour = ""; 
+				if((Integer.parseInt(r.getRoutine_exercise_hour()) % 60) == 0) { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간"; 
+				} else { 
+					if((Integer.parseInt(r.getRoutine_exercise_hour()) / 60) == 0) { 
+					hour = r.getRoutine_exercise_hour() + "분"; 
+				}else { 
+					hour = (Integer.parseInt(r.getRoutine_exercise_hour()) / 60) + "시간 30분"; 
+					} 
+				} r.setRoutine_exercise_hour(hour); 
+			
+				} 
+			}
+		model.addAttribute("routine", routine);
+		return "myBodiary/myRoutineDetail";
+	}
 	
 	
 	

@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       join routine r
       on b.routine_seq = r.routine_seq
       join exercise e
-      on r.excs_seq = e.excs_seq where c.routine_cart_seq=#{routine_cart_seq};
+      on r.excs_seq = e.excs_seq where c.routine_cart_seq=#{routine_cart_seq}
    </select>
    
    <!-- 루틴 리스트 불러오기 (나중에 더 변경해야함) -->
@@ -59,7 +59,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       select distinct c.routine_cart_seq, c.routine_cart_title from routinecart c
       join routinebundle b
       on c.routine_cart_seq = b.routine_cart_seq
-      where b.user_email = #{user_email};
+      where b.user_email = #{user_email}
    </select>
 	
 	<!-- 음식 검색하기 -->
@@ -125,11 +125,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT COUNT(*) 
 		FROM diary where DATE_FORMAT(diary_date,"%Y-%m-%d") = CURDATE() and user_email = #{user_email}
 	</select>
-	
-	
-	
-	
-	
 	
 	
 </mapper>
