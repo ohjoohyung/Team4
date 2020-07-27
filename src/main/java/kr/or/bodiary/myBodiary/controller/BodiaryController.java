@@ -52,55 +52,55 @@ public class BodiaryController {
    
       
       
-//      //내가 쓴글,댓글 보기(자유게시판+루틴자랑) 
-//         @RequestMapping("/myHistory")
-//         public String myHistory(HttpServletRequest request
-//                           ,Model model
-//                           ) throws Exception {
-//            
-//            UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-//            String user_email = user.getUser_email();
-//            System.out.println("유저 이메일"+user_email);
-//            
-//
-//         
-//            //내가쓴 글 가져오기(자유게시판)
-//            List<FreeBrdDTO> freeBrdList = bodiaryservice.myHistoryFreeBrd(user_email);
-//            
-//            //내가쓴 댓글 가져오기(자유게시판 댓글)
-//            List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.myHistoryFreeBrdReply(user_email);
-//            
-//            //내가 쓴글 가져오기(루틴자랑게시판)
-//            List<RoutineBrdDto> routineBrdList = bodiaryservice.myHistoryRoutineBrd(user_email);
-//            
-//            //내가 댓글 가져오기(루틴자랑게시판 댓글)
-//            List<RoutineBoardCommentDto> routineBrdReplyList = bodiaryservice.myHistoryRoutineBrdReply(user_email);
-//            
-//            
-//            model.addAttribute("routineBrdList",routineBrdList);
-//            model.addAttribute("routineBrdReplyList",routineBrdReplyList);
-//            model.addAttribute("freeBrdReplyList",freeBrdReplyList);
-//            model.addAttribute("freeBrdList",freeBrdList);
-//            
-//            
-//            return "myBodiary/myHistory";
-//         }
-//
-//         //내가 쓴글 삭제(자유게시판)
-//         @RequestMapping("/myHistoryDelete")
-//         public String myHistoryDelete(String seq) {
-//            String url="redirect:myBodiary/myHistory";
-//            
-//            try {
-//                     url = bodiaryservice.freeBrdDelete(seq);
-//            }catch (Exception e) {
-//                     System.out.println("에러발생...");
-//                      System.out.println(e.getMessage());
-//            }
-//            
-//            //예외 발생에 상관없이 목록 페이지 새로고침 처리
-//            return url;
-//         }
+      //내가 쓴글,댓글 보기(자유게시판+루틴자랑) 
+         @RequestMapping("/myHistory")
+         public String myHistory(HttpServletRequest request
+                           ,Model model
+                           ) throws Exception {
+            
+            UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+            String user_email = user.getUser_email();
+            System.out.println("유저 이메일"+user_email);
+            
+
+         
+            //내가쓴 글 가져오기(자유게시판)
+            List<FreeBrdDTO> freeBrdList = bodiaryservice.myHistoryFreeBrd(user_email);
+            
+            //내가쓴 댓글 가져오기(자유게시판 댓글)
+            List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.myHistoryFreeBrdReply(user_email);
+            
+            //내가 쓴글 가져오기(루틴자랑게시판)
+            List<RoutineBrdDto> routineBrdList = bodiaryservice.myHistoryRoutineBrd(user_email);
+            
+            //내가 댓글 가져오기(루틴자랑게시판 댓글)
+            List<RoutineBoardCommentDto> routineBrdReplyList = bodiaryservice.myHistoryRoutineBrdReply(user_email);
+            
+            
+            model.addAttribute("routineBrdList",routineBrdList);
+            model.addAttribute("routineBrdReplyList",routineBrdReplyList);
+            model.addAttribute("freeBrdReplyList",freeBrdReplyList);
+            model.addAttribute("freeBrdList",freeBrdList);
+            
+            
+            return "myBodiary/myHistory";
+         }
+
+         //내가 쓴글 삭제(자유게시판)
+         @RequestMapping("/myHistoryDelete")
+         public String myHistoryDelete(String seq) {
+            String url="redirect:myBodiary/myHistory";
+            
+            try {
+                     url = bodiaryservice.freeBrdDelete(seq);
+            }catch (Exception e) {
+                     System.out.println("에러발생...");
+                      System.out.println(e.getMessage());
+            }
+            
+            //예외 발생에 상관없이 목록 페이지 새로고침 처리
+            return url;
+         }
          
          
          

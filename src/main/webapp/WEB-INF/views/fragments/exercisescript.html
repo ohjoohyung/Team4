@@ -1,141 +1,11 @@
-
 <th:block th:fragment="scriptFragment">
    <script type="text/javascript">
       //$("input:checkbox[id='exer_ab']").is(":checked")
       $(function(){
+            search();
          $('#exercisesearch').keyup(function(){
-            var data = {excs_name : $('#exercisesearch').val()};
-            $.ajax(
-                   {
-                      type:"post",
-                      data: data,
-                      url:"exerciseNameSearch.exer",
-                      dataType:"json",
-                      success:function(responsedata){ 
-                         console.log(responsedata);
-                        $('#exercisetable').empty();
-                        
-                        $.each(responsedata,function(index,obj){
-                           if(obj.excs_cal_per_minweight==0){
-                              $('#exercisetable').append(   
-                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
-                                    +"</span></div></div>"
-                                    
-                                    
-                                    +"<div class='col-2 center'>"
-                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                    +"</div>"
-                                    
-                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                              +"<div class='modal-dialog modal-lg'>"
-                                              +    "<div class='modal-content'>"
-                                              +        "<div class='modal-header'>"
-                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                              +            "<button type='button' class='close' data-dismiss='modal'>"
-                                              +               "<span>&times;</span>"
-                                              +            "</button>"
-                                              +        "</div>"
-                                              +        "<div class='modal-body p-4'>"
-                                    +         "<div class='row'>"
-                                    +            "<div class='col-7'>"
-                                    +               "<h5>운동 설명</h5>"
-                                    +               "<p>"+obj.excs_description+"</p>"
-                                    +            "</div>"
-                                    +            "<div class='col-3 youtube-box'>"
-                                                   <!-- 유튜브링크 -->
-                                    +               "<h5>관련 영상</h5>"
-                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-                                    +         "<div class='m-auto'>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                    +            "</div>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +      "</div>"
-                                               +      "<div class='modal-footer'>" 
-                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                +  "</div>"    
-                                                +  "</div>"
-                                              +"</div>"
-                                         +"</div>" 
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                    );   
-                              
-                           }else{
-                           $('#exercisetable').append(   
-                                 "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                 +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
-                                 +obj.excs_cal_per_minweight.toFixed(3)+"</span></div></div>"
-                                 
-                                 
-                                 +"<div class='col-2 center'>"
-                                 +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                 +"</div>"
-                                 
-                                 +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                           +"<div class='modal-dialog modal-lg'>"
-                                           +    "<div class='modal-content'>"
-                                           +        "<div class='modal-header'>"
-                                           +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                           +            "<button type='button' class='close' data-dismiss='modal'>"
-                                           +               "<span>&times;</span>"
-                                           +            "</button>"
-                                           +        "</div>"
-                                           +        "<div class='modal-body p-4'>"
-                                 +         "<div class='row'>"
-                                 +            "<div class='col-7'>"
-                                 +               "<h5>운동 설명</h5>"
-                                 +               "<p>"+obj.excs_description+"</p>"
-                                 +            "</div>"
-                                 +            "<div class='col-3 youtube-box'>"
-                                                <!-- 유튜브링크 -->
-                                 +               "<h5>관련 영상</h5>"
-                                 +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                 +            "</div>"
-                                 +         "</div>"
-                                 +         "<hr/>"
-                                          <!-- 좋아요 버튼 -->
-                                 +         "<div class='m-auto'>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                 +            "</div>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                 +            "</div>"
-                                 +         "</div>"
-                                 +      "</div>"
-                                            +      "<div class='modal-footer'>" 
-                                            +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                             +  "</div>"    
-                                             +  "</div>"
-                                           +"</div>"
-                                      +"</div>" 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                 );
-                           }
-                        });
-                      }
-                   }
-                  );
+            search();
+            
          });
          //체크하나만 되게하는것
          $('input[type="checkbox"][name="exer_part"]').click(function(){
@@ -154,9 +24,180 @@
                   $(this).prop('checked', true);
               }
           });
+         $('input[type="checkbox"][name="exer_level"]').click(function(){
+             //click 이벤트가 발생했는지 체크
+             if ($(this).prop('checked')) {
+                 //checkbox 전체를 checked 해제후 click한 요소만 true지정
+                 $('input[type="checkbox"][name="exer_level"]').prop('checked', false);
+                 $(this).prop('checked', true);
+             }
+         });
          
          
       })
+      function search(){
+          var data={excs_name: "", 
+                  excs_kind : "", 
+                  excs_body_part:"" , 
+                  excs_equipment: "", 
+                  excs_level: 1 };
+         data = {excs_name:  $('#exercisesearch').val(), 
+               excs_kind : $('input[name="exer_kind"]').val(), 
+               excs_body_part: $('input:checkbox[name="exer_part"]:checked').val(), 
+               excs_equipment: $('input:checkbox[name="exer_equi"]:checked').val(), 
+               excs_level: $('input:checkbox[name="exer_level"]:checked').val() };
+              console.log(data);
+              
+              $.ajax(
+                        {
+                         type:"post",
+                         data: data,
+                          url:"exerciseSearch.exer",
+                          dataType:"json",
+                          success:function(responsedata){ 
+                             console.log(responsedata);
+                             $('#exercisetable').empty();
+                           $.each(responsedata,function(index,obj){   
+                              if(obj.excs_cal_per_minweight==0){
+                                 $('#exercisetable').append(   
+                                       "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+                                       +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
+                                       +"</span></div></div>"
+                                       
+                                       
+                                       +"<div class='col-2 center'>"
+                                       +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
+                                       +"</div>"
+                                       
+                                       +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
+                                                 +"<div class='modal-dialog modal-lg'>"
+                                                 +    "<div class='modal-content'>"
+                                                 +        "<div class='modal-header'>"
+                                                 +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
+                                                 +            "<button type='button' class='close' data-dismiss='modal'>"
+                                                 +               "<span>&times;</span>"
+                                                 +            "</button>"
+                                                 +        "</div>"
+                                                 +        "<div class='modal-body p-4'>"
+                                       +         "<div class='row mb-5'>"
+                                       +            "<div class='col-7'>"
+                                       +               "<h5>운동 설명</h5>"
+                                       +               "<p>"+obj.excs_description+"</p>"
+                                       +            "</div>"
+                                       +            "<div class='col-3 youtube-box'>"
+                                                      <!-- 유튜브링크 -->
+                                       +               "<h5>관련 영상</h5>"
+                                       +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
+                                       +            "</div>"
+                                       +         "</div>"
+//                                        +         "<hr/>"
+                                                <!-- 좋아요 버튼 -->
+//                                        +         "<div class='m-auto'>"
+//                                        +            "<div>"
+//                                        +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
+//                                        +            "</div>"
+//                                        +            "<div>"
+//                                        +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
+//                                        +            "</div>"
+//                                        +         "</div>"
+                                       +      "</div>"
+                                                  +      "<div class='modal-footer'>" 
+                                                  +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
+                                                   +  "</div>"    
+                                                   +  "</div>"
+                                                 +"</div>"
+                                            +"</div>" 
+                                       
+                                       
+                                       
+                                       
+                                       
+                                       
+                                       +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+                                       );   
+                                 
+                              }else{
+                              $('#exercisetable').append(   
+                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
+                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
+                                    +obj.excs_cal_per_minweight.toFixed(3)+"</span></div></div>"
+                                    
+                                    
+                                    +"<div class='col-2 center'>"
+                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
+                                    +"</div>"
+                                    
+                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
+                                              +"<div class='modal-dialog modal-lg'>"
+                                              +    "<div class='modal-content'>"
+                                              +        "<div class='modal-header'>"
+                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
+                                              +            "<button type='button' class='close' data-dismiss='modal'>"
+                                              +               "<span>&times;</span>"
+                                              +            "</button>"
+                                              +        "</div>"
+                                              +        "<div class='modal-body p-4'>"
+                                    +         "<div class='row mb-5'>"
+                                    +            "<div class='col-7'>"
+                                    +               "<h5>운동 설명</h5>"
+                                    +               "<p>"+obj.excs_description+"</p>"
+                                    +            "</div>"
+                                    +            "<div class='col-3 youtube-box'>"
+                                                   <!-- 유튜브링크 -->
+                                    +               "<h5>관련 영상</h5>"
+                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
+                                    +            "</div>"
+                                    +         "</div>"
+//                                     +         "<hr/>"
+                                             <!-- 좋아요 버튼 -->
+//                                     +         "<div class='m-auto'>"
+//                                     +            "<div>"
+//                                     +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
+//                                     +            "</div>"
+//                                     +            "<div>"
+//                                     +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
+//                                     +            "</div>"
+//                                     +         "</div>"
+                                    +      "</div>"
+                                               +      "<div class='modal-footer'>" 
+                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
+                                                +  "</div>"    
+                                                +  "</div>"
+                                              +"</div>"
+                                         +"</div>" 
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
+                                    );
+                              }
+                           });
+                             
+                           }
+                           
+                        });
+              
+      }
+      
+      function drawInput(ek){
+        if(ek=='http://localhost:8090/bodiary/search#navpills-2'){
+           //alert('무산소');
+           $('#exer_kind').empty();
+           $('#exer_kind').append(
+             "<input type='hidden' name='exer_kind' value='N'>"       
+           );
+        }else{
+           //alert('유산소')
+           $('#exer_kind').empty();
+           $('#exer_kind').append(
+             "<input type='hidden' name='exer_kind' value='C'>"       
+           );
+        }
+      }
+      
       function exer_c(){
             $.ajax(
                    {
@@ -188,7 +229,7 @@
                                            +            "</button>"
                                            +        "</div>"
                                            +        "<div class='modal-body p-4'>"
-                                 +         "<div class='row'>"
+                                 +         "<div class='row mb-5'>"
                                  +            "<div class='col-7'>"
                                  +               "<h5>운동 설명</h5>"
                                  +               "<p>"+obj.excs_description+"</p>"
@@ -199,16 +240,16 @@
                                  +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                  +            "</div>"
                                  +         "</div>"
-                                 +         "<hr/>"
+//                                  +         "<hr/>"
                                           <!-- 좋아요 버튼 -->
-                                 +         "<div class='m-auto'>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                 +            "</div>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                 +            "</div>"
-                                 +         "</div>"
+//                                  +         "<div class='m-auto'>"
+//                                  +            "<div>"
+//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
+//                                  +            "</div>"
+//                                  +            "<div>"
+//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
+//                                  +            "</div>"
+//                                  +         "</div>"
                                  +      "</div>"
                                             +      "<div class='modal-footer'>" 
                                             +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
@@ -260,7 +301,7 @@
                                            +            "</button>"
                                            +        "</div>"
                                            +        "<div class='modal-body p-4'>"
-                                 +         "<div class='row'>"
+                                 +         "<div class='row mb-5'>"
                                  +            "<div class='col-7'>"
                                  +               "<h5>운동 설명</h5>"
                                  +               "<p>"+obj.excs_description+"</p>"
@@ -271,16 +312,16 @@
                                  +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                  +            "</div>"
                                  +         "</div>"
-                                 +         "<hr/>"
+//                                  +         "<hr/>"
                                           <!-- 좋아요 버튼 -->
-                                 +         "<div class='m-auto'>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                 +            "</div>"
-                                 +            "<div>"
-                                 +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                 +            "</div>"
-                                 +         "</div>"
+//                                  +         "<div class='m-auto'>"
+//                                  +            "<div>"
+//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
+//                                  +            "</div>"
+//                                  +            "<div>"
+//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
+//                                  +            "</div>"
+//                                  +         "</div>"
                                  +      "</div>"
                                             +      "<div class='modal-footer'>" 
                                             +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
@@ -303,385 +344,11 @@
          }
          
       
-         function exer_check(excs_body_part){
-            //exer_equi 체크안되고, exer_part만 체크됐을때 검사
-            if(!$('input[type="checkbox"][name="exer_equi"]').is(":checked")){
-               //alert('exer_equi 체크안됐지롱'+$("input[name=exer_equi]:checked").val());
-               //"input[name=exer_equi]:checked").val() 체크된 value값
-               var data = {excs_body_part : excs_body_part.value};
-               console.log(data);
-               $.ajax(
-                      {
-                         type:"post",
-                         data: data,
-                         url:"exercisepartSearch.exer",
-                         dataType:"json",
-                         success:function(responsedata){ 
-                            console.log(responsedata);
-                           $('#exercisetable').empty();
-                           $.each(responsedata,function(index,obj){   
-                              $('#exercisetable').append(   
-                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
-                                    +"</span></div></div>"
-                                    
-                                    
-                                    +"<div class='col-2 center'>"
-                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                    +"</div>"
-                                    
-                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                              +"<div class='modal-dialog modal-lg'>"
-                                              +    "<div class='modal-content'>"
-                                              +        "<div class='modal-header'>"
-                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                              +            "<button type='button' class='close' data-dismiss='modal'>"
-                                              +               "<span>&times;</span>"
-                                              +            "</button>"
-                                              +        "</div>"
-                                              +        "<div class='modal-body p-4'>"
-                                    +         "<div class='row'>"
-                                    +            "<div class='col-7'>"
-                                    +               "<h5>운동 설명</h5>"
-                                    +               "<p>"+obj.excs_description+"</p>"
-                                    +            "</div>"
-                                    +            "<div class='col-3 youtube-box'>"
-                                                   <!-- 유튜브링크 -->
-                                    +               "<h5>관련 영상</h5>"
-                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-                                    +         "<div class='m-auto'>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                    +            "</div>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +      "</div>"
-                                               +      "<div class='modal-footer'>" 
-                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                +  "</div>"    
-                                                +  "</div>"
-                                              +"</div>"
-                                         +"</div>" 
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                    );
-                           });
-                         }
-                      }
-                     );   
-            }
-         
-            //exer_equi 체크되고, exer_part도 체크됐을때 검사
-             if($('input[type="checkbox"][name="exer_equi"]').is(":checked")){
-               //alert('exer_equi 체크됐지롱'+$("input[name=exer_equi]:checked").val());
-               //"input[name=exer_equi]:checked").val() 체크된 value값
-               var data = {"excs_body_part" : excs_body_part.value, "excs_equipment": $("input[name=exer_equi]:checked").val() };
-               console.log(data);
-               $.ajax(
-                      {
-                         type:"post",
-                         data: data,
-                         url:"exercisepartequiSearch.exer",
-                         dataType:"json",
-                         success:function(responsedata){ 
-                            console.log(responsedata);
-                           $('#exercisetable').empty();
-                           $.each(responsedata,function(index,obj){   
-                              $('#exercisetable').append(   
-                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
-                                    +"</span></div></div>"
-                                    
-                                    
-                                    +"<div class='col-2 center'>"
-                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                    +"</div>"
-                                    
-                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                              +"<div class='modal-dialog modal-lg'>"
-                                              +    "<div class='modal-content'>"
-                                              +        "<div class='modal-header'>"
-                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                              +            "<button type='button' class='close' data-dismiss='modal'>"
-                                              +               "<span>&times;</span>"
-                                              +            "</button>"
-                                              +        "</div>"
-                                              +        "<div class='modal-body p-4'>"
-                                    +         "<div class='row'>"
-                                    +            "<div class='col-7'>"
-                                    +               "<h5>운동 설명</h5>"
-                                    +               "<p>"+obj.excs_description+"</p>"
-                                    +            "</div>"
-                                    +            "<div class='col-3 youtube-box'>"
-                                                   <!-- 유튜브링크 -->
-                                    +               "<h5>관련 영상</h5>"
-                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-                                    +         "<div class='m-auto'>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                    +            "</div>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +      "</div>"
-                                               +      "<div class='modal-footer'>" 
-                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                +  "</div>"    
-                                                +  "</div>"
-                                              +"</div>"
-                                         +"</div>" 
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                    );
-                           });
-                         }
-                      }
-                     );   
-            } 
-            
-         }
          
          
          
-         function exer_equi_check(excs_equipment){
-            //exer_part 체크안되고, exer_equi만 체크됐을때 검사
-            if(!$('input[type="checkbox"][name="exer_part"]').is(":checked")){
-               //alert('exer_part 체크안됐지롱'+$("input[name=exer_equi]:checked").val());
-               //"input[name=exer_equi]:checked").val() 체크된 value값
-               var data = {excs_equipment : excs_equipment.value};
-               console.log(data);
-               $.ajax(
-                      {
-                         type:"post",
-                         data: data,
-                         url:"exerciseEquiSearch.exer",
-                         dataType:"json",
-                         success:function(responsedata){ 
-                            console.log(responsedata);
-                           $('#exercisetable').empty();
-                           $.each(responsedata,function(index,obj){   
-                              if(obj.excs_cal_per_minweight==0){
-                                 $('#exercisetable').append(   
-                                       "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                       +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
-                                       +"</span></div></div>"
-                                       
-                                       
-                                       +"<div class='col-2 center'>"
-                                       +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                       +"</div>"
-                                       
-                                       +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                                 +"<div class='modal-dialog modal-lg'>"
-                                                 +    "<div class='modal-content'>"
-                                                 +        "<div class='modal-header'>"
-                                                 +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                                 +            "<button type='button' class='close' data-dismiss='modal'>"
-                                                 +               "<span>&times;</span>"
-                                                 +            "</button>"
-                                                 +        "</div>"
-                                                 +        "<div class='modal-body p-4'>"
-                                       +         "<div class='row'>"
-                                       +            "<div class='col-7'>"
-                                       +               "<h5>운동 설명</h5>"
-                                       +               "<p>"+obj.excs_description+"</p>"
-                                       +            "</div>"
-                                       +            "<div class='col-3 youtube-box'>"
-                                                      <!-- 유튜브링크 -->
-                                       +               "<h5>관련 영상</h5>"
-                                       +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                       +            "</div>"
-                                       +         "</div>"
-                                       +         "<hr/>"
-                                                <!-- 좋아요 버튼 -->
-                                       +         "<div class='m-auto'>"
-                                       +            "<div>"
-                                       +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                       +            "</div>"
-                                       +            "<div>"
-                                       +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                       +            "</div>"
-                                       +         "</div>"
-                                       +      "</div>"
-                                                  +      "<div class='modal-footer'>" 
-                                                  +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                   +  "</div>"    
-                                                   +  "</div>"
-                                                 +"</div>"
-                                            +"</div>" 
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       
-                                       +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                       );   
-                                 
-                              }else{
-                              $('#exercisetable').append(   
-                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>1분1kg당"
-                                    +obj.excs_cal_per_minweight.toFixed(3)+"</span></div></div>"
-                                    
-                                    
-                                    +"<div class='col-2 center'>"
-                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                    +"</div>"
-                                    
-                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                              +"<div class='modal-dialog modal-lg'>"
-                                              +    "<div class='modal-content'>"
-                                              +        "<div class='modal-header'>"
-                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                              +            "<button type='button' class='close' data-dismiss='modal'>"
-                                              +               "<span>&times;</span>"
-                                              +            "</button>"
-                                              +        "</div>"
-                                              +        "<div class='modal-body p-4'>"
-                                    +         "<div class='row'>"
-                                    +            "<div class='col-7'>"
-                                    +               "<h5>운동 설명</h5>"
-                                    +               "<p>"+obj.excs_description+"</p>"
-                                    +            "</div>"
-                                    +            "<div class='col-3 youtube-box'>"
-                                                   <!-- 유튜브링크 -->
-                                    +               "<h5>관련 영상</h5>"
-                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-                                    +         "<div class='m-auto'>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                    +            "</div>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +      "</div>"
-                                               +      "<div class='modal-footer'>" 
-                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                +  "</div>"    
-                                                +  "</div>"
-                                              +"</div>"
-                                         +"</div>" 
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                    );
-                              }
-                           });
-                         }
-                      }
-                     ); 
-            }
-            
-            //exer_part 체크되고, exer_equi도 체크됐을때 검사
-             if($('input[type="checkbox"][name="exer_part"]').is(":checked")){
-               //alert('exer_part 체크됐지롱'+$("input[name=exer_part]:checked").val());
-               //"input[name=exer_equi]:checked").val() 체크된 value값
-               var data = {"excs_equipment" : excs_equipment.value, "excs_body_part": $("input[name=exer_part]:checked").val() };
-               console.log(data);
-               $.ajax(
-                      {
-                         type:"post",
-                         data: data,
-                         url:"exercisepartequiSearch.exer",
-                         dataType:"json",
-                         success:function(responsedata){ 
-                            console.log(responsedata);
-                           $('#exercisetable').empty();
-                           $.each(responsedata,function(index,obj){   
-                              $('#exercisetable').append(   
-                                    "<div class='excs-card card text-left mb-3'><div class='card-body ml-0 mr-0 row'><div class='col'><h5 class='card-title'>"
-                                    +obj.excs_name+"</h5><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>무산소</div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'></div><div class='bootstrap-badge'><span class='badge badge-pill badge-info'>"+obj.excs_body_part+"</span>"
-                                    +"</span></div></div>"
-                                    
-                                    
-                                    +"<div class='col-2 center'>"
-                                    +"<button type='button' class='btn btn-primary' data-toggle='modal' data-target='.bd-example-modal-lg-1-"+obj.excs_seq+"' >정보보기</button>"
-                                    +"</div>"
-                                    
-                                    +"<div class='modal fade bd-example-modal-lg-1-"+obj.excs_seq+"' tabindex='-1' role='dialog' aria-hidden='true'>"
-                                              +"<div class='modal-dialog modal-lg'>"
-                                              +    "<div class='modal-content'>"
-                                              +        "<div class='modal-header'>"
-                                              +            "<h5 class='modal-title'>"+obj.excs_name+"</h5>"
-                                              +            "<button type='button' class='close' data-dismiss='modal'>"
-                                              +               "<span>&times;</span>"
-                                              +            "</button>"
-                                              +        "</div>"
-                                              +        "<div class='modal-body p-4'>"
-                                    +         "<div class='row'>"
-                                    +            "<div class='col-7'>"
-                                    +               "<h5>운동 설명</h5>"
-                                    +               "<p>"+obj.excs_description+"</p>"
-                                    +            "</div>"
-                                    +            "<div class='col-3 youtube-box'>"
-                                                   <!-- 유튜브링크 -->
-                                    +               "<h5>관련 영상</h5>"
-                                    +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-                                    +         "<div class='m-auto'>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-                                    +            "</div>"
-                                    +            "<div>"
-                                    +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-                                    +            "</div>"
-                                    +         "</div>"
-                                    +      "</div>"
-                                               +      "<div class='modal-footer'>" 
-                                               +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
-                                                +  "</div>"    
-                                                +  "</div>"
-                                              +"</div>"
-                                         +"</div>" 
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    
-                                    +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
-                                    );
-                           });
-                         }
-                      }
-                     );   
-            } 
-            
-            }
+         
+         
          
          var number = 0;
             function rightdrow(es){
@@ -709,13 +376,13 @@
                                        +"<div class='col pt-2'><h9>"+obj.excs_name+"</h9></div>"
                                        +"<div class='form-group col-5'>"
                                           +"<select class='form-control form-control-sm input-rounded input-excs-cart hour-select"+number+"' id='sel1' onchange='eselected1("+number+");'>"
-                                             +"<option selected='selected' value=0>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
+                                             +"<option selected='selected'>시간</option><option value=30>30분</option><option value=60>1시간</option><option value=90>1시간 30분</option><option value=120>2시간</option><option  value=150>2시간 30분</option><option  value=180>3시간</option><option  value=210>3시간 30분</option><option  value=240>4시간</option>"
                                           +"</select></div>"
                                           +"<div class='col-2 center pt-2'>"
                                           +"<a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
                                           +"<input class='kind"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
                                           +"<input class='seq"+number+"' type='hidden' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'  value=0>"
+                                          +"<input class='hourinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_exercise_hour'>"
                                           +"</div>"
                                     );
                                     
@@ -725,14 +392,14 @@
                                     $('#exer_n_add').append(   
                                           "<div id='"+obj.excs_seq+"' class='row cart-item-card mb-3 cn"+number+"'style='height:40px;'><div class='col pt-2'><h10>"
                                           +obj.excs_name+"</h10></div><div class='form-group col-3'><select  id='sel2' onchange='eselected2("+number+");'class='set-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
-                                          +"<option selected='selected' value=0>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
+                                          +"<option selected='selected'>세트</option><option value=1>1</option><option value=2>2</option><option value=3>3</option><option value=4>4</option><option value=5>5</option></select>"
                                           +"</div><div class='form-group col-3'><select  id='sel3' onchange='eselected3("+number+");'class='perset-select"+number+" form-control form-control-sm input-rounded input-excs-cart'>"
-                                          +"<option selected='selected' value=0>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
+                                          +"<option selected='selected'>횟수</option><option value=5>5</option><option value=10>10</option><option value=15>15</option><option value=20>20</option><option value=25>25</option></select>"
                                           +"</div><div class='col-2 center pt-2'><a class='a"+number+"' href='javascript:removeadd("+number+");'><i class='mdi mdi-minus'></i></a></div>"
                                           +"<input type='hidden' class='kind"+number+"' name='routineJoinDtoList["+number+"].excs_kind' value='"+obj.excs_kind+"'>"
                                           +"<input type='hidden' class='seq"+number+"' name='routineJoinDtoList["+number+"].excs_seq' value='"+obj.excs_seq+"'>"
-                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set' value=0>"
-                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set' value=0>"
+                                          +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set'>"
+                                          +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set'>"
                                           +"</div>"
                                           );
                               
@@ -787,26 +454,23 @@
                }
                number--;
             }
-       
             function eselected1(number){
                var eselect = $('select.hour-select'+number+' option:selected').val();
                $("input.hourinput"+number+"").attr('value', eselect);
-            
+               
                
             }
             function eselected2(number){
                var eselect = $('select.set-select'+number+' option:selected').val();
                $("input.setinput"+number+"").attr('value', eselect);
-             
                
             }
             function eselected3(number){
                var eselect = $('select.perset-select'+number+' option:selected').val();
                $("input.persetinput"+number+"").attr('value', eselect);
-            
                
             }
-            
+ 
             
             $('#makeRoutine').click(function() {
                if(number == 0) {

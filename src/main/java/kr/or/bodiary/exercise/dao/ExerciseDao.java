@@ -11,6 +11,8 @@ import kr.or.bodiary.myBodiary.dto.RoutineJoinDto;
 public interface ExerciseDao {
 	public List<ExerciseDto> getExerciseListByName(String excs_name) throws ClassNotFoundException, SQLException;
 
+	public List<ExerciseDto> exerciseSearch(ExerciseDto ExerciseDto) throws ClassNotFoundException, SQLException;
+	
 	public List<ExerciseDto> getExercisecListByName() throws ClassNotFoundException, SQLException;
 
 	public List<ExerciseDto> getExercisenListByName() throws ClassNotFoundException, SQLException;
@@ -45,4 +47,12 @@ public interface ExerciseDao {
 
 	// 루틴을 하나로 묶어주기
 	public int insertRoutineBundle(List<RoutineBundleDto> list) throws ClassNotFoundException, SQLException;
+	
+
+	   // 루틴 삭제하기
+	   public int deleteRoutineCart(int routine_cart_seq) throws ClassNotFoundException, SQLException; 
+	   
+	   // 루틴 상태 수정하기
+	   public int updateRoutineCart(int routine_cart_seq) throws ClassNotFoundException, SQLException;
+	
 }

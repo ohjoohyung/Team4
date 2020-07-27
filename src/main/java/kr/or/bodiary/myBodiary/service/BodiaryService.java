@@ -259,29 +259,29 @@ private SqlSession sqlsession;
          
          return list;
       }
-//      //내 히스토리 카테고리(자유) 게시판 전체 게시물 댓글 List 형태로 불러오기 
-//      public List<FreeBrdReplyDTO> myHistoryFreeBrdReply(String user_email) throws Exception {
-//         FreeBrdReplyDao FreeBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
-//         return FreeBrdReply.getUserFreeBrdReplyList(user_email);
-//      }
-//      //내 히스토리 내가쓴글(자유)게시판 글삭제하기 서비스 함수
-//       public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
-//          FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
-//         FreeBrd.freeBrdDelete(seq);
-//         return "redirect:myHistory";
-//      }
-//      
-//      //내 히스토리 루틴자랑게시판 글 가져오기 
-//      public List<RoutineBrdDto> myHistoryRoutineBrd(String user_email) throws Exception {
-//         FreeBrdDao RoutineBrd = sqlsession.getMapper(FreeBrdDao.class);
-//         return RoutineBrd.getUserRoutineBrdList(user_email);
-//      }
-//      
-//      //내 히스토리 루틴자랑게시판 댓글 가져오기 
-//      public List<RoutineBoardCommentDto> myHistoryRoutineBrdReply(String user_email) throws Exception {
-//         FreeBrdReplyDao RoutineBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
-//         return RoutineBrdReply.getUserRoutineReplyList(user_email);
-//      }
+      //내 히스토리 카테고리(자유) 게시판 전체 게시물 댓글 List 형태로 불러오기 
+      public List<FreeBrdReplyDTO> myHistoryFreeBrdReply(String user_email) throws Exception {
+         FreeBrdReplyDao FreeBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
+         return FreeBrdReply.getUserFreeBrdReplyList(user_email);
+      }
+      //내 히스토리 내가쓴글(자유)게시판 글삭제하기 서비스 함수
+       public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
+          FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+         FreeBrd.freeBrdDelete(seq);
+         return "redirect:myHistory";
+      }
+      
+      //내 히스토리 루틴자랑게시판 글 가져오기 
+      public List<RoutineBrdDto> myHistoryRoutineBrd(String user_email) throws Exception {
+         FreeBrdDao RoutineBrd = sqlsession.getMapper(FreeBrdDao.class);
+         return RoutineBrd.getUserRoutineBrdList(user_email);
+      }
+      
+      //내 히스토리 루틴자랑게시판 댓글 가져오기 
+      public List<RoutineBoardCommentDto> myHistoryRoutineBrdReply(String user_email) throws Exception {
+         FreeBrdReplyDao RoutineBrdReply = sqlsession.getMapper(FreeBrdReplyDao.class);
+         return RoutineBrdReply.getUserRoutineReplyList(user_email);
+      }
 
          
       //루틴 리스트 들어가기

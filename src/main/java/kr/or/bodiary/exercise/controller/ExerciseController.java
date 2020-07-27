@@ -24,7 +24,8 @@ public class ExerciseController {
 		this.sqlsession = sqlsession;
 		
 	}
-		
+	
+
 	@RequestMapping("/exerciseNameSearch.exer")
 	@ResponseBody
 	public List<ExerciseDto> exerciseNameSearch(String excs_name) throws ClassNotFoundException, SQLException{
@@ -95,5 +96,13 @@ public class ExerciseController {
 		return elist;
 	}
 	
-	
+	@RequestMapping("/exerciseSearch.exer")
+	   @ResponseBody
+	   public List<ExerciseDto> exerciseSearch(ExerciseDto ExerciseDto) throws ClassNotFoundException, SQLException{
+	      System.out.println("받은:"+ExerciseDto);
+	      ExerciseDao exercisedao = sqlsession.getMapper(ExerciseDao.class);
+	      List<ExerciseDto> elist = exercisedao.exerciseSearch(ExerciseDto);
+	      //System.out.println(elist.toString());
+	      return elist;
+	   }
 }

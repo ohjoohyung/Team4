@@ -28,85 +28,85 @@
 </style>
 <script type="text/javascript">
 /* $(document).ready(function() {
-	connect();
-	/* $('#sendQna').click(function() { send(); }); */
+   connect();
+   /* $('#sendQna').click(function() { send(); }); */
 /* })
 
 var wsocket;
 
 function connect() {
-	wsocket = new WebSocket("ws://" + location.host + "/bodiary/alarm");
-	wsocket.onopen = onOpen;
-	wsocket.onmessage = onMessage;
-	wsocket.onclose = onClose;
+   wsocket = new WebSocket("ws://" + location.host + "/bodiary/alarm");
+   wsocket.onopen = onOpen;
+   wsocket.onmessage = onMessage;
+   wsocket.onclose = onClose;
 }
 function disconnect() {
-	wsocket.close();
+   wsocket.close();
 }
 
 function onOpen(evt) {
-	console.log("onOpen(evt)");
+   console.log("onOpen(evt)");
 }
 
 function onMessage(evt) {
-	console.log("evt :" + evt);
-	var data = evt.data;
-	appendMessage(data);
+   console.log("evt :" + evt);
+   var data = evt.data;
+   appendMessage(data);
 }
 
 function onClose(evt) {
 }
 
 function send() {
-	
-	
-	wsocket.send("login");
-	
+   
+   
+   wsocket.send("login");
+   
 }
 
 function appendMessage(msg) {
-	console.log(msg);
-	alert("msg : " + msg);
+   console.log(msg);
+   alert("msg : " + msg);
 }
  */
  $(function() {
-	 console.log(wsocket);
-	 $('#sendQna').click(function() { 
-		 
-		 sendQna(); });
-	/*  function send() {
-		
-		alert("갑니다")
-		wsocket.send("Qna"); 
-		form.submit();
-	} */
+    console.log(wsocket);
+    $('#sendQna').click(function() { 
+       
+       sendQna(); });
+   /*  function send() {
+      
+      alert("갑니다")
+      wsocket.send("Qna"); 
+      form.submit();
+   } */
 })
 
 function sendQna() {
-	/* let qna_brd_title = $('#qna_brd_title').val();
-	let qna_brd_content = $('#qna_brd_content').val();
-	let user = "새로운 문의가 도착했습니다."; */
-	
-	var text = "새로운 문의가 도착했습니다.";
-	var msg = {"type" : "user",
-				"qna_brd_title" : $('#qna_brd_title').val(),
-				"qna_brd_content" : $('#qna_brd_content').val(),
-				"text" : text
-				};
-	
-	/* 
-	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + user); */
-	wsocket.send(JSON.stringify(msg));
-	$('#qna_brd_title').val('');
-	$('#qna_brd_content').val('');
+   /* let qna_brd_title = $('#qna_brd_title').val();
+   let qna_brd_content = $('#qna_brd_content').val();
+   let user = "새로운 문의가 도착했습니다."; */
+   
+   var text = "새로운 문의가 도착했습니다.";
+   var msg = {"type" : "user",
+            "qna_brd_title" : $('#qna_brd_title').val(),
+            "qna_brd_content" : $('#summernote').val(),
+            "text" : text
+            };
+   
+   /* 
+   wsocket.send(qna_brd_title + "," + qna_brd_content + "," + user); */
+   wsocket.send(JSON.stringify(msg));
+   $('#qna_brd_title').val('');
+   $('#qna_brd_content').val('');
 
-	swal("성공!", "등록 되었습니다.", "success");
-	setTimeout(function() {
-		  location.href="myQnaList";
-		}, 1000);
+   swal("성공!", "등록 되었습니다.", "success");
+   setTimeout(function() {
+        location.href="myQnaList";
+      }, 1000);
 
-	
-	
+   
+   
 }
 
 
@@ -126,7 +126,7 @@ function sendQna() {
    </nav>
       
       <nav class="col-8 ml-3 mr-0" >
-      	<!-- 문의 폼 태그 제거 스크립트 추가 -->
+         <!-- 문의 폼 태그 제거 스크립트 추가 -->
          <div id="contain" class="side-nav-info card card-body border-primary pt-4 pb-4 pl-5 pr-5" > <!-- class="article col-sm-9" -->
             
          
@@ -145,7 +145,7 @@ function sendQna() {
                                 <div class="basic-form">
                                         <div class="form-group">
                                             
-                                            <textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="qna_brd_content" placeholder="내용을 입력하세요">
+                                            <textarea class="form-control h-150px" name="qna_brd_content" rows="12" id="summernote"  placeholder="내용을 입력하세요">
                                             </textarea>
                                         </div>
                                 </div>
@@ -172,6 +172,51 @@ function sendQna() {
 
    <!-- 공통 스크립트-->
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
+   <script>
+   $(document).ready(function() {
+        $('#summernote').summernote({
+              minHeight: 200,
+              maxHeight: 500,
+              focus: true, 
+              lang : 'ko-KR',
+              callbacks: {
+                  onImageUpload: function(files, editor, welEditable) {
+                              for (var i = files.length - 1; i >= 0; i--) {
+                               sendFile(files[i], this);
+                              }
+                          }
+                  }
+
+            });
+         });
+   function sendFile(file, el) {
+         var form_data = new FormData();
+                form_data.append('file', file);
+                $.ajax({
+                  data: form_data,
+                  type: "POST",
+                  url: 'qnasummerImageFree',
+                  cache: false,
+                  contentType: false,
+                  enctype: 'multipart/form-data',
+                  processData: false,
+                  success: function(img_name) {
+                    
+                     $(el).summernote('editor.insertImage', img_name);
+                  
+
+                  
+                  }
+                });
+             }
+</script>
+<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
+출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
+<script>
+function postForm() {
+    $('textarea[name="qna_brd_content"]').val($('#summernote').summernote('code'));
+}
+</script>
    
 
 </body>

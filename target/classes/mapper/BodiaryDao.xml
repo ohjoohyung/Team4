@@ -59,9 +59,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       select distinct c.routine_cart_seq, c.routine_cart_title from routinecart c
       join routinebundle b
       on c.routine_cart_seq = b.routine_cart_seq
-      where b.user_email = #{user_email};
+      where b.user_email = #{user_email} and routine_cart_check = 'I'
    </select>
-	
+   
 	<!-- 음식 검색하기 -->
 	<select id="foodNameSearch" parameterType="map" resultType="kr.or.bodiary.myBodiary.dto.FoodDto">
 		select food_seq, food_name, food_cal from food where food_name like concat('%', #{food_name}, '%') limit ${startIndex}, 5
