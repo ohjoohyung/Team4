@@ -199,6 +199,9 @@
       }
       
       function exer_c(){
+          $('input[type="checkbox"][name="exer_level"]').prop('checked', false);
+          $('input[type="checkbox"][name="exer_equi"]').prop('checked', false);
+          $('input[type="checkbox"][name="exer_part"]').prop('checked', false);
             $.ajax(
                    {
                       type:"post",
@@ -271,6 +274,9 @@
                   );
          }
          function exer_n(){
+             $('input[type="checkbox"][name="exer_level"]').prop('checked', false);
+             $('input[type="checkbox"][name="exer_equi"]').prop('checked', false);
+             $('input[type="checkbox"][name="exer_part"]').prop('checked', false);
             $.ajax(
                    {
                       type:"post",

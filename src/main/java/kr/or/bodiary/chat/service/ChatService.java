@@ -68,10 +68,7 @@ public class ChatService {
 			 HttpSession session = request.getSession(); 
 			 UserDto user = (UserDto)session.getAttribute("currentUser");
 			 
-				/*
-				 * String chatRoomId = Integer.toString(chattingVO.getChId());
-				 * session.setAttribute("chatRoomId", chatRoomId);
-				 */
+			
 			 String user_email = user.getUser_email();
 			 
 			 int userCount = chatdao.countUserInRoom(room_number, user_email);
@@ -86,12 +83,7 @@ public class ChatService {
 			model.addAttribute("user_email", user_email);
 			 model.addAttribute("chat", chatroomdto);
 			
-			
-			/*
-			 * model.addAttribute("user_id", chattingVO.getUser_id());
-			 * model.addAttribute("chatRoomSelect",
-			 * chattingService.chatRoomSelect(chattingVO.getChId()));
-			 */
+		
 			return "chat/chatRoom";
 		}
 			return "redirect:chatList";

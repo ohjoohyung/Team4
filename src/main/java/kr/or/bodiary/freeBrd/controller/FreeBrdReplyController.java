@@ -32,18 +32,7 @@ public class FreeBrdReplyController {
 	public List<FreeBrdReplyDTO> list(@RequestParam("boardSeq") String boardSeq,ModelAndView mav) throws Exception {
 		System.out.println("댓글목록글번호"+boardSeq);
 		
-		//List<FreeBrdReplyDTO> list = freeBrdCmtService.list(boardSeq);
-		
-		//System.out.println("자유게시판 목록페이지로 이동");	
-
-		//이동시킬 뷰에 전달할 데이터 지정
-		//mv.addAttribute("list",list);
-		
-		//return "freeBrd/freeReplyList";
-		
-		//mav.setViewName("freeBrd/freeReplyList");
-		//mav.addObject("list",list);
-		
+	
 		return freeBrdCmtService.list(boardSeq);
 	}
 	

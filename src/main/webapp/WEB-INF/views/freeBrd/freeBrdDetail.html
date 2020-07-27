@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
@@ -17,7 +16,7 @@
 
 			<div class="card" th:each="list : ${freeBrdDetail}">
 
-				<div class="card-body">
+				<div class="card-body p-5">
 					<div class="row">
 						<div class="col-11">
 							<!-- 카테고리 부분(자유-1,질문-2,팁-3) -->
@@ -25,19 +24,15 @@
 							<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
 							<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
 							
-							<!-- 프로필사진 이미지 뿌려주기 (등록한 프로필이 없으면 Default.jpg 프로필이미지 출력)-->
-							<div class="media align-items-center mb-4">
-								<img class="mr-3 circle-rounded" th:src="@{/assets/upload/userUpload/}+${list.user_img}" width="80" height="80" alt="">	
-							</div>
+							
 							
 							<h2 class="mt-2" th:text="${list.free_brd_title}"></h2>
 							<p class="card-text">
-								닉네임: <b th:text="${list.user_nickname}"></b> |
-								<i class="icon-clock" th:text="${list.free_brd_date}"></i>
+								<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_date}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+								<i class="icon-eye"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_hits}"></span>
 							</p>
 							<p class="card-text">
 								<!-- 조회수  -->
-								<i class="icon-eye" th:text="${list.free_brd_hits}"></i>
 							</p>
 						</div>
 						<div class="col">
@@ -74,7 +69,23 @@
 
 					<hr>
 					<div class="row">
-
+						<div class="col-lg-12">
+						<!-- 프로필사진 이미지 뿌려주기 (등록한 프로필이 없으면 Default.jpg 프로필이미지 출력)-->
+							<div class="row">
+								<div class="col"></div>
+								<div class="col-2 text-center media align-items-center mb-4 mt-2">
+									<div class="row">
+										<div class="col-12">
+									<img class="circle-rounded" th:src="@{/assets/upload/userUpload/}+${list.user_img}" width="80" height="80" alt="">	
+									</div>
+									<div class="col-12 mt-2">
+									<span th:text="${list.user_nickname}" class="text-primary" style="font-size:18px;"></span> 님
+									</div>
+									</div>
+								</div>
+								<div class="col"></div>
+							</div>
+						</div>
 
 						<div class="col mt-2">
 							<span class="card-text"> 
@@ -248,7 +259,7 @@ function commentInsert(insertData){
 //댓글 삭제 (GET방식)
 /* function commentDelete(cno){
 	alert("삭제할 댓글번호"+cno);
-	//ajax type을 get방식으로 쓰고 파라미터를 넘기면 컨트롤러를 잘타고 들어가는데 ... 
+	//ajax type을 get방식으로 쓰고 파라미터를 넘기면 컨트롤러를 잘타고 들어가는데 … 
 	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
 		$.ajax({
 	        url : 'comment/delete?cno='+cno,
@@ -287,25 +298,3 @@ function commentDelete(cno){
 </script>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

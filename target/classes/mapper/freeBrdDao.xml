@@ -241,7 +241,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	   
 	   <!-- 게시글 상세보기 쿼리문 -->
 	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">
-			    SELECT freeboard.free_brd_seq,freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_image,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img,freeboard.free_brd_hits
+			    SELECT freeboard.free_brd_seq,freeboard.free_cat,freeboard.user_email,freeboard.free_brd_title,freeboard.free_brd_content,freeboard.free_brd_date,User.user_nickname,User.user_img,freeboard.free_brd_hits
 				FROM freeboard
 				INNER JOIN User
 				ON freeboard.user_email = User.user_email

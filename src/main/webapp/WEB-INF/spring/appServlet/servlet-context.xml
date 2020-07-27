@@ -128,7 +128,7 @@
    <!-- 승인된 자바스크립트 원본과 승인된 리디렉션 URI -->
     <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters"> 
       <property name="scope" value="email" /> 
-      <property name="redirectUri" value="http://localhost:8090/bodiary/gCallback" />
+      <property name="redirectUri" value="http://192.168.0.5:8090/bodiary/gCallback" />
     </bean>
     <bean id="authInfo" class="kr.or.bodiary.user.dto.AuthInfo">
         <constructor-arg

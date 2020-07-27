@@ -29,7 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 일지 작성하기 (프로시저 활용) -->
 <!-- 입력은 대소문자구분 (to의 필드값)-->
 <select id="writeBodiary"  statementType="CALLABLE" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto" resultType="Integer">
-{call insert_diary(        
+{call insert_bodiary(        
       #{diary_today_weight, jdbcType=INTEGER, javaType=Integer, mode=IN}, 
 	  #{user_email, jdbcType=VARCHAR, javaType=String, mode=IN},
 	  #{routine_cart_seq, jdbcType=INTEGER,javaType=Integer, mode=IN},

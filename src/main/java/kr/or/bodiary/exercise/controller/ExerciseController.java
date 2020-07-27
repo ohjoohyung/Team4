@@ -102,7 +102,7 @@ public class ExerciseController {
 	      System.out.println("받은:"+ExerciseDto);
 	      ExerciseDao exercisedao = sqlsession.getMapper(ExerciseDao.class);
 	      List<ExerciseDto> elist = exercisedao.exerciseSearch(ExerciseDto);
-	      //System.out.println(elist.toString());
+	  
 	      return elist;
 	   }
 }
