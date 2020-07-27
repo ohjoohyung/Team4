@@ -25,36 +25,52 @@
                   <div class="row p-3 m-3" style="border:1px solid #7571f9; border-radius: 10px;">
                  
                      <div class="col-6">
-                        <h5 class="card-title p-3">Before</h5>
+                        <h4 class="card-title pt-3 center text-primary">Before</h4>
                         <div class="card-body">
                            <div class="form-group">
                               <div class="fallback">
                               	<!-- 버튼 변경중 -->
-                                <label class="btn btn-outline-primary btn-file">
+                                <label class="btn btn-outline-primary btn-file w-100">
 									<i class="icon-picture"></i> 
-									<input id="imgFile1" name="files[0]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 비포 사진
+									<input id="imgFile1" name="files[0]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" />사진 첨부하기
 								</label>
 								
 <!--                                   <input class="btn btn-outline-primary" type="file" id="imgFile1" -->
 <!--                                                 name="files[0]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
-                                  <img id="img1" alt="your image" style="width:300px; height:300px;"/>
+<!--                                   <img id="img1" alt="your image" style="width:300px; height:300px;"/> -->
                               </div>
+                              <!--  -->
+                              <div class="card"
+                                    style="float : left; background-color: white; overflow: hidden; width:100%;">
+                                    <div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+                                        <img id="img1" src="assets/upload/routineBrdUpload/before.png" alt="user" href="javascript:void(0)"
+                                            style="width :100%; height: auto; transform: translate(-50%, -50%); ">
+                                    </div>
+                               </div>
+                              <!--  -->
                            </div>
                         </div>
                      </div>
                      
                      <div class="col-6">
-                        <h5 class="card-title p-3">After</h5>
+                        <h4 class="card-title pt-3 center text-primary">After</h4>
                           <div class="card-body">
                            <div class="form-group">
                               <div class="fallback">
-                              	<label class="btn btn-outline-primary btn-file">
+                              	<label class="btn btn-outline-primary btn-file w-100">
 									<i class="icon-picture"></i> 
-									<input id="imgFile2" name="files[1]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 애프터 사진
+									<input id="imgFile2" name="files[1]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" />사진 첨부하기
 								</label>
 <!--                                  <input class="btn btn-outline-primary" type="file" id="imgFile2" -->
 <!--                                                 name="files[1]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
-                                 <img id="img2" alt="your image" style="width:300px; height:300px;"/>
+<!--                                  <img id="img2" alt="your image" style="width:300px; height:300px;"/> -->
+                              	<div class="card"
+                                    style="float : left; background-color: white; overflow: hidden; width:100%;">
+                                    <div style="top: 0; left: 0; right: 0; bottom: 0; transform: translate(50%, 50%);">
+                                        <img id="img2" src="assets/upload/routineBrdUpload/after.png" alt="user" href="javascript:void(0)"
+                                            style="width :100%; height: auto; transform: translate(-50%, -50%); ">
+                                    </div>
+                               </div>
                               </div>
                            </div>
                          </div>
