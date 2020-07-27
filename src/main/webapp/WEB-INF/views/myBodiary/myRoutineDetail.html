@@ -12,55 +12,50 @@
 				<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment"></aside>
 			</nav>
 			
-			<div class="col mr-5">
+			<div class="col-8 mr-5">
 				<div class="card p-5">
-					<h2 th:text="${routine[0].routine_cart_title}">루틴 제목</h2>
-					<hr>
+					<label >루틴 타이틀</label>   
+					<h2 th:text="${routine[0].routine_cart_title}" class="text-primary" style="font-weight:300; margin-bottom:72px;">루틴 제목</h2>
 					<div class="row">
 						<div class="col-6">
-							<div class="p-2" style="border:1px solid #7571f9;">
+							<div class="p-2 pt-3 mb-3 center" style="border:1px solid #7571f9;">
 								<h4>유산소</h4>
 								
 							</div>
 							<div class="basic-form" th:each="r : ${routine}">
-													<th:block th:if="${r.excs_kind}=='C'">
-														<div class="row">
-															<div class="col-6">
-																<p class="text" th:text="${r.excs_name}"></p>
-															</div>
-															<div class="col-6">
-																<p class="text" th:text="${r.routine_exercise_hour}"></p>
-															</div>
-															
-														</div>
-													</th:block>
-
-												</div>
+								<th:block th:if="${r.excs_kind}=='C'">
+									<div class="row m-0 pt-2">
+										<div class="col-8">
+											<p class="text mb-2" th:text="${r.excs_name}"></p>
+										</div>
+										<div class="col-4">
+											<p class="text mb-2" th:text="${r.routine_exercise_hour}"></p>
+										</div>
+									</div>
+									<hr class="m-2">
+								</th:block>
+							</div>
 						</div>
 						<div class="col-6">
-							<div class="p-2" style="border:1px solid #7571f9;">
+							<div class="p-2 pt-3 mb-3 center" style="border:1px solid #7571f9;">
 								<h4>무산소</h4>
 							
 							</div>
 							<div class="basic-form" th:each="r : ${routine}">
-
-													<th:block th:if="${r.excs_kind}=='N'">
-														<div class="row">
-															<div class="col-6">
-																<p class="text" th:text="${r.excs_name}"></p>
-															</div>
-															<div class="col-6">
-																<p class="text"
-																	th:text="${r.routine_set}+ '세트  '+ ${r.routine_reps_per_set}+'회'"></p>
-															</div>
-														
-														</div>
-													</th:block>
-
-
-												</div>
+								<th:block th:if="${r.excs_kind}=='N'">
+									<div class="row m-0 pt-2">
+										<div class="col-8">
+											<p class="text mb-2" th:text="${r.excs_name}"></p>
+										</div>
+										<div class="col-4">
+											<p class="text mb-2" th:text="${r.routine_set}+ '세트  '+ ${r.routine_reps_per_set}+'회'"></p>
+										</div>
+									</div>
+									<hr class="m-2">
+								</th:block>
+							</div>
 						</div>
-						<div class="col-12 center mt-4">
+						<div class="col-12 center mt-5">
 							<button class="btn btn-outline-primary" onclick="deleteCheck();">삭제하기</button>
 							<button class="btn btn-primary"  th:onclick="|location.href='updateRoutineBundle?routine_cart_seq=${routine[0].routine_cart_seq}'|">수정하기</button>
 						</div>
