@@ -41,7 +41,7 @@
 											<div class="col secret-input-box"></div>
 										</div>
 									<div class="modal-footer">
-									<button type="button" class="btn btn-outline-light">취소</button>
+									
 									<button type="submit" class="btn btn-primary">방만들기</button>
 								</div>
 									</form>
@@ -63,9 +63,9 @@
 									</button>
 								</div>
 								<div class="modal-body p-4">
-								<label for='secret-input'>비밀번호</label><input class='form-control' id='pwdChk' name='pwdChk' placeholder='네 자리의 숫자를 입력하세요' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'>
+								<label for='secret-input'>비밀번호</label><input type="password" class='form-control' id='pwdChk' name='pwdChk' placeholder='네 자리의 숫자를 입력하세요' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'>
 									<div class="modal-footer">
-									<button type="button" class="btn btn-outline-light">취소</button>
+									
 									<button type="button" onclick="pwdcheck();" class="btn btn-primary">입장하기</button>
 								</div>
 									
@@ -140,7 +140,7 @@
 
 			a = "";
 			if ($('#room_secret').is(':checked')) {
-				a += "<label for='secret-input'>비밀번호</label><input class='form-control' type='number' id='room_pwd' name='room_pwd' placeholder='네 자리의 숫자를 입력하세요' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'>"
+				a += "<label for='secret-input'>비밀번호</label><input class='form-control' type='password' id='room_pwd' name='room_pwd' placeholder='네 자리의 숫자를 입력하세요' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'>"
 				$('.secret-input-box').html(a);
 			} else {
 				$('.secret-input-box').html(a);
