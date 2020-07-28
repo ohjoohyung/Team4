@@ -20,7 +20,7 @@
 							 
 		<security:logout 	logout-url="/logout"
 							logout-success-url="/main"/>
-		<security:intercept-url pattern="/"/>
+	
 		<security:intercept-url pattern="/profileEditAssociate" access="hasRole('ROLE_ASSOCIATE_USER')" />
 		<security:intercept-url pattern="/main" access="hasAnyRole('ROLE_ASSOCIATE_USER','ROLE_REGULAR_USER')" />
 		<security:intercept-url pattern="/myProfile*" access="hasAnyRole('ROLE_ASSOCIATE_USER','ROLE_REGULAR_USER')" />
@@ -28,6 +28,7 @@
 		<security:intercept-url pattern="/free*" access="hasRole('ROLE_REGULAR_USER')" />
 		<security:intercept-url pattern="/routineBrd*" access="hasRole('ROLE_REGULAR_USER')" />
   		<security:intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')" />
+  		
 	
 		<security:session-management invalid-session-url="/login">
 	        <security:concurrency-control max-sessions="1" expired-url="/login"/>
