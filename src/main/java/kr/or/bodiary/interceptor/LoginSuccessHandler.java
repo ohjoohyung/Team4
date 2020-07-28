@@ -32,11 +32,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     	System.out.println("LoginSuccessHandler 생성");
     }
 	
-//    private UserService userService;
-//	@Autowired
-//	public void setUserService(UserService userService) {
-//		this.userService = userService;
-//	}
+
     @Autowired
     private SqlSession sqlsession;
     
@@ -75,7 +71,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             Authentication authentication) throws IOException, ServletException {
         
         SavedRequest savedRequest = requestCache.getRequest(request, response);
-//        System.out.println("권한값 :"+authentication.getAuthorities().toString().equals("[ROLE_ASSOCIATE_USER]"));
+
         if(savedRequest!=null) {
             String targetUrl = savedRequest.getRedirectUrl();
             redirectStratgy.sendRedirect(request, response, targetUrl);
@@ -97,7 +93,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
         HttpSession session = request.getSession(true);
         UserDto currentUser = null;
         System.out.println("sqlsession : "+ sqlsession);
-//        currentUser= userService.getUser(authentication.getName());
+
       try {	
         	System.out.println("authentication.getName() : "+authentication.getName());
         	UserDao userdao = sqlsession.getMapper(UserDao.class);

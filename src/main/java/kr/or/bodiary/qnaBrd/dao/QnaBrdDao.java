@@ -34,12 +34,7 @@ public interface QnaBrdDao {
 	//답변 작성
 	public int insertQnaAnsBrd(QnaBrdDto QnaBrdDto) throws ClassNotFoundException, SQLException;
 	
-	//답변 작성시 YN업데이트 (밑에 알림 관련 dao에 수정해서 추가)
-	/*
-	 * public int QnaRepYN(int qna_brd_ref) throws ClassNotFoundException,
-	 * SQLException;
-	 */
-	
+
 	//문의수정상세보기
 	public QnaBrdDto getQnaBrdBySeqAnsModify(QnaBrdDto QnaBrdDto) throws ClassNotFoundException, SQLException;
 		

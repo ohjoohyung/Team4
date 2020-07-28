@@ -51,14 +51,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 where notice_brd_seq=#{notice_brd_seq}
 	</delete>
 	
-	<!-- 페이징 -->
-<!-- 	<select id="listCriteria" resultType="BoardVO">
-		<![CDATA[
-		select bno, title, content, writer, regdate, viewcnt
-		  from tbl_board
-		 where bno > 0
-	  order by bno desc, regdate desc limit #{pageStart}, #{perPageNum}
-		]]>
-	</select> -->
+
 	
 </mapper>

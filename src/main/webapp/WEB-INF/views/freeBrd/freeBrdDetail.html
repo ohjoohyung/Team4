@@ -58,10 +58,7 @@
 					</div>
 					<hr>
 					<div class="contentFBD">
-						<!-- 해당 글에 해당하는 이미지가 있을경우 뿌려주고 없으면 안뿌려줌 -->
-<!-- 						<div th:if="${list.free_brd_image != null}"> -->
-<!-- 							 <img class="img-fluid" th:src="@{/assets/upload/freeBrdUpload/}+${list.free_brd_image}" alt="" style="width:300px;height:200px;" /> -->
-<!-- 						</div> -->
+				
 					
 						<p th:utext="${list.free_brd_content}"></p> 
 					</div>
@@ -89,7 +86,7 @@
 
 						<div class="col mt-2">
 							<span class="card-text"> 
-								<!-- <i id="cmt_count" th:value="${list.brd_cmt_count}" class="icon-bubble" th:text="${list.brd_cmt_count}"></i> -->
+							
 							</span>
 						</div>
 						<div class="col-9"></div>
@@ -117,8 +114,7 @@
 					               <input type="hidden" name="boardSeq" id="boardSeq" th:value="${list.free_brd_seq}"/>
 					               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
 					               <button type="button" id="btnComment" name="btnComment"  class="btn mb-1 btn-outline-light">등록</button>
-					               <!-- button type을 submit으로 해버리면 동기방식이 되버려서 페이지 이동이 일어남 즉.Ajax 비동기 방식 통신을 경우 submit을 사용하면 안됨-->
-					               <!-- 참고링크 : https://milkye.tistory.com/266 -->
+					              
 					           </div>
 					        </form>
 					</div>
@@ -261,23 +257,7 @@ function commentInsert(insertData){
     });
 }
 
-//댓글 삭제 (GET방식)
-/* function commentDelete(cno){
-	alert("삭제할 댓글번호"+cno);
-	//ajax type을 get방식으로 쓰고 파라미터를 넘기면 컨트롤러를 잘타고 들어가는데 … 
-	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
-		$.ajax({
-	        url : 'comment/delete?cno='+cno,
-	        type : 'get',
-	        success : function(data){
-	            if(data == 0) commentList(); //댓글 삭제후 목록 출력 
-	        }
-	    });
-	 }else{   //취소
-	     return false;
-	 }
-			
-}  */
+
 
 //댓글 삭제 (POST방식)
 function commentDelete(cno){

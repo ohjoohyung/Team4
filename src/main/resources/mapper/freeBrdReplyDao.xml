@@ -29,12 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{free_brd_seq},1,#{user_email},#{brd_cmt},now(),0,0,0);
    	 </insert>
    	 
-   	 <!-- 	
-   	 	update freeboardcomment 
-		set brd_cmt = #{brd_cmt}  => 수정할 댓글 내용 
-		where brd_cmt_seq = #{brd_cmt_seq} => 수정할 댓글번호 
-		=> freeboardcomment 테이블에서 수정할 댓글번호가 #{brd_cmt_seq}인 댓글내용을 #{brd_cmt} 값으로 수정함 
-	-->
+   
 		
    	 <update id="update" parameterType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">
 		update freeboardcomment
@@ -49,12 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    	 		where brd_cmt_seq=#{cno};
    	 </delete>
    	 
-   	 <!--댓글 삭제 -->
-   	<!--  <delete id="delete" parameterType="hashMap">
-   	 		delete 
-   	 		from freeboardcomment 
-   	 		where brd_cmt_seq=#{cmt};
-   	 </delete> -->
+
    	 
    	 <!-- 현재 접속한 유저가쓴 댓글목록 가져오기 -->
 	 <select id="c_replyList" resultType="kr.or.bodiary.freeBrd.dto.FreeBrdReplyDTO">

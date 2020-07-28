@@ -75,15 +75,6 @@ public class FreeBrdController {
 		}
 
 		
-		// ******************* 페이징 처리 ****************************************//
-		//Pagination 객체 생성 (파라미터 값으로 총게시물수 , 현재 페이지를 받는다)
-//		Pagination pagination = new Pagination();
-//		pagination.pageInfo(totalListCnt, page);
-//		
-//		int startIndex = pagination.getStartIndex();
-//		//페이지당 보여지는 게시글 최대 개수 
-//		int pageSize = pagination.getPageSize();
-		// ******************* 페이징 처리 ****************************************//
 		
 		//검색후 페이징 처리 계산 (검색한게 없어도 실행) 
 		search.pageInfo(searchListCnt, page, pageSize);
@@ -117,14 +108,7 @@ public class FreeBrdController {
 		model.addAttribute("cateGory",cateGory);
 		model.addAttribute("pagination",search);
 		model.addAttribute("freeBrdList",freeBrdList);
-		
-		// ******************* 페이징 처리 ****************************************//
-//		List<FreeBrdDto> freeBrdList = freeBrdService.allFreeBrd(startIndex,pageSize);
-//		
-//		model.addAttribute("pagination",pagination);
-//		model.addAttribute("freeBrdList",freeBrdList);
-		// ******************* 페이징 처리 ****************************************//
-		
+
 		
 		return "freeBrd/freeBrdList";
 	}
@@ -201,13 +185,7 @@ public class FreeBrdController {
 		System.out.println("글내용"+request.getParameter("content"));
 		System.out.println("글번호"+request.getParameter("seq"));
 		
-//		//파일 업로드시 아무것도 넣지 않으면 "" 공백이 들어감 
-//		if(image.getOriginalFilename() == null || image.getOriginalFilename() == "") {
-//			System.out.println("기존에 올린파일"+request.getParameter("image_2"));
-//		}else {
-//			System.out.println("올린첨부파일"+image.getOriginalFilename());
-//		}
-		
+
 		String url="redirect:freeBrd/freeBrdEdit";
 		
 		//트랜잭션 처리 .... 코드 수정...... 글수정 서비스 호출 

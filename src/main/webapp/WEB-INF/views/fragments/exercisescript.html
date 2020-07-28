@@ -40,7 +40,7 @@
                   excs_kind : "", 
                   excs_body_part:"" , 
                   excs_equipment: "", 
-                  excs_level: 1 };
+                  excs_level: 1.0 };
          data = {excs_name:  $('#exercisesearch').val(), 
                excs_kind : $('input[name="exer_kind"]').val(), 
                excs_body_part: $('input:checkbox[name="exer_part"]:checked').val(), 
@@ -90,16 +90,7 @@
                                        +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                        +            "</div>"
                                        +         "</div>"
-//                                        +         "<hr/>"
-                                                <!-- 좋아요 버튼 -->
-//                                        +         "<div class='m-auto'>"
-//                                        +            "<div>"
-//                                        +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-//                                        +            "</div>"
-//                                        +            "<div>"
-//                                        +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-//                                        +            "</div>"
-//                                        +         "</div>"
+
                                        +      "</div>"
                                                   +      "<div class='modal-footer'>" 
                                                   +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
@@ -148,16 +139,7 @@
                                     +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                     +            "</div>"
                                     +         "</div>"
-//                                     +         "<hr/>"
-                                             <!-- 좋아요 버튼 -->
-//                                     +         "<div class='m-auto'>"
-//                                     +            "<div>"
-//                                     +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-//                                     +            "</div>"
-//                                     +            "<div>"
-//                                     +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-//                                     +            "</div>"
-//                                     +         "</div>"
+
                                     +      "</div>"
                                                +      "<div class='modal-footer'>" 
                                                +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
@@ -183,7 +165,7 @@
       }
       
       function drawInput(ek){
-        if(ek=='http://localhost:8090/bodiary/search#navpills-2'){
+        if(ek=='http://'+location.host+'/bodiary/search#navpills-2'){
            //alert('무산소');
            $('#exer_kind').empty();
            $('#exer_kind').append(
@@ -243,16 +225,7 @@
                                  +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                  +            "</div>"
                                  +         "</div>"
-//                                  +         "<hr/>"
-                                          <!-- 좋아요 버튼 -->
-//                                  +         "<div class='m-auto'>"
-//                                  +            "<div>"
-//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-//                                  +            "</div>"
-//                                  +            "<div>"
-//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-//                                  +            "</div>"
-//                                  +         "</div>"
+/
                                  +      "</div>"
                                             +      "<div class='modal-footer'>" 
                                             +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"
@@ -318,16 +291,7 @@
                                  +               "<div class='w-100 bg-primary mb-2' style='height:110px;'><iframe src='"+obj.excs_video_link+"'>youtube</iframe></div>"
                                  +            "</div>"
                                  +         "</div>"
-//                                  +         "<hr/>"
-                                          <!-- 좋아요 버튼 -->
-//                                  +         "<div class='m-auto'>"
-//                                  +            "<div>"
-//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228zm6.826 1.641c-1.5-1.502-3.92-1.563-5.49-.153l-1.335 1.198-1.336-1.197c-1.575-1.412-3.99-1.35-5.494.154-1.49 1.49-1.565 3.875-.192 5.451L12 18.654l7.02-7.03c1.374-1.577 1.299-3.959-.193-5.454z'/></svg>"
-//                                  +            "</div>"
-//                                  +            "<div>"
-//                                  +               "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='38' height='38'><path fill='none' d='M0 0H24V24H0z'/><path d='M12.001 4.529c2.349-2.109 5.979-2.039 8.242.228 2.262 2.268 2.34 5.88.236 8.236l-8.48 8.492-8.478-8.492c-2.104-2.356-2.025-5.974.236-8.236 2.265-2.264 5.888-2.34 8.244-.228z'/></svg>"
-//                                  +            "</div>"
-//                                  +         "</div>"
+
                                  +      "</div>"
                                             +      "<div class='modal-footer'>" 
                                             +    "       <button type='button' class='btn btn-primary' onclick='rightdrow("+obj.excs_seq+");'data-dismiss='modal'>선택하기</button>"

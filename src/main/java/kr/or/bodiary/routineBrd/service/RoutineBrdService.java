@@ -371,10 +371,7 @@ private SqlSession sqlsession;
 		   try {
 			   int recmtinsert = routinebrddao.routineReCmtInsert(routineCmtDto);
 			   System.out.println("reCmt 인서트 했나요? : " + recmtinsert);
-//			   int cmtRefUpdate =  routinebrddao.routineCmtReferUpdate(routineCmtDto.getRoutine_cmt_seq());
-//			   System.out.println("cmt 업데이트 했나요? : "+cmtRefUpdate);
-//			   int cmtStepUpdate = routinebrddao.routineCmtStepUpdate(routineCmtDto);
-//			   System.out.println("cmt step 업데이트 했나요? : " + cmtStepUpdate);
+
 			} catch (Exception e) {
 				e.getMessage();
 			}

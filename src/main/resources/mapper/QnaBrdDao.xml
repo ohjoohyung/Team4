@@ -8,14 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 회원이 쓴 문의사항 가져오기 -->
     <select id="getQnaList" resultType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto">
       select *  from QnaBrd where user_email=#{user_email}
-      <!--  select * 
-       from Qnabrd
-       where qna_brd_ref in
-       			(select qna_brd_ref
-      			 from
-       			(select * from QnaBrd b where user_email=#{user_email})CNT
-       						)
-       order by qna_brd_ref  -->
+
     </select>
     
     <!-- 문의사항 작성하기 -->
@@ -68,9 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <!-- 관리자 답변 -->
     <insert id="insertQnaAnsBrd" parameterType="kr.or.bodiary.qnaBrd.dto.QnaBrdDto" useGeneratedKeys="true" keyProperty="qna_brd_seq">
      	
-     	<!-- INSERT INTO qnabrd(qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, 
-     	qna_brd_ref, qna_brd_depth , qna_brd_step) 
-     	VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , now(),#{qna_brd_ref},#{qna_brd_depth},0) -->
+     	
      	insert into qnabrd (qna_brd_seq, user_email, qna_brd_title, qna_brd_content, qna_brd_regdate, qna_brd_ref, qna_brd_depth, qna_brd_step)
 					VALUES(#{qna_brd_seq}, #{user_email}, #{qna_brd_title}, #{qna_brd_content} , now(),#{qna_brd_ref},(select ifnull(max(qna_brd_depth)+1,1)
 																															from qnabrd b

@@ -39,6 +39,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select> 
 
 
+<!-- 일지 수정 (프로시저 활용) -->
+<select id="updateBodiary"  statementType="CALLABLE" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto" resultType="Integer">
+{call update_bodiary(    
+	  #{diary_seq, jdbcType=INTEGER, javaType=Integer, mode=IN},    
+      #{diary_today_weight, jdbcType=INTEGER, javaType=Integer, mode=IN}, 
+	  #{user_email, jdbcType=VARCHAR, javaType=String, mode=IN},
+	  #{routine_cart_seq, jdbcType=INTEGER,javaType=Integer, mode=IN},
+	  #{meal_cart_seq, jdbcType=INTEGER, javaType=Integer,mode=IN},
+	  #{diary_content, jdbcType=VARCHAR, javaType=String, mode=IN},
+	  #{diary_condition, jdbcType=VARCHAR, javaType=String, mode=IN},
+	  #{diary_main_img, jdbcType=VARCHAR, javaType=String, mode=IN}
+       )
+}
+</select>
+
+
+
+
+
 	<!-- 루틴 불러오기 (나중에 좀 더 변경해야함) -->
    <select id="getRoutine" resultType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto">
       select * from routinecart c
@@ -87,30 +106,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-	<!-- 일지 수정
-	
-	우선 식단 수정부터함 (따로)
-	루틴 수정을 하는데 이건 insert 되게 해야할듯?
-	그 후 루틴 카트 번호를 새로운걸로 입력
-	식단 카트 번호는 그대로이나 안에 음식이 달라졌을거임
-	
-	그리고 권장섭취량 남 여 에 따라 다르게 해야함
-	 -->
-	<update id="updateBodiary" parameterType="kr.or.bodiary.myBodiary.dto.BodiaryDto">
-		update diary
-    	set diary_content=#{diary_content}, 
-	    	diary_condition=#{diary_condition},
-	    	diary_today_weight=#{diary_today_weight}, 
-	    	diary_main_img=#{diary_main_img} , 
-	    	meal_cart_seq=#{meal_cart_seq},
-	    	routine_cart_seq=#{routine_cart_seq},
-	    	diary_metabolism = 66.47 + (13.75*#{diary_today_weight}) + (5*(select user_height from user where user_email = #{user_email})) - (6.76*(select user_age from user where user_email = #{user_email})),
-	    	diary_nut = (select sum(a.food_cal * a.food_count) from (select f.food_cal, d.food_count
-						from (select * from dailymeal where meal_cart_seq = #{meal_cart_seq}) d JOIN food f
-						ON d.food_seq = f.food_seq) a)
-    	where diary_seq=#{diary_seq}
-	</update>
-	
+
 	<!-- 일지 삭제하기 -->
 	<delete id="deleteBodiary">
 		delete from diary where diary_seq = #{diary_seq}

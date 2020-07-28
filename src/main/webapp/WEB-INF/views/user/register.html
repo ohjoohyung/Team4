@@ -94,12 +94,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	                                    	</div>
                                     	</div>
                                     </div>
-                                    <!-- <div class="g-recaptcha" data-sitekey="6LfpFq4ZAAAAAPpsMTbRBQXDSLrP7EvV19hS8cnW"></div> -->
+                                 
                                     <button id="registerBtn" class="btn login-form__btn submit w-100">가입하기</button>
                                 </form>
-<!--                                     <button class="btn login-form__btn submit w-100 mb-2 "><span class="s-icon"><i class="fa fa-google"></i>구글로그인</span></button> -->
-<!--                                     <button class="btn login-form__btn submit w-100 mb-2 ">카카오 회갑....</button> -->
-<!--                                     <button class="btn login-form__btn submit w-100 mb-2 ">네이버 회갑...</button> -->
+
                                 </div>
                             </div>
                         </div>
@@ -227,7 +225,15 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         	 
         	 
         	 $("#emailCheck").click(function(){
-        		 console.log("emailCheck버튼 눌림")
+        		 
+        		 if($('#user_email').val() =='') {
+        			 alert('이메일을 입력해주세요.');
+        			 return false;
+        		 }
+        		 if(validate[0] == false) {
+        			 alert('올바른 이메일을 입력해주세요.');
+        			 return false;
+        		 }
         		 $.ajax({
                      type: "post",
                      url : "emailCheck",
@@ -277,31 +283,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
         	 });
          });
         	 
-        	 /*$("#registerBtn").click(function() {
-                $.ajax({
-                    url: '/bodiary/VerifyRecaptcha',
-                    type: 'post',
-                    data: {
-                        recaptcha: $("#g-recaptcha-response").val()
-                    },
-                    success: function(data) {
-                        switch (data) {
-                            case 0:
-                                alert("자동 가입 방지 봇 통과");
-                                break;
-
-                            case 1:
-                                alert("자동 가입 방지 봇을 확인 한뒤 진행 해 주세요.");
-                                break;
-
-                            default:
-                                alert("자동 가입 방지 봇을 실행 하던 중 오류가 발생 했습니다. [Error bot Code : " + Number(data) + "]");
-                                break;
-                        }
-                    }
-                });
-            });
-        }); */
+  
 
     </script>
     

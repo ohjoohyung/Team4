@@ -19,17 +19,7 @@
 			
 			<!-- 게시판 start -->
 			<div class="card card-body p-5">
-				<!-- <div class="dropdown-button text-right mb-3">
-					<div class="btn-group" role="group">
-						<button type="button" class="btn btn-light btn-sm dropdown-toggle mb-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">10개씩</button>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#">5개씩</a>
-							<a class="dropdown-item" href="#">15개씩</a>
-							<a class="dropdown-item" href="#">20개씩</a>
-						</div>
-					</div>
-				</div> -->
-					<!-- 페이징 사이즈 드롭다운 -->
+		
 								<div class="dropdown custom-dropdown text-right">
 									<button type="button" class="btn btn-sm btn-outline-primary"
 										data-toggle="dropdown">
@@ -65,29 +55,7 @@
 		        
 		      
 	        	
-	        	<!-- 검색 start -->
-				<!-- <div class="row justify-content-md-center">
-					<div class="basic-form col-6">
-						<form class="form-inline justify-content-center">
-							<div class="dropdown custom-dropdown">
-								<button type="button" class="btn btn-outline-primary" data-toggle="dropdown">제목&nbsp;<i class="fa fa-angle-down m-l-5"></i>	</button>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="#">내용</a>
-									<a class="dropdown-item" href="#">제목 + 내용</a>
-								</div>
-							</div>
-							
-							<div class="form-group mx-sm-3 mb-2">
-								<input type="text" class="form-control input-default" placeholder="검색어를 입력해주세요" style="height:34px;">
-							</div>
-							
-							<div>
-								<button type="submit" class="btn btn-primary text-right mb-2">검색</button>
-							</div>
-						</form>
-					</div>
-				</div> -->
-        		<!-- 검색 end -->
+	    
         		<div sec:authorize="hasRole('ROLE_ADMIN')">
         			<button type="button" class="btn mb-1 btn-outline-primary" style="margin-left: 0px; float: right;" onclick="location.href='noticeForm'">WRITE <span class="mdi mdi-pencil"></span></button>
 		    	</div>

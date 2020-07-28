@@ -34,12 +34,7 @@ public class FreeBrdReplyService {
 		List<FreeBrdReplyDTO> rList = list.replyList(Integer.parseInt(seq));
 	
 		
-		
-		
-		/*for(int i=0;i<rList.size();i++) {
-			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
-			rList.get(i).setBrd_cmt_count(list.commentCount(rList.get(i).getFree_brd_seq()));
-		}*/
+
 		//날짜변경
 		   for(FreeBrdReplyDTO f : rList) {
 				Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(f.getBrd_cmt_date());
@@ -84,11 +79,7 @@ public class FreeBrdReplyService {
 	//해당 댓글 삭제(delete) 
 	public int delete(int cno) throws NumberFormatException, Exception {
 		FreeBrdReplyDao list = sqlsession.getMapper(FreeBrdReplyDao.class);
-		
-//		Map map = new HashMap();
-//		map.put("seq",seq);
-//		map.put("cmt",cmt);
-		
+
 		return list.delete(cno);
 	}
 	

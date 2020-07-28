@@ -44,16 +44,7 @@ private SqlSession sqlsession;
 						}
 	return list;
 	}
-	/* 질문 insert 웹소켓으로 옮김
-	 * //문의 생성 서비스 함수 public String qnaInsert(QnaBrdDto QnaBrdDto ,
-	 * HttpServletRequest request) throws Exception {
-	 * 
-	 * QnaBrdDao QnaBrdDao = sqlsession.getMapper(QnaBrdDao.class);
-	 * QnaBrdDao.insertQnaBrd(QnaBrdDto); System.out.println(QnaBrdDto);
-	 * QnaBrdDto.setQna_brd_ref(QnaBrdDto.getQna_brd_seq());
-	 * QnaBrdDao.updateQnaBrd(QnaBrdDto); return "redirect:myQnaList"; }
-	 */
-	
+
 	//문의 상세보기 서비스 함수 (상세보기 할때 상태 업데이트 하기에 트랜잭션 추가)
 	
 	@Transactional
@@ -126,13 +117,7 @@ private SqlSession sqlsession;
 							}
 		return list;
 		}
-		/* 답변 insert 웹소켓으로 옮김
-		 * //관리자 답변 서비스 함수 (답변 상태 바꿔주는 dao 수정) public String qnaAnsInsert(QnaBrdDto
-		 * QnaBrdDto) throws Exception { QnaBrdDao QnaBrdDao =
-		 * sqlsession.getMapper(QnaBrdDao.class); QnaBrdDao.insertQnaAnsBrd(QnaBrdDto);
-		 * QnaBrdDao.updateQnaRep(QnaBrdDto.getQna_brd_ref()); return
-		 * "redirect:adminQnaList"; }
-		 */
+		
 		
 		public QnaBrdDto qnaBrdDetailAnsModify(QnaBrdDto QnaBrdDto) {
 			QnaBrdDto list=null;

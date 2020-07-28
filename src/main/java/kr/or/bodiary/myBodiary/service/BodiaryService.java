@@ -140,10 +140,7 @@ private SqlSession sqlsession;
    @Transactional(rollbackFor = {RuntimeException.class, SQLException.class})
    public String updateBodiary(DailyMealDto dailymealdto, BodiaryDto bodiarydto, HttpServletRequest request) throws IOException, ClassNotFoundException, SQLException {
       BodiaryDao bodiarydao = sqlsession.getMapper(BodiaryDao.class);
-      /*
-       * if(bodiarydto.getDiary_pubchk() == null) { bodiarydto.setDiary_pubchk("N"); }
-       * else { bodiarydto.setDiary_pubchk("Y"); }
-       */
+     
       String filename = bodiarydto.getFile().getOriginalFilename();
       
       System.out.println(filename);
@@ -184,15 +181,12 @@ private SqlSession sqlsession;
          UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
          bodiarydto.setUser_email(user.getUser_email());
          System.out.println(bodiarydto.toString());
-         int result = bodiarydao.updateBodiary(bodiarydto);
+         bodiarydao.updateBodiary(bodiarydto);
          
           System.out.println("식단 카트 번호 : " + dailymealdto.getMeal_cart_seq());
-         if(result > 0) { 
-            url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
-         } else { 
-            String referer = request.getHeader("Referer");
-            url = "redirect:"+referer;
-         }
+         
+         url = "redirect:myBodiaryDetail?diary_seq="+bodiarydto.getDiary_seq(); 
+         
 
       } catch (Exception e) {
          System.out.println(e.getMessage());

@@ -37,8 +37,8 @@
 										<b class="pl-1">운동 종류</b>
 										<select name="excs_kind" class="mt-2 form-control input-default">
 									    <option value="">운동 종류</option>
-									    <option value="C" th:selected="${exercise.excs_kind.equals('X')}">유산소</option>
-									    <option value="N" th:selected="${exercise.excs_kind.equals('X')}">무산소</option>
+									    <option value="C" th:selected="${exercise.excs_kind.equals('C')}">유산소</option>
+									    <option value="N" th:selected="${exercise.excs_kind.equals('N')}">무산소</option>
 										</select>
 										</div>
 										<div class="mt-4">
@@ -88,11 +88,7 @@
 							<div></div>
 						</div>
 
-						<!-- <textarea class="form-control h-150px" rows="6" id="comment" 
-						th:placeholder="${exercise.excs_name}" th:value="${exercise.excs_name}">
-							
-						</textarea> -->
-
+				
 
 
 

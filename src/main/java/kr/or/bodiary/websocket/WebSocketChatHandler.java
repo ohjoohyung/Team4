@@ -71,13 +71,7 @@ private SqlSession sqlsession;
 		Map<String, Object> map = session.getAttributes();
 		String room_number = (String) map.get("room_number");
 		
-		/*
-		 * ChatDao chatdao = sqlsession.getMapper(ChatDao.class); int currentMember =
-		 * chatdao.getMemberCount(Integer.parseInt(room_number)); List<ChatMemberDto>
-		 * list = chatdao.getMemberList(Integer.parseInt(room_number)); String userlist
-		 * = ""; for(ChatMemberDto mem : list) { userlist += mem.getUser_nickname() +
-		 * "\n"; }
-		 */
+	
 		
 		
 		// 현재 접속되어있는 클라이언트들에게 메세지 전달 TextMessage

@@ -59,8 +59,7 @@
 								<button type="button" class="btn mb-1 btn-info"
 									style="margin-left: 0px; float: right; margin-right: 50px;"
 									onclick="location.href='adminQnaList'">목록보기</button>
-								<!-- <button type="submit" class="btn mb-1 btn-info"
-									style="margin-left: 0px; float: right;">답글달기</button> -->
+						
 							</div>
 
 
@@ -101,8 +100,7 @@
 									<button type="button" class="btn mb-1 btn-info"
 									style="margin-left: 0px; float: right; margin-right: 50px;"
 									>삭제하기</button></a>
-									<!-- <a th:href="@{/oreder/details(id=${orderInfo.seq})}">></a> -->
-													<!-- :href="@{/adminExcsDelete(excs_seq=${exer.excs_seq})}" -->
+						
 									</form>
 							</div>
 							<article class="answer" itemprop="articleBody"
@@ -183,12 +181,7 @@ function onClose(evt) {
 
 function send() {
 	
-/* 	let qna_brd_title = $('#qna_brd_title').val();
-	let qna_brd_content = $('#qna_brd_content').val();
-	let qna_brd_ref = $('#qna_brd_ref').val();
-	let user_email = $('#user_email').val();
-	let admin = "관리자가 답변을 했습니다.";
-	wsocket.send(qna_brd_title + "," + qna_brd_content + "," + qna_brd_ref + "," + user_email + "," + admin); */
+
 	
 	var text = "문의 답변이 도착했습니다.";
 	var msg = {"type" : "admin",

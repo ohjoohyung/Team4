@@ -238,14 +238,9 @@ color: #7571f9;
 							
 							 
 	
-							<!-- <th:block th:replace="searchExcs/searchExcs :: headFragment"></th:block> -->
-							
-								<!-- <button type="button" class="form-control input-rounded pl-4" onclick="location.href='/bodiary/search'"></button> -->
-								<!-- <input type="search" id="search"
-									class="form-control input-rounded" onclick="href='/search'"> -->
 	
 							</div>
-							<!-- <i class="mdi mdi-magnify"></i> -->							
+													
 						</div>
 						
 						<!-- 오늘의 루틴 start -->
@@ -344,10 +339,7 @@ color: #7571f9;
 		   //만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
 
 		   var popupY= (window.screen.height /2) - (720 / 2);
-		   //만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
-		   
-//		   window.open('${pageContext.request.contextPath}/chatList.bit','_blank',
-//		         'width=580, height=700, left='+ popupX + ', top='+ popupY);
+		
 		   window.open('/bodiary/chatList','채팅', 'width=480, height=720, resizable = no, location = no, left='+ popupX + ', top='+ popupY);return false;
 		}
 	</script>

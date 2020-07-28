@@ -32,19 +32,18 @@ public class Mailer {
    }
 
    public void sendMail(EmailDto mail, String key) {
-      System.out.println("메일 보내~~~~~~~~~~~~");
-      //String userid = principal.getName();
-      // SimpleMailMessage message = new SimpleMailMessage();
+   
+
       MimeMessage message = mailSender.createMimeMessage();
       // JavaMailSender 인터페이스에서
       // createMimeMessage()를 이용해서 주소 받기
 
       try {
-    	 System.out.println("익셉트안나니까 탔겠지~~~~~~~~~~~~~~");
+    	 
          message.setFrom(new InternetAddress(mail.getMailFrom()));
          message.addRecipient(RecipientType.TO, new InternetAddress(mail.getMailTo()));
          message.setSubject(mail.getMailSubject());
-         System.out.println("나오냐? "+message.getSubject());
+         
       } catch (MessagingException e) {
          // TODO Auto-generated catch block
          e.printStackTrace();

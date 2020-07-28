@@ -76,14 +76,6 @@ public class QnaBrdController {
       return "myBodiary/myQnaForm";
    }
 
-   /* 질문 insert 웹소켓으로 옮김
-    * @RequestMapping(value="/myQnaForm", method=RequestMethod.POST) public String
-    * myQnaFormOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws Exception
-    * { UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-    * String user_email = user.getUser_email();
-    * QnaBrdDto.setUser_email(user_email); qnabrdservice.qnaInsert(QnaBrdDto,
-    * request); return "redirect:myQnaList"; }
-    */
    
    //삭제
    @RequestMapping(value="/myQnaFormDelete", method=RequestMethod.GET)
@@ -115,18 +107,7 @@ public class QnaBrdController {
          
       }
       
-      /*
-       * //어드민 답변완료 답변 insert 웹소켓으로 옮김
-       * 
-       * @RequestMapping(value="/adminQnaDetailOK", method=RequestMethod.POST) public
-       * String adminQnaAnsOK(QnaBrdDto QnaBrdDto, HttpServletRequest request) throws
-       * Exception { UserDto user =
-       * (UserDto)request.getSession().getAttribute("currentUser"); String user_email
-       * = user.getUser_email(); QnaBrdDto.setUser_email(user_email); return
-       * qnabrdservice.qnaAnsInsert(QnaBrdDto);
-       * 
-       * }
-       */
+    
       
       @RequestMapping(value="/adminQnaModify", method=RequestMethod.POST)
       public String adminQnaModify(QnaBrdDto QnaBrdDto, Model model) {

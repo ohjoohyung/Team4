@@ -31,10 +31,7 @@ public interface FreeBrdDao {
 		//게시물 Insert 
 		public FreeBrdDTO freeBrdInsert(FreeBrdDTO freeBrdDto) throws ClassNotFoundException, SQLException;
 		
-		//게시물 Insert 
-		//public int freeBrdInsert(FreeBrdDto freeBrdDto) throws ClassNotFoundException, SQLException;
-		// -> Mapper method 'freeBrdInsert' (interface kr.or.bodiary.freeBrd.dao.FreeBrdDao) 
-		//attempted to return null from a method with a primitive return type (int). 이런 에러발생 ?? 왜지??
+
 		
 		//게시물 Insert후 생성된 글번호만 가져오기 
 		public int afterInsert_SelectDetail() throws ClassNotFoundException, SQLException;

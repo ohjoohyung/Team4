@@ -125,10 +125,7 @@
 				 complete : function(responsedata) {
 					 $('#eventCalendar').calendar({
 						 
-		                  // view: 'month',
-		                
-		                  // startWeek: 0,
-		                  // selectedRang: [new Date(), null],
+		              
 		                  data: data,
 		                  monthArray: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
 		                  onSelected: function (view, date, data) {
@@ -137,11 +134,7 @@
 		                      console.log('data:' + (data))
 		                      if(data != null) {
 		                    	  location.href=data; 
-		                    	  /*  console.log($(this).attr('data-calendar-day'));
-		                    	  console.log(moment(date).format("YYYY/M/DD"));
-		                    	   if(moment(date).format("YYYY/M/DD") == $(this).attr('data-calendar-day')) {
-		                    		   $(this).attr('class', 'selected');
-		                    	   } */
+		                  
 		                      }
 		                   
 		                      

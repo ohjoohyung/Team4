@@ -42,14 +42,7 @@
 						
 						<div></div>
 					</div>
-					<!-- 사진 업로드(JPG,PNG,GIF) -->
-<!-- 					<div class="row"> -->
-<!-- 						<div class="col-11"> -->
-<!-- 							<div class="mb-3 pl-4 mt-2"> -->
-<!-- 	                              <input type="file" id="image" name="image" class="form-control-file"> -->
-<!-- 	                         </div> -->
-<!-- 	                    </div> -->
-<!-- 					</div>	                          -->
+
 					<!-- 썸머노트 -->
 					<div class="card-body">
 							 <!-- 썸머노트에 글을쓰고 등록버튼을 누르면 textarea에 글내용이 들어감 -->
@@ -124,11 +117,7 @@ $(document).ready(function() {
 		    }
 		    
 		    var value = $('textarea[name="content"]').val($('#summernote').summernote('code'));
-		    //alert("내용" + value);
-		    //왜 아무내용도 입력을 안했는데 object로 반환되지??? 
-		    		
-		    //var value = $("#content").val();
-		    //alert("내용" +value);
+		
 		    
 		    if (value == "" || value == null || value == undefined){
 		        alert("내용을 입력하십시오");

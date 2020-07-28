@@ -135,7 +135,7 @@ public class ChartService {
          dlist.addAll(userdao.dailyUser7());
          try {
             
-            //dlist.add(userdao.dailyUser2());
+ 
          } catch (Exception e) {
             e.getMessage();
          }

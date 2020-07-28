@@ -83,37 +83,7 @@
 				</div>
 
 				
-				
-			<!-- 	<th:block th:if="${#lists.size(chatlist)} > 0">
-			<th:block th:each="chat : ${chatlist}">
-				<div class="col-lg-4">
-					<div class="card border-primary" style="height: 280px;">
-												<div class="card-header">카테고리 줄거?</div>
-						<div class="card-body">
-							<div class="chat-title" style="height: 75%;">
-								<h3 th:text="${chat.room_title}">
-									
-								</h3>
-							</div>
-							<span th:text="${chat.user_nickname}"></span>
-							<div class="">
-								<a  th:href="@{/selectChatRoomByRn(room_number=${chat.room_number})}" class="btn btn-outline-primary btn-lg">입장하기</a>
-							</div>
-						</div>
-						<div class="card-footer pl-4">
-							<i class="icon-people mt-2"></i>&nbsp;&nbsp;<small th:text="${chat.room_count}"></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small th:if="${chat.room_secret.equals('N')}"></small><small th:if="${chat.room_secret.equals('Y')}">비밀방</small>
-						</div>
-					</div>
-				</div>
-			</th:block>
-			</th:block>
-			
-			<th:block th:unless="${#lists.size(chatlist)} > 0">
-				<div class="col">
-					<h2>방이 없습니다. 방을 개설해보세요!</h2>
-				</div>			
-			</th:block> -->
+		
 			
 		
 			</div>
@@ -226,7 +196,7 @@
 									'<i class="icon-people mt-2"></i>&nbsp;&nbsp;<small>'+obj.current_count+' / '+obj.room_count+'</small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+
 									secret+
 								'</div>'+
-								'<div class="col-3 text-primary" style="text-align:right; font-size:16px;">'+obj.user_nickname+'</div>'+
+								'<div class="col-4 text-primary" style="text-align:right; font-size:16px;">'+obj.user_nickname+'</div>'+
 							'</div>'+
 							'</div>'+
 						'</div>'+

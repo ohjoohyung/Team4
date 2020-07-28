@@ -34,9 +34,7 @@
 									<i class="icon-picture"></i> 
 									<input id="imgFile1" name="files[0]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 비포 사진
 								</label>
-								
-<!--                                   <input class="btn btn-outline-primary" type="file" id="imgFile1" -->
-<!--                                                 name="files[0]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
+
                                   <img id="img1" alt="your image" style="width:300px; height:300px;" th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image1}"/>
                               </div>
                            </div>
@@ -52,8 +50,7 @@
 									<i class="icon-picture"></i> 
 									<input id="imgFile2" name="files[1]" type="file" onchange="readURL(this); fileCheck(this);"accept="image/*" /> 애프터 사진
 								</label>
-<!--                                  <input class="btn btn-outline-primary" type="file" id="imgFile2" -->
-<!--                                                 name="files[1]" onchange="readURL(this); fileCheck(this);" accept="image/*"/> -->
+
                                  <img id="img2" alt="your image" style="width:300px; height:300px;" th:src="@{assets/upload/routineBrdUpload/}+${routineBoard.brd_image2}"/>
                               </div>
                            </div>
@@ -199,66 +196,7 @@
 	}
       $('#routine_cart_seq').change(function() {
     	  loadRoutine();
-           /* var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
-           if(data.routine_cart_seq == 0) {
-              $('#cardio').empty();
-              $('#weightTraining').empty();
-              validate[2] = false;
-              return;
-           }
-           $.ajax(
-                {
-                   type:"get",
-                   data: data,
-                   url:"getRoutine",
-                   dataType:"json",
-                   success:function(responsedata){ 
-                     $('#cardio').empty();
-                     $('#weightTraining').empty();
-                     console.log(responsedata);
-                     
-                     $.each(responsedata,function(index,obj){
-                        console.log(obj.excs_kind);
-                        var hour = "";
-                        if((obj.routine_exercise_hour % 60) == 0) {
-                           hour = (obj.routine_exercise_hour / 60) + "시간";
-                        } else {
-                           if(parseInt(obj.routine_exercise_hour / 60) == 0) {
-                              hour = obj.routine_exercise_hour + "분";
-                           }else {
-                              hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
-                           }
-                        }
-                        if(obj.excs_kind == 'C') {
-                           $('#cardio').append(
-                                 '<div class="row cart-item-card mb-3">'+                                       
-                                    '<div class="col pt-2">'+
-                                       '<h5>'+obj.excs_name+'</h5>'+
-                                    '</div>'+
-                                    '<div class="col-3 center pt-2">'+
-                                       '<h5>'+hour+'</h5>'+
-                                    '</div>'+
-                                 '</div>'
-                           );
-                        }else {
-                              $('#weightTraining').append(
-                                    '<div class="row cart-item-card mb-3">'+                                          
-                                       '<div class="col pt-2">'+
-                                          '<h5>'+obj.excs_name+'</h5>'+
-                                       '</div>'+
-                                       '<div class="col-3 center pt-2">'+
-                                          '<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
-                                       '</div>'+
-                                    '</div>'   
-                        )}
-                     }); 
-                     $('.tdroutine')
-                     .html(
-                           '');
-                     validate[2] = true;
-                   }
-                });
-           });       */
+        
    });
    }); 
     //이미지 추가 했을 때 화면에 띄우기

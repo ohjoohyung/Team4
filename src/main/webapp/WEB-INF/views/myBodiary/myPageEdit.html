@@ -55,15 +55,7 @@
 											<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>
 											</div>
 											
-<!-- 											<form> -->
-<!-- 												<div class="user_nickname-text"> -->
-<!-- 													<input type="text" class="form-control input-default" th:if="${session.currentUser} != null" th:value="${session.currentUser.user_nickname}"> -->
-<!-- 												</div> -->
-<!-- 												<div> -->
-<!-- 													<button type="button" class="btn btn-outline-primary mt-3">취소하기</button> -->
-<!-- 													<button type="submit" class="btn btn-primary mt-3">변경하기</button> -->
-<!-- 												</div> -->
-<!-- 											</form> -->
+
 										</div>
 									</div>
 
@@ -172,9 +164,7 @@
 	/*]]>*/
 	/*<![CDATA[*/
 	$(document).on('click','#nickChangeCancelBtn',function(){
-// 		a  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/;
-// 		a += ' value="'+/*[[${session.currentUser.user_nickname}]]*/;
-// 		a += '">'
+
 		a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
 		$('#button-div').html(a);
 	});
@@ -202,9 +192,7 @@
 				complete : function(responsedata){
 					a = '<button type="button" class="btn btn-outline-primary mt-3 w-100" id="nickChangeBtn">변경하기</button>';
 					$('#button-div').html(a);			
-// 					b  = '<input type="text" readonly="readonly" class="form-control-plaintext" th:if="'+/*[[${session.currentUser}]]*/+ '!= null"';
-// 					b += ' th:value="'+/*[[${session.currentUser.user_nickname}]]*/+'">';
-// 					console.log(responsedata)
+
 				}
 			}
 		);

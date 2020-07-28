@@ -41,7 +41,7 @@ public interface BodiaryDao {
 	public List<BodiaryDto> getBodiaryList(HashMap<String, String> map) throws ClassNotFoundException, SQLException;
 	
 	//일지 수정하기
-	public int updateBodiary(BodiaryDto bodiarydto) throws ClassNotFoundException, SQLException;
+	public Integer updateBodiary(BodiaryDto bodiarydto) throws ClassNotFoundException, SQLException;
 	
 	//일지 삭제하기
 	public int deleteBodiary(int diary_seq) throws ClassNotFoundException, SQLException;

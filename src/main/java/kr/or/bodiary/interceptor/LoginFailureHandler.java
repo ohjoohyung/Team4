@@ -66,11 +66,9 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
 	    
 	    if(exception instanceof BadCredentialsException) {
 	    	
-//	    	if(userdto.getUser_grade() == "withdrawal") {
-//	    		errormsg = "탈퇴한 회원입니다. 한달 후 재가입이 가능합니다.";
-//	    	}else { 
+
 	    	errormsg = "비밀번호 또는 아이디가 일치하지 않습니다. 다시 확인해주세요.";
-//	    	}
+
         } else if(exception instanceof InternalAuthenticationServiceException) {
             errormsg = "비밀번호 또는 아이디가 일치하지 않습니다. 다시 확인해주세요.";
         } else if(exception instanceof DisabledException) {

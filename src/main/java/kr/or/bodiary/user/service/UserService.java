@@ -210,12 +210,7 @@ public class UserService {
 			user.setUser_nickname(request.getParameter("user_nickname"));
 			resultInt = userdao.updateNick(user);
 			
-//			if(resultInt > 0) {
-//				returnUrl = "redirect:/myPageEdit";
-//			}else {
-//				returnUrl = "redirect:/myPageEdit";
-//			}
-			
+
 		} catch (Exception e) {
 			e.getMessage();
 		}
@@ -344,25 +339,7 @@ public class UserService {
 
 	// ------------이메일 발송 서비스------------
 	public String sendConfirmEmail(String user_email) throws Exception {
-//		MimeMessage messagedto = mailSender.createMimeMessage();
-//		MimeMessageHelper messageHelper = new MimeMessageHelper(messagedto, true, "UTF-8");
 
-//		Random random = new Random(System.currentTimeMillis());
-//		int confirmation = 0;
-//
-//		while (true) {
-//			confirmation = (random.nextInt(10000));
-//			if (confirmation < 10000 && confirmation > 1000) {
-//				break;
-//			}
-//		}
-
-//		messageHelper.setFrom("bitcamp155@gmail.com"); // 보내는 메일주소는 수정하자 dispatcher-servlet이랑 맞춰주자.
-//		messageHelper.setTo(emaildto.getReceiveMail());
-//		messageHelper.setSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
-//		messageHelper.setText("요청하신 인증번호는 " + confirmation + "입니다.");
-//
-//		mailSender.send(messagedto);
 		
 		String key = new Tempkey().getKey(10,false);
 		EmailDto mail = new EmailDto();
@@ -373,7 +350,7 @@ public class UserService {
 			mail.setMailSubject("바디어리 회원가입을 위해 요청하신 인증번호입니다.");
 			mail.setTemplateName("sendEmail.vm");
 			
-			System.out.println(key);
+			System.out.println("인증번호 : " + key);
 			mailer.sendMail(mail, key);
 			
 		} catch (Exception e) {

@@ -121,19 +121,7 @@
 	    $("#exampleModalCenter").modal('show');	  
 
 	}
-	/* 유저 이메일 클릭시 세부사항 볼수 있는 함수 */
-	/* function userDetail(age,height,weight,grade){
 
-	    $("#age").html(age);
-	    $("#height").html(height);
-	    $("#weight").html(weight);
-	    $("#grade").html(grade);
-
-	    //modal을 띄워준다.  
-
-	    $("#userDetailModal").modal('show');	  
-
-	} */
 
 </script>
 
@@ -142,14 +130,11 @@
 			
 			$("#role_Change").on("click", function(){
 	
-				//아래의 경우는 select 박스의 id를 이용해서 select 박스를 선택하되
-	
-				//나머지는 위의 설명과 같다.
-	
+				
 				var role = $("#role_Select option:selected").val();
 				var email = $("#email").text();
 				
-				 // alert("선택한 권한"+role+"이메일"+email); 권한이랑 이메일 둘다 잘가져옴
+				
 				 
 				var url = "adminRoleUpdate";
 			

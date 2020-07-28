@@ -109,12 +109,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
           (#{item.routine_cart_seq}, #{item.user_email}, #{item.routine_seq})
        </foreach>
     </insert>
-        
-<!--     루틴 번들 가져오기    -->
-<!--    <select id="getRoutineBundle" resultType="kr.or.bodiary.myBodiary.dto.RoutineJoinDto">                                                                                                                                                                                                                                                                                                                                                                      -->
-<!--       select * from routinebundle -->
-<!--       where routine_cart_seq = #{routine_cart_seq} and user_email = #{user_email} -->
-<!--    </select> -->
+
 
     <!--  루틴 삭제하기 -->
    <update id="deleteRoutineCart">

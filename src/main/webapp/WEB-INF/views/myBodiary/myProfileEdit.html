@@ -33,12 +33,7 @@
                                     th:src="@{assets/upload/userUpload/}+${session.currentUser.user_img}" alt="">
                                </div>
                               </th:block>
-                              <!-- not null로 바꿀 예정 -->
-                              <!-- <th:block th:unless="${session.currentUser.user_img != null}">
-                              <div style="width:80px; height:80px;">
-                               <img style="width:100%;overflow:hidden;" class="img-fluid" src="assets/upload/userUpload/user.png" alt="">
-                               </div>
-                              </th:block> -->
+                          
                            </div>
                            <div class="col-6">
                               <label class="btn btn-outline-primary btn-file">
@@ -78,9 +73,7 @@
                               <span th:text="${session.currentUser.user_gender}"></span>
                               <input id="user_gender" name="user_gender" type="hidden" class="form-check-input" th:value="${session.currentUser.user_gender}" readonly>
                               </label> 
-                              <!-- <label class="form-check-label ml-5"> 
-                              <input type="checkbox" class="form-check-input" value="여자" disabled>여자
-                              </label> -->
+                           
                            </div>
                         </div>
                         <div class="hidden-input">

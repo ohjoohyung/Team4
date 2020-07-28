@@ -208,36 +208,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 					</if>
 			</trim>
 	   </select>
-		<!-- 게시글 총개수 가져오기 -->
-	   <!-- <select id="getSearchFreeBoardListCnt" resultType="int"  parameterType="kr.or.bodiary.freeBrd.dto.Search">
-			SELECT count(*) as totalcount		
-			FROM freeboard
-			<trim prefix="WHERE" prefixOverrides="AND|OR">
-
-				<if test="keyword != null and keyword != '' ">
-	
-					<if test="searchType=='title'">
 		
-						AND free_brd_title like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-		
-					<if test="searchType=='content'">
-		
-						AND CONTENT like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-		
-					<if test="searchType=='reg_id'">
-		
-						AND reg_id like CONCAT('%', #{keyword}, '%')
-		
-					</if>
-	
-	     		 </if>
-
-			</trim>
-	   </select> -->
 	   
 	   <!-- 게시글 상세보기 쿼리문 -->
 	   <select id="freebrdDetail"  resultType="kr.or.bodiary.freeBrd.dto.FreeBrdDTO">

@@ -50,7 +50,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import kr.or.bodiary.user.dto.AuthInfo;
 import kr.or.bodiary.user.dto.UserDto;
 import kr.or.bodiary.user.service.UserService;
-import kr.or.bodiary.user.service.VerifyRecaptcha;
+
 import kr.or.bodiary.utils.NaverLoginBO;
 @Controller
 public class UserController {
@@ -386,33 +386,7 @@ public class UserController {
     }
 	
 	
-	//------------- 리캡차 --------------
-	
-	@ResponseBody
-	@RequestMapping(value = "VerifyRecaptcha", method = RequestMethod.POST)
-	public int VerifyRecaptcha(HttpServletRequest request) {
-		VerifyRecaptcha.setSecretKey("6LfpFq4ZAAAAADZmv1ZIqOr0407vgRt2H01KnUWM"); 
-		//시크릿키를 넣어준다.
-		String gRecaptchaResponse = request.getParameter("recaptcha");
-		System.out.println(gRecaptchaResponse);
-		//0 = 성공, 1 = 실패, -1 = 오류
-		try {
-			if(VerifyRecaptcha.verify(gRecaptchaResponse))
-				return 0;
-			else return 1;
-		} catch (IOException e) {
-			e.printStackTrace();
-			return -1;
-		}
-	}
-	
-	//------------- 리캡차 끝 --------------
-	
-	@RequestMapping("/deleteAccount")
-	public String deleteAccount() {
-		return "user/deleteAccount";
-	}
-	
+
 	
 	
 	//-------------- 차트 ------------------

@@ -261,18 +261,16 @@
 	* @param evt - 핸들러에서 받은 메시지 내용
 	**/
 	function onMessage(evt) {
-	/* 	console.log(evt.data.split("/")[0]);
-		console.log(evt.data.split("/")[1]);
-		var memberCount = ""; */
+	
 		
 		var tag = "";
 		var text = "";
 		
 		
 		
-		/* var currentCount = evt.data.split("/")[0]; */
+	
 		var msg = JSON.parse(evt.data);
-		/* var userlist = evt.data.split("/")[2]; */
+	
 		var time = new Date(msg.date);
 		var ampm = (time.getHours() > 12 ?  "PM" : "AM");
 		var h = (time.getHours() > 12 ? time.getHours() - 12 : time.getHours());
@@ -283,13 +281,13 @@
 		}
 		
 		var timeStr = ampm +" " +h + ":" +m;
-	/* 	appendUserList(userlist); */
+
 	
 	
 		//메세지 타입이 notice일 경우
 		if(msg.type == "notice") {
 			
-			/* memberCount += '<div>'+currentCount + " / " + room_count + '</div>';  */
+	
 		   
 			
 			tag += '<div class="center">';
@@ -297,7 +295,7 @@
 			tag += '</div>';
 			appendMessage(tag); 
 			
-			/* appendCount(memberCount); */
+			
 			
 		//메시지 타입이 delete일 경우
 		} else if(msg.type == "delete") {
@@ -370,17 +368,7 @@
 		/* $(".chatMessageArea").scrollTop($(".chatMessageArea")[0].scrollHeight);	 */
 	}
 	
-	//채팅방 유저 목록 나타내기
-/* 	function appendUserList(userlist) {
-		$(".userlist").empty();
-		$(".userlist").append(userlist);
-	} */
-	
-	//채팅방 멤버 수 나타내기
-/* 	function appendCount(memberCount) {
-		$(".count").empty();
-		$(".count").append(memberCount);
-	} */
+
 	
 	
 	

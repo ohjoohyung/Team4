@@ -31,7 +31,7 @@
                                                 <th scope="col">분당 칼로리 소모량</th>
                                                 <th scope="col">운동 부위</th>
                                                 <th scope="col">기구 사용 여부</th>
-<!--                                                 <th scope="col">excs_description</th> -->
+
                                                 <th scope="col">관련 유튜브 링크</th>
                                                 <th scope="col">운동 난이도</th>
                                                 <th scope="col">수정</th>
@@ -39,13 +39,13 @@
                                             </tr>
                                         </thead>
                                         <tr th:each="exer : ${list}">
-<!-- 								         <td th:text="${exer.excs_seq}">excs_seq</td>     -->
+
 								         <td th:text="${exer.excs_kind}">excs_kind</td>
 								         <td><a th:href="@{/adminExcsDetail(excs_seq=${exer.excs_seq})}"><span th:text="${exer.excs_name}">excs_name</span></a> </td>
 								         <td th:text="${exer.excs_cal_per_minweight}+' kcal'">excs_cal_per_minweight</td>
 								    	 <td th:text="${exer.excs_body_part}">excs_body_part</td>
 								    	 <td th:text="${exer.excs_equipment}">excs_equipment</td>
-<!-- 								    	 <td th:text="${exer.excs_description}">excs_description</td> -->
+
 								    	 <td th:text="${exer.excs_video_link}">excs_video_link</td>
 								    	 <td th:text="${exer.excs_level}">excs_level</td>
 								      	 <td><a th:href="@{/adminExcsEdit(excs_seq=${exer.excs_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>

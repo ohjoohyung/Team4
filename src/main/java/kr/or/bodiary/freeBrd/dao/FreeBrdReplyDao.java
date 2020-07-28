@@ -18,8 +18,7 @@ public interface FreeBrdReplyDao {
 	// 댓글 Update
 	public int update(FreeBrdReplyDTO freeBrdReplyDTO) throws Exception;
 
-	// 댓글 Delete
-	// public void delete(Map map) throws Exception;
+
 
 	// 댓글 Delete(해당댓글 삭제하기)
 	public int delete(int cno) throws Exception;

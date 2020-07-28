@@ -34,12 +34,6 @@ public class BodiaryDto {
 	private String diary_main_img;
 	// 파일 업로드 지원
 	private CommonsMultipartFile file;
-	/*
-	 * private String user_nickname; 
-	 * 
-	 * 
-	 * 
-	 * private List<CommonsMultipartFile> files;
-	 */
+	
 
 }
