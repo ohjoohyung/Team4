@@ -175,7 +175,7 @@
 	    				
 	    				if(obj.room_secret == 'Y') {
 	    					secret = '<i class="icon-lock mt-2"></i>&nbsp;&nbsp;<small>비밀방</small>';
-	    					button = '<button type="button" onclick="selectChatRoom('+obj.current_count+','+obj.room_count+','+obj.room_number+', '+"'"+''+obj.room_secret+''+"'"+')" class="btn btn-outline-primary btn-lg" data-toggle="modal" data-target="#pwdmodal">입장하기</button>';
+	    					button = '<button type="button" onclick="selectChatRoom('+obj.current_count+','+obj.room_count+','+obj.room_number+', '+"'"+''+obj.room_secret+''+"'"+')" class="btn btn-outline-primary btn-lg">입장하기</button>';
 	    				}
 	    				
 	    				$('#chatList').append(
@@ -221,15 +221,18 @@
 		**/
 		function selectChatRoom(current_count, room_count, room_number, room_secret) {
 			if(current_count >= room_count) {
-				alret("방이 가득 찼습니다.")
+				alert("방이 가득 찼습니다.")
 				return false;
+			}else {
+				if(room_secret === 'N') {
+					location.href="selectChatRoomByRn?room_number="+room_number;
+				}else {
+					roomnum = room_number;
+					$('#pwdmodal').modal('show');
+				}
 			}
 			
-			if(room_secret === 'N') {
-				location.href="selectChatRoomByRn?room_number="+room_number;
-			}else {
-				roomnum = room_number;
-			}
+			
 		}
 			
 		

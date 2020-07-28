@@ -151,6 +151,10 @@
 //https://devbox.tistory.com/entry/jQuery-%EB%AC%B8%EC%84%9C-%EC%A4%80%EB%B9%84-%EC%9D%B4%EB%B2%A4%ED%8A%B8 (AJAX 개념)
 var boardSeq = $('#boardSeq').val();
 
+/*<![CDATA[*/
+var user_email = /*[[ ${session.currentUser.user_email} ]]*/
+	
+/*]]>*/	
 $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
@@ -172,14 +176,16 @@ function commentList(){
         success : function(data){
         	console.log("댓글목록"+data);
         	var a =''; 
-
+			var button = '';
              $.each(data, function(key, value){ 
+            	 if(user_email == value.user_email) {
+            		 button = '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a><a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a></div>';
+            	 } 
                  a += '<div class="commentArea" style="margin-bottom: 20px;">';
                  a += '		<div class="commentInfo'+value.brd_cmt_seq+'">'+'<span class="text-primary">'+value.user_nickname+'</span>';
                  a += '		<div class="">';
                  a += '			<div> <i class="icon-clock"></i>&nbsp;&nbsp;<span> '+value.brd_cmt_date +'</span>&nbsp;&nbsp;&nbsp;';
-                 a += '			<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
-                 a += '			<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
+              	 a += button;
                  a += '		</div>';
                  a += '		</div>';
                  a += '	<div class="mt-4 commentContent'+value.brd_cmt_seq+'"> <p>'+value.brd_cmt +'</p>';
