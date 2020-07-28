@@ -49,8 +49,8 @@
 	            	</div>
 	            	<div class="notice col-3">
 	               		<a th:href="@{noticeList}"><b>NOTICE</b></a><br>
-		               	<div th:each="notice:${noticeMain}">
-		               		<a th:href="@{noticeDetail(notice_brd_seq=${notice.notice_brd_seq})}" th:text="${notice.notice_brd_title}"></a>&nbsp;<span class="badge badge-danger">N</span><br>
+		               	<div class="txt_line" th:each="notice:${noticeMain}">
+		               		<a th:href="@{noticeDetail(notice_brd_seq=${notice.notice_brd_seq})}" ><span class="" th:text="${notice.notice_brd_title}"></span></a><br>
 		               	</div>
 	            	</div>
             	</div>

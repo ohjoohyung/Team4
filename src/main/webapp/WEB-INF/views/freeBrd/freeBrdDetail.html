@@ -89,7 +89,7 @@
 
 						<div class="col mt-2">
 							<span class="card-text"> 
-								<i id="cmt_count" th:value="${list.brd_cmt_count}" class="icon-bubble" th:text="${list.brd_cmt_count}"></i>
+								<!-- <i id="cmt_count" th:value="${list.brd_cmt_count}" class="icon-bubble" th:text="${list.brd_cmt_count}"></i> -->
 							</span>
 						</div>
 						<div class="col-9"></div>
@@ -178,13 +178,18 @@ function commentList(){
         	var a =''; 
 
              $.each(data, function(key, value){ 
-                 a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                 a += '<div class="commentInfo'+value.brd_cmt_seq+'">'+'작성자 : '+value.user_nickname;
-                 a += '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
-                 a += '<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
-                 a += '<div> <p> '+value.brd_cmt_date +'</p></div>'
-                 a += '<div class="commentContent'+value.brd_cmt_seq+'"> <p> 내용 : '+value.brd_cmt +'</p>';
-                 a += '</div></div>';
+                 a += '<div class="commentArea" style="margin-bottom: 20px;">';
+                 a += '		<div class="commentInfo'+value.brd_cmt_seq+'">'+'<span class="text-primary">'+value.user_nickname+'</span>';
+                 a += '		<div class="">';
+                 a += '			<div> <i class="icon-clock"></i>&nbsp;&nbsp;<span> '+value.brd_cmt_date +'</span>&nbsp;&nbsp;&nbsp;';
+                 a += '			<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a>';
+                 a += '			<a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a> </div>';
+                 a += '		</div>';
+                 a += '		</div>';
+                 a += '	<div class="mt-4 commentContent'+value.brd_cmt_seq+'"> <p>'+value.brd_cmt +'</p>';
+                 a += '	</div>';
+                 a += '<hr>';
+                 a += '</div>';
              });
             
             $(".commentList").html(a); 
@@ -241,17 +246,17 @@ function commentInsert(insertData){
         data : insertData,
         success : function(data){
             if(data == 1) {
-            	alert("댓글 작성 성공");
+            	/* alert("댓글 작성 성공"); */
             	commentList(); //댓글 작성 후 댓글 목록 reload 과정에서 에러발생?? 왜지??
                 $('[name=content]').val('');
             }else{
             	//insert 실패시 
-            	alert("댓글 작성 실패");
+            	/* alert("댓글 작성 실패"); */
             	commentList();
             }
         },
    		error : function(error) {
-	        alert("댓글작성실패!"+error);
+	        alert("댓글이 작성되지 않았습니다.");
 	    }
     });
 }
@@ -276,7 +281,7 @@ function commentInsert(insertData){
 
 //댓글 삭제 (POST방식)
 function commentDelete(cno){
-	alert("삭제할 댓글번호"+cno);
+	/* alert("삭제할 댓글번호"+cno); */
 	//ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 
 	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
 		$.ajax({

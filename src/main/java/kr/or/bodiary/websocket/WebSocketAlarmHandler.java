@@ -79,7 +79,7 @@ public class WebSocketAlarmHandler extends TextWebSocketHandler{
 		System.out.println(type);
 		String user_email = (String)session.getAttributes().get("user_email");
 		QnaBrdDao qnabrddao = sqlsession.getMapper(QnaBrdDao.class);
-		String adminEmail = "eomjihee.code@gmail.com";
+		String adminEmail = "admin@bodiary.or.kr";
 		if(type.equals("view")) {
 			
 			

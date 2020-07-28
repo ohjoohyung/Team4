@@ -11,6 +11,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import kr.or.bodiary.freeBrd.dao.FreeBrdReplyDao;
 import kr.or.bodiary.freeBrd.dto.FreeBrdDTO;
 import kr.or.bodiary.main.dao.MainDao;
 import kr.or.bodiary.myBodiary.dto.BodiaryDto;
@@ -48,7 +49,7 @@ public class MainService {
 	}
 	
 	//메인 프리보드
-	public List<FreeBrdDTO> freeBrdMain() throws ClassNotFoundException, SQLException, ParseException {
+	public List<FreeBrdDTO> freeBrdMain() throws Exception {
 		MainDao maindao = sqlsession.getMapper(MainDao.class);
 		List<FreeBrdDTO> list = maindao.freeBrdMain();
 		for(FreeBrdDTO f : list) {
@@ -56,6 +57,14 @@ public class MainService {
 			String formatDate = DateUtils.formatTimeString(date);
 			System.out.println(formatDate);
 			f.setFree_brd_date(formatDate);
+		}
+		
+		FreeBrdReplyDao cmtlist = sqlsession.getMapper(FreeBrdReplyDao.class);
+
+		for(int i=0;i<list.size();i++) {
+			//게시글의 번호를 하나씩 얻어와 해당 게시글의 댓글수를 얻어옴 			
+			list.get(i).setBrd_cmt_count(cmtlist.commentCount(list.get(i).getFree_brd_seq()));
+			System.out.println(list.get(i).getFree_brd_seq()+"번호의 댓글 개수 ->"+list.get(i).getBrd_cmt_count());
 		}
 		return list;
 	}

@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 오늘의 루틴 top2 -->
 	<select id="routineBrdMainToday" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">
 		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_content, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, u.user_nickname 
-		  FROM routineboard r
+		 ,(SELECT COUNT(*) FROM routineboardcomment where routine_brd_seq = r.routine_brd_seq) as routine_brd_comcount FROM routineboard r
 		  JOIN user u
 		    ON r.user_email = u.user_email
 		 WHERE DATE_FORMAT(r.routine_brd_regdate,"%Y-%m-%d") = CURDATE()
@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 오늘의 루틴 없을 때 -->
     <select id="routineBrdMain" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">  
 		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, u.user_nickname 
-		  FROM routineboard r
+		 ,(SELECT COUNT(*) FROM routineboardcomment where routine_brd_seq = r.routine_brd_seq) as routine_brd_comcount FROM routineboard r
 		  JOIN user u on r.user_email = u.user_email  
 	  ORDER BY routine_brd_hit desc limit 0,2
 	</select>

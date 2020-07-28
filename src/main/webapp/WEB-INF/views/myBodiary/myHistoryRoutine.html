@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+	<!-- 공통 헤더-->
+	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
+		
+	<!-- 데이터 테이블 사용시 추가  -->
+    
+ 	<link href="assets/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script> 
+    <!-- **************** -->
+	 <script>
+	        jQuery(function($){
+	            $("#foo-table_routine").DataTable();
+	            $("#foo-table_routineReply").DataTable();   
+	        });
+
+	    </script>
+<body>
+	<!-- 공통 nav -->
+	<th:block th:replace="common/nav :: navFragment"></th:block>
+	<div style="height:70px;"></div>
+	<!-- 공통 sidenav -->
+	<div class="row mt-4">
+		<nav class="col-3 ml-3 mr-0 sidenav">
+			<aside id="sidebar" class="js-custom-scroll side-nav" th:replace="common/sidebar :: sidebarFragment">
+			</aside>
+		</nav>
+		
+		
+	   <div class="col-9">
+	   
+		<div class="card">
+             <div class="card-body">
+               
+                  <h2 style="display:inline;"><a href="myHistory" >자유게시판 </a></h2>&nbsp; &nbsp;
+                     
+                 <h2 style="display:inline;" ><a href="myHistoryRoutine" >루틴자랑 게시판 </a></h2>
+                
+
+	     <!--  루틴자랑 게시판(내가쓴글/댓글) 시작 -->
+				      <div id="navpills-2" class="tab-pane">
+				      <!--  루틴자랑 내가쓴 글  -->	
+						
+						<div class="card">
+				             <div class="card-body">
+				             	<h4>내가 쓴 글</h4>
+									<div class="table-responsive" >
+									    <table id="foo-table_routine" class="table table-bordered">
+											 <thead class="table-info">
+		                                            <tr>
+		                                                <th>글번호</th>
+		                                                <th>제목</th>
+		                                                <th >작성일</th>
+														<th >수정</th>
+														<th >삭제</th>		
+		                                            </tr>
+				                              </thead>
+											 <tbody>
+											 		<tr th:each="routineBrdList : ${routineBrdList}">
+				                                        <th th:text="${routineBrdList.routine_brd_seq}"></th>
+				                                        <td><a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdList.routine_brd_seq})}" th:text="${routineBrdList.routine_brd_seq}"></a></td>
+				                                        <td th:text="${routineBrdList.routine_brd_regdate}"></td>			                                                
+				                                        <!-- 수정  -->
+				                                        <td><a th:href="@{/routineBrdEdit(routine_brd_seq=${routineBrdList.routine_brd_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
+				                                        <!-- 삭제  -->	
+				                    					<td><a th:onclick="|javascript:myHistoryRoutineDelete('${routineBrdList.routine_brd_seq}')|" style="cursor:pointer;"><i class="ti-close m-r-5 f-s-12"></i></a></td>
+				                    				</tr>		
+								              </tbody>
+									    </table>
+								      </div>  
+								      </div>
+							</div>  
+		
+							<!--  루틴자랑 내가쓴 글  END-->	
+							
+							
+						<!--  루틴자랑 내가쓴 댓글  -->
+							<div class="card">
+						             <div class="card-body">
+										 
+										 <h4>내가 쓴 댓글</h4>
+											<div class="table-responsive">
+											    <table id="foo-table_routineReply" class="table table-bordered">
+													 <thead class="table-info">
+						                                            <tr>
+						                                                <th >댓글 내용</th>
+						                                                <th >작성일</th> 	          	
+								                                    </tr>
+						                              </thead>
+													  <tbody>
+													 	<tr th:each="routineBrdReplyList : ${routineBrdReplyList}">
+						                           			<td>
+						                           				<a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdReplyList.routine_brd_seq})}" th:text="${routineBrdReplyList.routine_cmt}"></a>
+						                           			</td>
+						      								<td th:text="${routineBrdReplyList.routine_cmt_date}"></td>
+										                </tr>                       
+										              </tbody>
+											    </table>
+										      </div>  
+										   
+									</div>  
+						      </div>
+						       <!--  루틴자랑  내가쓴 댓글  END-->
+							       
+				      </div>
+				      <!--  루틴자랑 게시판(내가쓴글/댓글) END-->
+	  
+				    
+				    
+				       
+				
+			
+				
+				
+			</div>  
+			
+			</div>
+			
+		</div>  
+	</div>  	
+	<script type="text/javascript" th:inline="javascript">
+		function myHistoryDelete(seq,cmt_cnt){
+				if(cmt_cnt > 0){
+					alert("댓글이 있는 게시물은 삭제 할 수 없습니다!");	
+				}else{
+					if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
+						location.href="myHistoryDelete?seq="+seq;
+					}
+				} 
+				
+		}
+		/* 해당글을 삭제할경우 댓글이 있을때 따로 문구를 추가해야됨 */
+		function myHistoryRoutineDelete(seq){
+				if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
+					location.href="routineBrdDelete?routine_brd_seq="+seq;
+				}		
+		}
+	 </script>
+	
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+</body>
+</html>

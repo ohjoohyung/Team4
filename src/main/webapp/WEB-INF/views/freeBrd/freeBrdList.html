@@ -37,7 +37,7 @@
 	                             <div class="carousel-inner">
 	                                 <div class="carousel-item active" th:each="free : ${highLankFree}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${free.free_brd_seq}')|">
 	                                 		<b class="card-text pb-4" th:if="${free.free_cat} == 1 ">자유</b>
-	                                     	<h5 class="card-text mt-3 mb-5" th:text="${free.free_brd_title}">
+	                                     	<h5 class="card-text mt-3 mb-5 txt_post" th:text="${free.free_brd_title}">
 	                                     		
 	                                     	</h5>
 											<!-- 해당 글쓴 시간-->
@@ -48,12 +48,12 @@
 											<p class="card-text">
 												<i class="icon-eye" th:text="${free.free_brd_hits}"></i>
 												&nbsp;&nbsp;
-												<i class="icon-bubble"></i>&nbsp;&nbsp;5
+												<i class="icon-bubble" th:text="${free.brd_cmt_count}"></i>&nbsp;&nbsp;
 											</p>
 	                                 </div>
 	                                 <div class="carousel-item" th:each="qna : ${highLankQna}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${qna.free_brd_seq}')|">
 	                                 	 <b class="card-text pb-4" th:if="${qna.free_cat} == 2 ">질문</b>
-	                                     <h5 class="card-text mt-3 mb-5" th:text="${qna.free_brd_title}"></h5>
+	                                     <h5 class="card-text mt-3 mb-5 txt_post" th:text="${qna.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${qna.free_brd_date}"></span>
@@ -62,12 +62,12 @@
 											<p class="card-text">
 												<i class="icon-eye" th:text="${qna.free_brd_hits}"></i>
 												&nbsp;&nbsp;
-												<i class="icon-bubble"></i>&nbsp;&nbsp;5
+												<i class="icon-bubble" th:text="${qna.brd_cmt_count}"></i>&nbsp;&nbsp;
 											</p>
 	                                 </div>
 	                                 <div class="carousel-item" th:each="tip : ${highLankTip}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${tip.free_brd_seq}')|">
 	                                 	<b class="card-text" th:if="${tip.free_cat} == 3 ">팁</b>
-	                                     <h5 class="card-text mt-3 mb-5">&nbsp;&nbsp;<span th:text="${tip.free_brd_title}"></span></h5>
+	                                     <h5 class="card-text mt-3 mb-5 txt_post">&nbsp;&nbsp;<span th:text="${tip.free_brd_title}"></span></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${tip.free_brd_date}"></span>
@@ -76,7 +76,7 @@
 											<p class="card-text">
 												<i class="icon-eye" th:text="${tip.free_brd_hits}"></i>
 												&nbsp;&nbsp;
-												<i class="icon-bubble"></i>&nbsp;&nbsp;5
+												<i class="icon-bubble" th:text="${tip.brd_cmt_count}"></i>&nbsp;&nbsp;
 											</p>
 	                                 </div>
 	                             </div>
@@ -104,7 +104,7 @@
 	                             <div class="carousel-inner">
 	                                  <div class="carousel-item active" th:each="free : ${highLankFree}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${free.free_brd_seq}')|">
 	                                 		<b class="card-text" th:if="${free.free_cat} == 1 ">자유</b>
-	                                     	<h5 class="card-text mt-3" th:text="${free.free_brd_title}"></h5>
+	                                     	<h5 class="card-text mt-3 txt_post" th:text="${free.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${free.free_brd_date}"></span>
@@ -133,7 +133,7 @@
 	                                 
 	                                 <div class="carousel-item active" th:each="qna : ${highLankQna}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${qna.free_brd_seq}')|">
 	                                 	 <b class="card-text" th:if="${qna.free_cat} == 2 ">질문</b>
-	                                     <h5 class="card-text mt-3 mb-5" th:text="${qna.free_brd_title}"></h5>
+	                                     <h5 class="card-text mt-3 mb-5 txt_post" th:text="${qna.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock" th:text="${qna.free_brd_date}"></i>
@@ -162,7 +162,7 @@
 	                                 
 	                                  <div class="carousel-item active" th:each="tip : ${highLankTip}" style="cursor:pointer;" th:onclick="|javascript:freeDetail('${tip.free_brd_seq}')|">
 	                                 	<b class="card-text" th:if="${tip.free_cat} == 3 ">팁</b>
-	                                     <h5 class="card-text mt-3 mb-5" th:text="${tip.free_brd_title}"></h5>
+	                                     <h5 class="card-text mt-3 mb-5 txt_post" th:text="${tip.free_brd_title}"></h5>
 											<!-- 해당 글쓴 시간-->
 											<p class="card-text">
 												<i class="icon-clock" th:text="${tip.free_brd_date}"></i>
@@ -253,7 +253,7 @@
 												<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
 												<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
 												<!-- 글제목 부분 -->
-												<h5 class="card-title mt-3 mb-5">
+												<h5 class="card-title mt-3 mb-5 txt_post">
 													<a th:href="@{/freeBrdDetail(seq=${list.free_brd_seq})}" th:text="${list.free_brd_title}"></a>
 												</h5>
 												<!-- 해당 글쓴 시간-->

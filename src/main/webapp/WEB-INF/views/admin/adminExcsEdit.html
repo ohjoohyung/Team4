@@ -19,56 +19,74 @@
 
 <!-- 여기에 부위, 이미지 수정까지 들어가야함  (운동 난이도도 어떻게 할지)-->
 	
-			<div class="card m-4">
+			<div class="card p-5 m-4">
 				<div class="card-body">
 					<form action="adminExcsEdit" method="post">
 
-						<div class="row">
+					
+<div class="row">
 							<!-- 제목 -->
 							<div class="col-11">
 								<div class="mb-3 mt-2">
-									
-										<label>운동번호<input type="text" id="excs_seq" name="excs_seq" class="form-control"
-										th:value="${exercise.excs_seq}" readonly ></label>
-										<select name="excs_kind" class="form-control">
-									    <option th:value="${exercise.excs_kind}">운동종류</option>
-									    <option value="C">유산소</option>
-									    <option value="N">무산소</option>
+									<h2 style="color:#7571f9;">운동 수정하기</h2>
+									<div class="mt-5">
+									<b class="pl-1">운동 번호</b><input type="text" id="excs_seq" name="excs_seq" class="mt-2 form-control input-default"
+										th:value="${exercise.excs_seq}" readonly >
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 종류</b>
+										<select name="excs_kind" class="mt-2 form-control input-default">
+									    <option value="">운동 종류</option>
+									    <option value="C" th:selected="${exercise.excs_kind.equals('X')}">유산소</option>
+									    <option value="N" th:selected="${exercise.excs_kind.equals('X')}">무산소</option>
 										</select>
-										<label>운동이름<input type="text"   id="excs_name" name="excs_name" class="form-control"
-										th:value="${exercise.excs_name}" ></label>
-										<label>분, 몸무게당 칼로리<input type="text"  class="form-control" id="excs_cal_per_minweight" name="excs_cal_per_minweight" 
-										th:value="${exercise.excs_cal_per_minweight}"></label>
-										
-										<select name="excs_body_part" class="form-control">
-									    <option th:value="${exercise.excs_body_part}">운동부위</option>
-									    <option value="X">유산소</option>
-									    <option value="등">등</option>
-									    <option value="어깨">어깨</option>
-									    <option value="가슴">가슴</option>
-									    <option value="다리">다리</option>
-									    <option value="팔">팔</option>
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 이름</b>
+										<input type="text" th:value="${exercise.excs_name}"  id="excs_name" name="excs_name" class="mt-2 form-control input-default">
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">분, 몸무게당 칼로리</b><input type="text" th:value="${exercise.excs_cal_per_minweight}" class="mt-2 form-control input-default" id="excs_cal_per_minweight" name="excs_cal_per_minweight" 
+										>
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 부위</b>
+										<select name="excs_body_part" class="mt-2 form-control input-default" >
+									    <option value="">운동 부위</option>
+									    <option value="X" th:selected="${exercise.excs_body_part.equals('X')}">유산소</option>
+									    <option value="등" th:selected="${exercise.excs_body_part.equals('등')}">등</option>
+									    <option value="어깨" th:selected="${exercise.excs_body_part.equals('어깨')}">어깨</option>
+									    <option value="가슴" th:selected="${exercise.excs_body_part.equals('가슴')}">가슴</option>
+									    <option value="다리" th:selected="${exercise.excs_body_part.equals('다리')}">다리</option>
+									    <option value="팔" th:selected="${exercise.excs_body_part.equals('팔')}">팔</option>
 										</select>
-										
-										<select name="excs_equipment" class="form-control">
-									    <option th:value="${exercise.excs_equipment}">기구여부</option>
-									    <option value="X">기구없음</option>
-									    <option value="O">기구사용</option>
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">기구 여부</b>
+										<select name="excs_equipment" class="mt-2 form-control input-default" >
+									    <option value="" >기구여부</option>
+									    <option value="X" th:selected="${exercise.excs_equipment.equals('X')}" >기구없음</option>
+									    <option value="O" th:selected="${exercise.excs_equipment.equals('Y')}">기구사용</option>
 										</select>
-										
-										<label>운동설명<input type="text"   id="excs_description" name="excs_description" class="form-control"
-										th:value="${exercise.excs_description}"></label>
-										<label>운동난이도<input type="text"   id="excs_level" name="excs_level" class="form-control"
-										th:value="${exercise.excs_level}"></label>
-										<label>운동링크<input type="text"   id="excs_video_link" name="excs_video_link" class="form-control"
-										th:value="${exercise.excs_video_link}"></label>
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 설명</b><!-- <input type="text"   id="excs_description" name="excs_description" class="form-control"
+										> --><textarea id="excs_description" th:text="${exercise.excs_description}" name="excs_description" rows="5" class="mt-2 form-control h-150px"></textarea>
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 난이도</b><input type="text"   id="excs_level" name="excs_level" class="mt-2 form-control input-default"
+										 th:value="${exercise.excs_level}">
+										</div>
+										<div class="mt-4">
+										<b class="pl-1">운동 링크</b><input type="text"   id="excs_video_link" name="excs_video_link" class="mt-2 form-control input-default"
+										 th:value="${exercise.excs_video_link}">
+										</div>
 										
 										
 								</div>
 							</div>
 							<div></div>
 						</div>
-
 
 						<!-- <textarea class="form-control h-150px" rows="6" id="comment" 
 						th:placeholder="${exercise.excs_name}" th:value="${exercise.excs_name}">

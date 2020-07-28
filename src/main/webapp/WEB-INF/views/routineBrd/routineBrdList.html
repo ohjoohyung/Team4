@@ -38,8 +38,8 @@
 			</div>
 
 			<div class="row">
-				
-				
+
+
 				<th:block th:each="today : ${todayHit}">
 
 					<div class="grid-item card ml-3">
@@ -48,34 +48,38 @@
 							class="card-link"> <img
 							th:src="@{assets/upload/routineBrdUpload/}+${today.brd_image2}" />
 							<div class="card-body">
-							<p class="card-text float-right"
-										th:text="${today.user_nickname}"></p>
+								<p th:text="${today.user_nickname}"></p>
 
-								<h5 class="card-text mt-3 mb-3"
-									th:text="${today.routine_brd_title}"></h5>
+								<h3 class="mt-3 mb-3 txt_post"
+									th:text="${today.routine_brd_title}"></h3>
 
-								<div class="card-footer">
-									<i class="icon-clock"></i>&nbsp;&nbsp; <span class="card-text"
+								<div class="card-footer p-0 pt-3">
+									<i class="icon-eye"></i>&nbsp;<span
+										th:text="${today.routine_brd_hit}"></span>&nbsp;&nbsp; <i
+										class="icon-bubble"></i>&nbsp;&nbsp;<span
+										th:text="${today.routine_brd_comcount}"></span>&nbsp;&nbsp; <i
+										class="icon-clock"></i>&nbsp;&nbsp;<span
 										th:text="${today.routine_brd_regdate}"></span>
-									&nbsp;&nbsp;&nbsp;&nbsp; <i class="icon-eye"></i>&nbsp;&nbsp; <span
-										class="card-text" th:text="${today.routine_brd_hit}"></span>
-									
+
+
 								</div>
+
+
 							</div>
 
 						</a>
 					</div>
-					
+
 					<!-- 
 					<div th:unless="${today != null}">
 						<h2>오늘의 인기글이 없습니다. 글을 작성해보세요!</h2>
 					</div>
 				 -->
-					
+
 
 				</th:block>
-				
-			
+
+
 			</div>
 			<!-- 인기 많은 루틴 end -->
 
@@ -99,7 +103,7 @@
 
 					<div class="grid">
 						<div class="grid-sizer"></div>
-	
+
 					</div>
 
 
@@ -109,12 +113,12 @@
 				<!-- 오늘의 루틴 end -->
 			</div>
 		</div>
-		</div>
-		<!-- 기본 폼 완성 -->
+	</div>
+	<!-- 기본 폼 완성 -->
 
-		<!-- 공통 스크립트-->
-		<th:block th:replace="fragments/script :: scriptFragment"></th:block>
-		<script type="text/javascript">
+	<!-- 공통 스크립트-->
+	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+	<script type="text/javascript">
    
 		
 		var cpval = 1;
@@ -174,19 +178,18 @@
 									'<a href="routineBrdDetail?routine_brd_seq='+obj.routine_brd_seq+'" class="card-link">'+
 											'<img src="assets/upload/routineBrdUpload/'+obj.brd_image2+'" />'+
 											'<div class="card-body">'+
-											 '<p class="card-text float-right">'+obj.user_nickname+'</p>'+
-						                          '<h5 class="card-text mt-3 mb-3">'+obj.routine_brd_title+'</h5>'+
+											 '<p>'+obj.user_nickname+'</p>'+
+						                          '<h3 class="txt_post mt-3 mb-3">'+obj.routine_brd_title+'</h3>'+
 						          
-						                        '<div class="card-footer">'+
-						                        '<i class="icon-clock"></i>&nbsp;&nbsp;'+
-						                    	'<span class="card-text">'+obj.routine_brd_regdate+'</span>'+
-						                        '&nbsp;&nbsp;&nbsp;&nbsp;'+
-						                        '<i class="icon-eye"></i>&nbsp;&nbsp;'+
-						                        '<span class="card-text" >'+obj.routine_brd_hit+'</span>'+
-						                          
-						                        '</div>'+
-						                     '</div>'+
-										
+						                       
+						                     
+						                     '<div class="card-footer p-0 pt-3">'+
+												'<i class="icon-eye"></i>&nbsp;<span>'+obj.routine_brd_hit+'</span>&nbsp;&nbsp;'+
+												'<i class="icon-bubble"></i>&nbsp;&nbsp;<span>'+obj.routine_brd_comcount+'</span>&nbsp;&nbsp;'+
+												'<i class="icon-clock"></i>&nbsp;&nbsp;<span>'+obj.routine_brd_regdate+'</span>'+
+											'</div>'+
+											'</div>'+
+						           
 										'</a>'+
 								'</div>'	
 								

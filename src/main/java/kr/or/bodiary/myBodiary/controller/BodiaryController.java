@@ -43,48 +43,51 @@ public class BodiaryController {
      @Autowired public void setBodiaryservice(BodiaryService bodiaryservice) {
      this.bodiaryservice = bodiaryservice; }
      
-     @Autowired
-      private RoutineBrdService routinebrdservice;
-      
-      public void setRoutineBrdservice(RoutineBrdService routinebrdservice) {
-         this.routinebrdservice = routinebrdservice;
-      }
-   
-      
-      
-      //내가 쓴글,댓글 보기(자유게시판+루틴자랑) 
-         @RequestMapping("/myHistory")
-         public String myHistory(HttpServletRequest request
-                           ,Model model
-                           ) throws Exception {
-            
-            UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
-            String user_email = user.getUser_email();
-            System.out.println("유저 이메일"+user_email);
-            
+   //내가 쓴글,댓글 보기(루틴자랑) 
+     @RequestMapping("/myHistoryRoutine")
+     public String myHistoryRoutine(HttpServletRequest request,Model model) throws Exception {
+       UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+        String user_email = user.getUser_email();
+        System.out.println("유저 이메일"+user_email);
+        
+       //내가 쓴글 가져오기(루틴자랑게시판)
+        List<RoutineBrdDto> routineBrdList = bodiaryservice.myHistoryRoutineBrd(user_email);
+        
+        //내가 댓글 가져오기(루틴자랑게시판 댓글)
+        List<RoutineBoardCommentDto> routineBrdReplyList = bodiaryservice.myHistoryRoutineBrdReply(user_email);
+        
+        model.addAttribute("routineBrdList",routineBrdList);
+        model.addAttribute("routineBrdReplyList",routineBrdReplyList);
+        
+        return "myBodiary/myHistoryRoutine";
+     }
+     
+     
+     //내가 쓴글,댓글 보기(자유게시판) 
+     @RequestMapping("/myHistory")
+     public String myHistory(HttpServletRequest request
+                       ,Model model
+                       ) throws Exception {
+        
+        UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
+        String user_email = user.getUser_email();
+        System.out.println("유저 이메일"+user_email);
+        
 
-         
-            //내가쓴 글 가져오기(자유게시판)
-            List<FreeBrdDTO> freeBrdList = bodiaryservice.myHistoryFreeBrd(user_email);
-            
-            //내가쓴 댓글 가져오기(자유게시판 댓글)
-            List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.myHistoryFreeBrdReply(user_email);
-            
-            //내가 쓴글 가져오기(루틴자랑게시판)
-            List<RoutineBrdDto> routineBrdList = bodiaryservice.myHistoryRoutineBrd(user_email);
-            
-            //내가 댓글 가져오기(루틴자랑게시판 댓글)
-            List<RoutineBoardCommentDto> routineBrdReplyList = bodiaryservice.myHistoryRoutineBrdReply(user_email);
-            
-            
-            model.addAttribute("routineBrdList",routineBrdList);
-            model.addAttribute("routineBrdReplyList",routineBrdReplyList);
-            model.addAttribute("freeBrdReplyList",freeBrdReplyList);
-            model.addAttribute("freeBrdList",freeBrdList);
-            
-            
-            return "myBodiary/myHistory";
-         }
+     
+        //내가쓴 글 가져오기(자유게시판)
+        List<FreeBrdDTO> freeBrdList = bodiaryservice.myHistoryFreeBrd(user_email);
+        
+        //내가쓴 댓글 가져오기(자유게시판 댓글)
+        List<FreeBrdReplyDTO> freeBrdReplyList = bodiaryservice.myHistoryFreeBrdReply(user_email);
+
+
+        model.addAttribute("freeBrdReplyList",freeBrdReplyList);
+        model.addAttribute("freeBrdList",freeBrdList);
+        
+        
+        return "myBodiary/myHistory";
+     }
 
          //내가 쓴글 삭제(자유게시판)
          @RequestMapping("/myHistoryDelete")
@@ -115,26 +118,7 @@ public class BodiaryController {
 
    
 
-   @RequestMapping("/myHistoryDetail")
-   public String myHistoryDetail() {
-      return "myBodiary/myHistoryDetail";
-   }
-
-   @RequestMapping("/myHistoryEditForm")
-   public String myHistoryEditForm() {
-      return "myBodiary/myHistoryEditForm";
-   }
-
-   @RequestMapping("/myHistoryRoutine")
-   public String myHistoryRoutine() {
-      return "myHistory/myHistoryRoutine";
-   }
-
-   @RequestMapping("/myHistoryFreeBoard")
-   public String myHistoryFreeBoard() {
-      return "myHistory/myHistoryFreeBoard";
-   }
-
+  
    
 
 

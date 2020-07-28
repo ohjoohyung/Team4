@@ -25,7 +25,7 @@ public class NaverLoginBO {
 	*/
 	private final static String CLIENT_ID = "AYWBY1dmBWBJwgS4UqNE";
 	private final static String CLIENT_SECRET = "7OyQljaBSD";
-	private final static String REDIRECT_URI = "http://192.168.0.5:8090/bodiary/nCallback";
+	private final static String REDIRECT_URI = "http://localhost:8090/bodiary/nCallback";
 	private final static String SESSION_STATE = "oauth_state";
 	
 	/* 프로필 조회 API URL */

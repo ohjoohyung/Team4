@@ -8,7 +8,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    <!-- 리스트 -->
     <select id="routineBoardList" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">  
 		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, u.user_nickname 
-		FROM routineboard r JOIN user u on r.user_email = u.user_email  
+	,(SELECT COUNT(*) FROM routineboardcomment where routine_brd_seq = r.routine_brd_seq) as routine_brd_comcount FROM routineboard r JOIN user u on r.user_email = u.user_email  
 		ORDER BY routine_brd_seq desc limit ${param1}, ${param2}
 	</select>
 	
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 조회수가 많은 오늘 게시물 4개 뽑기 -->
 	<select id="getTodayHit" resultType="kr.or.bodiary.routineBrd.dto.RoutineBoardUserJoinDto">
 		SELECT r.routine_brd_seq, r.routine_brd_title, r.routine_brd_regdate, r.routine_brd_hit, r.brd_image1, r.brd_image2, u.user_nickname 
-		FROM routineboard r JOIN user u on r.user_email = u.user_email 
+		, (SELECT COUNT(*) FROM routineboardcomment where routine_brd_seq = r.routine_brd_seq) as routine_brd_comcount FROM routineboard r JOIN user u on r.user_email = u.user_email 
 		where DATE_FORMAT(r.routine_brd_regdate,"%Y-%m-%d") = CURDATE() order by routine_brd_hit desc limit 0,4;
 	</select>
 	

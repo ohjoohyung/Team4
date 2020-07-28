@@ -4,17 +4,17 @@
 	<th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 		
 	<!-- 데이터 테이블 사용시 추가  -->
+    
  	<link href="assets/plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+    <script src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script> 
     <!-- **************** -->
-    <script>
-        jQuery(function($){
-            $("#foo-table_free").DataTable();
-            $("#foo-table_freeReply").DataTable();   
-            $("#foo-table_routine").DataTable();
-            $("#foo-table_routineReply").DataTable(); 
-        });
-    </script>
+	 <script>
+	        jQuery(function($){
+	            $("#foo-table_free").DataTable();
+	            $("#foo-table_freeReply").DataTable();   
+	        });
+
+	    </script>
 <body>
 	<!-- 공통 nav -->
 	<th:block th:replace="common/nav :: navFragment"></th:block>
@@ -31,23 +31,17 @@
 	   
 		<div class="card">
              <div class="card-body">
-                <ul class="nav nav-pills mb-3">
-                     <li class="nav-item"><a href="#navpills-1" class="nav-link active show" data-toggle="tab" aria-expanded="false">자유게시판 게시물</a>
-                     </li>
-                     <li class="nav-item"><a href="#navpills-2" class="nav-link" data-toggle="tab" aria-expanded="false">루틴자랑 게시판 게시물</a>
-                     </li>                                 
-                 </ul>
-				<!-- 내가쓴글 댓글(자유,루틴)  -->
-				<div class="tab-content br-n pn">
-				
-				
-	<!--  자유게시물   -->	
-	    <div id="navpills-1" class="tab-pane active show" >
+               
+                  <h2 style="display:inline;"><a href="myHistory" >자유게시판 </a></h2>&nbsp;&nbsp; 
+                     
+                 <h2 style="display:inline;" ><a href="myHistoryRoutine" >루틴자랑 게시판 </a></h2>
+                
+
 	    
 	    <!--  자유게시물 내가쓴 글  -->	
 			<div class="card">
              <div class="card-body">
-             	<h3>내가 쓴 글</h3>
+             	<h4>내가 쓴 글</h4>
 					<div class="table-responsive">
 					    <table id="foo-table_free" class="table table-bordered">
 							 <thead class="table-info">
@@ -84,7 +78,7 @@
 					<div class="card">
 				             <div class="card-body">
 								 
-								 <h3>내가 쓴 댓글</h3>
+								 <h4>내가 쓴 댓글</h4>
 									<div class="table-responsive">
 									    <table id="foo-table_freeReply" class="table table-bordered">
 											 <thead class="table-info">
@@ -110,80 +104,11 @@
 				  </div>
 				     <!--  자유게시물  END -->
 				      
-				      <!--  루틴자랑 게시판(내가쓴글/댓글) 시작 -->
-				      <div id="navpills-2" class="tab-pane">
-				      <!--  루틴자랑 내가쓴 글  -->	
-						
-						<div class="card">
-				             <div class="card-body">
-				             	<h3>내가 쓴 글</h3>
-									<div class="table-responsive">
-									    <table id="foo-table_routine" class="table table-bordered">
-											 <thead class="table-info">
-		                                            <tr>
-		                                                <th>글번호</th>
-		                                                <th>제목</th>
-		                                                <th >작성일</th>
-														<th >수정</th>
-														<th >삭제</th>		
-		                                            </tr>
-				                              </thead>
-											 <tbody>
-											 		<tr th:each="routineBrdList : ${routineBrdList}">
-				                                        <th th:text="${routineBrdList.routine_brd_seq}"></th>
-				                                        <td><a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdList.routine_brd_seq})}" th:text="${routineBrdList.routine_brd_seq}"></a></td>
-				                                        <td th:text="${routineBrdList.routine_brd_regdate}"></td>			                                                
-				                                        <!-- 수정  -->
-				                                        <td><a th:href="@{/routineBrdEdit(routine_brd_seq=${routineBrdList.routine_brd_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>
-				                                        <!-- 삭제  -->	
-				                    					<td><a th:onclick="|javascript:myHistoryRoutineDelete('${routineBrdList.routine_brd_seq}')|" style="cursor:pointer;"><i class="ti-close m-r-5 f-s-12"></i></a></td>
-				                    				</tr>		
-								              </tbody>
-									    </table>
-								      </div>  
-								      </div>
-							</div>  
-		
-							<!--  루틴자랑 내가쓴 글  END-->	
-							
-							
-						<!--  루틴자랑 내가쓴 댓글  -->
-							<div class="card">
-						             <div class="card-body">
-										 
-										 <h3>내가 쓴 댓글</h3>
-											<div class="table-responsive">
-											    <table id="foo-table_routineReply" class="table table-bordered">
-													 <thead class="table-info">
-						                                            <tr>
-						                                                <th >댓글 내용</th>
-						                                                <th >작성일</th> 	          	
-								                                    </tr>
-						                              </thead>
-													  <tbody>
-													 	<tr th:each="routineBrdReplyList : ${routineBrdReplyList}">
-						                           			<td>
-						                           				<a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdReplyList.routine_brd_seq})}" th:text="${routineBrdReplyList.routine_cmt}"></a>
-						                           			</td>
-						      								<td th:text="${routineBrdReplyList.routine_cmt_date}"></td>
-										                </tr>                       
-										              </tbody>
-											    </table>
-										      </div>  
-										   
-									</div>  
-						      </div>
-						       <!--  루틴자랑  내가쓴 댓글  END-->
-							       
-				      </div>
-				      <!--  루틴자랑 게시판(내가쓴글/댓글) END-->
+				    
 				    
 				       
-				          
-				</div>  
 				
-				
-				</div>
+			
 				
 				
 			</div>  
@@ -210,6 +135,7 @@
 				}		
 		}
 	 </script>
+	
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 </html>

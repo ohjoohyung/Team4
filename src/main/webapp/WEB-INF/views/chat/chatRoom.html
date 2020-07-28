@@ -405,19 +405,24 @@
 			success:function(data){
 				var memberList = "";
 				$.each(data, function(key, value) {
+					if(value.user_email == master_email) {
+						memberList += "<div>" +value.user_nickname + "<span class='badge badge-pill badge-info'>방장</span></div>";
+					} else {
+						memberList += "<div>" +value.user_nickname + "</div>";
+					}
 					var currentMemberCount = data.length;
 					var memberCount = '';
 						memberCount += '<div class="count"> 참여자수 : ' +currentMemberCount +' / ' + room_count +'</div>'; 
 						
 					$('.count').html(memberCount);
 					
-					/*  
-						memberList += "<span>" +value.user_nickname; */
+					  
 						
 						
+						$('.userlist').html(memberList); 
 				});
-				/* memberList+="</span>";
-				$('.userlist').html(memberList); */
+		
+				
 			}
 	    });
 	} 

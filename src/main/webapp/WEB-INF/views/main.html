@@ -120,6 +120,7 @@ color: #7571f9;
 .main-active a{
 color: #7571f9;
 }
+
 </style>
 </head>
 
@@ -260,7 +261,7 @@ color: #7571f9;
 													<div class="col-7">
 														<div style=" height:70%;">
 														<label class="text-muted" th:text="${todayMain.user_nickname}"></label>
-														<h3>
+														<h3 class="txt_post">
 														<a th:href="@{/routineBrdDetail(routine_brd_seq=${todayMain.routine_brd_seq})}" th:text="${todayMain.routine_brd_title}"></a></h3>
 														</div>
 														<div id="icon">
@@ -269,9 +270,14 @@ color: #7571f9;
 																<span class="card-text" th:text="${todayMain.routine_brd_hit}"></span>
 															</div>
 															<div class="card-text">
+															<i class="icon-bubble"></i>&nbsp;&nbsp;<span th:text="${todayMain.routine_brd_comcount}"></span>
+																&nbsp;&nbsp;&nbsp;
 																<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${todayMain.routine_brd_regdate}"></span>
+																
+																
 															</div>
 															<div class="card-text">
+															
 															</div>
 														</div>
 													</div>
@@ -288,7 +294,7 @@ color: #7571f9;
 						<!-- 오늘의 루틴 end -->
 
 						<div class="col-main col-12">
-							<a th:href="@{freeBrdList}"><h4>프리보드</h4></a>
+							<a th:href="@{freeBrdList}"><h4>자유 게시판</h4></a>
 							<hr>
 							<div class="row">
 								<!-- 값 잘 넘어오나 찍어보기 -->
@@ -299,17 +305,17 @@ color: #7571f9;
 											<a th:href="@{freeBrdDetail(seq=${freeMain.free_brd_seq})}">
 											<label class="" th:text="${freeMain.user_nickname}"></label>
 												<div style="height:70%;">
-												<h2 class=" mb-3" th:text="${freeMain.free_brd_title}"></h2>
+												<h2 class="mb-3 txt_post" th:text="${freeMain.free_brd_title}"></h2>
 												</div>
 											</a>
 <!-- 											<div class="card-body-text" th:utext="${freeMain.free_brd_content}"></div> -->
 											<div id="icon2">
 												<div class="card-footer p-0 pt-3">
 													<i class="icon-eye"></i>&nbsp;<span th:text="${freeMain.free_brd_hits}"></span>&nbsp;&nbsp;
+													<i class="icon-bubble"></i>&nbsp;&nbsp;<span th:text="${freeMain.brd_cmt_count}"></span>&nbsp;&nbsp;
 													<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${freeMain.free_brd_date}"></span>
-												<div class="text">
 													
-												</div>
+												
 												</div>
 											</div>
 										</div>

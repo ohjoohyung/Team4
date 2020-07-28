@@ -100,7 +100,7 @@
                                         <tr th:each="qna : ${list}">
 								         <td th:text="${qna.qna_brd_seq}"></td>    
 								         <!-- <td th:text="${qna.qna_brd_title}"></td> -->
-								         <td><a th:href="@{/myQnaDetail(qna_brd_seq=${qna.qna_brd_seq})}"><span th:text="${qna.qna_brd_title}"></span></a> </td>
+								         <td><a th:href="@{/myQnaDetail(qna_brd_seq=${qna.qna_brd_seq})}"><span class="txt_post" th:text="${qna.qna_brd_title}"></span></a> </td>
 								         
 								         
 								         <!-- <td th:text="${qna.qna_brd_answer}"></td> -->

@@ -15,7 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import kr.or.bodiary.chat.dao.ChatDao;
-import kr.or.bodiary.chat.dto.ChatMemberDto;
+
 import kr.or.bodiary.user.dto.UserDto;
 
 
@@ -106,7 +106,9 @@ private SqlSession sqlsession;
 		
 		ChatDao chatdao = sqlsession.getMapper(ChatDao.class);
 		chatdao.removeMember(user_email, Integer.parseInt(room_number));
-		
+		if(chatdao.getMemberCount(Integer.parseInt(room_number)) == 0) {
+			chatdao.deleteChatRoom(Integer.parseInt(room_number));
+		}
 		
 	}
 

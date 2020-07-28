@@ -53,6 +53,7 @@ public class NoticeService {
 		NoticeDao noticedao = sqlsession.getMapper(NoticeDao.class);
 		UserDto user = (UserDto)request.getSession().getAttribute("currentUser");
 		noticedto.setUser_email(user.getUser_email());
+		noticedto.setNotice_brd_title("[공지] "+noticedto.getNotice_brd_title());
 		noticedao.noticeInsert(noticedto);
 		return "redirect:noticeList";
 	}
