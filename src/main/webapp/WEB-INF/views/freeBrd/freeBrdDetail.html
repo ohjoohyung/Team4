@@ -1,164 +1,164 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <!-- 공통 헤더-->
 <th:block th:replace="fragments/htmlhead :: headFragment"></th:block>
 <body>
 
 
-	<!-- 공통 nav -->
-	<th:block th:replace="common/nav :: navFragment"></th:block>
-	<div class="bodiary-wrapper">
+   <!-- 공통 nav -->
+   <th:block th:replace="common/nav :: navFragment"></th:block>
+   <div class="bodiary-wrapper">
 
 
-		<!-- 글 상세정보 시작 -->
-		<div class="content mt-4">
+      <!-- 글 상세정보 시작 -->
+      <div class="content mt-4">
 
-			<div class="card" th:each="list : ${freeBrdDetail}">
+         <div class="card" th:each="list : ${freeBrdDetail}">
 
-				<div class="card-body p-5">
-					<div class="row">
-						<div class="col-11">
-							<!-- 카테고리 부분(자유-1,질문-2,팁-3) -->
-							<span class="card-text text-primary" th:if="${list.free_cat} == 1 ">자유</span>
-							<span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>	
-							<span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
-							
-							
-							
-							<h2 class="mt-2" th:text="${list.free_brd_title}"></h2>
-							<p class="card-text">
-								<i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_date}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
-								<i class="icon-eye"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_hits}"></span>
-							</p>
-							<p class="card-text">
-								<!-- 조회수  -->
-							</p>
-						</div>
-						<div class="col">
-							<div class="user-img c-pointer position-relative"
-								data-toggle="dropdown">
-								<span class="activity active"></span> <i
-									class="icon-options-vertical"></i>
-							</div>
+            <div class="card-body p-5">
+               <div class="row">
+                  <div class="col-11">
+                     <!-- 카테고리 부분(자유-1,질문-2,팁-3) -->
+                     <span class="card-text text-primary" th:if="${list.free_cat} == 1 ">자유</span>
+                     <span class="card-text text-primary" th:if="${list.free_cat} == 2 ">질문</span>   
+                     <span class="card-text text-primary" th:if="${list.free_cat} == 3 ">팁</span>
+                     
+                     
+                     
+                     <h2 class="mt-2" th:text="${list.free_brd_title}"></h2>
+                     <p class="card-text">
+                        <i class="icon-clock"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_date}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <i class="icon-eye"></i>&nbsp;&nbsp;<span th:text="${list.free_brd_hits}"></span>
+                     </p>
+                     <p class="card-text">
+                        <!-- 조회수  -->
+                     </p>
+                  </div>
+                  <div class="col">
+                     <div class="user-img c-pointer position-relative"
+                        data-toggle="dropdown">
+                        <span class="activity active"></span> <i
+                           class="icon-options-vertical"></i>
+                     </div>
 
-							<!-- 해당글을 쓴사람의 이메일과 수정할라고 하는 현재접속자의 이메일이 똑같다면 수정과 삭제가 가능    -->		
-							<div class="basic-dropdown" th:if="${list.user_email == user}">							
-								<div class="dropdown-menu">
-									
-										<a class="dropdown-item" th:href="@{/freeBrdEdit(seq=${list.free_brd_seq})}">수정</a>
-										<a id="freeBrdDelete" class="dropdown-item" >삭제</a>
-										<!-- onclick="return freeBrdDelete();" -->
-									<!-- 글번호 -->
-									<button id="freeSeq" hidden="hidden" th:value="${list.free_brd_seq}"></button>
-								</div>
-							</div>
+                     <!-- 해당글을 쓴사람의 이메일과 수정할라고 하는 현재접속자의 이메일이 똑같다면 수정과 삭제가 가능    -->      
+                     <div class="basic-dropdown" th:if="${list.user_email == user}">                     
+                        <div class="dropdown-menu">
+                           
+                              <a class="dropdown-item" th:href="@{/freeBrdEdit(seq=${list.free_brd_seq})}">수정</a>
+                              <a id="freeBrdDelete" class="dropdown-item" >삭제</a>
+                              <!-- onclick="return freeBrdDelete();" -->
+                           <!-- 글번호 -->
+                           <button id="freeSeq" hidden="hidden" th:value="${list.free_brd_seq}"></button>
+                        </div>
+                     </div>
 
-						</div>
-					</div>
-					<hr>
-					<div class="contentFBD">
-				
-					
-						<p th:utext="${list.free_brd_content}"></p> 
-					</div>
-
-
-					<hr>
-					<div class="row">
-						<div class="col-lg-12">
-						<!-- 프로필사진 이미지 뿌려주기 (등록한 프로필이 없으면 Default.jpg 프로필이미지 출력)-->
-							<div class="row">
-								<div class="col"></div>
-								<div class="col-2 text-center media align-items-center mb-4 mt-2">
-									<div class="row">
-										<div class="col-12">
-									<img class="circle-rounded" th:src="@{/assets/upload/userUpload/}+${list.user_img}" width="80" height="80" alt="">	
-									</div>
-									<div class="col-12 mt-2">
-									<span th:text="${list.user_nickname}" class="text-primary" style="font-size:18px;"></span> 님
-									</div>
-									</div>
-								</div>
-								<div class="col"></div>
-							</div>
-						</div>
-
-						<div class="col mt-2">
-							<span class="card-text"> 
-							
-							</span>
-						</div>
-						<div class="col-9"></div>
+                  </div>
+               </div>
+               <hr>
+               <div class="contentFBD">
+            
+               
+                  <p th:utext="${list.free_brd_content}"></p> 
+               </div>
 
 
+               <hr>
+               <div class="row">
+                  <div class="col-lg-12">
+                  <!-- 프로필사진 이미지 뿌려주기 (등록한 프로필이 없으면 Default.jpg 프로필이미지 출력)-->
+                     <div class="row">
+                        <div class="col"></div>
+                        <div class="col-2 text-center media align-items-center mb-4 mt-2">
+                           <div class="row">
+                              <div class="col-12">
+                           <img class="circle-rounded" th:src="@{/assets/upload/userUpload/}+${list.user_img}" width="80" height="80" alt="">   
+                           </div>
+                           <div class="col-12 mt-2">
+                           <span th:text="${list.user_nickname}" class="text-primary" style="font-size:18px;"></span> 님
+                           </div>
+                           </div>
+                        </div>
+                        <div class="col"></div>
+                     </div>
+                  </div>
 
-						<div class="col">
-							<button type="button" onclick="location.href='freeBrdList'"
-								class="btn btn-outline-primary">글 목록</button>
-						</div>
+                  <div class="col mt-2">
+                     <span class="card-text"> 
+                     
+                     </span>
+                  </div>
+                  <div class="col-9"></div>
 
-					</div>
 
-					<!-- 댓글 목록 보이는 부분 -->
-					<hr>				
-						<div class="commentList"></div>
-					<hr>
 
-					<!-- 댓글 쓰기 -->
+                  <div class="col">
+                     <button type="button" onclick="location.href='freeBrdList'"
+                        class="btn btn-outline-primary">글 목록</button>
+                  </div>
 
-					<div>
-						<label for="content">comment</label>
-					        <form name="commentInsertForm">
-					            <div class="input-group">
-					               <input type="hidden" name="boardSeq" id="boardSeq" th:value="${list.free_brd_seq}"/>
-					               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-					               <button type="button" id="btnComment" name="btnComment"  class="btn mb-1 btn-outline-light">등록</button>
-					              
-					           </div>
-					        </form>
-					</div>
+               </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 공통 스크립트-->
-	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
+               <!-- 댓글 목록 보이는 부분 -->
+               <hr>            
+                  <div class="commentList"></div>
+               <hr>
+
+               <!-- 댓글 쓰기 -->
+
+               <div>
+                  <label for="content">comment</label>
+                       <form name="commentInsertForm">
+                           <div class="input-group">
+                              <input type="hidden" name="boardSeq" id="boardSeq" th:value="${list.free_brd_seq}"/>
+                              <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+                              <button type="button" id="btnComment" name="btnComment"  class="btn mb-1 btn-outline-light">등록</button>
+                             
+                          </div>
+                       </form>
+               </div>
+
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- 공통 스크립트-->
+   <th:block th:replace="fragments/script :: scriptFragment"></th:block>
 </body>
 <script type="text/javascript">
 
-	
-	$("#freeBrdDelete").on("click", function(){
+   
+   $("#freeBrdDelete").on("click", function(){
 
-		var count = $('#cmt_count').text();
-		var seq = $("#freeSeq").val();
-		//alert("댓글 개수" + count +"해당 글번호"+seq);
-		
-		if(count > 0){
-			alert("댓글이 있는 게시물은 삭제 할 수 없습니다!");	
-		}else{
-			if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
-				location.href = "freeBrdDelete?seq="+seq;
-			}
-		} 
+      var count = $('#cmt_count').text();
+      var seq = $("#freeSeq").val();
+      //alert("댓글 개수" + count +"해당 글번호"+seq);
+      
+      if(count > 0){
+         alert("댓글이 있는 게시물은 삭제 할 수 없습니다!");   
+      }else{
+         if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
+            location.href = "freeBrdDelete?seq="+seq;
+         }
+      } 
 
-	});
+   });
 
 
 </script>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
 //https://devbox.tistory.com/entry/jQuery-%EB%AC%B8%EC%84%9C-%EC%A4%80%EB%B9%84-%EC%9D%B4%EB%B2%A4%ED%8A%B8 (AJAX 개념)
 var boardSeq = $('#boardSeq').val();
 
 /*<![CDATA[*/
 var user_email = /*[[ ${session.currentUser.user_email} ]]*/
-	
-/*]]>*/	
+   
+/*]]>*/   
 $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
-	
+   
 $('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시 
     var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴(객체 타입으로 가져옴)
     //alert("내용"+insertData);
@@ -168,28 +168,31 @@ $('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시
 
 //댓글 목록 
 function commentList(){
-	// alert('게시글번호'+boardSeq); 게시글 번호 잘가져옴
+   // alert('게시글번호'+boardSeq); 게시글 번호 잘가져옴
     $.ajax({
         url : 'comment/list',
         type : 'get',
         data : {'boardSeq':boardSeq},
         success : function(data){
-        	console.log("댓글목록"+data);
-        	var a =''; 
-			var button = '';
+           
+           var a =''; 
+      
              $.each(data, function(key, value){ 
-            	 if(user_email == value.user_email) {
-            		 button = '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a><a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a></div>';
-            	 } 
+     
+                  var button = '';
+                if(user_email == value.user_email) {
+                   button = '<a onclick="commentUpdate('+value.brd_cmt_seq+',\''+value.brd_cmt+'\');"> 수정 </a><a onclick="commentDelete('+value.brd_cmt_seq+');"> 삭제 </a>';
+                } 
                  a += '<div class="commentArea" style="margin-bottom: 20px;">';
-                 a += '		<div class="commentInfo'+value.brd_cmt_seq+'">'+'<span class="text-primary">'+value.user_nickname+'</span>';
-                 a += '		<div class="">';
-                 a += '			<div> <i class="icon-clock"></i>&nbsp;&nbsp;<span> '+value.brd_cmt_date +'</span>&nbsp;&nbsp;&nbsp;';
-              	 a += button;
-                 a += '		</div>';
-                 a += '		</div>';
-                 a += '	<div class="mt-4 commentContent'+value.brd_cmt_seq+'"> <p>'+value.brd_cmt +'</p>';
-                 a += '	</div>';
+                 a += '      <div class="commentInfo'+value.brd_cmt_seq+'">'+'<span class="text-primary">'+value.user_nickname+'</span>';
+                 a += '      <div class="">';
+                 a += '         <div> <i class="icon-clock"></i>&nbsp;&nbsp;<span> '+value.brd_cmt_date +'</span>&nbsp;&nbsp;&nbsp;';
+                  a += button;
+                  a += '      </div>';
+                 a += '      </div>';
+                 a += '      </div>';
+                 a += '   <div class="mt-4 commentContent'+value.brd_cmt_seq+'"> <p>'+value.brd_cmt +'</p>';
+                 a += '   </div>';
                  a += '<hr>';
                  a += '</div>';
              });
@@ -197,9 +200,9 @@ function commentList(){
             $(".commentList").html(a); 
         },
         error : function(error) {
-        	console.log(error);
-	        alert("Error!"+error);
-	    }
+           console.log(error);
+           alert("Error!"+error);
+       }
     });
 }
 
@@ -233,33 +236,33 @@ function commentUpdateProc(cno){
 
 //댓글 등록
 function commentInsert(insertData){
-	
-	//댓글창에 아무것도 입력을 안하고 등록을 누를시 입력하라고 알람창을 띄우기
-	if($.trim($('#content').val())=="")
-	{
-		alert("댓글을 입력하세요.");
-		$('#content').focus();
-		return false;
-	}
-	
+   
+   //댓글창에 아무것도 입력을 안하고 등록을 누를시 입력하라고 알람창을 띄우기
+   if($.trim($('#content').val())=="")
+   {
+      alert("댓글을 입력하세요.");
+      $('#content').focus();
+      return false;
+   }
+   
     $.ajax({
         url : 'comment/insert',
         type : 'post',
         data : insertData,
         success : function(data){
             if(data == 1) {
-            	/* alert("댓글 작성 성공"); */
-            	commentList(); //댓글 작성 후 댓글 목록 reload 과정에서 에러발생?? 왜지??
+               /* alert("댓글 작성 성공"); */
+               commentList(); //댓글 작성 후 댓글 목록 reload 과정에서 에러발생?? 왜지??
                 $('[name=content]').val('');
             }else{
-            	//insert 실패시 
-            	/* alert("댓글 작성 실패"); */
-            	commentList();
+               //insert 실패시 
+               /* alert("댓글 작성 실패"); */
+               commentList();
             }
         },
-   		error : function(error) {
-	        alert("댓글이 작성되지 않았습니다.");
-	    }
+         error : function(error) {
+           alert("댓글이 작성되지 않았습니다.");
+       }
     });
 }
 
@@ -267,21 +270,21 @@ function commentInsert(insertData){
 
 //댓글 삭제 (POST방식)
 function commentDelete(cno){
-	/* alert("삭제할 댓글번호"+cno); */
-	//ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 
-	 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
-		$.ajax({
-	        url : 'comment/delete',
-	        type : 'post',
-	        data : {"cno":cno}, // data : cno 이런방식으로 넘기면 안넘어감 무조건 객체로 넘겨야됨?? {"cno":cno} 이런식으로 
-	        success : function(data){
-	            if(data == 1) commentList(); //댓글 삭제후 목록 출력
-	        }
-	    });
-	 }else{   //취소
-	     return false;
-	 }
-			
+   /* alert("삭제할 댓글번호"+cno); */
+   //ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 
+    if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
+      $.ajax({
+           url : 'comment/delete',
+           type : 'post',
+           data : {"cno":cno}, // data : cno 이런방식으로 넘기면 안넘어감 무조건 객체로 넘겨야됨?? {"cno":cno} 이런식으로 
+           success : function(data){
+               if(data == 1) commentList(); //댓글 삭제후 목록 출력
+           }
+       });
+    }else{   //취소
+        return false;
+    }
+         
 } 
 
 
