@@ -58,7 +58,7 @@
 											 <tbody>
 											 		<tr th:each="routineBrdList : ${routineBrdList}">
 				                                        <th th:text="${routineBrdList.routine_brd_seq}"></th>
-				                                        <td><a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdList.routine_brd_seq})}" th:text="${routineBrdList.routine_brd_seq}"></a></td>
+				                                        <td><a th:href="@{/routineBrdDetail(routine_brd_seq=${routineBrdList.routine_brd_seq})}" th:text="${routineBrdList.routine_brd_title}"></a></td>
 				                                        <td th:text="${routineBrdList.routine_brd_regdate}"></td>			                                                
 				                                        <!-- 수정  -->
 				                                        <td><a th:href="@{/routineBrdEdit(routine_brd_seq=${routineBrdList.routine_brd_seq})}"><i class="fa fa-pencil color-muted m-r-5"></i></a></td>

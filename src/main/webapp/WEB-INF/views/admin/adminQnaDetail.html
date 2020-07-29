@@ -103,8 +103,8 @@
 						
 									</form>
 							</div>
-							<article class="answer" itemprop="articleBody"
-								style="color: black;"  th:text="${qna.qna_brd_content}">
+							<article  class="answer" itemprop="articleBody"
+								style="color: black; white-space:pre;"  th:text="${qna.qna_brd_content}">
 							</article>
 						</div>
 					</div>
@@ -112,26 +112,28 @@
 				
 				
 				<!-- email hidden 추가 각각 hidden에 id 추가 form 태그 제거 스크립트 추가 -->
+				
 				<input id="qna_brd_ref" name="qna_brd_ref" th:value="${qna.qna_brd_seq}" type="hidden">
 				<input type="hidden" class="form-control input-default" value="답변입니다" id="qna_brd_title" name="qna_brd_title">
 				<input type="hidden"  id="user_email" th:value="${qna.user_email}" name="user_email">
-				<div class="card" style=" height: 280px;">
+				<div class="container">
+				<div class="card" style=" min-height: 280px;">
 					<div class="card-body"
 						style="padding-right: 30px; padding-left: 30px;">
 						<div class="basic-form">
 								<div class="form-group">
 
-										<textarea class="form-control h-150px" id="qna_brd_content" name="qna_brd_content" rows="12"  placeholder="내용을 입력하세요">
+										<textarea class="form-control" id="qna_brd_content" name="qna_brd_content" rows="12"  placeholder="내용을 입력하세요" >
                                             </textarea>
 								</div>
 						</div>
-						<button type="button" id="sendAns" class="btn mb-1 btn-info"
+						<button type="button" id="sendAns" class="btn mb-1 btn-info text-center"
 					style="margin-bottom: 10px; float: right;">댓글답변하기</button>
 					
 					</div>
 					
 				</div>
-				
+				</div>
 				
 		</div>
 				 <!--**********************************

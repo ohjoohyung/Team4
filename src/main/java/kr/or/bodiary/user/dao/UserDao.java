@@ -19,6 +19,8 @@ public interface UserDao {
 	   
 	   public int countBodiary() throws ClassNotFoundException, SQLException;
 	   
+	   public int countTodayBodiary() throws ClassNotFoundException, SQLException;
+	   
 	   public int todayUser() throws ClassNotFoundException, SQLException;
 	   
 	   public int updatingChart() throws ClassNotFoundException, SQLException;

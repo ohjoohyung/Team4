@@ -74,12 +74,12 @@ public class ChartService {
       }
       return returnNum;
    }
-   //신고게시글수
+   //오늘 일지 수
       public int countReport() {
          UserDao userdao = sqlsession.getMapper(UserDao.class);
          int returnNum = 0;
          try {
-            returnNum = userdao.countBodiary();
+            returnNum = userdao.countTodayBodiary();
          } catch (Exception e) {
             e.getMessage();
          }

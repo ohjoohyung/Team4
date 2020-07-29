@@ -298,9 +298,14 @@ color: #7571f9;
 									<div class="card scale">
 										<div class="card-body2 p-4">
 											<a th:href="@{freeBrdDetail(seq=${freeMain.free_brd_seq})}">
-											<label class="" th:text="${freeMain.user_nickname}"></label>
+											
+											<label class="" th:if="${freeMain.free_cat == 1}" >자유</label>
+											<label class="" th:if="${freeMain.free_cat == 2}">질문</label>
+											<label class="" th:if="${freeMain.free_cat == 3}">팁</label>
+											
+											
 												<div style="height:70%;">
-												<h2 class="mb-3 txt_post" th:text="${freeMain.free_brd_title}"></h2>
+												<h3 class="mb-3 txt_post" th:text="${freeMain.free_brd_title}"></h3>
 												</div>
 											</a>
 <!-- 											<div class="card-body-text" th:utext="${freeMain.free_brd_content}"></div> -->

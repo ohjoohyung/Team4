@@ -58,6 +58,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
       from diary   
    </select>
    
+   <!-- 오늘 일지 수 -->
+   <select id="countTodayBodiary" resultType="int">
+   		select count(*) from diary where DATE_FORMAT(diary_date,"%Y-%m-%d") = CURDATE()
+   </select>
+   
    <!-- 일일회원가입수 -->
    <select id="todayUser" resultType="int">
       select count(user_email)

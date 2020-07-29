@@ -24,9 +24,16 @@
                 <div class="basic-dropdown">
                     <div class="dropdown-menu">
                     	<th:block th:if="${session.currentUser.user_email} != ${routineBoard.user_email}">
+                    	 <th:block th:if="${session.currentUser.user_email} != 'admin@bodiary.or.kr'">
                         	<a class="dropdown-item" href="#">신고</a>
+                        	 </th:block>
                         </th:block>
                         <th:block th:unless="${session.currentUser.user_email} != ${routineBoard.user_email}">
+	                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
+	                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
+                        </th:block>
+                        
+                        <th:block th:if="${session.currentUser.user_email.equals('admin@bodiary.or.kr')}">
 	                        <a class="dropdown-item" th:href="@{/routineBrdEdit(routine_brd_seq=${routineBoard.routine_brd_seq})}">수정</a>
 	                        <a class="dropdown-item" href="javascript:deleteCheck();">삭제</a>
                         </th:block>

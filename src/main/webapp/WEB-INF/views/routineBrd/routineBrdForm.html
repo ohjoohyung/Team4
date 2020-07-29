@@ -148,7 +148,7 @@
            if(data.routine_cart_seq == 0) {
               $('#cardio').empty();
               $('#weightTraining').empty();
-              validate[2] = false;
+             
               return;
            }
            $.ajax(
@@ -197,10 +197,8 @@
                                     '</div>'   
                         )}
                      }); 
-                     $('.tdroutine')
-                     .html(
-                           '');
-                     validate[2] = true;
+                    
+                    
                    }
                 });
            });      
