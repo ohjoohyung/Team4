@@ -84,7 +84,20 @@ public class UserController {
 		this.naverLoginBO = naverLoginBO;
 	}
 	
-
+	/*
+    * @Method Name : login
+    * @작성일 : 2020. 8. 14.
+    * @작성자 : 엄지희
+    * @변경이력 :
+    * @Method 설명 : 소셜로그인 인지 체크 후 소셜일 경우 각각에 맞는 콜백 페이지로 이
+    * 				이메일과 패스워드 확인하여 에러발생시 에러 메세지 출력, 
+    * 				올바른 입력 시 login handler에 따라 로그인처리
+    * @param errormsg : 에러시 띄우는 에러 메세지를 정의한 String
+    * @param user_email : 클라이언트가 입력한 이메일 값
+    * @param request
+    * @param modelmap : 소셜로그인 시 콜백 url을 담는다.
+    * @return "user/login" : 로그인 페이지 재호출
+    */
 	//------------- 로그인 --------------
 	//로그인 페이지 
 			@RequestMapping("/login")
@@ -115,9 +128,20 @@ public class UserController {
 					System.out.println("구글" + googleAuthUrl);
 				}
 				
-				
 				return "user/login";
 			}
+		/*
+		* @Method Name : loginFail
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @변경이력 :
+		* @Method 설명 : 에러 발생시 그에 맞는 에러 메세지 출력할 수 있도록 정의함
+		* @param errormsg : 에러시 띄우는 에러 메세지를 정의한 String
+		* @param user_email : 클라이언트가 입력한 이메일 값
+		* @param request
+		* @param redirect
+		* @return "redirect:/login" : 에러메세지를 담아 로그인 페이지 재호출
+		*/
 		@RequestMapping("/loginFail")
 		public String login(HttpServletRequest request, RedirectAttributes redirect) {
 			System.out.println("에러 컨트롤러 탐");
@@ -130,7 +154,18 @@ public class UserController {
 			return "redirect:/login";
 		}
 		
-		
+		/*
+		* @Method Name : gCallback
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @변경이력 :
+		* @Method 설명 :	구글 로그인 정보 확인 후 데이터를 담아 돌아갈 페이지를 정의함
+		* @param model 
+		* @param session 
+		* @param request
+		* @return : 성공시 user/callback
+		* 			실패시 redirect:/login?error
+		*/
 		//구글 로그인
 		@RequestMapping(value = "/gCallback", method = { RequestMethod.GET, RequestMethod.POST })
 		public String googlecallback(Model model, HttpSession session, HttpServletRequest request) throws Exception {
@@ -211,7 +246,20 @@ public class UserController {
 		      
 		}
 		
-		
+		/*
+		* @Method Name : nCallback
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @변경이력 :
+		* @Method 설명 :	구글 로그인 정보 확인 후 데이터를 담아 돌아갈 페이지를 정의함
+		* @param model 
+		* @param code
+		* @param state
+		* @param session
+		* @param request
+		* @return : 성공시 user/callback
+		* 			실패시 redirect:/login?error
+		*/
 		//네이버 로그인 성공시 callback호출 메소드
 		@RequestMapping(value = "/nCallback", method = { RequestMethod.GET, RequestMethod.POST })
 		public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, HttpServletRequest request)
@@ -276,7 +324,17 @@ public class UserController {
 	        	return "redirect:/login?error";
 	        }
 		}	
-		//------------- 회원가입 --------------
+	//------------- 회원가입 --------------
+	/*
+	* @Method Name : register
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	회원가입 페이지 이동 및 처리
+	* @param user : 가입할 유저 정보
+	* @return get 방식 : user/register
+	* 		  post 방식 : userService.register(user) 
+	*/
 	//회원가입 페이지
 	@RequestMapping("/register")
 	public String register() {
@@ -289,6 +347,17 @@ public class UserController {
 		System.out.println("register 탐");
 		return userService.register(user);
 	}
+	/*
+	* @Method Name : profileEditAssociate
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	회원가입 후 준회원에게 정보입력 유도하여 작성 성공 시 role 권한 업데이트하는 함수
+	* @param user : 가입할 유저 정보
+	* @param request
+	* @return get 방식 : user/profileEditForAssociateUser,
+	* 		  post 방식 : userService.updateUserAssociate(user,request) 
+	*/
 	//---------- 준회원 정보수정 -----------
 	@RequestMapping("/profileEditAssociate")
 	public String profileEditForAssociateUser() {
@@ -299,6 +368,18 @@ public class UserController {
 		
 		return userService.updateUserAssociate(user, request);
 	}
+	/*
+	* @Method Name : register
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	회원 탈퇴 요청 시 정보 수정 update를 통해 로그인을 막고,
+	* 				한달 뒤 유저 데이터가 실제로 삭제처리 될 수 있는 트리거의 조건을 충족시키는 메서드
+	* @param user : 가입할 유저 정보
+	* @param request 
+	* @return get 방식 : myBodiary/myWithdraw
+	* 		  post 방식 : userService.updateWithdrawUser(user,request) 
+	*/
 	//---------- 탈퇴처리 -----------
 	@RequestMapping("/myWithdraw")
 	   public String getMyWithdraw() {
@@ -306,22 +387,49 @@ public class UserController {
 	}
 	@RequestMapping(value="/myWithdraw" , method=RequestMethod.POST)
 	public String updateWithdrawalUser(UserDto user ,HttpServletRequest request) {
-		return userService.updateWithdrawalUser(user, request);
+		return userService.updateWithdrawUser(user, request);
 	}
 	
-
+	/*
+	* @Method Name : myPageEdit
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	계정정보 수정 페이지로 이동하는 메서드
+	* @return myBodiary/myPageEdit
+	*/
 	//---------- 계정정보 수정 -----------
 	@RequestMapping("/myPageEdit")
 	public String myPageEdit() {
 		return "myBodiary/myPageEdit";
 	}
+	/*
+	* @Method Name : pwdUpdate
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	패스워드 비동기 수정 메서드
+	* @param user : 비밀번호를 수정할 유저 정보
+	* @param request 
+	* @return userService.updatePwd(user,request) 
+	*/
 	@ResponseBody
 	@RequestMapping(value="updatePwd" , method=RequestMethod.POST)
 	public String pwdUpdate(UserDto user,HttpServletRequest request) {
-		System.out.println("유저 패스워드 수정하러 왔슴다~");
+		System.out.println("유저 패스워드 수정 메서드");
 		
 		return userService.updatePwd(user,request);
 	}
+	/*
+	* @Method Name : updateNick
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	닉네임 비동기 수정 메서드
+	* @param user : 닉네임을 수정할 유저 정보
+	* @param request 
+	* @return userService.updateNick(user,request) 
+	*/
 	@ResponseBody
 	@RequestMapping(value="updateNick" , method=RequestMethod.POST, produces = "application/text; charset=utf8")
 	public String updateNick(UserDto user,HttpServletRequest request) {
@@ -341,12 +449,28 @@ public class UserController {
 		System.out.println(result);
 		return result;
 	}
-	
+	/*
+	* @Method Name : myProfileDetail
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 : 프로필 상세 페이지로 이동
+	* @return myBodiary/myProfileDetail
+	*/
 	//---------- 계정정보 외 프로필정보 수정 -----------
 	@RequestMapping("/myProfileDetail")
 	public String myProfileDetail() {
 		return "myBodiary/myProfileDetail";
 	}
+	/*
+	* @Method Name : myPageEdit
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	프로필정보 수정 페이지로 이동하고, 변경된 값을 수정하는 메서드
+	* @return get방식 : myBodiary/myProfileEdit
+	* 		  post방식 : userService.updateUser(user,request)
+	*/
 	@RequestMapping("/myProfileEdit")
 	public String myProfileEdit() {
 		return "myBodiary/myProfileEdit";
@@ -370,6 +494,15 @@ public class UserController {
 		
 		return result;
 	}
+	/*
+	* @Method Name : emailcheck
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	입력된 이메일이 이미 회원가입된 이메일인지 확인하는 메서드
+	* @param user_email : 중복여부를 체크할 이메일
+	* @return userService.emailCheck(user_email) 
+	*/
 	//------------- 이메일 확인 --------------
 	@ResponseBody
 	@RequestMapping("/emailCheck")
@@ -378,6 +511,15 @@ public class UserController {
 		System.out.println(userService.getUser(user_email));
 		return userService.emailCheck(user_email);
 	}
+	/*
+	* @Method Name : sendConfirmEmail
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @변경이력 :
+	* @Method 설명 :	입력된 이메일로 인증확인을 위한 인증번호를 전송하는 메서드
+	* @param user_email : 메일을 받을 이메일
+	* @return userService.sendConfirmEmail(user_email) 
+	*/
 	//------------- 이메일 인증번호 전송 -------------
 	@ResponseBody
 	@RequestMapping("/confirmEmail")

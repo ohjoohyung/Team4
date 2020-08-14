@@ -312,7 +312,7 @@ public class UserService {
 		return resultReturn;
 	}
 	// -----------유저 탈퇴 요청 처리-----------
-	public String updateWithdrawalUser(UserDto user, HttpServletRequest request) {
+	public String updateWithdrawUser(UserDto user, HttpServletRequest request) {
 		UserDao userdao = sqlsession.getMapper(UserDao.class);
 		int result = 0;
 		try {

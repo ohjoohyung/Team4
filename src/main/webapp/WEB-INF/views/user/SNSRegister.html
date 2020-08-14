@@ -123,38 +123,26 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<!-- 리캡차 스크립트 -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>s
 	<script>
-// 	var validate = new Array;
-	
-         $(document).ready(function() {
-
-        	 
-        	 $('#user_nickname')
-				.keyup(
-							function () {
-								let nickname = /^[가-힣a-zA-Z0-9]{2,10}$/;
-								if (!nickname.test($('#user_nickname').val())) {
-									$('.tdnickname')
-											.html(
-													'<p class="pl-1 mt-2" style="color:red">2~10자에 특수문자,공백이 제거된 한글,영어 대소문자,숫자만 사용하세요.</p>');
-									validate[1] = false;
-								} else {
-									$('.tdnickname').html('<p class="pl-1 mt-2" style="color:#7571f9">멋진 닉네임이네요!</p>');
-									validate[1] = true;
-								}
-							}
-         );
-						
-
-		});	
-        	 
-        	 
-        	 
-
+	var validate = new Array;
+    $(document).ready(function() {
+    	for(let i=0; i<4; i++) {
+        	validate[i]=false;
+        }
+    	//유저 닉네임 유효성 검증
+    	$('#user_nickname').keyup(function () {
+			let nickname = /^[가-힣a-zA-Z0-9]{2,10}$/;
+			if (!nickname.test($('#user_nickname').val())) {
+			$('.tdnickname').html(
+				'<p class="pl-1 mt-2" style="color:red">2~10자에 특수문자,공백이 제거된 한글,영어 대소문자,숫자만 사용하세요.</p>');
+				validate[1] = false;
+			} else {
+				$('.tdnickname').html('<p class="pl-1 mt-2" style="color:#7571f9">멋진 닉네임이네요!</p>');
+				validate[1] = true;
+			}
+		});
+	});
     </script>
-    
 </body>
 </html>

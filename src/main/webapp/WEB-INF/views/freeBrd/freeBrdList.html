@@ -874,14 +874,18 @@
 	    /* function button1_click() {
 	    	alert("버튼1을 누르셨습니다.");
 	    } */
+	    /**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 오동률
+		* @설명 : 입력한 데이터가 포함된 게시글을 찾는 함수
+		* @param :file - 이미지 파일명
+		* 		  e - 입력된 썸머노트 게시글
+		**/
 	    $(document).on('click', '#btnSearch', function(e){
-	
 			e.preventDefault();
 	
 			var url = "freeBrdList";
-			
 			url = url + "?searchType=" + $('#searchType').val();
-	
 			url = url + "&keyword=" + $('#keyword').val();
 	
 			location.href = url;
@@ -889,8 +893,6 @@
 			console.log(url);
 	
 		});	 
-    </script>
-    <script type="text/javascript">
 	    /* 자유게시판용 검색 */
 	    $(document).on('click', '#btnFreeSearch', function(e){
 	
@@ -909,8 +911,6 @@
 			console.log(url);
 	
 		});	 
-    </script>
-	<script type="text/javascript">
 	    /* 질문게시판용 검색 */
 	    $(document).on('click', '#btnQnaSearch', function(e){
 	
@@ -929,8 +929,6 @@
 			console.log(url);
 	
 		});	 
-    </script>
-    <script type="text/javascript">
 	    /* 팁 게시판용 검색 */
 	    $(document).on('click', '#btnTipSearch', function(e){
 	
@@ -949,8 +947,6 @@
 			console.log(url);
 	
 		});	 
-    </script>
-    <script type="text/javascript"> 
    		function freeDetail(seq) 
    			{ 
    				 /* alert(idx); 
