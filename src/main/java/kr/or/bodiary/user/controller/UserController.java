@@ -527,13 +527,7 @@ public class UserController {
         return userService.sendConfirmEmail(user_email);
     }
 	
-	
-
-	
-	
 	//-------------- 차트 ------------------
-	
-	
 	//자신의 성별, 키에 해당하는 회원 평균 몸무게 조회
 	@ResponseBody
 	@RequestMapping("/getAvgWeight")
