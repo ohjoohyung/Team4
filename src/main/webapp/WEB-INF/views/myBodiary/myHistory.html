@@ -123,21 +123,27 @@
 		/**
 		* @함수명 : myHistoryDelete(seq,cmt_cnt)
 		* @작성일 : 2020. 7. 22.
-		* @작성자 : 오주형
-		* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
-		* @param input - 현재 input에 대한 정보			 
+		* @작성자 : 오동률
+		* @설명 : 글 삭제시 확인창 띄우기
+		* @param seq - 글번호
+		* @param cmt_cnt - 댓글 개수
 		**/
 		function myHistoryDelete(seq,cmt_cnt){
-				if(cmt_cnt > 0){
-					alert("댓글이 있는 게시물은 삭제 할 수 없습니다!");	
-				}else{
+				
 					if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
 						location.href="myHistoryDelete?seq="+seq;
 					}
-				} 
+				 
 				
 		}
-		/* 해당글을 삭제할경우 댓글이 있을때 따로 문구를 추가해야됨 */
+		
+		/**
+		* @함수명 : myHistoryDelete(seq)
+		* @작성일 : 2020. 7. 22.
+		* @작성자 : 오동률
+		* @설명 : 글 삭제시 확인창 띄우기
+		* @param seq - 글번호		 
+		**/
 		function myHistoryRoutineDelete(seq){
 				if (confirm("정말 이 게시글을 삭제하시겠습니까?") == true){
 					location.href="routineBrdDelete?routine_brd_seq="+seq;

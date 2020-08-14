@@ -343,6 +343,7 @@ public int allFreeBrdCount(Search search) throws Exception {
 	 //글삭제하기 서비스 함수
 	 public String freeBrdDelete(String seq) throws ClassNotFoundException, SQLException {
 		 	FreeBrdDao FreeBrd = sqlsession.getMapper(FreeBrdDao.class);
+		 	
 			FreeBrd.freeBrdDelete(seq);
 			return "redirect:freeBrdList";
 	}
