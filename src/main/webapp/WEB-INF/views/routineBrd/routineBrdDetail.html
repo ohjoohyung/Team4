@@ -324,17 +324,19 @@
 					
 				}
 		    });
-   			
-   			
-   			
-   			
    		});
    		/* 댓글 출력 함수 */
+   		/**
+		* @함수명 : printData(data)
+		* @작성일 : 2020. 8. 13.
+		* @작성자 : 엄지희
+		* @설명 : param으로 받은 데이터로 댓글 리스트를 CSS 태그등으로 가공하여 출력한다.
+		* @param data - 댓글 DB데이터
+		**/
    		/*<![CDATA[*/
    		function printData(data){
    			
    			$('#replyCount').html('댓글 '+data.length);
-   			
    			console.log(data);
    			
    			let session_email = /*[[${session.currentUser.user_email}]]*/; 
@@ -342,7 +344,6 @@
    			let a= "";
    			
    			console.log(session_email);
-   			
    			$.each(data, function(){
    				//console.log(data);
    				
@@ -350,6 +351,7 @@
    				let depthCss = "";
    				let depthStyle="";
    				let reCmt ="";
+   				
    				if(this.routine_cmt_depth == 1){
    					depthCss += " ml-4 pl-5";
    					depthStyle=" background-color : #f9f9ff;";
@@ -370,8 +372,6 @@
    				}else{
    					dropdownItem += "<a class='dropdown-item' id='cmtReportBtn'>신고</a>";
    				}
-//     				console.log(dropdownItem);
-   				/* session_email == 작성자 케이스 */
    				
    				a += "<div class='cmt"+ depthCss +"' style='padding-top:20px; padding-bottom: 30px; border-top : 1px solid #ecf0f9;"+depthStyle+"'>";
    				a += "<div class='row'>";
@@ -401,6 +401,12 @@
    		
    		
    		/* 댓글 리스트 불러오기 함수 */
+   		/**
+		* @함수명 : getReplyList()
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 댓글 목록을 DB로부터 비동기로 불러온다.
+		**/
    		function getReplyList(){
    			let data = {routine_brd_seq : /*[[ ${param.routine_brd_seq[0]}]]*/};
    			
@@ -418,6 +424,11 @@
    			);
    		};
    		/* 댓글 작성하기 함수 */
+   		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 등록하기 버튼을 누를 시, 조건이 충족되면 댓글을 DB에 insert하고, 비동기로 작성한 댓글을 출력한다.
+		**/
    		/*<![CDATA[*/
    		$('#routineCmtBtn').on("click", function(){
    			console.log('#routineCmtBtn 클릭');
@@ -452,20 +463,19 @@
    		/*]]>*/
    		
    		/* 댓글 수정 폼 불러오기 */
+   		/**
+		* @함수명 : modifyCmt(data)
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 기존 작성된 자신의 댓글을 수정할 수 있는 형태로 출력한다.
+		**/
 		/*<![CDATA[*/
 		function modifyCmt(data){
-			console.log('나와라예~'+$(data).attr('user_email'));
-			
-// 			 
-			
 			let a = "";
 			let session_email = /*[[${session.currentUser.user_email}]]*/; 
-			
 			var textModifyContent = $(data).parent().parent().parent().next();
 			
-// 			console.log(textModifyContent.children('.routineCmtTextarea').length);
 			if(textModifyContent.children('.routineCmtModifyTextarea').length == 0){
-				console.log("textarea 없음")
 				a += "<textarea class='w-100 p-4 l-border-1 mb-2 routineCmtModifyTextarea cmt_modify_"+$(data).attr('routine_cmt_seq')+"'>";
 				a += $(data).attr('routine_cmt');
 				a += "</textarea>";
@@ -479,6 +489,11 @@
 		/*]]>*/
 		
 		/* 댓글 수정하기 */
+		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 수정 폼에서의 내용을 수정하여 update한다.
+		**/
 		/*<![CDATA[*/
 		$(document).on('click', '#cmtModifyUdateBtn', function(){
 			console.log('수정버튼눌렸음');
@@ -506,11 +521,22 @@
 		});
 		/*]]>*/
 		/* 댓글 수정 취소하기 */
+		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 수정 폼에서 취소버튼을 통해 다시 원래대로의 댓글 창으로 변경한다.
+		**/
 		$(document).on('click', '#cmtModifyCancel', function(){
 			var a = $(this).attr('routine_cmt');
 			$(this).parent().html(a);	
 		});
 		/* 댓글 삭제 */
+		/**
+		* @함수명 : deleteCmtCheck(data)
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 댓글을 삭제하기 전 확인한다.
+		**/
 		function deleteCmtCheck(data) {
 			 if (confirm("정말 이 댓글을 삭제하시겠습니까?") == true){    //확인
 				deleteCmt(data);
@@ -518,6 +544,12 @@
 			     return false;
 			 }
 		}	
+		/**
+		* @함수명 : deleteCmt(data)
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 댓글을 삭제한다.
+		**/
 		function deleteCmt(data){
 			var data2 = {
 					routine_cmt_seq : $(data).attr('routine_cmt_seq'),
@@ -540,21 +572,20 @@
 		
 		
    		//대댓글 창 불러오기
+   		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 댓글에 대한 대댓글을 작성할 수 있는 폼을 불러온다.
+		**/
    		/*<![CDATA[*/
    		$(document).on('click', '#reCmtBtn', function(){
    			
-   			
-//    			console.log('reCmtBtn클릭' + $(this).attr('routine_cmt'));
-   			
-//    			console.log($(this).parent().parent().parent().parent().next().attr('class'));
    			var reCmtForm = $(this).parent().parent().parent().parent().next()
    			if(reCmtForm.attr('class') == 'reCmt_form_'+ $(this).attr("routine_cmt_seq")+' form-group reCmtBox mt-5 mb-2 pl-5 pr-4 pt-4 pb-4'){
    				reCmtForm.remove();
    				$(this).text('답글 쓰기');
    			}else{
    				let a='';
-   				
-//    				console.log($(this).attr("routine_cmt_seq"));
    				
    				a +='<div class="reCmt_form_'+ $(this).attr("routine_cmt_seq")
    				a += ' form-group reCmtBox mt-5 mb-2 pl-5 pr-4 pt-4 pb-4" style="border-top: 1px solid #e2e1f5;border-bottom: 1px solid #e2e1f5; background-color:#f8f8fe;">';
@@ -574,6 +605,11 @@
    		/*]]>*/
    		
    		//대댓글 등록
+   		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 엄지희
+		* @설명 : 대댓글 창에서 입력된 데이터로 대댓글을 insert한다.
+		**/
    		/*<![CDATA[*/
    		$(document).on('click', '#reCmtInsertBtn', function(){
    			let session_email = /*[[${session.currentUser.user_email}]]*/; 

@@ -48,6 +48,7 @@
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<script>
 	$(document).ready(function() {
+		//썸머노트 에디터 정의 메소드
 		$('#summernote').summernote({
 			minHeight: 400, //최소 높이
 			maxHeight: null, //최대 높이
@@ -64,7 +65,14 @@
 		});
 	});
 	
-
+	 /**
+	* @함수명 : eraseProgress(food_seq, food_cal, count)
+	* @작성일 : 2020. 8. 17.
+	* @작성자 : 남소영
+	* @설명 : 썸머노트에서 이미지 파일을 업로드할 시 DB에 insert한다.
+	* @param file - 이미지파일명,
+			 el - 썸머노트 에디터에 입력된 데이터 객체
+	**/
 	function sendFile(file, el) {
 	var form_data = new FormData();
 	       form_data.append('file', file);
@@ -85,12 +93,10 @@
 	         }
 	       });
 	    }
-</script>
-<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다. -->
-<script>
-function postForm() {
-    $('textarea[name="content"]').val($('#summernote').summernote('code'));
-}
+	// Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
+	function postForm() {
+	    $('textarea[name="content"]').val($('#summernote').summernote('code'));
+	}
 </script>
 </body>
 </html>

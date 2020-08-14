@@ -81,6 +81,11 @@
 <!-- 위에 있는 코드들이 로딩되고 나면 썸머노트를 설정해줌  -->
 <script>
 $(document).ready(function() {
+	/**
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 오동률
+	* @설명 : 썸머노트 에디터의 길이,높이,언어를 정의하고 출력하는 함수
+	**/
 	  $('#summernote').summernote({
 	        minHeight: 500,
 	        maxHeight: null,
@@ -97,7 +102,13 @@ $(document).ready(function() {
 			});
 		});
 		
-
+		/**
+		* @작성일 : 2020. 8. 14.
+		* @작성자 : 오동률
+		* @설명 : 썸머노트에서 입력된 이미지 파일을 insert하는 함수
+		* @param :file - 이미지 파일명
+		* 		  el - 입력된 썸머노트 게시글
+		**/
 		function sendFile(file, el) {
 		var form_data = new FormData();
 		       form_data.append('file', file);
@@ -118,19 +129,14 @@ $(document).ready(function() {
 		         }
 		       });
 		    }
-</script>
-<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
-출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
-<script>
+/* 
+ Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다. 
+ 출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] 
+ */
 function postForm() {
     $('textarea[name="content"]').val($('#summernote').summernote('code'));
 }
 </script>
-
-<script type="text/javascript">
-
-</script>
-
 </html>
 
 

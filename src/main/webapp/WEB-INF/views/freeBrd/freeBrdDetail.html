@@ -128,9 +128,13 @@
 </body>
 <script type="text/javascript">
 
-   
+	/**
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 오동률
+	* @설명 : 게시글 삭제 함수
+	**/
    $("#freeBrdDelete").on("click", function(){
-
+	
       var count = $('#cmt_count').text();
       var seq = $("#freeSeq").val();
       //alert("댓글 개수" + count +"해당 글번호"+seq);
@@ -153,8 +157,8 @@ var boardSeq = $('#boardSeq').val();
 
 /*<![CDATA[*/
 var user_email = /*[[ ${session.currentUser.user_email} ]]*/
-   
 /*]]>*/   
+
 $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
@@ -167,6 +171,11 @@ $('[name=btnComment]').click(function(){ //댓글 등록 버튼 클릭시
 
 
 //댓글 목록 
+/**
+* @작성일 : 2020. 8. 14.
+* @작성자 : 오동률
+* @설명 : 댓글 출력 비동기 함수
+**/
 function commentList(){
    // alert('게시글번호'+boardSeq); 게시글 번호 잘가져옴
     $.ajax({
@@ -206,7 +215,13 @@ function commentList(){
     });
 }
 
-//댓글 수정폼 - 댓글 내용 출력을 input 폼으로 변경 
+/**
+* @작성일 : 2020. 8. 14.
+* @작성자 : 오동률
+* @설명 : 댓글 수정폼 - 댓글 내용 출력을 input 폼으로 변경 
+* @param : cno - 댓글 시퀀스번호,
+* 		   content - 댓글 내용
+**/
 function commentUpdate(cno, content){
     var a ='';
     
@@ -221,6 +236,12 @@ function commentUpdate(cno, content){
 }
 
 //댓글 수정확인 
+/**
+* @작성일 : 2020. 8. 14.
+* @작성자 : 오동률
+* @설명 : 수정할 댓글에 입력된 내용을 update하여 수정하는 함수
+* @param : cno - 댓글 시퀀스번호
+**/
 function commentUpdateProc(cno){
     var updateContent = $('[name=content_'+cno+']').val();
     
@@ -235,6 +256,12 @@ function commentUpdateProc(cno){
 }
 
 //댓글 등록
+/**
+* @작성일 : 2020. 8. 14.
+* @작성자 : 오동률
+* @설명 : 댓글을 insert하는 함수
+* @param : insertData - 댓글창에 입력된 댓글 내용.
+**/
 function commentInsert(insertData){
    
    //댓글창에 아무것도 입력을 안하고 등록을 누를시 입력하라고 알람창을 띄우기
@@ -269,6 +296,12 @@ function commentInsert(insertData){
 
 
 //댓글 삭제 (POST방식)
+/**
+* @작성일 : 2020. 8. 14.
+* @작성자 : 오동률
+* @설명 : 댓글을 삭제하는 함수
+* @param : cno - 댓글 시퀀스번호,
+**/
 function commentDelete(cno){
    /* alert("삭제할 댓글번호"+cno); */
    //ajax 댓글 삭제시 위와 같은 post 방식으로 파라미터를 넘기면 ajax함수가 아예실행이 안되는데 

@@ -12,6 +12,13 @@
   // 네이버 사용자 프로필 조회
   naver_id_login.get_naver_userprofile("naverSignInCallback()");
   // 네이버 사용자 프로필 조회 이후 프로필 정보를 처리할 callback function
+  
+  /**
+	* @함수명 : naverSignInCallback()
+	* @작성일 : 2020. 8. 13.
+	* @작성자 : 엄지희
+	* @설명 : 네이버에서 넘겨받은 정보값을 넘겨주는 메서드
+  **/
   function naverSignInCallback() {
     alert(naver_id_login.getProfileData('email'));
     alert(naver_id_login.getProfileData('nickname'));

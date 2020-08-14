@@ -127,6 +127,11 @@
    <script>
 
       $(function() {
+    	  /**
+   		* @작성일 : 2020. 8. 14.
+   		* @작성자 : 김덕기
+   		* @설명 : 날짜 출력 포맷 수정을 위한 함수
+   		**/
          var todaydate = new Date();
          Date.prototype.format = function (f) {
              if (!this.valueOf()) return " ";
@@ -161,87 +166,99 @@
          
          var todaydate2 = todaydate.format('yyyy-MM-dd');
          
-         
+        /**
+ 		* @작성일 : 2020. 8. 14.
+ 		* @작성자 : 엄지희
+ 		* @설명 : 남녀 성비 출력 비동기함수.
+ 		**/
          $.ajax({
             url : "genderPer",
             type : "GET",
             dataType : "html",
             success : function(responsedata) {
-//                alert('뭐라도 띄워봐');
-               //console.log(responsedata);
                $('#genderPer').html(responsedata);
             },
             error : function(responsedata) {
-               //console.log(responsedata);
-               alert(responsedata + '에러라도 띄워봐1');
+               alert(responsedata + '에러');
             }
 
          });
+        /**
+ 		* @작성일 : 2020. 8. 14.
+ 		* @작성자 : 엄지희
+ 		* @설명 : 총 가입자수 출력 비동기함수.
+ 		**/
          $.ajax({
             url : "selectUserCount",
             type : "GET",
             dataType : "html",
             success : function(responsedata) {
-//                alert('뭐라도 띄워봐');
-               //console.log(responsedata);
                $('#total-user').html(responsedata);
             },
             error : function(responsedata) {
-               //console.log(responsedata);
-               alert(responsedata + '에러라도 띄워봐2');
+               alert(responsedata + '에러2');
             }
 
          });
+         /**
+ 		* @작성일 : 2020. 8. 14.
+ 		* @작성자 : 김덕기
+ 		* @설명 : 탈퇴회원수 비동기 출력 함수
+ 		**/
          $.ajax({
             url : "userDelete",
             type : "GET",
             dataType : "html",
             success : function(responsedata) {
-//                alert('뭐라도 띄워봐');
-               //console.log(responsedata);
                $('#userDelete').html(responsedata);
             },
             error : function(responsedata) {
-               //console.log(responsedata);
-               alert(responsedata + '에러라도 띄워봐3');
+               alert(responsedata + '에러3');
             }
 
          });
+         /**
+ 		* @작성일 : 2020. 8. 14.
+ 		* @작성자 : 김덕기
+ 		* @설명 : 신고 게시글 수 카운트 비동기 출력 함수.
+ 		**/
          $.ajax({
             url : "countReport",
             type : "GET",
             dataType : "html",
             success : function(responsedata) {
-//                alert('뭐라도 띄워봐');
-               //console.log(responsedata);
                $('#countReport').html(responsedata);
             },
             error : function(responsedata) {
-               //console.log(responsedata);
-               alert(responsedata + '에러라도 띄워봐4');
+               alert(responsedata + '에러4');
             }
 
          });
-         
+         /**
+ 		* @작성일 : 2020. 8. 14.
+ 		* @작성자 : 김덕기
+ 		* @설명 : 오늘의 가입자수 비동기 출력 함수
+ 		**/
          $.ajax({
             url : "todayUser",
             type : "GET",
             dataType : "html",
             success : function(responsedata) {
-
                $('#todayUser').html(responsedata);
-               
             },
             error : function(responsedata) {
-               //console.log(responsedata);
-               alert(responsedata + '에러라도 띄워봐');
+               alert(responsedata + '에러5');
             }
        
          });
          $('#todayDate').html(todaydate2);
          $('#todayDate2').html(todaydate2);
          $('#todayDate3').html(todaydate2);
-         //monthly회원
+         /**
+  		 * @작성일 : 2020. 8. 14.
+  		 * @작성자 : 김덕기
+  		 * @설명 : 각 날짜별 신규 회원 수 비동기 출력 함수
+  		 **/         
          $.ajax({
             url : "monthlyCount",
             type : "GET",
@@ -331,6 +348,11 @@
 
          });
          //bar chart
+          /**
+ 	      * @작성일 : 2020. 8. 14.
+ 		  * @작성자 : 김덕기
+ 		  * @설명 : 오늘의 가입자수 비동기 출력 함수
+ 		  **/
          $.ajax({
             url : "dailyUser",
             type : "GET",

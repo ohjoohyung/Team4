@@ -338,13 +338,16 @@ color: #7571f9;
 	<!-- 공통 스크립트-->
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<script>
+	/**
+	* @함수명 : popupchatList()
+	* @작성일 : 2020. 8. 14.
+	* @작성자 : 엄지희
+	* @설명 : 채팅방 팝업 시 중앙에서 팝업되도록 정의하는 함수
+	**/
 	function popupchatList(){
-		   
 		   var popupX = (window.screen.width / 2) - (480 / 2);
 		   //만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-
 		   var popupY= (window.screen.height /2) - (720 / 2);
-		
 		   window.open('/bodiary/chatList','채팅', 'width=480, height=720, resizable = no, location = no, left='+ popupX + ', top='+ popupY);return false;
 		}
 	</script>
