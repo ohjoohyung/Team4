@@ -204,63 +204,72 @@
            });      
    });
     //이미지 추가 했을 때 화면에 띄우기
-   function readURL(input) {
-       
-      if (input.name == 'files[0]') {
-         console.log(input.files[0]);
-         pathpoint = input.value.lastIndexOf('.');
-          filepoint = input.value.substring(pathpoint+1,input.length);
-          filetype = filepoint.toLowerCase();
-          console.log(filetype);
-          if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
-            var reader = new FileReader();
-            reader.onload = function(e) {
-               $('#img1').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-         } 
-      }else if(input.name == 'files[1]'){
-         console.log(input.files[0]);
-            pathpoint = input.value.lastIndexOf('.');
-             filepoint = input.value.substring(pathpoint+1,input.length);
-             filetype = filepoint.toLowerCase();
-             console.log(filetype);
-             if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
-               var reader = new FileReader();
-               reader.onload = function(e) {
-                  $('#img2').attr('src', e.target.result);
-               }
-               reader.readAsDataURL(input.files[0]);
-            
-         }
-      }else {
-          return false;
-      } 
-               
-      
-  
-   };
-   
-   //업로드한 파일 검증
-   function fileCheck(obj) {
-   pathpoint = obj.value.lastIndexOf('.');
-   filepoint = obj.value.substring(pathpoint+1,obj.length);
-   filetype = filepoint.toLowerCase();
-   if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
-  
- 
-       return;
-
-   } else {
-       alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
-
-       parentObj  = obj.parentNode
-       node = parentObj.replaceChild(obj.cloneNode(true),obj);
-      
-       return false;
-   }
-   }
-   
+	     /**
+			* @함수명 : readURL(input)
+			* @작성일 : 2020. 7. 25.
+			* @작성자 : 오주형
+			* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+			* @param input - 현재 input에 대한 정보					 
+		**/
+	   function readURL(input) {
+	       
+	      if (input.name == 'files[0]') {
+	         console.log(input.files[0]);
+	         pathpoint = input.value.lastIndexOf('.');
+	          filepoint = input.value.substring(pathpoint+1,input.length);
+	          filetype = filepoint.toLowerCase();
+	          console.log(filetype);
+	          if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
+	            var reader = new FileReader();
+	            reader.onload = function(e) {
+	               $('#img1').attr('src', e.target.result);
+	            }
+	            reader.readAsDataURL(input.files[0]);
+	         } 
+	      }else if(input.name == 'files[1]'){
+	         console.log(input.files[0]);
+	            pathpoint = input.value.lastIndexOf('.');
+	             filepoint = input.value.substring(pathpoint+1,input.length);
+	             filetype = filepoint.toLowerCase();
+	             console.log(filetype);
+	             if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {      
+	               var reader = new FileReader();
+	               reader.onload = function(e) {
+	                  $('#img2').attr('src', e.target.result);
+	               }
+	               reader.readAsDataURL(input.files[0]);
+	            
+	         }
+	      }else {
+	          return false;
+	      } 
+	               
+	      
+	  
+	   };
+	   
+	   //업로드한 파일 검증
+	    	/**
+				* @함수명 : fileCheck(obj)
+				* @작성일 : 2020. 7. 25.
+				* @작성자 : 오주형
+				* @설명 : 업로드한 파일 검증
+				* @param obj - 현재 input에 대한 정보					 
+			**/
+	   function fileCheck(obj) {
+	   pathpoint = obj.value.lastIndexOf('.');
+	   filepoint = obj.value.substring(pathpoint+1,obj.length);
+	   filetype = filepoint.toLowerCase();
+	   if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
+	       return;	
+	   } else {
+	       alert('jpg, jpeg, png 파일만 업로드 가능합니다.');	
+	       parentObj  = obj.parentNode
+	       node = parentObj.replaceChild(obj.cloneNode(true),obj);	      
+	       return false;
+	   }
+	   }
+	   
    </script>
 </body>
 </html>

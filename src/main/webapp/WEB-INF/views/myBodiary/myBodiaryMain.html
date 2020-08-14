@@ -46,11 +46,7 @@
 						                        &nbsp;&nbsp;&nbsp;&nbsp;
 						                        
 						                        오늘의 몸무게 : <span class="card-text" th:text="${bodiary.diary_today_weight}+kg" ></span>
-		                         
-		                        
 		                     </div>
-						
-						
 					</div>
                 </th:block>
                 </div>
@@ -66,6 +62,8 @@
 		var list = /*[[ ${list} ]]*/
 		console.log(list[0].diary_seq);
 	/*]]>*/
+	
+	//이미 오늘의 일지를 작성했을때 작성한 일지로 이동하게 해줌
 	$(function() {
 		$('#already').attr("href", "myBodiaryDetail?diary_seq="+list[0].diary_seq+"");
 	});

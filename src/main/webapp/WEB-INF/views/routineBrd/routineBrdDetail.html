@@ -203,7 +203,12 @@
    		var user_email = /*[[${session.currentUser.user_email}]]*/;
    			/*]]>*/
    
-	  
+	  /**
+		* @함수명 : deleteCheck()
+		* @작성일 : 2020. 7. 27.
+		* @작성자 : 오주형
+		* @설명 : 게시글 삭제시 삭제 할지 창이 뜨도록 만드는 메소드	 
+	**/ 
 		function deleteCheck() {
 			 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
 				location.href="routineBrdDelete?routine_brd_seq="+routine_brd_seq;
@@ -212,6 +217,12 @@
 			 }
 		}	
    			
+		/**
+			* @함수명 : selectRoutineBrdLike()
+			* @작성일 : 2020. 7. 27.
+			* @작성자 : 오주형
+			* @설명 : 좋아요 버튼을 눌렀을 때 체크 여부에 따라 다르게 실행되는 메소드	 
+		**/ 
    		function selectRoutineBrdLike() {
    			$.ajax({
 				type:'POST',
@@ -233,7 +244,12 @@
 		    });
 		}
    		
-   		
+		/**
+			* @함수명 : cancleRoutineBrdLike()
+			* @작성일 : 2020. 7. 28.
+			* @작성자 : 오주형
+			* @설명 : 좋아요 취소할때 사용되는 메소드	 
+		**/ 
    		function cancleRoutineBrdLike() {
    			$.ajax({
 				type:'POST',
@@ -247,7 +263,12 @@
 		}
    		
 		
-		
+		/**
+			* @함수명 : addRoutineBrdLike()
+			* @작성일 : 2020. 7. 28.
+			* @작성자 : 오주형
+			* @설명 : 좋아요 추가될 때 사용되는 메소드	 
+		**/ 
 		function addRoutineBrdLike() {
 			$.ajax({
 				type:'POST',
@@ -259,7 +280,13 @@
 				}
 		    });
 		}
-		
+			
+		/**
+			* @함수명 : countRoutineBrdLike()
+			* @작성일 : 2020. 7. 28.
+			* @작성자 : 오주형
+			* @설명 : 좋아요 개수를 카운트하는 메소드 
+		**/ 
 		function countRoutineBrdLike() {
 			$.ajax({
 				type:'POST',

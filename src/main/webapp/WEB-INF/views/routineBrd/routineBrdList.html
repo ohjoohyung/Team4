@@ -151,6 +151,12 @@
 		});
 		
 		//스크롤이 바닥에 닿았을 때 비동기로 리스트 불러오기
+		/**
+			* @함수명 : fetchList()
+			* @작성일 : 2020. 7. 25.
+			* @작성자 : 오주형
+			* @설명 : 루틴게시판 리스트를 비동기로 불러온다
+		**/
 		function fetchList() {
 			console.log("비동기 전 cp : "+cpval)
 			
@@ -170,8 +176,7 @@
 				success:function(responsedata){
 					console.log(responsedata.length);
 					isEnd = false;
-					$.each(responsedata ,function(index,obj){	
-						
+					$.each(responsedata ,function(index,obj){							
 						console.log(obj);
 						$('.grid').append(		
 								'<div class="grid-item card">'+
@@ -179,26 +184,19 @@
 											'<img src="assets/upload/routineBrdUpload/'+obj.brd_image2+'" />'+
 											'<div class="card-body">'+
 											 '<p>'+obj.user_nickname+'</p>'+
-						                          '<h3 class="txt_post mt-3 mb-3">'+obj.routine_brd_title+'</h3>'+
-						          
-						                       
-						                     
+						                          '<h3 class="txt_post mt-3 mb-3">'+obj.routine_brd_title+'</h3>'+						                     
 						                     '<div class="card-footer p-0 pt-3">'+
 												'<i class="icon-eye"></i>&nbsp;<span>'+obj.routine_brd_hit+'</span>&nbsp;&nbsp;'+
 												'<i class="icon-bubble"></i>&nbsp;&nbsp;<span>'+obj.routine_brd_comcount+'</span>&nbsp;&nbsp;'+
 												'<i class="icon-clock"></i>&nbsp;&nbsp;<span>'+obj.routine_brd_regdate+'</span>'+
 											'</div>'+
-											'</div>'+
-						           
+											'</div>'+						           
 										'</a>'+
-								'</div>'	
-								
-						   
+								'</div>'							   
 						);
 					});
 					if(responsedata.length < 8) {
-						isEnd = true;
-						
+						isEnd = true;						
 					} else {
 						cpval++
 					} 
@@ -211,8 +209,7 @@
 						});
 						imagesLoaded( '.grid' ).on( 'progress', function() {
 						msnry.layout();
-						});
-					
+						});					
 				}
 				
 		      });

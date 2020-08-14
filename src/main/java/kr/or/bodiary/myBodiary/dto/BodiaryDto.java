@@ -22,7 +22,7 @@ public class BodiaryDto {
 	private String diary_pubchk;
 	private String diary_condition;
 	
-	//String으로 바꾸기
+
 	private String diary_date;
 
 	private int diary_metabolism;

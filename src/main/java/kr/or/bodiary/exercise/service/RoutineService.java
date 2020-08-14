@@ -27,7 +27,7 @@ public class RoutineService {
       this.sqlsession = sqlsession;
    }
    
-   
+   //루틴 만들기
    @Transactional
    public String insertRoutineBundle(RoutineJoinDto routinejoindto, HttpServletRequest request) {
       String url = "";

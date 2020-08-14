@@ -1,8 +1,7 @@
 package kr.or.bodiary.main.controller;
 
 
-import java.sql.SQLException;
-import java.text.ParseException;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +25,14 @@ public class MainController {
 	public void setMainService(MainService mainservice) {
 		this.mainservice = mainservice;
 	}
+	
+	//로그인 후 메인 페이지 들어가기
 	@RequestMapping(value="/", method =RequestMethod.GET)
 	public String index() {
 		return "index";
 	}
+	
+	//쿠션 메인 페이지 들어가기
 	@RequestMapping("main")
 	public String main(Model model) throws Exception {
 		List<NoticeDto> noticeMain = mainservice.noticeMain();

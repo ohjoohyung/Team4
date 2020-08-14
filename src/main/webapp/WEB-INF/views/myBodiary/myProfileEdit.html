@@ -96,6 +96,13 @@
    <th:block th:replace="fragments/script :: scriptFragment"></th:block>
    <script>
    //이미지 추가 했을 때 화면에 띄우기
+    /**
+		* @함수명 : readURL(input)
+		* @작성일 : 2020. 7. 20.
+		* @작성자 : 김덕기
+		* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+		* @param input - 현재 input에 대한 정보		 
+	**/
     function readURL(input) {
        if (input.files && input.files[0]) {
           var reader = new FileReader();
@@ -104,9 +111,15 @@
           }
           reader.readAsDataURL(input.files[0]);
        }
-       
     };
     
+    
+    /**
+		* @함수명 : checkProfile()
+		* @작성일 : 2020. 7. 23.
+		* @작성자 : 김덕기
+		* @설명 : 유효성 검증을 위한 메소드 
+	**/ 
     function checkProfile(){
        var age = document.getElementById('user_age');
        var height = document.getElementById('user_height');

@@ -50,7 +50,7 @@ public class AdminController {
 	public void setChartService(ChartService chartService) {
 		this.chartService = chartService;
 	}
-	//동률 -------------------------------------------------------------------
+
 		@Autowired
 		private UserService userService;
 		

@@ -53,12 +53,13 @@
 
 	<th:block th:replace="fragments/script :: scriptFragment"></th:block>
 	<script>
+	
+	//약관 동의하지 않으면 탈퇴가 되지 않음
 		$(document).ready(function(){
 			$('#withdrawal_check_btn').click(function(){
 				if($('#withdrawal_check').prop('checked') == false){
 			    	alert('필수 약관에 동의 하셔야 합니다.');
-				}else{
-			
+			    	return false;
 				}
 			});
 		});

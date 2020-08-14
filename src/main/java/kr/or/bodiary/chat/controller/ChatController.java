@@ -44,7 +44,7 @@ private ChatService chatservice;
 		  return "chat/chatList"; 
 	  }
 	 
-	
+	//채팅방 리스트 비동기로 불러오기
 	@ResponseBody
 	@RequestMapping("/getChatList")
 	public List<ChatRoomDto> getChatList() throws ClassNotFoundException, SQLException {

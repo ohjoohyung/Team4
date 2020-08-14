@@ -98,6 +98,7 @@
        var email = {'user_email' : $('#user_email').val()};
 	   var data = [];
        
+	   //일지 작성 일자에 맞게 달력 불러오기
        $.ajax(
 				 {
 					 type:"get",
@@ -109,7 +110,7 @@
 						$.each(responsedata,function(index,obj){
 							console.log(obj.diary_date+" / " +obj.diary_seq);
 							
-							console.log("모멘트 : " +moment(obj.diary_date).format("YYYY-MM-DD"));
+							
 							
 							
 							data.push({date : moment(obj.diary_date).format("YYYY-MM-DD"),

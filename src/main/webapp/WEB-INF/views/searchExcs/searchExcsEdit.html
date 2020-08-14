@@ -154,7 +154,12 @@
 		
 		
 		
-		
+		 /**
+			* @함수명 : loadRoutine()
+			* @작성일 : 2020. 7. 21.
+			* @작성자 : 오주형
+			* @설명 : 페이지 들어갔을 때 루틴을 로딩해주는 메소드
+		**/
 		/*<![CDATA[*/
 		function loadRoutine() {
 			var seq = [[ ${routine_cart_seq} ]]
@@ -189,10 +194,7 @@
 										 if(obj.routine_reps_per_set == (i+1)*5)
 											 selectarray3[i] = "selected";
 									 }
-									
-									 
-									 
-									 
+																		 
 	                                 //유산소에 달자
 	                                 if(obj.excs_kind == "C"){
 	                                    $('#exer_c_add').append(   

@@ -146,10 +146,14 @@
 	   loadRoutine();
 	   
     //저장된 루틴 불러오기
-    
-    
-    
-    function loadRoutine() {
+    	/**
+			* @함수명 : loadRoutine()
+			* @작성일 : 2020. 7. 23.
+			* @작성자 : 오주형
+			* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+			* @param input - 현재 input에 대한 정보				 
+		**/
+   	 function loadRoutine() {
     	 var data = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
          if(data.routine_cart_seq == 0) {
             $('#cardio').empty();
@@ -215,6 +219,14 @@
    });
    }); 
     //이미지 추가 했을 때 화면에 띄우기
+     /**
+			* @함수명 : readURL(input)
+			* @작성일 : 2020. 7. 10.
+			* @작성자 : 오주형
+			* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+			* @param input - 현재 input에 대한 정보
+					 
+			**/
    function readURL(input) {
        
       if (input.name == 'files[0]') {
@@ -253,6 +265,14 @@
    };
    
    //업로드한 파일 검증
+    /**
+			* @함수명 : readURL(input)
+			* @작성일 : 2020. 7. 10.
+			* @작성자 : 오주형
+			* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+			* @param input - 현재 input에 대한 정보
+					 
+			**/
    function fileCheck(obj) {
    pathpoint = obj.value.lastIndexOf('.');
    filepoint = obj.value.substring(pathpoint+1,obj.length);

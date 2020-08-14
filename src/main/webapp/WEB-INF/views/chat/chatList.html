@@ -74,18 +74,8 @@
 								
 							</div>
 						</div>
-					</div>
-					
-					
-					
-					
-					
-				</div>
-
-				
-		
-			
-		
+					</div>					
+				</div>			
 			</div>
 			<div class="center">
 			<small>BODIARY</small>
@@ -107,7 +97,6 @@
 		//비밀방 체크했을시 비밀번호 폼 생성
 		$('#room_secret').change(function() {
 			console.log($('input:checkbox[id="room_secret"]').val());
-
 			a = "";
 			if ($('#room_secret').is(':checked')) {
 				a += "<label for='secret-input'>비밀번호</label><input class='form-control' type='password' id='room_pwd' name='room_pwd' placeholder='네 자리의 숫자를 입력하세요' onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'>"
@@ -115,16 +104,12 @@
 			} else {
 				$('.secret-input-box').html(a);
 					}
-
 			})
 
 		//방 만들때 유효성 검증				
 		 $('button:submit').click(function() {
-			 let pwd = /^\d{4}$/;
-			 
-			
-			 let count = Number($('#room_count').val());
-			 
+			 let pwd = /^\d{4}$/;			
+			 let count = Number($('#room_count').val());		 
              if($('#room_title').val() == '') {
             	 alert("채팅방 이름을 입력해주세요.");
             	 return false;
@@ -136,8 +121,7 @@
                 	 alert("비밀번호는 4자리 숫자를 입력해주세요.");
                 	 return false;
             	 }
-             }		 
-                
+             }		                 
             });			 
 						
 						
@@ -200,8 +184,7 @@
 							'</div>'+
 							'</div>'+
 						'</div>'+
-						'</div>'
-    						
+						'</div>'				
     					);
     				});
 	    		}
@@ -230,9 +213,7 @@
 					roomnum = room_number;
 					$('#pwdmodal').modal('show');
 				}
-			}
-			
-			
+			}			
 		}
 			
 		
@@ -301,14 +282,7 @@
             else
                 event.target.value = event.target.value.replace(/[^0-9]/g, "");
         }
-			
-		
-		
-		
-		
-		
-		
-		
+				
 	</script>
 </body>
 </html>

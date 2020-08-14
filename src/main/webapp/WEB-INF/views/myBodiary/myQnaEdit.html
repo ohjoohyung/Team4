@@ -107,9 +107,9 @@ $(document).ready(function() {
 	  });
 	});
 </script>
-<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.
-출처: https://smallgiant.tistory.com/31 [나에게 남기는 지식] -->
+<!-- Summernote의 code를 가져와서 textarea 태그 중 name="content" 속성을 갖고 있는 요소를 찾아 클라이언트가 입력한 값을 집어넣는다.-->
 <script>
+
 function postForm() {
     $('textarea[name="qna_brd_content"]').val($('#summernote').summernote('code'));
 }

@@ -36,9 +36,14 @@
 
 })
 
+
+/**
+		* @함수명 : sendQna()
+		* @작성일 : 2020. 7. 24.
+		* @작성자 : 오주형
+		* @설명 : msg 변수를 연결된 웹소켓으로 보내는 메소드	 
+	**/ 
 function sendQna() {
-   
-   
    var text = "새로운 문의가 도착했습니다.";
    var msg = {"type" : "user",
             "qna_brd_title" : $('#qna_brd_title').val(),
@@ -140,6 +145,15 @@ function sendQna() {
 
             });
          });
+   
+   
+   /**
+	* @함수명 : checkProfile()
+	* @작성일 : 2020. 7. 23.
+	* @작성자 : 김덕기
+	* @설명 : 이미지를 추가했을 때 화면에 보여주기 위한 메소드
+	* @param input - 현재 input에 대한 정보		 
+**/ 
    function sendFile(file, el) {
          var form_data = new FormData();
                 form_data.append('file', file);

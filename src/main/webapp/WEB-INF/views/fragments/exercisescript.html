@@ -35,6 +35,14 @@
          
          
       })
+      
+      
+       /**
+			* @함수명 : search()
+			* @작성일 : 2020. 7. 10.
+			* @작성자 : 김덕기
+			* @설명 : 운동 검색 시 비동기로 db에서 데이터를 불러온다				 
+			**/
       function search(){
           var data={excs_name: "", 
                   excs_kind : "", 
@@ -163,7 +171,14 @@
                         });
               
       }
-      
+      /**
+		* @함수명 : drawInput(ek)
+		* @작성일 : 2020. 7. 12.
+		* @작성자 : 김덕기
+		* @설명 : 유산소 무산소 버튼 클릭했을 때 태그 변화
+		* @param ek - url
+				 
+		**/
       function drawInput(ek){
         if(ek=='http://'+location.host+'/bodiary/search#navpills-2'){
            //alert('무산소');
@@ -179,7 +194,13 @@
            );
         }
       }
-      
+		
+      /**
+		* @함수명 : exer_c()
+		* @작성일 : 2020. 7. 13.
+		* @작성자 : 김덕기
+		* @설명 : 유산소 운동 리스트를 불러온다	 
+		**/
       function exer_c(){
           $('input[type="checkbox"][name="exer_level"]').prop('checked', false);
           $('input[type="checkbox"][name="exer_equi"]').prop('checked', false);
@@ -246,6 +267,16 @@
                    }
                   );
          }
+      
+      
+      /**
+		* @함수명 : exer_n()
+		* @작성일 : 2020. 7. 13.
+		* @작성자 : 김덕기
+		* @설명 : 무산소 운동 리스트를 불러온다
+	
+				 
+		**/
          function exer_n(){
              $('input[type="checkbox"][name="exer_level"]').prop('checked', false);
              $('input[type="checkbox"][name="exer_equi"]').prop('checked', false);
@@ -298,13 +329,7 @@
                                              +  "</div>"    
                                              +  "</div>"
                                            +"</div>"
-                                      +"</div>" 
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
+                                      +"</div>"                              
                                  +"<div class='col-2 center' onclick='rightdrow("+obj.excs_seq+");'><i class='fa' aria-hidden='true'></i> <a href='#'class='btn btn-flat btn-lg btn-outline-primary mt-1'><i class='mdi mdi-plus'></i></a></div>"
                                  );
                         });
@@ -321,6 +346,16 @@
          
          
          var number = 0;
+         
+         
+         /**
+			* @함수명 : rightdrow(es)
+			* @작성일 : 2020. 7. 14.
+			* @작성자 : 김덕기
+			* @설명 : 선택한 운동을 리스트에 추가시킨다
+			* @param es - 운동 번호
+					 
+			**/
             function rightdrow(es){
             //rightdrow ajax
             var data = {excs_seq : es};
@@ -331,8 +366,7 @@
                          url:"exerciseadd.exer",
                          dataType:"json",
                          success:function(responsedata){ 
-                               console.log(responsedata);
-                              //$('#exer_add').empty();
+                               console.log(responsedata);                           
                               $.each(responsedata,function(index,obj){
                                  console.log($('#'+obj.excs_seq+'').text() != "");
                                  if($('#'+obj.excs_seq+'').text() != "") {
@@ -371,8 +405,7 @@
                                           +"<input class='setinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_set'>"
                                           +"<input class='persetinput"+number+"' type='hidden' name='routineJoinDtoList["+number+"].routine_reps_per_set'>"
                                           +"</div>"
-                                          );
-                              
+                                          );                              
                                  }
                                  number++;   
                            });
@@ -381,11 +414,15 @@
                       }
                      );    
             }
-            function removeadd(num){
-               /* var elem = document.getElementById(es);
-               console.log(elem);
-                elem.parentNode.removeChild(elem);
-               number--;  */
+            
+            /**
+			* @함수명 : removeadd(num)
+			* @작성일 : 2020. 7. 15.
+			* @작성자 : 김덕기
+			* @설명 : 추가한 운동을 삭제시킨다
+			* @param num - 운동 인덱스			 
+			**/
+            function removeadd(num){            
                $(".cn"+num+"").remove();
                
                for(let i=1; i < number; i++) {
@@ -424,17 +461,39 @@
                }
                number--;
             }
+            
+            /**
+			* @함수명 : eselected1(number)
+			* @작성일 : 2020. 7. 15.
+			* @작성자 : 김덕기
+			* @설명 : 유산소 시간을 선택했을 때 input의 속성을 추가하기
+			* @param number - 운동 인덱스					 
+			**/
             function eselected1(number){
                var eselect = $('select.hour-select'+number+' option:selected').val();
-               $("input.hourinput"+number+"").attr('value', eselect);
-               
-               
+               $("input.hourinput"+number+"").attr('value', eselect);                          
             }
+			
+			 /**
+			* @함수명 : eselected2(number)
+			* @작성일 : 2020. 7. 15.
+			* @작성자 : 김덕기
+			* @설명 : 무산소 세트를 선택했을 때 input의 속성을 추가하기
+			* @param number - 운동 인덱스					 
+			**/
             function eselected2(number){
                var eselect = $('select.set-select'+number+' option:selected').val();
-               $("input.setinput"+number+"").attr('value', eselect);
-               
+               $("input.setinput"+number+"").attr('value', eselect);               
             }
+			
+			
+			 /**
+			* @함수명 : eselected3(number)
+			* @작성일 : 2020. 7. 15.
+			* @작성자 : 김덕기
+			* @설명 : 무산소 횟수를 선택했을 때 input의 속성을 추가하기
+			* @param number - 운동 인덱스					 
+			**/
             function eselected3(number){
                var eselect = $('select.perset-select'+number+' option:selected').val();
                $("input.persetinput"+number+"").attr('value', eselect);

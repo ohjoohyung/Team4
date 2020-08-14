@@ -26,11 +26,7 @@ public class RoutineController {
       this.routineservice = routineservice;
    }
    
-   private BodiaryService bodiaryservice;
-     
-     @Autowired public void setBodiaryservice(BodiaryService bodiaryservice) {
-     this.bodiaryservice = bodiaryservice; }
-   
+
    
    @RequestMapping("/insertRoutineBundle")
    public String insertRoutineBundle(RoutineJoinDto routinejoindto, HttpServletRequest request) {

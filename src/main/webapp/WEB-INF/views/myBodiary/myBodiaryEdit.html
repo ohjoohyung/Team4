@@ -299,19 +299,15 @@
 		 var validate = new Array;
 		 var preper = 0;
 		 
-		 /**
-			* @함수명 : drawProgress(food_seq, food_cal)
-			* @작성일 : 2020. 7. 20.
-			* @작성자 : 김덕기
-			* @설명 : 음식 추가시 프로그레스바가 추가된다
-			* @param food_seq - 음식 번호,
-					 food_cal - 음식 칼로리
+			/**
+				* @함수명 : drawProgress(food_seq, food_cal)
+				* @작성일 : 2020. 7. 20.
+				* @작성자 : 김덕기
+				* @설명 : 음식 추가시 프로그레스바가 추가된다
+				* @param food_seq - 음식 번호,
+						 food_cal - 음식 칼로리
 			**/
 		   //덕추가 추가할때 progress바 추가
-		
-			
-			
-			
 			 function drawProgress(food_seq,food_cal, food_count){
 			      var totalcal = $('#totalcal').text();
 			 
@@ -322,20 +318,14 @@
 			      var bar = document.getElementById("progress-bar");
 			     
 			      var origin = bar.style.width.slice(0,-1);
-			    console.log(Number(preper))
-			      var after = Number(preper)+Number(presentcal*100/totalcal);
+			     console.log(Number(preper))
+			     var after = Number(preper)+Number(presentcal*100/totalcal);
 			     console.log(totalcal);
 			     console.log(count);
-			     
 			     console.log(presentcal);
-			     
 			     console.log(bar);
-			     
 			     console.log(origin);
-			     
 			     console.log(after);
-			     
-			     
 			      preper = after;
 			       if (Number(after>=100)){
 			          bar.style.width = "100%";
@@ -355,14 +345,14 @@
 			
 			
 			
-			 /**
-			* @함수명 : eraseProgress(food_seq, food_cal, count)
-			* @작성일 : 2020. 7. 23.
-			* @작성자 : 김덕기
-			* @설명 : 음식 제거시 프로그레스바가 줄어든다
-			* @param food_seq - 음식 번호,
-					 food_cal - 음식 칼로리,
-					 count - 음식 수량
+			/**
+				* @함수명 : eraseProgress(food_seq, food_cal, count)
+				* @작성일 : 2020. 7. 23.
+				* @작성자 : 김덕기
+				* @설명 : 음식 제거시 프로그레스바가 줄어든다
+				* @param food_seq - 음식 번호,
+						 food_cal - 음식 칼로리,
+						 count - 음식 수량
 			**/
 		   function eraseProgress(food_seq,food_cal,count){
 		      var totalcal = $('#totalcal').text();
@@ -418,84 +408,90 @@
 			 
 			 
 			 
-			
-			function loadRoutine() {
-				var routine_cart_seq = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
-				if(routine_cart_seq.routine_cart_seq == 0) {
-                    $('#cardio').empty();
-                    $('#weightTraining').empty();
-                    validate[1] = false;
-                    return;
-                 }     
-	            console.log(routine_cart_seq);
-	            $.ajax(
-							 {
-								 type:"get",
-								 data: routine_cart_seq,
-								 url:"getRoutine",
-								 dataType:"json",
-								 success:function(responsedata){ 
-									$('#cardio').empty();
-									$('#weightTraining').empty();
-									console.log(responsedata);
-									
-									$.each(responsedata,function(index,obj){
-										console.log(obj.excs_kind);
-										if(obj.excs_kind == 'C') {
-											var hour = "";
-											if((obj.routine_exercise_hour % 60) == 0) {
-												hour = (obj.routine_exercise_hour / 60) + "시간";
-											} else {
-												if(parseInt(obj.routine_exercise_hour / 60) == 0) {
-													hour = obj.routine_exercise_hour + "분";
-												}else {
-													hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+				 /**
+					* @함수명 : loadRoutine()
+					* @작성일 : 2020. 7. 11.
+					* @작성자 : 오주형
+					* @설명 : 페이지 들어갔을 때 루틴을 로딩해주는 메소드
+				**/
+				function loadRoutine() {
+					var routine_cart_seq = {"routine_cart_seq" : $('#routine_cart_seq option:selected').val()};
+					if(routine_cart_seq.routine_cart_seq == 0) {
+	                    $('#cardio').empty();
+	                    $('#weightTraining').empty();
+	                    validate[1] = false;
+	                    return;
+	                 }     
+		            console.log(routine_cart_seq);
+		            $.ajax(
+								 {
+									 type:"get",
+									 data: routine_cart_seq,
+									 url:"getRoutine",
+									 dataType:"json",
+									 success:function(responsedata){ 
+										$('#cardio').empty();
+										$('#weightTraining').empty();
+										console.log(responsedata);
+										
+										$.each(responsedata,function(index,obj){
+											console.log(obj.excs_kind);
+											if(obj.excs_kind == 'C') {
+												var hour = "";
+												if((obj.routine_exercise_hour % 60) == 0) {
+													hour = (obj.routine_exercise_hour / 60) + "시간";
+												} else {
+													if(parseInt(obj.routine_exercise_hour / 60) == 0) {
+														hour = obj.routine_exercise_hour + "분";
+													}else {
+														hour = parseInt(obj.routine_exercise_hour / 60) + "시간 30분"; 
+													}
 												}
-											}
-											$('#cardio').append(
-													'<div class="row cart-item-card mb-3">'+													
-														'<div class="col pt-2">'+
-															'<h5>'+obj.excs_name+'</h5>'+
-														'</div>'+
-														'<div class="col-3 center pt-2">'+
-															'<h5>'+hour+'</h5>'+
-														'</div>'+
-													'</div>'
-											);
-										}else {
-												$('#weightTraining').append(
-														'<div class="row cart-item-card mb-3">'+														
+												$('#cardio').append(
+														'<div class="row cart-item-card mb-3">'+													
 															'<div class="col pt-2">'+
 																'<h5>'+obj.excs_name+'</h5>'+
 															'</div>'+
 															'<div class="col-3 center pt-2">'+
-																'<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+																'<h5>'+hour+'</h5>'+
 															'</div>'+
-														'</div>'	
-										)}
-									});
-									$('.tdroutine')
-			                           .html(
-			                                 '');
-			                           validate[1] = true;
-							 	}
-							 });
-					}
+														'</div>'
+												);
+											}else {
+													$('#weightTraining').append(
+															'<div class="row cart-item-card mb-3">'+														
+																'<div class="col pt-2">'+
+																	'<h5>'+obj.excs_name+'</h5>'+
+																'</div>'+
+																'<div class="col-3 center pt-2">'+
+																	'<h5>'+obj.routine_set+'세트'+obj.routine_reps_per_set+'회</h5>'+
+																'</div>'+
+															'</div>'	
+											)}
+										});
+										$('.tdroutine')
+				                           .html(
+				                                 '');
+				                           validate[1] = true;
+								 	}
+								 });
+						}
 				
+				/**
+					* @함수명 : loadDailyMeal()
+					* @작성일 : 2020. 7. 11.
+					* @작성자 : 오주형
+					* @설명 : 페이지 들어갔을 때 식단을 로딩해주는 메소드
+				**/
 				function loadDailyMeal() {
 					var meal_cart_seq = {"meal_cart_seq" : seq};
-					
-					
-					
 					$.ajax(
 							 {
 								 type:"get",
 								 data: meal_cart_seq,
 								 url:"getDailyMeal",
 								 dataType:"json",
-								 success:function(responsedata){ 
-									
-									
+								 success:function(responsedata){ 									
 									$.each(responsedata,function(index,obj){
 										console.log(obj.meal_seq);
 										console.log(obj.food_seq);
@@ -758,14 +754,13 @@
 			//음식 추가하기 메소드
 			
 			/**
-			* @함수명 : addFood(food_seq, food_name, food_cal)
-			* @작성일 : 2020. 7. 9.
-			* @작성자 : 오주형
-			* @설명 : 검색한 음식을 추가하는 메소드
-			* @param food_seq - 음식 번호,
-					 food_name - 음식 이름
-					 food_cal - 음식 칼로리
-					 
+				* @함수명 : addFood(food_seq, food_name, food_cal)
+				* @작성일 : 2020. 7. 9.
+				* @작성자 : 오주형
+				* @설명 : 검색한 음식을 추가하는 메소드
+				* @param food_seq - 음식 번호,
+						 food_name - 음식 이름,
+						 food_cal - 음식 칼로리				 
 			**/
 			function addFood(food_seq, food_name, food_cal) {
 				
@@ -857,7 +852,6 @@
 			* @작성자 : 오주형
 			* @설명 : 검색한 음식을 삭제하는 메소드
 			* @param num - 식단 index
-					 
 			**/
 			function delFood(num) {
 	            $(".mealDiv"+num+"").remove();
@@ -880,7 +874,7 @@
 	                                    });
 	                  $(".fd"+(num+i)+"").attr({name : "dailyMealList["+(num+(i-1))+"].food_cal",
                           class : "fd"+(num+(i-1))+""
-            });
+           		 });
 	                  
 	               }
 	               number--;
@@ -932,17 +926,14 @@
 	          if(filetype=='jpg' || filetype=='png' || filetype=='jpeg') {
 	            
 	             console.log("파일 검증 : " +validate[0]);
-	             $('.tdimg').html(
-	            '');
+	             $('.tdimg').html('');
 	              return;
 	      
 	          } else {
 	              alert('jpg, jpeg, png 파일만 업로드 가능합니다.');
 	      
 	              parentObj  = obj.parentNode
-	              node = parentObj.replaceChild(obj.cloneNode(true),obj);
-	              
-	              
+	              node = parentObj.replaceChild(obj.cloneNode(true),obj);	              
 	              return false;
 	          }
 	         }

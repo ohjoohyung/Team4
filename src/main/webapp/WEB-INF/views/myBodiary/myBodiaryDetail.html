@@ -370,6 +370,12 @@
 	
 	
 	
+	/**
+	* @함수명 : deleteCheck()
+	* @작성일 : 2020. 7. 23.
+	* @작성자 : 오주형
+	* @설명 : 일지 삭제시 삭제 할지 창이 뜨도록 만드는 메소드
+	**/
 	/*<![CDATA[*/
 			function deleteCheck() {
 				 if (confirm("정말 삭제하시겠습니까?") == true){    //확인
@@ -421,19 +427,8 @@
   			
 		})
 			
-			
-		 
-		
-		
-			
-			
-       
-    	
-        
-           
-           
-		//하루 칼로리량 도넛 그래프
-		
+			       
+		//하루 칼로리량 도넛 그래프		
            /*<![CDATA[*/
            var dailymeallist = /*[[ ${dailymeallist} ]]*/;
            console.log(dailymeallist);
@@ -463,10 +458,7 @@
         	   
         	   
            });
-           /*]]>*/
-           
-           
-           
+           /*]]>*/       
            new Morris.Donut({
             element: 'morrisDonut',
             data: [        
